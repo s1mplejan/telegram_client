@@ -17,7 +17,7 @@ telegram_client:
 
 ## Quickstart
 ```dart
-import 'package:telegram_client/telelegram_bot_api.dart';
+import 'package:telegram_client/telegram_client.dart';
 import 'package:switchscript/switchscript.dart';
 import 'dart:io';
 
