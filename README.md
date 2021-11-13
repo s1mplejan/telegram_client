@@ -4,20 +4,20 @@ Telegram Bot api dart library auto update from official [Telegram-Bot-Api](https
 ## Install
 
 ```Bash
-dart pub add telegram_bot_api
+dart pub add telegram_client
 ```
 
 ## Instal from github 
 ```yaml
-telegram_bot_api:
+telegram_client:
   git:
-    url: https://github.com/azkadev/telegram_bot_api.git
+    url: https://github.com/azkadev/telegram_client.git
     ref: main
 ```
 
 ## Quickstart
 ```dart
-import 'package:telegram_bot_api/telelegram_bot_api.dart';
+import 'package:telegram_client/telelegram_bot_api.dart';
 import 'package:switchscript/switchscript.dart';
 import 'dart:io';
 
