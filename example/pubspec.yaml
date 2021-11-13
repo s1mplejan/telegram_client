@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  telegran_client:
+  telegram_client:
     path: ../
 
 dev_dependencies:

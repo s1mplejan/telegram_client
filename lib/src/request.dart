@@ -3,9 +3,9 @@ part of telegram_client;
 class _Request {
   // ignore: prefer_typing_uninitialized_variables
   final _token;
-  // ignore: prefer_typing_uninitialized_variables
-  final _url;
-  _Request(this._token, this._url);
+  // ignore: prefer_typing_uninitialized_variables, non_constant_identifier_names
+  final Option;
+  _Request(this._token, this.Option);
 
   dynamic request(method, [Map? data]) async {
     var option = {
@@ -15,10 +15,11 @@ class _Request {
         "Content-Type": "application/json",
       },
     };
+    var url = "${Option["api"].toString()}${Option["type"].toString()}";
     if (switchscript.typeof(data) == "object") {
       option["body"] = convert.json.encode(data);
       var response = await switchscript.UrlFetchApp.fetch(
-          "${_url.toString()}${_token.toString()}/${method.toString()}",
+          "$url${_token.toString()}/${method.toString()}",
           option);
       if (response.statusCode == 200) {
         return convert.json.decode(response.body);
@@ -27,7 +28,7 @@ class _Request {
       }
     } else {
       var response = await switchscript.UrlFetchApp.fetch(
-          "${_url.toString()}${_token.toString()}/${method.toString()}",
+          "url${_token.toString()}/${method.toString()}",
           option);
       if (response.statusCode == 200) {
         return convert.json.decode(response.body);
