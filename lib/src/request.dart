@@ -45,7 +45,12 @@ class _Request {
     return originalObject;
   }
 
-  _makeParamsSync(originalObject) {}
+  _makeParamsSync(originalObject, newObject) {
+    newObject.forEach((key, value) {
+      originalObject[key.toString()] = value;
+    });
+    return originalObject;
+  }
 
   // ignore: non_constant_identifier_names
   sendMessage(chat_id, text, [parameters]) async {
