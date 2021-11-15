@@ -42,7 +42,7 @@ class Telegram {
   }
 
   _Request get api {
-    return _Request(_token, _options["api"].toString());
+    return _Request(_token, _options);
   }
   
   _Request newBot(String newToken) {
