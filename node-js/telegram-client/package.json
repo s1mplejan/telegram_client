@@ -1,14 +1,24 @@
 {
   "name": "telegram_client",
   "version": "0.0.0",
-  "description": "",
+  "description": "library to make bot or user bot telegram auto update latest bot api version telegram only bot api",
   "main": "src/index.js",
+  "homepage": "https://github.com/azkadev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azkadev/telegram_client",
+    "directory": "packages/app"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/azkadev"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "azkadev",
+  "license": "MIT",
   "dependencies": {
     "node-fetch": "^2.6.1"
   }
