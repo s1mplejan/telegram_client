@@ -65,7 +65,7 @@ MX7LM0tJegNLBVVQUN-ggUvzwAZJHGahx
 - Userbot
 
     ```javascript
-    var lib = new telegramclient.telegram("paste_your_tokenhere", { "type": "user", "api": "https://telegram.rest/" });
+    var lib = new telegramclient.telegram("paste_your_tokenhere", { "type": "user", "api": "api_userbot" });
     var tg = lib.api;
 
     function getToken(){
