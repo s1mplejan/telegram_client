@@ -20,7 +20,7 @@ var telegram = class Telegram {
         }
         this.options = this.invokeSync(this.optiondef, options);
         this.token = token;
-        this.api = new lib(token, this.options);
+        this.api = new Apis(token, this.options);
     }
 
 
@@ -62,16 +62,18 @@ var telegram = class Telegram {
     doPost(e) {
         if (e.postData.type == "application/json") {
             var update = JSON.parse(e.postData.contents);
-            if (update) return update;
+            if (update) {
+                return update;
+            }
         }
-        return false;
+        return {};
     }
 
     newBot(token) {
         var option = this.options;
         option.type = "bot";
         return {
-            api: new lib(token, option)
+            api: new Apis(token, option)
         };
     }
 
@@ -79,7 +81,7 @@ var telegram = class Telegram {
         var option = this.options;
         option.type = "user";
         return {
-            api: new lib(token, option)
+            api: new Apis(token, option)
         };
     }
 

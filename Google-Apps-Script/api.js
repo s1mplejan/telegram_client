@@ -1,4 +1,4 @@
-var lib = class Api {
+var Apis = class Api {
   
     constructor(token, options) {
       this.token = token;
@@ -7,10 +7,14 @@ var lib = class Api {
   
     request(method, data, form, blob) {
       if (!this.token) {
-        return 'Bot Token is required';
+        throw {
+          "message": 'Bot Token is required'
+        };
       }
       if (!method) {
-        return 'Method is required';
+        throw {
+          "message": 'Method is required'
+        };
       }
       var options = {
         'method': 'post',
