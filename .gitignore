@@ -4,3 +4,7 @@ dart/telegram_client/.packages
 
 # Conventional directory for build output.
 dart/telegram_client/build/
+
+node-js/telegram-client/node_modules/
+
+node-js/telegram-client/node_modules/*
