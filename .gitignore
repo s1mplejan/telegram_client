@@ -1,5 +1,5 @@
 # Files and directories created by pub.
-.dart_tool/
+dart/telegram_client/.dart_tool/
 dart/telegram_client/.packages
 
 # Conventional directory for build output.
