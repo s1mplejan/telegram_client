@@ -3,6 +3,7 @@ import 'package:switchscript/switchscript.dart';
 import 'dart:io';
 
 void main() async {
+
   stdout.write("Paste your token bot from @botfather here: ");
   var tokenBot = stdin.readLineSync().toString();
   if (tokenBot.isNotEmpty) {

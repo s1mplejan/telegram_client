@@ -7,7 +7,7 @@ Telegram Bot api dart library auto update from official [Telegram-Bot-Api](https
 dart pub add telegram_client
 ```
 
-- [Documentation](https://github.com/azkadev/telegram_client/dart/docs)
+- [Documentation](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/docs)
 - [Tutorial](https://youtube.com/c/azkadev)
 
 ## Quickstart
