@@ -40,7 +40,7 @@ class Telegram {
   _Request get api {
     return _Request(_token, _options);
   }
-  
+
   _Request newBot(String newToken) {
     var option = _options;
     option["type"] = "bot";
@@ -52,4 +52,8 @@ class Telegram {
     option["type"] = "user";
     return _Request(newToken, option);
   }
+}
+
+class Tdlib {
+  Tdlib();
 }
