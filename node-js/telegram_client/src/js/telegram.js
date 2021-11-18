@@ -20,9 +20,6 @@ class Telegram {
         this.api = new Api(token, this.options);
     }
 
-
-
-
     invokeSync(json, object) {
         if (object) {
             for (var key in object) {

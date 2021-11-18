@@ -64,38 +64,6 @@ class Api {
             return json;
         }
     }
-    requestSync(method, data, form, blob) {
-        if (!this.token) {
-            throw new Error("required token !")
-        }
-        if (!method) {
-            console.trace("Please use Method")
-            throw "reuired method !"
-        }
-        var options = {
-            'method': 'POST',
-            'headers': {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
-        if (data) {
-            options.body = JSON.stringify(data);
-        }
-        if (form) {
-            options = { 'method': 'POST' }
-            if (data) options["body"] = data;
-        }
-        var response = fetch(this.url + this.token + "/" + method, options).json()
-        if (this.options.logger) {
-            console.log(JSON.stringify(response, null, 2))
-        }
-        if (response.ok) {
-            return response
-        } else {
-            throw new Error(response.description)
-        }
-    }
 
     requestForm(method, data) {
         return this.request(method, data);
