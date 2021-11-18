@@ -37,10 +37,6 @@ class Telegram {
     }
   }
 
-  opt() {
-    print(_options);
-  }
-
   _Request get api {
     return _Request(_token, _options);
   }
@@ -48,7 +44,7 @@ class Telegram {
   _Request newBot(String newToken) {
     var option = _options;
     option["type"] = "bot";
-    return _Request(newToken, _option);
+    return _Request(newToken, option);
   }
 
   _Request newUser(String newToken) {

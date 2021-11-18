@@ -16,32 +16,24 @@ class _Request {
       },
     };
     var url = "${Option["api"].toString()}${Option["type"].toString()}";
-    if (switchscript.typeof(data) == "object") {
+    if (data != null) {
       option["body"] = convert.json.encode(data);
-      var response = await switchscript.UrlFetchApp.fetch(
-          "$url${_token.toString()}/${method.toString()}",
-          option);
-      if (response.statusCode == 200) {
-        return convert.json.decode(response.body);
-      } else {
-        throw convert.json.decode(response.body);
-      }
+    }
+    var response = await switchscript.UrlFetchApp.fetch(
+        "$url${_token.toString()}/${method.toString()}", option);
+    if (response.statusCode == 200) {
+      return convert.json.decode(response.body);
     } else {
-      var response = await switchscript.UrlFetchApp.fetch(
-          "url${_token.toString()}/${method.toString()}",
-          option);
-      if (response.statusCode == 200) {
-        return convert.json.decode(response.body);
-      } else {
-        throw convert.json.decode(response.body);
-      }
+      throw convert.json.decode(response.body);
     }
   }
 
-  _makeParams(originalObject, newObject) async {
-    newObject.forEach((key, value) {
-      originalObject[key.toString()] = value;
-    });
+  _makeParams(originalObject, [Map<String, dynamic>? newObject]) async {
+    if (newObject != null) {
+      newObject.forEach((key, value) {
+        originalObject[key.toString().toLowerCase()] = value;
+      });
+    }
     return originalObject;
   }
 
@@ -53,15 +45,10 @@ class _Request {
   }
 
   // ignore: non_constant_identifier_names
-  sendMessage(chat_id, text, [parameters]) async {
+  sendMessage(chat_id, text, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "text": text};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendMessage", option);
   }
 
@@ -73,12 +60,7 @@ class _Request {
       "message_id": message_id
     };
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("forwardMessage", option);
   }
 
@@ -90,12 +72,7 @@ class _Request {
       "message_id": message_id
     };
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("copyMessage", option);
   }
 
@@ -103,25 +80,14 @@ class _Request {
   sendPhoto(chat_id, photo, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "photo": photo};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendPhoto", option);
   }
 
   // ignore: non_constant_identifier_names
   sendAudio(chat_id, audio, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "audio": audio};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendAudio", option);
   }
 
@@ -129,12 +95,7 @@ class _Request {
   sendDocument(chat_id, document, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "document": document};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendDocument", option);
   }
 
@@ -142,12 +103,7 @@ class _Request {
   sendVideo(chat_id, video, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "video": video};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendVideo", option);
   }
 
@@ -155,12 +111,7 @@ class _Request {
   sendAnimation(chat_id, animation, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "animation": animation};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendAnimation", option);
   }
 
@@ -168,12 +119,7 @@ class _Request {
   sendVoice(chat_id, voice, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "voice": voice};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendVoice", option);
   }
 
@@ -181,12 +127,7 @@ class _Request {
   sendVideoNote(chat_id, video_note, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "video_note": video_note};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendVideoNote", option);
   }
 
@@ -194,12 +135,7 @@ class _Request {
   sendMediaGroup(chat_id, media, [parameters]) async {
     Map optiondef = {"chat_id": chat_id, "media": media};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendMediaGroup", option);
   }
 
@@ -210,13 +146,7 @@ class _Request {
       "latitude": latitude,
       "longitude": longitude
     };
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendLocation", option);
   }
 
@@ -224,12 +154,7 @@ class _Request {
   editMessageLiveLocation(latitude, longitude, [parameters]) async {
     Map optiondef = {"latitude": latitude, "longitude": longitude};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("editMessageLiveLocation", option);
   }
 
@@ -237,12 +162,7 @@ class _Request {
   stopMessageLiveLocation([parameters]) async {
     Map optiondef = {};
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("stopMessageLiveLocation", option);
   }
 
@@ -256,12 +176,7 @@ class _Request {
       "address": address
     };
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendVenue", option);
   }
 
@@ -273,12 +188,7 @@ class _Request {
       "first_name": first_name
     };
     // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendContact", option);
   }
 
