@@ -17,7 +17,18 @@ void main() async {
       try {
         await tg.api.request("sendMessage", options);
 
-        await tg.api.sendMessage(chat_id, "hello world");
+        await tg.api.sendMessage(chat_id, "hello world", {
+          "reply_markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "hewlo",
+                  "url": "google.com"
+                }
+              ]
+            ]
+          }
+        });
         var request = await tg.api.request("getMe");
         print(JSON.stringify(request, null, 2));
       } catch (e) {

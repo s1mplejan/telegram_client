@@ -1,9 +1,10 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 part of telegram_client;
 
 class _Request {
-  // ignore: prefer_typing_uninitialized_variables
   final _token;
-  // ignore: prefer_typing_uninitialized_variables, non_constant_identifier_names
+  // ignore: non_constant_identifier_names
   final Option;
   _Request(this._token, this.Option);
 
@@ -15,12 +16,12 @@ class _Request {
         "Content-Type": "application/json",
       },
     };
-    var url = "${Option["api"].toString()}${Option["type"].toString()}";
+    var url =
+        "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
     if (data != null) {
       option["body"] = convert.json.encode(data);
     }
-    var response = await switchscript.UrlFetchApp.fetch(
-        "$url${_token.toString()}/${method.toString()}", option);
+    var response = await switchscript.UrlFetchApp.fetch(url, option);
     if (response.statusCode == 200) {
       return convert.json.decode(response.body);
     } else {
@@ -37,6 +38,7 @@ class _Request {
     return originalObject;
   }
 
+  // ignore: unused_element
   _makeParamsSync(originalObject, newObject) {
     newObject.forEach((key, value) {
       originalObject[key.toString()] = value;
@@ -47,100 +49,100 @@ class _Request {
   // ignore: non_constant_identifier_names
   sendMessage(chat_id, text, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "text": text};
-    // ignore: prefer_typing_uninitialized_variables
     var option = await _makeParams(optiondef, parameters);
     return await request("sendMessage", option);
   }
 
   // ignore: non_constant_identifier_names
-  forwardMessage(chat_id, from_chat_id, message_id, [parameters]) async {
+  forwardMessage(chat_id, from_chat_id, message_id,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "from_chat_id": from_chat_id,
       "message_id": message_id
     };
-    // ignore: prefer_typing_uninitialized_variables
     var option = await _makeParams(optiondef, parameters);
     return await request("forwardMessage", option);
   }
 
   // ignore: non_constant_identifier_names
-  copydMessage(chat_id, from_chat_id, message_id, [parameters]) async {
+  copydMessage(chat_id, from_chat_id, message_id,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "from_chat_id": from_chat_id,
       "message_id": message_id
     };
-    // ignore: prefer_typing_uninitialized_variables
     var option = await _makeParams(optiondef, parameters);
     return await request("copyMessage", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendPhoto(chat_id, photo, [parameters]) async {
+  sendPhoto(chat_id, photo, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "photo": photo};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendPhoto", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendAudio(chat_id, audio, [parameters]) async {
+  sendAudio(chat_id, audio, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "audio": audio};
     var option = await _makeParams(optiondef, parameters);
     return await request("sendAudio", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendDocument(chat_id, document, [parameters]) async {
+  sendDocument(chat_id, document, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "document": document};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendDocument", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendVideo(chat_id, video, [parameters]) async {
+  sendVideo(chat_id, video, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "video": video};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendVideo", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendAnimation(chat_id, animation, [parameters]) async {
+  sendAnimation(chat_id, animation, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "animation": animation};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendAnimation", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendVoice(chat_id, voice, [parameters]) async {
+  sendVoice(chat_id, voice, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "voice": voice};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendVoice", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendVideoNote(chat_id, video_note, [parameters]) async {
+  sendVideoNote(chat_id, video_note, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "video_note": video_note};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendVideoNote", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendMediaGroup(chat_id, media, [parameters]) async {
+  sendMediaGroup(chat_id, media, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "media": media};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendMediaGroup", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendLocation(chat_id, latitude, longitude, [parameters]) async {
+  sendLocation(chat_id, latitude, longitude,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "latitude": latitude,
@@ -151,23 +153,25 @@ class _Request {
   }
 
   // ignore: non_constant_identifier_names
-  editMessageLiveLocation(latitude, longitude, [parameters]) async {
+  editMessageLiveLocation(latitude, longitude,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"latitude": latitude, "longitude": longitude};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("editMessageLiveLocation", option);
   }
 
   // ignore: non_constant_identifier_names
-  stopMessageLiveLocation([parameters]) async {
+  stopMessageLiveLocation([Map<String, dynamic>? parameters]) async {
     Map optiondef = {};
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("stopMessageLiveLocation", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendVenue(chat_id, latitude, longitude, title, address, [parameters]) async {
+  sendVenue(chat_id, latitude, longitude, title, address,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "latitude": latitude,
@@ -175,50 +179,39 @@ class _Request {
       "title": title,
       "address": address
     };
-    // ignore: prefer_typing_uninitialized_variables
+
     var option = await _makeParams(optiondef, parameters);
     return await request("sendVenue", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendContact(chat_id, phone_number, first_name, [parameters]) async {
+  sendContact(chat_id, phone_number, first_name,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "phone_number": phone_number,
       "first_name": first_name
     };
-    // ignore: prefer_typing_uninitialized_variables
     var option = await _makeParams(optiondef, parameters);
     return await request("sendContact", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendPoll(chat_id, question, options, [parameters]) async {
+  sendPoll(chat_id, question, options,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "question": question,
       "options": options
     };
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendPoll", option);
   }
 
   // ignore: non_constant_identifier_names
-  sendDice(chat_id, [parameters]) async {
+  sendDice(chat_id, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("sendDice", option);
   }
 
@@ -229,15 +222,9 @@ class _Request {
   }
 
   // ignore: non_constant_identifier_names
-  getUserProfilePhotos(user_id, [parameters]) async {
+  getUserProfilePhotos(user_id, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"user_id": user_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("getUserProfilePhotos", option);
   }
 
@@ -248,58 +235,36 @@ class _Request {
   }
 
   // ignore: non_constant_identifier_names
-  banChatMember(chat_id, user_id, [parameters]) async {
+  banChatMember(chat_id, user_id, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "user_id": user_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("banChatMember", option);
   }
 
   // ignore: non_constant_identifier_names
-  unbanChatMember(chat_id, user_id, [parameters]) async {
+  unbanChatMember(chat_id, user_id, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "user_id": user_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("unbanChatMember", option);
   }
 
   // ignore: non_constant_identifier_names
-  restrictChatMember(chat_id, user_id, permissions, [parameters]) async {
+  restrictChatMember(chat_id, user_id, permissions,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {
       "chat_id": chat_id,
       "user_id": user_id,
       "permissions": permissions
     };
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("restrictChatMember", option);
   }
 
   // ignore: non_constant_identifier_names
-  promoteChatMember(chat_id, user_id, [parameters]) async {
+  promoteChatMember(chat_id, user_id,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "user_id": user_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("promoteChatMember", option);
   }
 
@@ -327,28 +292,17 @@ class _Request {
   }
 
   // ignore: non_constant_identifier_names
-  createChatInviteLink(chat_id, [parameters]) async {
+  createChatInviteLink(chat_id, [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("createChatInviteLink", option);
   }
 
   // ignore: non_constant_identifier_names
-  editChatInviteLink(chat_id, invite_link, [parameters]) async {
+  editChatInviteLink(chat_id, invite_link,
+      [Map<String, dynamic>? parameters]) async {
     Map optiondef = {"chat_id": chat_id, "invite_link": invite_link};
-    // ignore: prefer_typing_uninitialized_variables
-    var option;
-    if (switchscript.typeof(parameters) == "object") {
-      option = await _makeParams(optiondef, parameters);
-    } else {
-      option = optiondef;
-    }
+    var option = await _makeParams(optiondef, parameters);
     return await request("editChatInviteLink", option);
   }
 
