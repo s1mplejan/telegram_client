@@ -1,6 +1,9 @@
 name: telegram_client
-description: A simple command-line application.
+description: telegram client library to make bot or userbot.
 version: 0.0.0
+homepage: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/docs
+repository: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client
+issue_tracker: https://github.com/azkadev/telegram_client/issues
 
 environment:
   sdk: '>=2.14.4 <3.0.0'
@@ -9,4 +12,4 @@ dev_dependencies:
   lints: ^1.0.0
 
 dependencies: 
-  switchscript: ^0.0.0
+  switchscript: ^0.0.1
