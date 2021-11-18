@@ -1,4 +1,4 @@
-# Telegram Bot Api Dart
+# Telegram Client
 Telegram Bot api dart library auto update from official [Telegram-Bot-Api](https://core.telegram.org/bots/api), Support All Method Api.
 
 ## Install
@@ -7,15 +7,15 @@ Telegram Bot api dart library auto update from official [Telegram-Bot-Api](https
 dart pub add telegram_client
 ```
 
-## Instal from github 
-```yaml
-telegram_client:
-  git:
-    url: https://github.com/azkadev/telegram_client.git
-    ref: main
-```
+- [Documentation](https://github.com/azkadev/telegram_client/dart/docs)
+- [Tutorial](https://youtube.com/c/azkadev)
 
 ## Quickstart
+
+- Apps
+```dart
+```
+- Test Cli
 ```dart
 import 'package:telegram_client/telegram_client.dart';
 import 'package:switchscript/switchscript.dart';
@@ -36,9 +36,20 @@ void main() async {
       try {
         await tg.api.request("sendMessage", options);
 
-        await tg.api.sendMessage(chat_id, "hello world");
+        await tg.api.sendMessage(chat_id, "hello world", {
+          "reply_markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "hewlo",
+                  "url": "google.com"
+                }
+              ]
+            ]
+          }
+        });
         var request = await tg.api.request("getMe");
-        print(JSON.stringify(request["result"], null, 2));
+        print(JSON.stringify(request, null, 2));
       } catch (e) {
         try {
           await tg.api.sendMessage(chat_id, e.toString());
