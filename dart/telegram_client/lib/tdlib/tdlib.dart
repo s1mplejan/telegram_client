@@ -1,8 +1,4 @@
-// ignore_for_file: avoid_types_as_parameter_names
-
-import 'dart:convert' as convert;
-import 'dart:ffi' as ffi;
-import 'package:ffi/ffi.dart' as pkgffi;
+part of telegram_client;
 
 class Tdlib {
   String pathTdl;
