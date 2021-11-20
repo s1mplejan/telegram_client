@@ -1,20 +1,22 @@
 ### To-Do
 
-- telegram client dart
-    - support multi token ( bot / userbot ) - done
-    - support bot and userbot - done
-    - support telegram-bot-api local server - done
-    - support telegram database library ( Tdlib ) - done
+- ```telegram client dart```
+    ✅️ support multi token ( bot / userbot ) 
+    ✅️ support bot and userbot
+    ✅️ support telegram-bot-api local server
+    ✅️ support telegram database library ( Tdlib )
 
-- telegram client node
-    - support multi token ( bot / userbot ) - done
-    - support bot and userbot - done
-    - support telegram-bot-api local server - done 
-    - support telegram database library ( Tdlib ) - long soon
+- ```telegram client node```
+    ✅️ support multi token ( bot / userbot )
+    ✅️ support bot and userbot
+    ✅️ support telegram-bot-api local server
+    🔜️ support telegram database library ( Tdlib )
 
-- telegram client google apps script
-    - support multi token ( bot / userbot ) - done
-    - support bot and userbot - done
+- ```telegram client google apps script```
+    ✅️ support multi token ( bot / userbot )
+    ✅️ support bot and userbot
+    ❌️ support telegram-bot-api local server
+    ❌️ support telegram database library ( Tdlib )
 
 #### Features that will not be available on the Telegram client forever
 
