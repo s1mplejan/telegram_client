@@ -37,23 +37,29 @@ class Tdlib {
     'application_version': 'v1',
     'device_model': 'dart',
     'system_version': 'azkadev',
-    "database_key": "" 
+    "database_key": ""
   };
   late ffi.Pointer client = _client_create();
 
   Tdlib(this._pathTdl, this.option) {
-      option.forEach((key, value) {
-        _optionDefault[key.toString().toLowerCase()] = value;
-      });
-    
+    option.forEach((key, value) {
+      _optionDefault[key.toString().toLowerCase()] = value;
+    });
+
     var optin = {'@type': 'setTdlibParameters', 'parameters': _optionDefault};
     clientSend({
       "@type": "setLogVerbosityLevel",
       "new_verbosity_level": _optionDefault['new_verbosity_level']
     });
     clientSend(optin);
-    clientSend({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': _optionDefault["database_key"]});
-    clientSend({'@type': 'checkDatabaseEncryptionKey', 'encryption_key': _optionDefault["database_key"]});
+    clientSend({
+      '@type': 'setDatabaseEncryptionKey',
+      'new_encryption_key': _optionDefault["database_key"]
+    });
+    clientSend({
+      '@type': 'checkDatabaseEncryptionKey',
+      'encryption_key': _optionDefault["database_key"]
+    });
   }
 
   // ignore: non_constant_identifier_names
@@ -127,7 +133,7 @@ class Tdlib {
     return _client_destroy(client);
   }
 
-  String clienReceive(client, [double timeout = 10.0]) {
+  String clienReceive([double timeout = 10.0]) {
     try {
       return _client_receive(client, timeout).toDartString();
     } catch (e) {
@@ -138,8 +144,8 @@ class Tdlib {
   void on(callback, [double timeout = 10.0]) {
     var nums = 0;
     while (nums == 0) {
-      var update = clienReceive(client, timeout);
-      if (update.isNotEmpty) {
+      var update = clienReceive(timeout);
+      if (update != null) {
         var updateMessage = convert.json.decode(update);
         callback(updateMessage, client);
       }

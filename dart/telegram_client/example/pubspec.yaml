@@ -12,6 +12,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   telegram_client:
     path: ../
+  flutter_screenutil: ^5.0.0+2
+  path_provider: ^2.0.7
+  switchscript: ^0.0.1
 
 dev_dependencies:
   flutter_test:

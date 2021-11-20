@@ -8,7 +8,7 @@ void main() {
     'files_directory': ""
   };
   var tdl = Tdlib("/home/azkadev/Documents/azka-userbot/libtdjson.so", option);
-  tdl.on((update, client) {
+  tdl.on((update) async {
     if (update["@type"] == "updateNewMessage" &&
         update["message"]["@type"] == "message") {
       var msg = update["message"];
