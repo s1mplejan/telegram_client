@@ -38,10 +38,8 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names, unused_local_variable
-  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)
-      get client_execute {
-    return TdlibPathFile()
-        .lookup<
+  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>) get client_execute {
+    return TdlibPathFile().lookup<
             ffi.NativeFunction<
                 ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer,
                     ffi.Pointer<pkgffi.Utf8>)>>('td_json_client_execute')
@@ -63,8 +61,8 @@ class Tdlib {
   }
 
   invokeSync(client, jsonobject) {
-    var fetch = client_execute.call(
-        client, convert.json.encode(jsonobject).toNativeUtf8());
+    var fetch =
+        client_execute(client, convert.json.encode(jsonobject).toNativeUtf8());
     return convert.json.decode(fetch.toDartString());
   }
 
@@ -73,10 +71,11 @@ class Tdlib {
         client, convert.json.encode(jsonsend).toNativeUtf8());
   }
 
-  clienReceive(client, double) {
-    /*
-    return convert.json.decode(client_receive.call(client, double).toDartString());
-  
-*/
+  clienReceive(client, [double timeout = 10.0]) {
+    try {
+      return client_receive(client, timeout).toDartString();
+    } catch (e) {
+      return convert.json.encode({"@type": "error", "result": "eror update"});
+    }
   }
 }
