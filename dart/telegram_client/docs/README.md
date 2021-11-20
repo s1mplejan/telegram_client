@@ -1,5 +1,6 @@
 # Documentation
 
+#### Telegram Api Support user bot and bot
 - Telegram
     - ```constuctor(String token, Map option)```
     default option
@@ -37,3 +38,57 @@ var tg = lib.api;
 // chat id and text is required see docs for detail
 tg.sendMessage(123456, "hewllo");
 ```
+
+#### Telegram Database Library ( Tdlib )
+- Support user bot and bot
+- High Speed on low internet speed
+- Support Mobile, Desktop, and Embedded System
+
+##### Tdlib
+- ```constuctor(pathFileTdlib, { options Map })```
+    default option
+    ```dart
+    {
+        'api_id': 0, // you must seet this to your own api id
+        'api_hash': '', // and set this
+        'database_directory': "", // and this
+        'files_directory': "", // and this
+        'enable_storage_optimizer': true,
+        'system_language_code': 'en',
+        'new_verbosity_level': 0,
+        'application_version': 'v1',
+        'device_model': 'dart',
+        'system_version': 'azkadev',
+        "database_key": "" 
+    }
+    ```
+- ```on((update){   })```
+    on update will listen update raw next update will set spesified like newMessage, messagegroup only etx
+
+- Login
+    Login in tdlib example
+    Support ```bot``` and ```user``` Eg
+    Bot
+    ```dart
+    var tdl = Tdlib("pathTdlib", {...option});
+    tdl.clientSend({
+        "@type": "checkAuthenticationBotToken",
+        "token": "token_your_bot"
+    });
+    ```
+    User
+    ```dart
+    var tdl = Tdlib("pathTdlib", {...option});
+    tdl.clientSend({
+        '@type': 'setAuthenticationPhoneNumber',
+        'phone_number': '628516226262', //your phone
+        'settings': {
+            'allow_flash_call': false,
+            'is_current_phone_number': false,
+            'allow_sms_retriever_api': false
+        }
+    });
+    ```
+
+# Need More Efficiency and easy use?
+Please Hire Me to your project or buy me a cup tea or milk hehe because i don't like coffe
