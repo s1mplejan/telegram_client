@@ -2,7 +2,25 @@ part of telegram_client;
 
 class Tdlib {
   String pathTdl;
-  Tdlib(this.pathTdl);
+  Map<String, dynamic> optionDefault = {
+    '@type': 'tdlibParameters',
+    'api_id': 273729,
+    'api_hash': '0f7a4f1ed6c06469bf0ecf70ce92b49d',
+    'database_directory': "${io.Platform.script.path.toString()}/telegram",
+    'files_directory': "${io.Platform.script.path.toString()}/telegram",
+    'enable_storage_optimizer': true,
+    'system_language_code': 'en',
+    'application_version': 'v1',
+    'device_model': 'dart',
+    'system_version': 'azkadev'
+  };
+  Tdlib(this.pathTdl, [Map<String, dynamic>? option]) {
+    if (option != null) {
+      option.forEach((key, value) {
+        optionDefault[key.toString().toLowerCase()] = value;
+      });
+    }
+  }
 
   // ignore: non_constant_identifier_names
   ffi.DynamicLibrary TdlibPathFile() {
@@ -38,8 +56,10 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names, unused_local_variable
-  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>) get client_execute {
-    return TdlibPathFile().lookup<
+  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)
+      get client_execute {
+    return TdlibPathFile()
+        .lookup<
             ffi.NativeFunction<
                 ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer,
                     ffi.Pointer<pkgffi.Utf8>)>>('td_json_client_execute')
@@ -71,11 +91,12 @@ class Tdlib {
         client, convert.json.encode(jsonsend).toNativeUtf8());
   }
 
-  clienReceive(client, [double timeout = 10.0]) {
+  String clienReceive(client, [double timeout = 10.0]) {
     try {
       return client_receive(client, timeout).toDartString();
+      // ignore: empty_catches
     } catch (e) {
-      return convert.json.encode({"@type": "error", "result": "eror update"});
+      return "";
     }
   }
 }
