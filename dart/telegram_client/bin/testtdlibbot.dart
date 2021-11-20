@@ -8,7 +8,6 @@ void main() {
     'files_directory': ""
   };
   var tdl = Tdlib("/home/azkadev/Documents/azka-userbot/libtdjson.so", option);
-  tdl;
   tdl.on((update, client) {
     if (update["@type"] == "updateNewMessage" &&
         update["message"]["@type"] == "message") {
