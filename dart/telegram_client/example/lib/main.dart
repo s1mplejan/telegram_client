@@ -46,7 +46,6 @@ class _FlutterDemoState extends State<SplashSreen> {
   }
 
   Stream<dynamic> api() async* {
-    var count = 0;
     while (true) {
       await Future.delayed(const Duration(milliseconds: 10));
       var d = tdl.clienReceive();

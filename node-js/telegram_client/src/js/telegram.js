@@ -16,7 +16,6 @@ class Telegram {
         this.url = (options.api) ? this.optiondef.api = options.api : options.api = 'https://api.telegram.org/';
         this.options = this.invokeSync(this.optiondef, options);
         this.token = token;
-        this.app = app;
         this.api = new Api(token, this.options);
     }
 
