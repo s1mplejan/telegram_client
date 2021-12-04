@@ -37,36 +37,8 @@ class Api {
 
     }
 
-    async invoke(json, object) {
-        if (object) {
-            for (var key in object) {
-                if (Object.hasOwnProperty.call(object, key)) {
-                    var loop_data = object[key];
-                    json[key] = loop_data;
-                }
-            }
-            return json;
-        } else {
-            return json;
-        }
-    }
-
-    invokeSync(json, object) {
-        if (object) {
-            for (var key in object) {
-                if (Object.hasOwnProperty.call(object, key)) {
-                    var loop_data = object[key];
-                    json[key] = loop_data;
-                }
-            }
-            return json;
-        } else {
-            return json;
-        }
-    }
-
     requestForm(method, data) {
-        return this.request(method, data);
+        return await this.request(method, data);
     }
 
     typeFile(data) {
@@ -82,7 +54,7 @@ class Api {
         var data = {
             "chat_id": msg_chat_id
         };
-        return this.request("getChatAdministrators", data);
+        return await this.request("getChatAdministrators", data);
     }
     async checkadmin(chat_id, check_user) {
         var parameter = {
@@ -105,276 +77,267 @@ class Api {
         }
     }
 
-    listadminSync(msg_chat_id) {
-        var data = {
-            "chat_id": msg_chat_id
-        };
-        return this.requestSync("getChatAdministrators", data)
-    }
-
-    checkadminSync(chat_id, check_user) {
-        var parameter = {
-            "chat_id": chat_id
-        };
-        var admins = this.requestSync("getChatAdministrators", parameter)
-        var ok = admins.result;
-        var data = [];
-        try {
-            for (var row = 0; row < ok.length; row++) {
-                data.push(ok[row].user.id);
-            }
-            if (data.indexOf(check_user) > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (e) {
-            return false;
-        }
-    }
-    async getUpdates(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("getUpdates", param);
-    }
-    async setwebhook(url, parameter = false) {
+    async getUpdates(parameter = {}) {
         var json = {
-            "url": url
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("setWebhook", param);
+        return await this.request("getUpdates", json);
     }
-    async deleteWebhook(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("deleteWebhook", param);
+    async setwebhook(url, parameter = {}) {
+        var json = {
+            "url": url,
+            ...parameter
+        };
+        return await this.request("setWebhook", json);
+    }
+    async deleteWebhook(parameter = {}) {
+        var json = {
+            ...parameter
+        };
+        return await this.request("deleteWebhook", json);
     }
     async getWebhookInfo() {
-        return this.request("getWebhookInfo");
+        return await this.request("getWebhookInfo");
     }
-    async WebhookInfo(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("WebhookInfo", param);
+    async WebhookInfo(parameter = {}) {
+        var json = {
+            ...parameter
+        };
+        return await this.request("WebhookInfo", json);
     }
     async getMe() {
-        return this.request("getMe");
+        return await this.request("getMe");
     }
     async logOut() {
-        return this.request("logOut");
+        return await this.request("logOut");
     }
     async close() {
-        return this.request("close");
+        return await this.request("close");
     }
-    async sendMessage(chat_id, text, parameter = false) {
+    async sendMessage(chat_id, text, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "text": text
+            "text": text,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendMessage", param);
+
+        return await this.request("sendMessage", json);
     }
-    async forwardMessage(chat_id, from_chat_id, message_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id,
-            "from_chat_id": from_chat_id,
-            "message_id": message_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("forwardMessage", param);
-    }
-    async copyMessage(chat_id, from_chat_id, message_id, parameter = false) {
+    async forwardMessage(chat_id, from_chat_id, message_id, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "from_chat_id": from_chat_id,
-            "message_id": message_id
+            "message_id": message_id,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("copyMessage", param);
+
+        return await this.request("forwardMessage", json);
+    }
+    async copyMessage(chat_id, from_chat_id, message_id, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "from_chat_id": from_chat_id,
+            "message_id": message_id,
+            ...parameter
+        };
+
+        return await this.request("copyMessage", json);
     }
 
-    async sendPhoto(chat_id, photo, parameter = false) {
+    async sendPhoto(chat_id, photo, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "photo": this.typeFile(photo)
+            "photo": this.typeFile(photo),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendPhoto", param);
+
+        return await this.request("sendPhoto", json);
     }
-    async sendAudio(chat_id, audio, parameter = false) {
+    async sendAudio(chat_id, audio, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "audio": this.typeFile(audio)
+            "audio": this.typeFile(audio),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendAudio", param);
+        return await this.request("sendAudio", json);
     }
-    async sendDocument(chat_id, document, parameter = false) {
+    async sendDocument(chat_id, document, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "document": this.typeFile(document)
+            "document": this.typeFile(document),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendDocument", param);
+        return await this.request("sendDocument", json);
     }
-    async sendVideo(chat_id, video, parameter = false) {
+    async sendVideo(chat_id, video, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "video": this.typeFile(video)
+            "video": this.typeFile(video),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendVideo", param);
+        return await this.request("sendVideo", json);
     }
-    async sendAnimation(chat_id, animation, parameter = false) {
+    async sendAnimation(chat_id, animation, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "animation": this.typeFile(animation)
+            "animation": this.typeFile(animation),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendAnimation", param);
+        return await this.request("sendAnimation", json);
     }
-    async sendVoice(chat_id, voice, parameter = false) {
+    async sendVoice(chat_id, voice, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "voice": this.typeFile(voice)
+            "voice": this.typeFile(voice),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendVoice", param);
+
+        return await this.request("sendVoice", json);
     }
-    async sendVideoNote(chat_id, video_note, parameter = false) {
+    async sendVideoNote(chat_id, video_note, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "video_note": this.typeFile(video_note)
+            "video_note": this.typeFile(video_note),
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendVideoNote", param);
+
+        return await this.request("sendVideoNote", json);
     }
-    async sendMediaGroup(chat_id, media, parameter = false) {
+    async sendMediaGroup(chat_id, media, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "media": media
+            "media": media,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendMediaGroup", param);
+
+        return await this.request("sendMediaGroup", json);
     }
-    async sendLocation(chat_id, latitude, longitude, parameter = false) {
+    async sendLocation(chat_id, latitude, longitude, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "latitude": latitude,
-            "longitude": longitude
+            "longitude": longitude,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendLocation", param);
+        return await this.request("sendLocation", json);
     }
-    async editMessageLiveLocation(latitude, longitude, parameter = false) {
+    async editMessageLiveLocation(latitude, longitude, parameter = {}) {
         var json = {
             "latitude": latitude,
-            "longitude": longitude
+            "longitude": longitude,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("editMessageLiveLocation", param);
+        return await this.request("editMessageLiveLocation", json);
     }
-    async stopMessageLiveLocation(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("stopMessageLiveLocation", param);
+    async stopMessageLiveLocation(parameter = {}) {
+        var json = {
+            ...parameter
+        };
+        return await this.request("stopMessageLiveLocation", json);
     }
-    async sendVenue(chat_id, latitude, longitude, title, adress, parameter = false) {
+    async sendVenue(chat_id, latitude, longitude, title, adress, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "latitude": latitude,
             "longitude": longitude,
             "title": title,
-            "adress": adress
+            "adress": adress,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendVenue", param);
+
+        return await this.request("sendVenue", json);
     }
-    async sendContact(chat_id, phone_number, first_name, parameter = false) {
+    async sendContact(chat_id, phone_number, first_name, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "phone_number": phone_number,
-            "first_name": first_name
+            "first_name": first_name,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendContact", param);
+
+        return await this.request("sendContact", json);
     }
-    async sendPoll(chat_id, question, options, parameter = false) {
+    async sendPoll(chat_id, question, options, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "question": question,
-            "options": options
+            "options": options,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendPoll", param);
+
+        return await this.request("sendPoll", json);
     }
-    async sendDice(chat_id, parameter = false) {
+    async sendDice(chat_id, parameter = {}) {
         var json = {
-            "chat_id": chat_id
+            "chat_id": chat_id,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("sendDice", param);
+        return await this.request("sendDice", json);
     }
     async sendChatAction(chat_id, action) {
         var json = {
             "chat_id": chat_id,
             "action": action
         };
-        return this.request("sendChatAction", json);
+        return await this.request("sendChatAction", json);
     }
-    async getUserProfilePhotos(user_id, parameter = false) {
+    async getUserProfilePhotos(user_id, parameter = {}) {
         var json = {
-            "user_id": user_id
+            "user_id": user_id,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("getUserProfilePhotos", param);
+        return await this.request("getUserProfilePhotos", json);
     }
     async getFile(file_id) {
         var json = {
             "file_id": file_id
         };
-        return this.request("getFile", json);
+        return await this.request("getFile", json);
     }
-    async banChatMember(chat_id, user_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id,
-            "user_id": user_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("banChatMember", param);
-    }
-    async unbanChatMember(chat_id, user_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id,
-            "user_id": user_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("unbanChatMember", param);
-    }
-    async banChatMember(chat_id, user_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id,
-            "user_id": user_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("banChatMember", param);
-    }
-    async restrictChatMember(chat_id, user_id, permissions, parameter = false) {
+    async banChatMember(chat_id, user_id, parameter = {}) {
         var json = {
             "chat_id": chat_id,
             "user_id": user_id,
-            "permissions": permissions
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("restrictChatMember", param);
+        return await this.request("banChatMember", json);
     }
-    async promoteChatMember(chat_id, user_id, parameter = false) {
+    async unbanChatMember(chat_id, user_id, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "user_id": user_id
+            "user_id": user_id,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("promoteChatMember", param);
+
+        return await this.request("unbanChatMember", json);
+    }
+    async banChatMember(chat_id, user_id, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "user_id": user_id,
+            ...parameter
+        };
+
+        return await this.request("banChatMember", json);
+    }
+    async restrictChatMember(chat_id, user_id, permissions, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "user_id": user_id,
+            "permissions": permissions,
+            ...parameter
+        };
+
+        return await this.request("restrictChatMember", json);
+    }
+    async promoteChatMember(chat_id, user_id, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "user_id": user_id,
+            ...parameter
+        };
+
+        return await this.request("promoteChatMember", json);
     }
 
     async setChatAdministratorCustomTitle(chat_id, user_id, custom_title) {
@@ -383,191 +346,199 @@ class Api {
             "user_id": user_id,
             "custom_title": custom_title
         };
-        return this.request("setChatAdministratorCustomTitle", json);
+        return await this.request("setChatAdministratorCustomTitle", json);
     }
     async setChatPermissions(chat_id, permissions) {
         var json = {
             "chat_id": chat_id,
             "permissions": permissions
         };
-        return this.request("setChatPermissions", json);
+        return await this.request("setChatPermissions", json);
     }
     async exportChatInviteLink(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("exportChatInviteLink", json);
+        return await this.request("exportChatInviteLink", json);
     }
-    async createChatInviteLink(chat_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("createChatInviteLink", param);
-    }
-    async editChatInviteLink(chat_id, invite_link, parameter = false) {
+    async createChatInviteLink(chat_id, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "invite_link": invite_link
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("editChatInviteLink", param);
+
+        return await this.request("createChatInviteLink", json);
+    }
+    async editChatInviteLink(chat_id, invite_link, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "invite_link": invite_link,
+            ...parameter
+        };
+
+        return await this.request("editChatInviteLink", json);
     }
     async revokeChatInviteLink(chat_id, invite_link) {
         var json = {
             "chat_id": chat_id,
             "invite_link": invite_link
         };
-        return this.request("revokeChatInviteLink", json);
+        return await this.request("revokeChatInviteLink", json);
     }
     async setChatPhoto(chat_id, photo) {
         var json = {
             "chat_id": chat_id,
             "photo": this.typeFile(photo)
         };
-        return this.request("setChatPhoto", json);
+        return await this.request("setChatPhoto", json);
     }
     async deleteChatPhoto(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("deleteChatPhoto", json);
+        return await this.request("deleteChatPhoto", json);
     }
     async setChatTitle(chat_id, title) {
         var json = {
             "chat_id": chat_id,
             "title": title
         };
-        return this.request("setChatTitle", json);
+        return await this.request("setChatTitle", json);
     }
-    async setChatDescription(chat_id, parameter = false) {
-        var json = {
-            "chat_id": chat_id
-        };
-        var param = await this.invoke(json, parameter);
-        return this.request("setChatDescription", param);
-    }
-    async pinChatMessage(chat_id, message_id, parameter = false) {
+    async setChatDescription(chat_id, parameter = {}) {
         var json = {
             "chat_id": chat_id,
-            "message_id": message_id
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("pinChatMessage", param);
+
+        return await this.request("setChatDescription", json);
+    }
+    async pinChatMessage(chat_id, message_id, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            "message_id": message_id,
+            ...parameter
+        };
+
+        return await this.request("pinChatMessage", json);
     }
     async unpinChatMessage(chat_id, message_id) {
         var json = {
             "chat_id": chat_id,
             "message_id": message_id
         };
-        return this.request("unpinChatMessage", json);
+        return await this.request("unpinChatMessage", json);
     }
     async unpinAllChatMessages(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("unpinAllChatMessages", json);
+        return await this.request("unpinAllChatMessages", json);
     }
     async leaveChat(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("leaveChat", json);
+        return await this.request("leaveChat", json);
     }
     async getChat(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("getChat", json);
+        return await this.request("getChat", json);
     }
     async getChatAdministrators(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("getChatAdministrators", json);
+        return await this.request("getChatAdministrators", json);
     }
     async getChatMemberCount(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("getChatMemberCount", json);
+        return await this.request("getChatMemberCount", json);
     }
     async getChatMember(chat_id, user_id) {
         var json = {
             "chat_id": chat_id,
             "user_id": user_id
         };
-        return this.request("getChatMember", json);
+        return await this.request("getChatMember", json);
     }
     async setChatStickerSet(chat_id, sticker_set_name) {
         var json = {
             "chat_id": chat_id,
             "sticker_set_name": sticker_set_name
         };
-        return this.request("setChatStickerSet", json);
+        return await this.request("setChatStickerSet", json);
     }
     async deleteChatStickerSet(chat_id) {
         var json = {
             "chat_id": chat_id
         };
-        return this.request("deleteChatStickerSet", json);
+        return await this.request("deleteChatStickerSet", json);
     }
-    async answerCallbackQuery(callback_query_id, parameter = false) {
+    async answerCallbackQuery(callback_query_id, parameter = {}) {
         var json = {
-            "callback_query_id": callback_query_id
+            "callback_query_id": callback_query_id,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("answerCallbackQuery", param);
+        return await this.request("answerCallbackQuery", json);
     }
-    async setMyCommands(commands, parameter = false) {
+    async setMyCommands(commands, parameter = {}) {
         var json = {
-            "commands": commands
+            "commands": commands,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("setMyCommands", param);
+
+        return await this.request("setMyCommands", json);
     }
-    async deleteMyCommands(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("deleteMyCommands", param);
-    }
-    async getMyCommands(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("getMyCommands", param);
-    }
-    async editMessageText(text, parameter = false) {
+    async deleteMyCommands(parameter = {}) {
         var json = {
-            "text": text
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("editMessageText", param);
+        return await this.request("deleteMyCommands", json);
     }
-    async editMessageCaption(parameter = false) {
-        var json = {};
-        var param = await this.invoke(json, parameter);
-        return this.request("editMessageCaption", param);
-    }
-    async editMessageMedia(media, parameter = false) {
+    async getMyCommands(parameter = {}) {
         var json = {
-            "media": media
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("editMessageMedia", param);
+        return await this.request("getMyCommands", json);
     }
-    async stopPoll(chat_id, parameter = false) {
+    async editMessageText(text, parameter = {}) {
         var json = {
-            "chat_id": chat_id
+            "text": text,
+            ...parameter
         };
-        var param = await this.invoke(json, parameter);
-        return this.request("stopPoll", param);
+        return await this.request("editMessageText", json);
+    }
+    async editMessageCaption(parameter = {}) {
+        var json = {
+            ...parameter
+        };
+        return await this.request("editMessageCaption", json);
+    }
+    async editMessageMedia(media, parameter = {}) {
+        var json = {
+            "media": media,
+            ...parameter
+        };
+        return await this.request("editMessageMedia", json);
+    }
+    async stopPoll(chat_id, parameter = {}) {
+        var json = {
+            "chat_id": chat_id,
+            ...parameter
+        };
+        return await this.request("stopPoll", json);
     }
     async deleteMessage(chat_id, message_id) {
         var json = {
             "chat_id": chat_id,
             "message_id": message_id
         };
-        return this.request("deleteMessage", json);
+        return await this.request("deleteMessage", json);
     }
 }
 

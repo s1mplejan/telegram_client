@@ -1,38 +1,49 @@
 // azka dev
 
-var fetch = require("node-fetch");
+var nodefetch = require("node-fetch");
 var { Api } = require("./api");
 class Telegram {
 
     constructor(token, options = {}) {
-        this.optiondef = {
+        this.options = {
             botPath: "/bot/",
             userPath: "/user/",
             port: 8080,
             type: "bot",
-            api: false,
-            logger: false
+            api: 'https://api.telegram.org/',
+            logger: false,
+            ...options,
         };
-        this.url = (options.api) ? this.optiondef.api = options.api : options.api = 'https://api.telegram.org/';
-        this.options = this.invokeSync(this.optiondef, options);
         this.token = token;
         this.api = new Api(token, this.options);
     }
-
-    invokeSync(json, object) {
-        if (object) {
-            for (var key in object) {
-                if (Object.hasOwnProperty.call(object, key)) {
-                    var loop_data = object[key];
-                    json[key] = loop_data;
-                }
-            }
-            return json;
+    async loginUser(phone, url) {
+        if (!phone || ! url) {
+            throw {
+                message: "please use token"
+            };
+        }
+        var option = {
+            'method': 'POST',
+            'headers': {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            "body": JSON.stringify({
+                "phone_number": phone
+            })
+        };
+        var url = `${url}/userlogin`;
+        var response = await nodefetch(url, option); 
+        if (response.status == 200) {
+            return await response.json();
         } else {
-            return json;
+            var msg = await response.json();
+            throw {
+                message: msg
+            };
         }
     }
-
     newBot(token) {
         var option = this.options;
         option.type = "bot";
@@ -52,4 +63,4 @@ class Telegram {
 
 module.exports = {
     Telegram
-}
+};
