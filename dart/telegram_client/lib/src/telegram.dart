@@ -24,35 +24,21 @@ part of telegram_client;
 
 class Telegram {
   final String _token;
-  // ignore: prefer_typing_uninitialized_variables
-  final Map? _option;
-  final Map _options = {
-    "botPath": "/bot/",
-    "userPath": "/user/",
-    "port": 8080,
-    "type": "bot",
-    "logger": false,
-    "api": "https://api.telegram.org/"
-  };
-  Telegram(this._token, [this._option]) {
+  final Map? option; 
+  final Map _options = {};
+  Telegram(this._token, [this.option]) {
     if (_token.isEmpty) {
       throw "please fill token bot";
     }
-    if (_option != null) {
-      if (_option!.toBoolean && _option!.isType == "object") {
-        _option!.forEach((key, value) {
-          if (key.toString().toLowerCase() == "api") {
-            if (RegExp("\/\$", caseSensitive: false).hasMatch(key.toString())) {
-              _options[key.toString().toLowerCase()] = value;
-            } else {
-              _options[key.toString().toLowerCase()] = "${value.toString()}/";
-            }
-          } else {
-            _options[key.toString().toLowerCase()] = value;
-          }
-        });
-      }
-    }
+    _options.addAll({
+      "botPath": "/bot/",
+      "userPath": "/user/",
+      "port": 8080,
+      "type": "bot",
+      "logger": false,
+      "api": "https://api.telegram.org/",
+      ...option ?? {},
+    });
   }
 
   _Request get api {

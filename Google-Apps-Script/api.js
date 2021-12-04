@@ -37,34 +37,5 @@ var Apis = class Api {
         }
       }
       return false;
-    }
-  
-    invoke(json, object) {
-      if (object) {
-        for (var key in object) {
-          if (Object.hasOwnProperty.call(object, key)) {
-            var loop_data = object[key];
-            json[key] = loop_data;
-          }
-        }
-        return json;
-      } else {
-        return json;
-      }
-    }
-  
-    invokeSync(json, object) {
-      if (object) {
-        for (var key in object) {
-          if (Object.hasOwnProperty.call(object, key)) {
-            var loop_data = object[key];
-            json[key] = loop_data;
-          }
-        }
-        return json;
-      } else {
-        return json;
-      }
-    }
-  
+    } 
   }
