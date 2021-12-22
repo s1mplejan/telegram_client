@@ -23,4 +23,4 @@ jobs:
           tag: ${{ env.APP_VERSION }}
           name: Tdlib Android
           token: ${{ secrets.TOKEN }}
-          artifacts: 'telegram-bot-api/build/telegram-bot-api'
+          artifacts: 'tddroid/build-folder/build-arm64-v8a/libtdjsonandroid.so'
