@@ -1,5 +1,5 @@
-name: Build and Release Apps
-on: [push]
+name: Telegram bot api android arm64
+on: [workflow_dispatch]
 jobs:
   build:
     name: Build Apps
@@ -16,12 +16,12 @@ jobs:
           cd telegram-bot-api
           mkdir build
           cd build
-          cmake -DCMAKE_TOOLCHAIN_FILE=/home/runner/work/telegram-bot-api-build/telegram-bot-api-build/tddroid/ndk/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=29 -G Ninja -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_PREFIX_PATH=/home/runner/work/telegram-bot-api-build/telegram-bot-api-build/tddroid/ndk/build/cmake -DCMAKE_INSTALL_PREFIX=/home/runner/work/telegram-bot-api-build/telegram-bot-api-build/tddroid/ndk/build/cmake -DCMAKE_FIND_ROOT_PATH=/home/runner/work/telegram-bot-api-build/telegram-bot-api-build/tddroid/ndk/build/cmake ..
+          cmake -DCMAKE_TOOLCHAIN_FILE=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=29 -G Ninja -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_PREFIX_PATH=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake -DCMAKE_INSTALL_PREFIX=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake -DCMAKE_FIND_ROOT_PATH=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake ..
           cmake --build .
       - name: Release Apps
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.APP_VERSION }}
-          name: Telegram Bot Api Build
+          name: Telegram bot api android arm64
           token: ${{ secrets.TOKEN }}
           artifacts: 'telegram-bot-api/build/telegram-bot-api'
