@@ -9,7 +9,7 @@ jobs:
         run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
       - name: Install Depends
         run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev ninja-build
-      - name: Clone Repo telegram bot api
+      - name: Clone Repo tdlib
         run: |
           git clone https://github.com/bsggr78/tddroid.git
           cd tddroid
@@ -20,7 +20,8 @@ jobs:
           cmake .. || exit 1
           cmake --build . --target prepare_cross_compiling || exit 1
           cd ..
-
+      - name: Build Tdlib android Arm64
+        run: |
           export ANDROID_SDK_ROOT=../ndk
           export ABI="arm64-v8a"
           mkdir -p build-$ABI
@@ -30,11 +31,11 @@ jobs:
           cd ..
 
           mkdir -p ../output/$ABI/
-          cp build-$ABI/libtd*.so ../output/$ABI/
-      - name: Release Apps
+          cp build-$ABI/libtd*.so ../output/$ABI/libtdjson-arm64-v8a.so
+      - name: Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.APP_VERSION }}
-          name: Tdlib Android
+          name: Tdlib Android Arm64
           token: ${{ secrets.TOKEN }}
           artifacts: 'tddroid/output/arm64-v8a/libtd*.so'
