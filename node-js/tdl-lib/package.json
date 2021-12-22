@@ -1,0 +1,16 @@
+{
+  "name": "tdl-lib",
+  "version": "0.0.3",
+  "description": "",
+  "main": "src/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tdl": "^7.0.0",
+    "tdl-tdlib-addon": "^1.0.1"
+  }
+}
