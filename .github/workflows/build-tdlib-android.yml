@@ -33,11 +33,53 @@ jobs:
           cd ..
 
           mkdir -p ../output/$ABI/
-          cp build-$ABI/libtd*.so ../output/$ABI/libtdjson-arm64-v8a.so
+          cp build-$ABI/libtd*.so ../output/$ABI/libtdjson-$ABI.so
+      - name: Build Tdlib android armeabi-v7a
+        run: |
+          cd tddroid
+          cd build-folder
+          export ANDROID_SDK_ROOT=../ndk
+          export ABI="armeabi-v7a"
+          mkdir -p build-$ABI
+          cd build-$ABI
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=${ANDROID_SDK_ROOT}/build/cmake/android.toolchain.cmake  -DCMAKE_BUILD_TYPE=MinSizeRel -GNinja -DANDROID_ABI=${ABI} || exit 1
+          cmake --build . || exit 1
+          cd ..
+
+          mkdir -p ../output/$ABI/
+          cp build-$ABI/libtd*.so ../output/libtdjson-$ABI.so
+      - name: Build Tdlib android x86_64
+        run: |
+          cd tddroid
+          cd build-folder
+          export ANDROID_SDK_ROOT=../ndk
+          export ABI="x86_64"
+          mkdir -p build-$ABI
+          cd build-$ABI
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=${ANDROID_SDK_ROOT}/build/cmake/android.toolchain.cmake  -DCMAKE_BUILD_TYPE=MinSizeRel -GNinja -DANDROID_ABI=${ABI} || exit 1
+          cmake --build . || exit 1
+          cd ..
+
+          mkdir -p ../output/$ABI/
+          cp build-$ABI/libtd*.so ../output/libtdjson-$ABI.so
+      - name: Build Tdlib android x86
+        run: |
+          cd tddroid
+          cd build-folder
+          export ANDROID_SDK_ROOT=../ndk
+          export ABI="x86"
+          mkdir -p build-$ABI
+          cd build-$ABI
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=${ANDROID_SDK_ROOT}/build/cmake/android.toolchain.cmake  -DCMAKE_BUILD_TYPE=MinSizeRel -GNinja -DANDROID_ABI=${ABI} || exit 1
+          cmake --build . || exit 1
+          cd ..
+
+          mkdir -p ../output/$ABI/
+          cp build-$ABI/libtd*.so ../output/libtdjson-$ABI.so
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.APP_VERSION }}
           name: Tdlib Android Arm64
           token: ${{ secrets.TOKEN }}
-          artifacts: 'tddroid/output/arm64-v8a/libtd*.so'
+          artifacts: 'tddroid/output/libtdjson*.so'
