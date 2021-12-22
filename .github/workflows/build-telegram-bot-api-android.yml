@@ -1,0 +1,27 @@
+name: Build Telegram Bot Api Android
+on: [workflow_dispatch]
+jobs:
+  build:
+    name: Build Apps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - name: Install Depends
+        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev ninja-build
+      - name: Clone Repo telegram bot api
+        run: |
+          git clone https://github.com/bsggr78/tddroid.git
+          git clone --recursive https://github.com/tdlib/telegram-bot-api.git
+          cd telegram-bot-api
+          mkdir build
+          cd build
+          cmake -DCMAKE_TOOLCHAIN_FILE=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=29 -G Ninja -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_PREFIX_PATH=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake -DCMAKE_INSTALL_PREFIX=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake -DCMAKE_FIND_ROOT_PATH=/home/runner/work/telegram_client/telegram_client/tddroid/ndk/build/cmake ..
+          cmake --build .
+      - name: Release Apps
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.APP_VERSION }}
+          name: Telegram Bot Api Build
+          token: ${{ secrets.TOKEN }}
+          artifacts: 'telegram-bot-api/build/telegram-bot-api'
