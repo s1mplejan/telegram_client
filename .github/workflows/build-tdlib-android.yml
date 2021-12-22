@@ -15,12 +15,19 @@ jobs:
           cd tddroid
           git clone https://github.com/tdlib/td tdlib-src
           cd build-folder
-          chmod +x build-all.sh
-          ./build-all.sh
+          ANDROID_SDK_ROOT=../ndk ABI="arm64-v8a"
+          mkdir -p build-$ABI
+          cd build-$ABI
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=${ANDROID_SDK_ROOT}/build/cmake/android.toolchain.cmake  -DCMAKE_BUILD_TYPE=MinSizeRel -GNinja -DANDROID_ABI=${ABI} || exit 1
+          cmake --build . || exit 1
+          cd ..
+
+          mkdir -p ../output/$ABI/
+          cp build-$ABI/libtd*.so ../output/$ABI/
       - name: Release Apps
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.APP_VERSION }}
           name: Tdlib Android
           token: ${{ secrets.TOKEN }}
-          artifacts: 'tddroid/build-folder/build-arm64-v8a/libtdjsonandroid.so'
+          artifacts: 'tddroid/output/arm64-v8a/libtd*.so'
