@@ -26,7 +26,7 @@ Telegram client is a library to make it easier for you to build your own telegra
     - ✅️ support multi token ( bot / userbot )
     - ✅️ support bot and userbot
     - ✅️ support telegram-bot-api local server
-    - 🔜️ support telegram database library ( Tdlib )
+    - ✅️ support telegram database library ( [TDLIB](https://github.com/azkadev/telegram_client/tree/main/node-js/tdl-lib) )
 
 - ```telegram client google apps script```
     - ✅️ support multi token ( bot / userbot )
