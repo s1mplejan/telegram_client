@@ -20,7 +20,7 @@ jobs:
           cmake .. || exit 1
           cmake --build . --target prepare_cross_compiling || exit 1
           cd ..
-      - name: Build Tdlib android Arm64
+      - name: Build Tdlib android arm64-v8a
         run: |
           cd tddroid
           cd build-folder
