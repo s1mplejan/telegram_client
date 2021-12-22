@@ -33,7 +33,7 @@ jobs:
           cd ..
 
           mkdir -p ../output/$ABI/
-          cp build-$ABI/libtd*.so ../output/$ABI/libtdjson-$ABI.so
+          cp build-$ABI/libtd*.so ../output/libtdjson-$ABI.so
       - name: Build Tdlib android armeabi-v7a
         run: |
           cd tddroid
@@ -80,6 +80,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.APP_VERSION }}
-          name: Tdlib Android Arm64
+          name: Tdlib Android
           token: ${{ secrets.TOKEN }}
           artifacts: 'tddroid/output/libtdjson*.so'
