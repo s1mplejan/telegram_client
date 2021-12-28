@@ -6,4 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check disk
-        run: df -h
+        run: |
+          pwd
+          df -h
