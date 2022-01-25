@@ -115,8 +115,14 @@ class Tdlib {
     return _client_receive(client, 1.0).toDartString();
   }
 
-  clientSend(jsonsend) {
-    return _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
+  Map clientSend(jsonsend) {
+    _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
+    var receive = clienReceive(1.0);
+    if (typeData(receive) == "string") {
+      return convert.json.decode(receive);
+    } else {
+      return {};
+    }
   }
 
   void clientDestroy() {
@@ -150,10 +156,12 @@ class Tdlib {
                   'parameters': _optionDefault
                 };
                 clientSend(optin);
+                /*
                 clientSend({
                   '@type': 'setDatabaseEncryptionKey',
                   'new_encryption_key': _optionDefault["database_key"]
                 });
+                */
               }
 
               if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
@@ -163,6 +171,13 @@ class Tdlib {
                 });
               }
             }
+          }
+          if (updateOrigin["@type"] == "updateConnectionState" &&
+              updateOrigin["state"]["@type"] == "connectionStateReady") {
+            clientSend({
+              "@type": "checkAuthenticationBotToken",
+              "token": ""
+            });
           }
           callback(updateOrigin);
         }
