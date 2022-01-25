@@ -141,13 +141,34 @@ class Tdlib {
     }
   }
 
-  void on(callback, [double timeout = 10.0]) {
+  on(callback, [double timeout = 10.0]) async {
     var nums = 0;
-    while (nums == 0) {
+    while (true) {
       var update = clienReceive(timeout);
+      // ignore: unnecessary_null_comparison
       if (update != null) {
-        var updateMessage = convert.json.decode(update);
-        callback(updateMessage, client);
+        // ignore: non_constant_identifier_names
+        var update_origin = convert.json.decode(update);
+        if (update_origin["@type"] == "updateAuthorizationState") {
+
+          // ignore: non_constant_identifier_names, unused_local_variable
+          var auth_state = update_origin['authorization_state'];
+
+          if (update_origin["@type"] == "authorizationStateClosed") {
+            break;
+          }
+
+          if (update_origin["@type"] == "authorizationStateWaitTdlibParameters") {
+        
+          }
+
+          if (update_origin["@type"] == "authorizationStateWaitEncryptionKey") {
+        
+          }
+
+        }
+
+        callback(update_origin, client);
       }
     }
   }
