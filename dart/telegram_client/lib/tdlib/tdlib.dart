@@ -46,7 +46,6 @@ class Tdlib {
       _optionDefault[key.toString().toLowerCase()] = value;
     });
 
-    var optin = {'@type': 'setTdlibParameters', 'parameters': _optionDefault};
     clientSend({
       "@type": "setLogVerbosityLevel",
       "new_verbosity_level": _optionDefault['new_verbosity_level']
@@ -113,7 +112,7 @@ class Tdlib {
 
   invoke(Object? value) {
     _client_send(client, convert.json.encode(value).toNativeUtf8());
-    return _client_receive(client, 1.0);
+    return _client_receive(client, 1.0).toDartString();
   }
 
   clientSend(jsonsend) {
@@ -132,41 +131,41 @@ class Tdlib {
     }
   }
 
-  on(callback, [double timeout = 10.0]) async {
-    var nums = 0;
+  on(callback, [double timeout = 1.0]) async {
     while (true) {
       var update = clienReceive(timeout);
       // ignore: unnecessary_null_comparison
-      if (update != null) {
-        // ignore: non_constant_identifier_names
-        var update_origin = convert.json.decode(update);
-        if (update_origin["@type"] == "updateAuthorizationState") {
-          // ignore: non_constant_identifier_names, unused_local_variable
-          var auth_state = update_origin['authorization_state'];
+      if (typeData(update) == "string" && update.toString().isNotEmpty) {
+        var updateOrigin = convert.json.decode(update);
 
-          if (update_origin["@type"] == "authorizationStateClosed") {
-            break;
+        if (typeData(updateOrigin) == "object") {
+          if (updateOrigin["@type"] == "updateAuthorizationState") {
+            var authState = updateOrigin["authorization_state"];
+
+            if (typeData(authState) == "object") {
+              if (authState["@type"] ==
+                  "authorizationStateWaitTdlibParameters") {
+                var optin = {
+                  '@type': 'setTdlibParameters',
+                  'parameters': _optionDefault
+                };
+                clientSend(optin);
+                clientSend({
+                  '@type': 'setDatabaseEncryptionKey',
+                  'new_encryption_key': _optionDefault["database_key"]
+                });
+              }
+
+              if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
+                clientSend({
+                  '@type': 'checkDatabaseEncryptionKey',
+                  'encryption_key': _optionDefault["database_key"]
+                });
+              }
+            }
           }
-
-          if (update_origin["@type"] ==
-              "authorizationStateWaitTdlibParameters") {
-            var optin = {
-              '@type': 'setTdlibParameters',
-              'parameters': _optionDefault
-            };
-
-            return clientSend(optin);
-          }
-
-          if (update_origin["@type"] == "authorizationStateWaitEncryptionKey") {
-            return clientSend({
-              '@type': 'checkDatabaseEncryptionKey',
-              'encryption_key': _optionDefault["database_key"]
-            });
-          }
+          callback(updateOrigin);
         }
-
-        callback(update_origin, client);
       }
     }
   }

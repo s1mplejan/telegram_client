@@ -2,13 +2,14 @@ import 'package:telegram_client/telegram_client.dart';
 
 void main() {
   var option = {
-    'api_id': 0,
-    'api_hash': '',
-    'database_directory': "",
-    'files_directory': ""
+    'api_id': 94575,
+    'api_hash': 'a3406de8d171bb422bb6ddf3bbd800e2',
+    'database_directory': "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin",
+    'files_directory': "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin"
   };
-  var tdl = Tdlib("/home/azkadev/Documents/azka-userbot/libtdjson.so", option);
+  var tdl = Tdlib("/home/azkadev/Desktop/azkauserrobot/libtdjson.so", option);
   tdl.on((update) async {
+    print(update);
     if (update["@type"] == "updateNewMessage" &&
         update["message"]["@type"] == "message") {
       var msg = update["message"];
