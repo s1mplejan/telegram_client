@@ -87,7 +87,7 @@ class Tdlib {
 
   ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)
       // ignore: non_constant_identifier_names
-      get _client_execute {
+      get client_execute {
     return TdlibPathFile()
         .lookup<
             ffi.NativeFunction<
@@ -103,17 +103,7 @@ class Tdlib {
             'td_json_client_destroy')
         .asFunction();
   }
-
-  invokeSync(client, jsonobject) {
-    var fetch =
-        _client_execute(client, convert.json.encode(jsonobject).toNativeUtf8());
-    return convert.json.decode(fetch.toDartString());
-  }
-
-  invoke(Object? value) {
-    _client_send(client, convert.json.encode(value).toNativeUtf8());
-    return _client_receive(client, 1.0).toDartString();
-  }
+ 
 
   Map clientSend(jsonsend) {
     _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
@@ -152,7 +142,7 @@ class Tdlib {
               if (authState["@type"] ==
                   "authorizationStateWaitTdlibParameters") {
                 var optin = {
-                  '@type': 'setTdlibParameters',
+                  "@type": 'setTdlibParameters',
                   'parameters': _optionDefault
                 };
                 clientSend(optin);
@@ -166,7 +156,7 @@ class Tdlib {
 
               if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
                 clientSend({
-                  '@type': 'checkDatabaseEncryptionKey',
+                  "@type": 'checkDatabaseEncryptionKey',
                   'encryption_key': _optionDefault["database_key"]
                 });
               }
@@ -176,7 +166,7 @@ class Tdlib {
               updateOrigin["state"]["@type"] == "connectionStateReady") {
             clientSend({
               "@type": "checkAuthenticationBotToken",
-              "token": ""
+              "token": "5059078949:"
             });
           }
           callback(updateOrigin);
