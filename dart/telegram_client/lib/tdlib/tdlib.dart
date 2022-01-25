@@ -51,15 +51,6 @@ class Tdlib {
       "@type": "setLogVerbosityLevel",
       "new_verbosity_level": _optionDefault['new_verbosity_level']
     });
-    clientSend(optin);
-    clientSend({
-      '@type': 'setDatabaseEncryptionKey',
-      'new_encryption_key': _optionDefault["database_key"]
-    });
-    clientSend({
-      '@type': 'checkDatabaseEncryptionKey',
-      'encryption_key': _optionDefault["database_key"]
-    });
   }
 
   // ignore: non_constant_identifier_names
@@ -150,7 +141,6 @@ class Tdlib {
         // ignore: non_constant_identifier_names
         var update_origin = convert.json.decode(update);
         if (update_origin["@type"] == "updateAuthorizationState") {
-
           // ignore: non_constant_identifier_names, unused_local_variable
           var auth_state = update_origin['authorization_state'];
 
@@ -158,14 +148,22 @@ class Tdlib {
             break;
           }
 
-          if (update_origin["@type"] == "authorizationStateWaitTdlibParameters") {
-        
+          if (update_origin["@type"] ==
+              "authorizationStateWaitTdlibParameters") {
+            var optin = {
+              '@type': 'setTdlibParameters',
+              'parameters': _optionDefault
+            };
+
+            return clientSend(optin);
           }
 
           if (update_origin["@type"] == "authorizationStateWaitEncryptionKey") {
-        
+            return clientSend({
+              '@type': 'checkDatabaseEncryptionKey',
+              'encryption_key': _optionDefault["database_key"]
+            });
           }
-
         }
 
         callback(update_origin, client);
