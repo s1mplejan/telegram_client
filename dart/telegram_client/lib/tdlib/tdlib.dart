@@ -46,7 +46,7 @@ class Tdlib {
       _optionDefault[key.toString().toLowerCase()] = value;
     });
 
-    clientSend({
+    clientRequest({
       "@type": "setLogVerbosityLevel",
       "new_verbosity_level": _optionDefault['new_verbosity_level']
     });
@@ -103,9 +103,21 @@ class Tdlib {
             'td_json_client_destroy')
         .asFunction();
   }
- 
 
-  Map clientSend(jsonsend) {
+  clientSend(jsonsend) {
+    _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
+    
+    clienReceive(1.0);
+    clienReceive(1.0);
+    var receive = clienReceive(1.0);
+    if (typeData(receive) == "string") {
+      return convert.json.decode(receive);
+    } else {
+      return {};
+    }
+  }
+
+  clientRequest(jsonsend) {
     _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
     var receive = clienReceive(1.0);
     if (typeData(receive) == "string") {
@@ -114,6 +126,7 @@ class Tdlib {
       return {};
     }
   }
+
 
   void clientDestroy() {
     return _client_destroy(client);
@@ -145,7 +158,7 @@ class Tdlib {
                   "@type": 'setTdlibParameters',
                   'parameters': _optionDefault
                 };
-                clientSend(optin);
+                clientRequest(optin);
                 /*
                 clientSend({
                   '@type': 'setDatabaseEncryptionKey',
@@ -155,7 +168,7 @@ class Tdlib {
               }
 
               if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
-                clientSend({
+                clientRequest({
                   "@type": 'checkDatabaseEncryptionKey',
                   'encryption_key': _optionDefault["database_key"]
                 });
@@ -164,9 +177,9 @@ class Tdlib {
           }
           if (updateOrigin["@type"] == "updateConnectionState" &&
               updateOrigin["state"]["@type"] == "connectionStateReady") {
-            clientSend({
+            clientRequest({
               "@type": "checkAuthenticationBotToken",
-              "token": "5059078949:"
+              "token": "5059078949:AAF0lFQGmcWyDjLPaCMYc6Xcp3kgcS_lFQU"
             });
           }
           callback(updateOrigin);

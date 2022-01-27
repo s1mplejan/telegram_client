@@ -12,5 +12,6 @@ dev_dependencies:
   lints: ^1.0.0
 
 dependencies: 
+  eventify: ^1.0.0
   ffi: ^1.1.2
   switchscript: ^0.0.1

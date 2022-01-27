@@ -4,9 +4,7 @@ Telegram client is a library to make it easier for you to build your own telegra
 
 ### Docs
 
-- [Dart / Flutter](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/docs) - [Wiki]()
-- [Node JS](https://github.com/azkadev/telegram_client)
-- [Script Google](https://github.com/azkadev/telegram_client)
+- Just Read On [Wiki](https://github.com/azkadev/telegram_client/wiki)
 
 ###  Update
 <!-- replacer_start -->
@@ -21,14 +19,14 @@ Telegram client is a library to make it easier for you to build your own telegra
     - ✅️ support bot and userbot
     - ✅️ support telegram-bot-api local server
     - ✅️ support telegram database library ( Tdlib )
-    - 🔜️ Add more Api Humanize pretty update and method api humanize
+    - ✅️ Add more Api Humanize pretty update and method api humanize
     
 - ```telegram client node```
     - ✅️ support multi token ( bot / userbot )
     - ✅️ support bot and userbot
     - ✅️ support telegram-bot-api local server
     - ✅️ support telegram database library ( [TDLIB](https://github.com/azkadev/telegram_client/tree/main/node-js/tdl-lib) )
-    - 🔜️ Add more Api Humanize pretty update and method api humanize
+    - ✅️ Add more Api Humanize pretty update and method api humanize
 
 - ```telegram client google apps script```
     - ✅️ support multi token ( bot / userbot )
