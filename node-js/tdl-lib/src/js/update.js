@@ -59,8 +59,11 @@ class updateApi {
                         json["chat"] = chatJson;
                     }
 
-                    if (update["message"]["date"]) {
+                    if (typeof update["message"]["date"] == "number") {
                         json["date"] = Number(update["message"]["date"]);
+                    }
+                    if (typeof update["message"]["author_signature"] == "string"){
+                        json["author_signature"] = update["message"]["author_signature"];
                     }
                     if (update["message"]["forward_info"]) {
                         var forward_info = update["message"]["forward_info"];
@@ -96,7 +99,13 @@ class updateApi {
                     if (update["message"]["reply_to_message_id"] && update["message"]["reply_in_chat_id"]) {
                         var getMessage = await this.tg.getMessage(update["message"]["reply_in_chat_id"], update["message"]["reply_to_message_id"]);
                         var replyTo = await this.replyMessage({ message: getMessage });
-                        json["reply_to_message"] = replyTo["message"]
+                        if (typeof replyTo["message"] == "object") {
+                            json["reply_to_message"] = replyTo["message"];
+
+                        }
+                        if (typeof replyTo["channel_post"] == "object") {
+                            json["reply_to_message"] = replyTo["channel_post"];
+                        }
                     }
 
                     if (update["message"]["content"]) {
@@ -313,7 +322,11 @@ class updateApi {
                             json["caption"] = update["message"]["content"]["caption"]["text"];
                         }
                     }
-                    return { channel_post: json };
+                    if (update["message"]["reply_markup"]) {
+                        var { reply_markup } = update["message"];
+                        json["reply_markup"] = this.replyMarkup(reply_markup);
+                    };
+                    return { "channel_post": json };
                 } else {
                     var json = {};
                     if (update["message"]["is_outgoing"] ? true : true) {
@@ -403,6 +416,7 @@ class updateApi {
                         } catch (e) {
                         }
                     }
+
                     if (update["message"]["content"]) {
                         if (update["message"]["content"]["text"] && new RegExp("^messageText$", "i").exec(update["message"]["content"]["_"]) && new RegExp("^formattedText$", "i").exec(update["message"]["content"]["text"]["_"])) {
                             json["type_content"] = "text";
@@ -693,25 +707,45 @@ class updateApi {
                             }
                             json["entities"] = array_entities
                         }
+
+                        if (update["message"]["content"]["_"] == "messageChatAddMembers") {
+                            var new_chat_members = [];
+                            if (typeof update["message"]["content"]["member_user_ids"] == "object" && update["message"]["content"]["member_user_ids"].length > 0) {
+                                var member_user_ids = update["message"]["content"]["member_user_ids"];
+                                for (var i = 0; i < member_user_ids.length; i++) {
+                                    var loop_data = member_user_ids[i];
+                                    try {
+                                        var getUser = await this.tg.request("getUser", { "chat_id": loop_data });
+                                        if (getUser["ok"]) {
+                                            new_chat_members.push(getUser["result"]);
+                                        }
+                                    } catch (e) {
+
+                                    }
+                                }
+                            }
+                            json["new_chat_members"] = new_chat_members;
+                        }
                     }
-                    if (update["message"].reply_markup) {
+
+                    if (update["message"]["reply_markup"]) {
                         var { reply_markup } = update["message"];
                         json["reply_markup"] = this.replyMarkup(reply_markup);
                     };
 
-                    return { message: json };
+                    return { "message": json };
                 }
                 //--! callback_query !--\\
             } else if (new RegExp(`^updateNewCallbackQuery$`, "i").exec(update["_"])) {
                 var json_data = { "callback_query": {} };
-                var json = json_data.callback_query
+                var json = json_data["callback_query"];
                 if (update["id"]) {
-                    json["id"] = update["id"]
+                    json["id"] = update["id"];
                 }
-                var senderUserId = update.sender_user_id ? update.sender_user_id : false
+                var senderUserId = update["sender_user_id"] ? update["sender_user_id"] : false
                 var fromJson = {}
                 if (senderUserId) {
-                    var getUser = await this.tg.request("getUser", { chat_id: senderUserId });
+                    var getUser = await this.tg.request("getUser", { "chat_id": senderUserId });
                     if (getUser["ok"]) {
                         fromJson = getUser["result"];
                     } else {
@@ -723,8 +757,12 @@ class updateApi {
                 if (update["chat_id"]) {
                     if (update["message_id"]) {
                         var getMessage = await this.tg.getMessage(update["chat_id"], update["message_id"]);
-                        var replyTo = await this.replyMessage({ message: getMessage });
-                        json["message"] = replyTo["message"];
+                        var replyTo = await this.replyMessage({ "message": getMessage });
+                        if (replyTo["message"]) {
+                            json["message"] = replyTo["message"];
+                        } else if (replyTo["channel_post"]) {
+                            json["message"] = replyTo["channel_post"];
+                        }
                     }
                     var chatJson = {};
                     var chatId = update["chat_id"];
@@ -741,7 +779,7 @@ class updateApi {
                 return json_data;
             } else if (new RegExp(`^updateChatMember$`, "i").exec(update["_"])) {
                 var json_data = { "chat_member": {} };
-                var json = json_data.chat_member;
+                var json = json_data["chat_member"];
                 if (update["chat_id"]) {
                     var chatJson = {};
                     var chatId = update["chat_id"];
@@ -753,9 +791,9 @@ class updateApi {
                     }
                     json["chat"] = chatJson;
                 }
-                if (update.actor_user_id) {
+                if (update["actor_user_id"]) {
                     var fromJson = {};
-                    var getUser = await this.tg.request("getUser", { chat_id: update.actor_user_id });
+                    var getUser = await this.tg.request("getUser", { "chat_id": update["actor_user_id"] });
                     if (getUser["ok"]) {
                         fromJson = getUser["result"];
                     } else {
@@ -773,17 +811,17 @@ class updateApi {
                     var data_json = { "user": {} };
                     var fromJson = {};
                     if (oldChatMemberUserId) {
-                        var getUser = await this.tg.request("getUser", { chat_id: oldChatMemberUserId });
+                        var getUser = await this.tg.request("getUser", { "chat_id": oldChatMemberUserId });
                         if (getUser["ok"]) {
                             fromJson = getUser["result"];
                         } else {
                             throw new Error(getUser);
                         }
                     }
-                    data_json["join_date"] = update["old_chat_member"].joined_chat_date;
+                    data_json["join_date"] = update["old_chat_member"]["joined_chat_date"];
                     data_json["status"] = update["old_chat_member"]["status"]["_"].replace(/(chatMemberStatus)/ig, "").toLocaleLowerCase();
                     data_json["user"] = fromJson;
-                    json["old_chat_member"] = data_json
+                    json["old_chat_member"] = data_json;
                 }
 
                 if (update["new_chat_member"] && update["new_chat_member"]["member_id"] && update["new_chat_member"]["member_id"]["user_id"] && update["new_chat_member"]["_"]) {
@@ -803,6 +841,7 @@ class updateApi {
                     data_json["user"] = fromJson;
                     json["new_chat_member"] = data_json
                 }
+
                 try {
                     if (update["invite_link"] && update["invite_link"]["_"]) {
                         var data_json = { "user": {} };
@@ -825,7 +864,7 @@ class updateApi {
                 } catch (e) {
 
                 }
-                return json_data
+                return json_data;
             } else if (RegExp("^updateMessageSendSucceeded$", "i").exec(update["_"])) {
                 return { message_send: update };
             } else if (RegExp("^updateMessageSendFailed$", "i").exec(update["_"])) {
@@ -1104,7 +1143,11 @@ class updateApi {
                     json["caption"] = update["message"]["content"]["caption"]["text"];
                 }
             }
-            return { channel_post: json };
+            if (update["message"].reply_markup) {
+                var { reply_markup } = update["message"];
+                json["reply_markup"] = this.replyMarkup(reply_markup);
+            };
+            return { "channel_post": json };
         } else {
             var json = {};
             if (update["message"]["is_outgoing"] ? true : true) {
@@ -1451,7 +1494,7 @@ class updateApi {
                 var { reply_markup } = update["message"];
                 json["reply_markup"] = this.replyMarkup(reply_markup);
             };
-            return { message: json };
+            return { "message": json };
         }
     }
 

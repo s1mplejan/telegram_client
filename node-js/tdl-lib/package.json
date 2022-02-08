@@ -1,13 +1,13 @@
 {
   "name": "tdl-lib",
-  "version": "0.0.27",
+  "version": "0.0.60",
   "description": "",
   "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "azkadev",
   "license": "ISC",
   "dependencies": {
     "tdl": "^7.0.0",

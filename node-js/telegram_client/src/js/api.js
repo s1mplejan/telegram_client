@@ -1,33 +1,75 @@
 // azka dev
 const nodefetch = require("node-fetch");
+const FormData = require('form-data');
+const form = new FormData();
+var fs = require("fs");
 class Api {
     constructor(token, options) {
         this.token = token;
         this.options = options;
     }
-    async request(method, data = false) {
-        if (!method) {
+    async request(method, parameter = false, is_form_data = false) {
+        if (typeof method != "string" && String(method).length == 0) {
             throw {
-                message: "please use token"
+                "message": "please use token"
             };
         }
-        var option = {
-            'method': 'POST',
-            'headers': {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
-        if (data) {
-            option.body = JSON.stringify(data);
+        if (typeof is_form_data != "boolean") {
+            throw {
+                "message": "parameter form must be boolean"
+            };
         }
-        var url = this.options.api + String(this.options.type).toLocaleLowerCase();
-        var response = await nodefetch(url + this.token + "/" + method, option);
-        if (this.options.logger) {
+        var option = {};
+        if (is_form_data) {
+            option = {
+                'method': 'post'
+            };
+            for (const key in parameter) {
+                if (Object.hasOwnProperty.call(parameter, key)) {
+                    var element = parameter[key];
+                    if (typeof element == "object") {
+                        if (element["is_post_file"]) {
+                            form.append(key, element["buffer"], element["option"]);
+                        } else {
+                            form.append(key, JSON.stringify(element));
+                        }
+                    } else if (typeof element != "string") {
+                        form.append(key, String(element));
+                    } else {
+                        form.append(key, element);
+                    }
+                }
+            }
+            if (typeof parameter == "object") {
+                option["body"] = form;
+            }
+        } else {
+            option = {
+                'method': 'POST',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            };
+            if (typeof parameter == "object") {
+                option["body"] = JSON.stringify(parameter);
+            }
+        }
+
+        var url = this["options"]["api"] + String(this["options"]["type"]).toLocaleLowerCase();
+        var response = await nodefetch(url + this["token"] + "/" + method, option);
+        if (this["options"]["logger"]) {
             console.log(JSON.stringify(response, null, 2));
         }
         if (response.status == 200) {
-            return await response.json();
+            if (String(method).toLocaleLowerCase() == "getfile") {
+                var getFile = await response.json();
+                var url = this["options"]["api"] + "file/" + String(this["options"]["type"]).toLocaleLowerCase();
+                getFile["result"]["links"] = url + this["token"] + "/" + getFile["result"]["file_path"];
+                return getFile;
+            } else {
+                return await response.json();
+            }
         } else {
             var msg = await response.json();
             throw {
@@ -37,8 +79,59 @@ class Api {
 
     }
 
-    requestForm(method, data) {
-        return await this.request(method, data);
+    async requestForm(method, data) {
+        return await this.request(method, data, true);
+    }
+
+    file(path, option = false) {
+        var json = {
+            "is_post_file": true
+        };
+        if (typeof path != "string") {
+
+        }
+        if (RegExp("^(./|\/)", "i").exec(path)) {
+            var filename = String(path).replace(/(.*[\/\\])/i, "");
+            if (typeof option == "object") {
+                json["option"] = {
+                    "filename": filename,
+                    ...option
+                };
+            } else {
+                json["option"] = {
+                    "filename": filename,
+                };
+            }
+            json["buffer"] = fs.readFileSync(path);
+            return json;
+        } else {
+            return path;
+        }
+    }
+
+    fileUpload(data, option) {
+        var json = {
+            "is_post_file": true
+        };
+        if (typeof path != "string") {
+
+        }
+        if (typeof data === "object") {
+            if (typeof option == "object") {
+                json["option"] = {
+                    "filename": data["name"],
+                    ...option
+                };
+            } else {
+                json["option"] = {
+                    "filename":  data["name"],
+                };
+            }
+            json["buffer"] = Buffer.from(data["data"]["data"]);
+            return json;
+        } else {
+            return data;
+        }
     }
 
     typeFile(data) {
@@ -292,7 +385,10 @@ class Api {
         var json = {
             "file_id": file_id
         };
-        return await this.request("getFile", json);
+        var getFile = await this.request("getFile", json);
+        var url = this["options"]["api"] + "file/" + String(this["options"]["type"]).toLocaleLowerCase();
+        getFile["result"]["links"] = url + this["token"] + "/" + getFile["result"]["file_path"];
+        return getFile;
     }
     async banChatMember(chat_id, user_id, parameter = {}) {
         var json = {
