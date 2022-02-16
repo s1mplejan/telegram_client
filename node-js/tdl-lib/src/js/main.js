@@ -4,19 +4,11 @@ var folder = process.cwd();
 var timers = require("timers/promises");
 var update_lib = require("./update");
 class telegram {
-<<<<<<< HEAD
     constructor(pathDb = "./client/", client = {}) {
         if (typeof client != "object") {
             client = {};
         }
         if (!client) {
-=======
-    constructor(pathDb = "./client/", client= {}) {
-        if (typeof client != "object"){
-            client = {};
-        }
-        if (!client){
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
             client = {};
         }
         var option = {
@@ -80,21 +72,14 @@ class telegram {
         if (RegExp("^update$", "i").exec(type)) {
             var clients = this.client;
             var option = this.option;
-<<<<<<< HEAD
             var tg = this;
             var lib = update_lib;
-=======
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
             this.client.on("update", async function (updateTd) {
                 var updateApi = new lib.updateApi(tg);
                 var update = await updateApi.update(updateTd);
                 return callback(update, updateTd, tg, option);
             });
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
         }
         if (RegExp("^raw$", "i").exec(type)) {
             this.client.on("update", async function (updateTd) {

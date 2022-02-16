@@ -3,10 +3,7 @@ const nodefetch = require("node-fetch");
 const FormData = require('form-data');
 const form = new FormData();
 var fs = require("fs");
-<<<<<<< HEAD
 var timers = require("node:timers/promises");
-=======
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
 class Api {
     constructor(token, options) {
         this.token = token;
@@ -23,12 +20,9 @@ class Api {
                 "message": "parameter form must be boolean"
             };
         }
-<<<<<<< HEAD
         if (String(this["options"]["type"]).toLocaleLowerCase() == "user"){
             delete parameter["reply_markup"];
         }
-=======
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
         var option = {};
         if (is_form_data) {
             option = {
@@ -90,7 +84,6 @@ class Api {
 
     }
 
-<<<<<<< HEAD
     async requestAuto(method, data) {
         if (typeof data == "object") {
             if (typeof data["chat_id"] == "object") {
@@ -127,8 +120,6 @@ class Api {
         return json_data;
     }
 
-=======
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
     async requestForm(method, data) {
         return await this.request(method, data, true);
     }
@@ -174,11 +165,7 @@ class Api {
                 };
             } else {
                 json["option"] = {
-<<<<<<< HEAD
                     "filename": data["name"],
-=======
-                    "filename":  data["name"],
->>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
                 };
             }
             json["buffer"] = Buffer.from(data["data"]["data"]);
