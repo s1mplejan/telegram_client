@@ -1,9 +1,10 @@
 var { updateApi } = require("./update");
-
+var timers = require("timers/promises");
 class telegramApi {
 
-    constructor(handle) {
-        this.handle = handle;
+    constructor(client, on_update = false) {
+        this.handle = client;
+        this.on_update = on_update;
     }
 
     async request(method, option = {}) {
@@ -30,6 +31,28 @@ class telegramApi {
             } catch (e) {
 
             }
+        }
+
+
+        if (RegExp(`^promoteChatMember$`, "i").exec(method)) {
+            var optionparam = {
+                "custom_title": option["custom_title"],
+                "can_manage_chat": option["can_manage_chat"],
+                "can_post_messages": option["can_post_messages"],
+                "can_edit_messages": option["can_edit_messages"],
+                "can_delete_messages": option["can_delete_messages"],
+                "can_manage_voice_chats": option["can_manage_voice_chats"],
+                "can_restrict_members": option["can_restrict_members"],
+                "can_promote_members": option["can_promote_members"],
+                "can_change_info": option["can_change_info"],
+                "can_invite_users": option["can_invite_users"],
+                "can_pin_messages": option["can_pin_messages"]
+            };
+            return await this.promoteChatMember(option["chat_id"], option["user_id"], optionparam);
+        }
+
+        if (RegExp(`^banChatMember$`, "i").exec(method)) {
+            return await this.banChatMember(option["chat_id"], option["user_id"], option["banned_until_date"], option["revoke_messages"]);
         }
 
         if (RegExp(`^deleteMessage$`, "i").exec(method)) {
@@ -124,7 +147,7 @@ class telegramApi {
         }
 
         if (new RegExp(`^sendMessage$`, "i").exec(method)) {
-            return await this.sendMessage(option["chat_id"], option["text"], option["parse_mode"], option["entities"], option["disable_web_page_preview"], option["disable_notification"], option["reply_to_message_id"], option["reply_markup"])
+            return await this.sendMessage(option["chat_id"], option["text"], option["parse_mode"], option["entities"], option["disable_web_page_preview"], option["disable_notification"], option["reply_to_message_id"], option["reply_markup"]);
         }
 
         if (new RegExp(`^sendPhoto$`, "i").exec(method)) {
@@ -198,6 +221,9 @@ class telegramApi {
         if (new RegExp(`^editMessageText$`, "i").exec(method)) {
             return await this.editMessageText(option["chat_id"], option["message_id"], option["text"], option["parse_mode"], option["entities"], option["disable_web_page_preview"], option["reply_markup"])
         }
+        if (new RegExp(`^editMessageReplyMarkup$`, "i").exec(method)) {
+            return await this.editMessageReplyMarkup(option["chat_id"], option["message_id"], option["reply_markup"])
+        }
 
         if (new RegExp(`^forwardMessage$`, "i").exec(method)) {
             return await this.forwardMessage(option["chat_id"], option["from_chat_id"], option["message_id"], false);
@@ -208,47 +234,23 @@ class telegramApi {
         }
 
         if (new RegExp(`^getChats$`, "i").exec(method)) {
-            var getchats = await this.getChats()
-
-            if (new RegExp("^chats$", "i").exec(getchats["_"])) {
-                var json = {};
-                if (getchats["total_count"] > 0) {
-                    json["total_count"] = getchats["total_count"];
-                    var array_data = []
-                    for (var i = 0; i < getchats["chat_ids"].length; i++) {
-                        var loop_data = getchats["chat_ids"][i];
-                        var json_loop = {};
-                        if (new RegExp("-.*", "i").exec(loop_data)) {
-                            try {
-                                var data = {
-                                    "chat_id": loop_data
-                                };
-                                var getSupergroup = await this.request("getSupergroup", data);
-                                if (getSupergroup["ok"]) {
-                                    json_loop["id"] = loop_data;
-                                    var result = getSupergroup["result"];
-                                    if (result["username"]) {
-                                        json_loop["username"] = result["username"];
-                                    }
-                                    if (result["type"]) {
-                                        json_loop["type"] = result["type"];
-                                    }
-                                    json_loop["detail"] = result["detail"];
-                                }
-                            } catch (e) {
-
-                            }
-                        }
-                        array_data.push(json_loop);
-                    }
-                    json["data"] = array_data;
-                    return { "ok": true, "result": json };
-                } else {
-                    return { "ok": false };
+            var getchats = await this.getChats();
+            var list_chats = [];
+            for (var index = 0; index < getchats["chat_ids"].length; index++) {
+                var loop_data = getchats["chat_ids"][index];
+                try {
+                    var result = await this.request("getChat", {
+                        "chat_id": loop_data
+                    });
+                    list_chats.push(result["result"]);
+                } catch (e) {
                 }
-            } else {
-                return { "ok": false };
             }
+            return {
+                "status_code": 200,
+                "status_bool": true,
+                "result": list_chats
+            };
         }
 
         if (new RegExp(`^getSupergroupMembers$`, "i").exec(method)) {
@@ -290,13 +292,13 @@ class telegramApi {
                             json["language_code"] = getUser["language_code"];
                         }
                         json["detail"] = {
-                            "contact": getUser["is_contact"],
-                            "mutual": getUser["is_mutual_contact"],
-                            "verified": getUser["is_verified"],
-                            "support": getUser["is_support"],
-                            "scam": getUser["is_scam"],
-                            "fake": getUser["is_fake"],
-                            "acces": getUser["have_access"]
+                            "is_contact": getUser["is_contact"],
+                            "is_mutual_contact": getUser["is_mutual_contact"],
+                            "is_verified": getUser["is_verified"],
+                            "is_support": getUser["is_support"],
+                            "is_scam": getUser["is_scam"],
+                            "is_fake": getUser["is_fake"],
+                            "have_acces": getUser["have_access"]
                         };
                         array.push(json);
                     }
@@ -418,13 +420,13 @@ class telegramApi {
                     json["language_code"] = getMe["language_code"];
                 }
                 json["detail"] = {
-                    "contact": getMe["is_contact"],
-                    "mutual": getMe["is_mutual_contact"],
-                    "verified": getMe["is_verified"],
-                    "support": getMe["is_support"],
-                    "scam": getMe["is_scam"],
-                    "fake": getMe["is_fake"],
-                    "acces": getMe["have_access"]
+                    "is_contact": getMe["is_contact"],
+                    "is_mutual_contact": getMe["is_mutual_contact"],
+                    "is_verified": getMe["is_verified"],
+                    "is_support": getMe["is_support"],
+                    "is_scam": getMe["is_scam"],
+                    "is_fake": getMe["is_fake"],
+                    "have_acces": getMe["have_access"]
                 };
                 return { "ok": true, "result": json };
             } else {
@@ -464,14 +466,27 @@ class telegramApi {
                     json["language_code"] = getUser["language_code"];
                 }
                 json["detail"] = {
-                    "contact": getUser["is_contact"],
-                    "mutual": getUser["is_mutual_contact"],
-                    "verified": getUser["is_verified"],
-                    "support": getUser["is_support"],
-                    "scam": getUser["is_scam"],
-                    "fake": getUser["is_fake"],
-                    "acces": getUser["have_access"]
+                    "is_contact": getUser["is_contact"],
+                    "is_mutual_contact": getUser["is_mutual_contact"],
+                    "is_verified": getUser["is_verified"],
+                    "is_support": getUser["is_support"],
+                    "is_scam": getUser["is_scam"],
+                    "is_fake": getUser["is_fake"],
+                    "have_acces": getUser["have_access"]
                 };
+                try {
+                    var getUserFullInfo = await this.getUserFullInfo(option["chat_id"]);
+                    if (typeof getUserFullInfo == "object") {
+                        if (getUserFullInfo["bio"]) {
+                            json["bio"] = getUserFullInfo["bio"];
+                        }
+                        if (typeof getUserFullInfo["photo"] == "object" && getUserFullInfo["photo"].length > 0) {
+                            json["profile_photo"] = getUserFullInfo["photo"][getUserFullInfo["photo"].length - 1]["file_id"];
+                        }
+                    }
+                } catch (e) {
+
+                }
                 return { "ok": true, "result": json };
             } else {
                 return { "ok": false, "result": getUser };
@@ -496,6 +511,9 @@ class telegramApi {
                     json["type"] = "channel";
                     json["detail"] = {
                         "member_count": getSupergroup["member_count"],
+                        "administrator_count": 0,
+                        "restricted_count": 0,
+                        "banned_count": 0,
                         "has_linked_chat": getSupergroup["has_linked_chat"],
                         "has_location": getSupergroup["has_location"],
                         "sign_messages": getSupergroup["sign_messages"],
@@ -505,6 +523,20 @@ class telegramApi {
                         "is_scam": getSupergroup["is_scam"],
                         "is_fake": getSupergroup["is_fake"]
                     };
+
+                    try {
+                        var getSupergroupFullInfo = await this.getSupergroupFullInfo(option["chat_id"]);
+                        json["member_count"] = getSupergroupFullInfo["member_count"];
+                        json["administrator_count"] = getSupergroupFullInfo["administrator_count"];
+                        json["restricted_count"] = getSupergroupFullInfo["restricted_count"];
+                        json["banned_count"] = getSupergroupFullInfo["banned_count"];
+                        if (typeof getSupergroupFullInfo["photo"] == "object" && typeof getSupergroupFullInfo["photo"]["sizes"] == "object" && getSupergroupFullInfo["photo"]["sizes"].length > 0) {
+                            var getSupergroupPhotos = getSupergroupFullInfo["photo"]["sizes"];
+                            json["profile_photo"] = getSupergroupPhotos[getSupergroupPhotos.length - 1]["photo"]["remote"]["id"];
+                        }
+                    } catch (e) {
+
+                    }
                     return { ok: true, result: json };
                 } else if (RegExp("supergroup", "i").exec(type_chat)) {
                     var getSupergroup = await this.getSupergroup(option["chat_id"]);
@@ -520,6 +552,9 @@ class telegramApi {
                     json["type"] = "supergroup";
                     json["detail"] = {
                         "member_count": getSupergroup["member_count"],
+                        "administrator_count": 0,
+                        "restricted_count": 0,
+                        "banned_count": 0,
                         "has_linked_chat": getSupergroup["has_linked_chat"],
                         "has_location": getSupergroup["has_location"],
                         "sign_messages": getSupergroup["sign_messages"],
@@ -529,6 +564,19 @@ class telegramApi {
                         "is_scam": getSupergroup["is_scam"],
                         "is_fake": getSupergroup["is_fake"]
                     };
+                    try {
+                        var getSupergroupFullInfo = await this.getSupergroupFullInfo(option["chat_id"]);
+                        json["detail"]["member_count"] = getSupergroupFullInfo["member_count"];
+                        json["detail"]["administrator_count"] = getSupergroupFullInfo["administrator_count"];
+                        json["detail"]["restricted_count"] = getSupergroupFullInfo["restricted_count"];
+                        json["detail"]["banned_count"] = getSupergroupFullInfo["banned_count"];
+                        if (typeof getSupergroupFullInfo["photo"] == "object" && typeof getSupergroupFullInfo["photo"]["sizes"] == "object" && getSupergroupFullInfo["photo"]["sizes"].length > 0) {
+                            var getSupergroupPhotos = getSupergroupFullInfo["photo"]["sizes"];
+                            json["profile_photo"] = getSupergroupPhotos[getSupergroupPhotos.length - 1]["photo"]["remote"]["id"];
+                        }
+                    } catch (e) {
+
+                    }
                     return { ok: true, result: json };
                 } else if (RegExp("BasicGroup", "i").exec(type_chat)) {
                     var getBasicGroup = await this.getBasicGroup(option["chat_id"]);
@@ -540,8 +588,17 @@ class telegramApi {
                     }
                     json["type"] = "group";
                     json["detail"] = {
-                        "memberCount": getBasicGroup["member_count"]
+                        "member_count": getBasicGroup["member_count"]
                     };
+                    try {
+                        var getBasicGroupFullInfo = await this.getBasicGroupFullInfo(option["chat_id"]);
+                        if (typeof getBasicGroupFullInfo["photo"] == "object" && typeof getBasicGroupFullInfo["photo"]["sizes"] == "object" && getBasicGroupFullInfo["photo"]["sizes"].length > 0) {
+                            var getBasicGroupPhotos = getBasicGroupFullInfo["photo"]["sizes"];
+                            json["profile_photo"] = getBasicGroupPhotos[getBasicGroupPhotos.length - 1]["photo"]["remote"]["id"];
+                        }
+                    } catch (e) {
+
+                    }
                     return { ok: true, result: json };
                 } else if (RegExp("private", "i").exec(type_chat)) {
                     var getUser = await this.getUser(option["chat_id"]);
@@ -575,14 +632,29 @@ class telegramApi {
                             json["language_code"] = getUser["language_code"]
                         }
                         json["detail"] = {
-                            "contact": getUser["is_contact"],
-                            "mutual": getUser["is_mutual_contact"],
-                            "verified": getUser["is_verified"],
-                            "support": getUser["is_support"],
-                            "scam": getUser["is_scam"],
-                            "fake": getUser["is_fake"],
-                            "acces": getUser["have_access"]
+                            "is_contact": getUser["is_contact"],
+                            "is_mutual_contact": getUser["is_mutual_contact"],
+                            "is_verified": getUser["is_verified"],
+                            "is_support": getUser["is_support"],
+                            "is_scam": getUser["is_scam"],
+                            "is_fake": getUser["is_fake"],
+                            "have_acces": getUser["have_access"]
                         };
+
+                        try {
+                            var getUserFullInfo = await this.getUserFullInfo(option["chat_id"]);
+                            if (typeof getUserFullInfo == "object") {
+                                if (getUserFullInfo["bio"]) {
+                                    json["bio"] = getUserFullInfo["bio"];
+                                }
+                                if (typeof getUserFullInfo["photo"] == "object" && getUserFullInfo["photo"].length > 0) {
+                                    json["profile_photo"] = getUserFullInfo["photo"][getUserFullInfo["photo"].length - 1]["file_id"];
+                                }
+                            }
+                        } catch (e) {
+
+                        }
+
                         return { "ok": true, "result": json };
                     } else {
                         return { "ok": false, "result": getUser };
@@ -700,20 +772,24 @@ class telegramApi {
     }
 
 
-    async invoke(method, parameters = false) {
-        var data = {
-            '_': method
-        };
-        if (parameters) {
-            libForEach(parameters, (nilai, index) => {
-                data[index] = nilai
-            });
+    async invoke(method, parameters = {}) {
+        if (typeof method != "string") {
+            throw {
+                "message": "method false"
+            };
         }
-        return await this.handle.invoke(data);
+        if (typeof parameters != "object") {
+            throw {
+                "message": "parameters false"
+            };
+        }
+        delete parameters["_"];
+        var option = {
+            "_": method,
+            ...parameters
+        };
+        return await this.handle.invoke(option);
     }
-
-
-
 
     typeFile(content) {
 
@@ -801,6 +877,47 @@ class telegramApi {
         };
         return await this.handle.invoke(data)
     }
+
+    async requestSendMessage(parameters) {
+        var sendMessage = await this.invoke("sendMessage", parameters);
+        if (this.on_update) {
+            var request = this;
+            var value = {
+                "status_code": 200,
+                "status_bool": true,
+                "result": {}
+            };
+            await timers.setTimeout(1000, request.handle.addListener("update", async function (update) {
+                if (typeof update == "object") {
+                    if (update["_"] == "updateMessageSendSucceeded") {
+                        try {
+                            var result = await request.request("getMessage", {
+                                "chat_id": update["message"]["chat_id"],
+                                "message_id": update["message"]["id"]
+                            });
+                            return value["result"] = result["message"];
+                        } catch (e) {
+                            value["status_code"] = 500;
+                            value["status_bool"] = false;
+                            return value["result"] = {}
+                        }
+                    } else {
+                        value["status_code"] = 400;
+                        value["status_bool"] = false;
+                        return value["result"] = update;
+                    }
+                } else {
+                    value["status_code"] = 405;
+                    value["status_bool"] = false;
+                    return value["result"] = {}
+                }
+            }));
+            return value;
+        } else {
+            return sendMessage;
+        }
+    }
+
     async sendMessage(chat_id, text, parse_mode = false, entities = false, disable_web_page_preview = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
         var pesan = this.parseMode(text, parse_mode, entities);
         var data = {
@@ -823,18 +940,18 @@ class telegramApi {
             "disable_web_page_preview": disable_web_page_preview,
             "clear_draft": false
         };
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
 
     async editMessageText(chat_id, message_id, text, parse_mode = false, entities = false, disable_web_page_preview = false, reply_markup = false) {
-        var pesan = this.parseMode(text, parse_mode, entities)
+        var pesan = this.parseMode(text, parse_mode, entities);
         var data = {
             '_': "editMessageText",
             "chat_id": chat_id,
             "message_id": message_id,
             "input_message_content": {}
-        }
+        };
         if (reply_markup) {
             data["reply_markup"] = this.reply_markup(reply_markup)
         }
@@ -844,6 +961,17 @@ class telegramApi {
             "disable_web_page_preview": disable_web_page_preview,
             "clear_draft": false
         };
+        return await this.handle.invoke(data);
+    }
+    async editMessageReplyMarkup(chat_id, message_id, reply_markup = false) {
+        var data = {
+            '_': "editMessageReplyMarkup",
+            "chat_id": chat_id,
+            "message_id": message_id
+        };
+        if (typeof reply_markup == "object") {
+            data["reply_markup"] = this.reply_markup(reply_markup);
+        }
         return await this.handle.invoke(data);
     }
 
@@ -892,27 +1020,51 @@ class telegramApi {
     async sendChatAction(chat_id, type = 'typing') {
         var action = 'chatActionTyping';
         switch (type.toLowerCase()) {
-            case 'photo':
-                action = 'chatActionUploadingPhoto'
+            case 'cancel':
+                action = 'chatActionCancel';
                 break;
-            case 'document':
-                action = 'chatActionUploadingDocument'
-                break;
-            case 'video':
-                action = 'chatActionUploadingVideo'
-                break;
-            case 'voice':
-            case 'audio':
-                action = 'chatActionRecordingVoiceNote'
+            case 'contact':
+                action = 'chatActionChoosingContact';
                 break;
             case 'location':
-            case 'venue':
-                action = 'chatActionChoosingLocation'
+                action = 'chatActionChoosingLocation';
                 break;
-            case 'cancel':
-                action = 'chatActionCancel'
+            case 'sticker':
+                action = 'chatActionChoosingSticker';
+                break;
+            case 'record_video':
+                action = 'chatActionRecordingVideo';
+                break;
+            case 'record_video_note':
+                action = 'chatActionRecordingVideoNote';
+                break;
+            case 'record_voice':
+                action = 'chatActionRecordingVoiceNote';
+                break;
+            case 'game':
+                action = 'chatActionStartPlayingGame';
                 break;
             case 'typing':
+                action = 'chatActionTyping';
+                break;
+            case 'upload_document':
+                action = 'chatActionUploadingDocument';
+                break;
+            case 'upload_photo':
+                action = 'chatActionUploadingPhoto';
+                break;
+            case 'upload_video':
+                action = 'chatActionUploadingVideo';
+                break;
+            case 'upload_video_note':
+                action = 'chatActionUploadingVideoNote';
+                break;
+            case 'upload_voice':
+                action = 'chatActionUploadingVoiceNote';
+                break;
+            case 'watch_animation':
+                action = 'chatActionWatchingAnimations';
+                break;
             default:
                 action = 'chatActionTyping'
                 break;
@@ -921,7 +1073,9 @@ class telegramApi {
         return await this.handle.invoke({
             '_': "sendChatAction",
             "chat_id": chat_id,
-            'action': { '_': action }
+            'action': {
+                '_': action
+            }
         });
 
     }
@@ -951,11 +1105,10 @@ class telegramApi {
         if (reply_markup) {
             data["reply_markup"] = this.reply_markup(reply_markup);
         }
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
     async copyMessage(chat_id, from_chat_id, message_id, new_caption = false, parse_mode = "html", entities = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
-
         var data = {
             '_': "sendMessage",
             "chat_id": chat_id,
@@ -984,7 +1137,7 @@ class telegramApi {
         if (reply_markup) {
             data["reply_markup"] = this.reply_markup(reply_markup);
         }
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
 
@@ -1038,6 +1191,45 @@ class telegramApi {
             "parameters": parameters
         };
         return await this.handle.invoke(data);
+    }
+
+    async getBlockedMessageSenders(offset, limit = 50) {
+        var data = {
+            '_': "getBlockedMessageSenders",
+            "offest": offset,
+            "limit": limit
+        };
+        return await this.handle.invoke(data);
+    }
+
+    async getAllBlockMessageSender() {
+        var limit = 40;
+        var total_count = 0;
+        var getBlockedMessageSenders = await this.handle.invoke({
+            '_': "getBlockedMessageSenders",
+            "offest": 0,
+            "limit": limit
+        });
+        total_count = getBlockedMessageSenders["total_count"];
+        var list_user = [];
+        list_user = getBlockedMessageSenders["senders"];
+        var start_offset = limit;
+        for (let index = 0; index < (total_count / limit); index++) {
+            if (index > 0) {
+                await timers.setTimeout(2000);
+                var getBlockedMessageSender = await this.handle.invoke({
+                    '_': "getBlockedMessageSenders",
+                    "offest": start_offset,
+                    "limit": limit
+                });
+                await timers.setTimeout(2000);
+                for (var i = 0; i < getBlockedMessageSender["senders"].length; i++) {
+                    list_user.push(getBlockedMessageSender["senders"][i]);
+                }
+                start_offset = (start_offset + limit);
+            }
+        }
+        return { "ok": true, "result": list_user };
     }
 
     async getUserFullInfo(user_id, nau = false) {
@@ -1142,12 +1334,12 @@ class telegramApi {
             '_': "inputMessagePhoto",
             "photo": detailData,
         };
-        if (caption) {
+        if (typeof caption == "string") {
             var text = this.parseMode(caption, parse_mode, caption_entities);
             data["input_message_content"]["caption"] = text;
         }
 
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
     async sendDocument(chat_id, document, caption = false, parse_mode = false, caption_entities = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
@@ -1180,7 +1372,7 @@ class telegramApi {
             data["input_message_content"]["caption"] = text;
         }
 
-        return await this.handle.invoke(data)
+        return await this.requestSendMessage(data);
     }
 
     async sendVideo(chat_id, video, caption = false, parse_mode = false, caption_entities = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
@@ -1212,8 +1404,7 @@ class telegramApi {
             var text = this.parseMode(caption, parse_mode, caption_entities);
             data["input_message_content"]["caption"] = text;
         }
-
-        return this.handle.invoke(data)
+        return await this.requestSendMessage(data);
     }
 
     async sendAudio(chat_id, audio, caption = false, parse_mode = false, caption_entities = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
@@ -1248,7 +1439,7 @@ class telegramApi {
             data["input_message_content"]["caption"] = text;
         }
 
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
     async sendVoice(chat_id, voice, caption = false, parse_mode = false, caption_entities = false, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
@@ -1284,7 +1475,7 @@ class telegramApi {
             data["input_message_content"]["caption"] = text;
         }
 
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
     async sendSticker(chat_id, sticker, disable_notification = false, reply_to_message_id = false, reply_markup = false) {
@@ -1312,7 +1503,7 @@ class telegramApi {
         if (typeof reply_markup == "object") {
             data["reply_markup"] = this.reply_markup(reply_markup);
         }
-        return await this.handle.invoke(data);
+        return await this.requestSendMessage(data);
     }
 
     async answerCallbackQuery(callback_query_id, text = false, show_alert = false, url = false, cache_time = false) {
@@ -1368,12 +1559,13 @@ class telegramApi {
         return await this.handle.invoke(data);
     }
 
-    async getChats() {
+    async getChats(limit = 4000) {
         return await this.handle.invoke({
             '_': 'getChats',
-            "offset_order": '9223372036854775807',
-            "offset_chat_id": 0,
-            "limit": Math.floor(Math.random() * 9999999)
+            "chat_list": {
+                "_": 'chatListMain'
+            },
+            "limit": limit
         });
     }
 
@@ -1396,6 +1588,14 @@ class telegramApi {
     }
 
 
+    async getBasicGroupFullInfo(chat_id) {
+        var chat_id = String(chat_id).replace(/(-100|-)/ig, "");
+        var data = {
+            '_': "getBasicGroupFullInfo",
+            "basic_group_id": Number(chat_id)
+        };
+        return await this.handle.invoke(data);
+    }
     async getChatAdministrators(chat_id) {
         var data = {
             '_': "getChatAdministrators",
@@ -1430,7 +1630,7 @@ class telegramApi {
                         json_user["language_code"] = getUser["language_code"];
                     }
                     var json_user_detail = {};
-                    json_user_detail.contact = getUser.is_contact
+                    json_user_detail["contact"] = getUser.is_contact
                     json_user_detail.mutual = getUser.is_mutual_contact
                     json_user_detail.verified = getUser.is_verified
                     json_user_detail.support = getUser.is_support
@@ -1451,6 +1651,88 @@ class telegramApi {
         }
     }
 
+    async promoteChatMember(chat_id, user_id, options) {
+        var data = {
+            '_': "setChatMemberStatus",
+            "chat_id": chat_id,
+            "member_id": {
+                "_": "messageSenderUser",
+                "user_id": user_id
+            },
+            "status": {
+                "_": "chatMemberStatusAdministrator",
+                "custom_title": "Admins"
+            }
+        };
+        if (typeof options == "boolean") {
+            var status = {
+                "_": "chatMemberStatusAdministrator",
+                "custom_title": "Admins"
+            };
+            for (var key in options) {
+                if (Object.hasOwnProperty.call(options, key)) {
+                    var loop_data = options[key];
+                    if (typeof loop_data == "boolean") {
+                        status[String(key).toLocaleLowerCase()] = loop_data;
+                    }
+                }
+            }
+            data["status"] = status;
+        }
+        return await this.handle.invoke(data);
+    }
+    async setChatMemberStatus(chat_id, user_id, status = "ban", banned_until_date = 0) {
+        var data = {
+            '_': "setChatMemberStatus",
+            "chat_id": chat_id,
+            "member_id": {
+                "_": "messageSenderUser",
+                "user_id": user_id
+            },
+            "status": {
+                "_": "chatMemberStatusBanned",
+                "banned_until_date": banned_until_date
+            }
+        };
+        return await this.handle.invoke(data);
+    }
+
+    async banChatMember(chat_id, user_id, banned_until_date = 0, revoke_messages = false) {
+        var data = {
+            '_': "banChatMember",
+            "chat_id": chat_id,
+            "member_id": {
+                "_": "messageSenderUser",
+                "user_id": user_id
+            }
+        };
+        if (typeof banned_until_date == "number") {
+            data["banned_until_date"] = banned_until_date;
+        }
+        if (typeof revoke_messages == "boolean") {
+            data["revoke_messages"] = revoke_messages;
+        }
+        return await this.handle.invoke(data);
+    }
+
+    async banChatSenderChat(chat_id, sender_chat_id, banned_until_date = 0, revoke_messages = false) {
+        var data = {
+            '_': "getChatMember",
+            "chat_id": chat_id,
+            "member_id": {
+                "_": "messageSenderChat",
+                "chat_id": sender_chat_id
+            }
+        };
+        if (typeof banned_until_date == "number") {
+            data["banned_until_date"] = banned_until_date;
+        }
+        if (typeof revoke_messages == "boolean") {
+            data["revoke_messages"] = revoke_messages;
+        }
+        return await this.handle.invoke(data);
+    }
+
     async getChatMember(chat_id, user_id) {
         var data = {
             '_': "getChatMember",
@@ -1461,7 +1743,6 @@ class telegramApi {
             }
         };
         return await this.handle.invoke(data);
-
     }
     async getChatList() {
         var { chat_ids } = await this.getChats()
@@ -1656,6 +1937,27 @@ class telegramApi {
         return await this.handle.invoke({
             '_': "sendChatScreenshotTakenNotification",
             'chat_id': chat_id
+        });
+    }
+
+    async setAuthenticationPhoneNumber(phone_number) {
+        return await this.handle.invoke({
+            '_': "setAuthenticationPhoneNumber",
+            "phone_number": phone_number
+        });
+    }
+
+    async checkAuthenticationCode(code) {
+        return await this.handle.invoke({
+            '_': "checkAuthenticationCode",
+            "code": code
+        });
+    }
+
+    async checkAuthenticationPassword(password) {
+        return await this.handle.invoke({
+            '_': "checkAuthenticationPassword",
+            "password": password
         });
     }
 

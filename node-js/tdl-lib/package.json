@@ -1,11 +1,17 @@
 {
   "name": "tdl-lib",
+<<<<<<< HEAD
   "version": "0.0.64",
   "description": "Lightweight library to make application or bot for telegram without ip public",
+=======
+  "version": "0.0.60",
+  "description": "",
+>>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
   "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+<<<<<<< HEAD
   "repository": {
     "type": "git",
     "url": "git+https://github.com/azkadev/telegram_client.git"
@@ -17,6 +23,10 @@
     "telegram-client"
   ],
   "author": "@azkadev",
+=======
+  "keywords": [],
+  "author": "azkadev",
+>>>>>>> 7d7af08ca19f904cf346d8cb74dd492718a12510
   "license": "ISC",
   "dependencies": {
     "tdl": "^7.0.0",
