@@ -14,4 +14,4 @@ dev_dependencies:
 dependencies: 
   eventify: ^1.0.0
   ffi: ^1.1.2
-  switchscript: ^0.0.1
+  http: ^0.13.4

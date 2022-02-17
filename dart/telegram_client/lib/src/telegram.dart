@@ -24,21 +24,22 @@ part of telegram_client;
 
 class Telegram {
   final String _token;
-  final Map? option; 
-  final Map _options = {};
-  Telegram(this._token, [this.option]) {
+  late var option;
+  final Map _options = {
+    "botPath": "/bot/",
+    "userPath": "/user/",
+    "port": 8080,
+    "type": "bot",
+    "logger": false,
+    "api": "https://api.telegram.org/"
+  };
+  Telegram(this._token, [var this.option]) {
     if (_token.isEmpty) {
       throw "please fill token bot";
     }
-    _options.addAll({
-      "botPath": "/bot/",
-      "userPath": "/user/",
-      "port": 8080,
-      "type": "bot",
-      "logger": false,
-      "api": "https://api.telegram.org/",
-      ...option ?? {},
-    });
+    if (typeData(option) == "object") {
+      _options.addAll(option);
+    }
   }
 
   _Request get api {
