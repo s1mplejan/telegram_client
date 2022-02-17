@@ -54,7 +54,7 @@ class _Request {
         if (typeData(value) == "object") {
           if (typeData(value["is_post_file"]) == "boolean" &&
               value["is_post_file"]) {
-            var files = await MultipartFile.fromPath("document", "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin/test.dart");
+            var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else {
             form.fields[key] = convert.json.encode(value);
@@ -103,8 +103,22 @@ class _Request {
     return await request(method, parameters, true);
   }
 
-  file(path, [var option]) {
-    var json_data = {};
+  dynamic file(path, [var option]) {
+    Map<String, dynamic> jsonData = {"is_post_file": true};
+    if (RegExp("^(./|/)", caseSensitive: false).hasMatch(path)) {
+      var filename = path
+          .toString()
+          .replaceAll(RegExp("^(./|/)", caseSensitive: false), "");
+      jsonData["file_name"] = filename;
+      jsonData["file_path"] = path;
+      if (typeData(option) == "object") {
+        jsonData.addAll(option);
+      }
+    } else {
+      jsonData["is_post_file"] = false;
+      jsonData["file_path"] = path;
+    }
+    return jsonData;
   }
 
   // ignore: non_constant_identifier_names

@@ -1,4 +1,3 @@
-import 'package:switchscript/switchscript.dart';
 import 'package:telegram_client/telegram_client.dart';
 
 void main() {
@@ -24,7 +23,7 @@ void main() {
             "@type": "inputMessageText",
             "text": {
               "@type": "formattedText",
-              "text": JSON.stringify(update, null, 2),
+              "text": update.toString(),
               "entitiees": []
             },
             "disableWebPagePreview": false,
@@ -32,7 +31,7 @@ void main() {
           }
         };
         var anu = tdl.clientSend(option);
-        print(JSON.stringify(anu, null,2));
+        print(anu);
       }
     }
   });

@@ -14,6 +14,8 @@ void main() async {
       // request raw auto update library latest
       var options = {
         "chat_id": chat_id,
+        "document": tg.api.file(
+            "/home/azkadev/Documents/telegram_client/dart/telegram_client/docs/README.md"),
         "caption": "hello world",
         "protect_content": true,
         "reply_markup": {
@@ -25,8 +27,11 @@ void main() async {
         }
       };
       try {
-        await tg.api.request("sendDocument", options, true);
-
+        try {
+          await tg.api.request("sendDocument", options, true);
+        } catch (e) {
+          print("eror");
+        }
         await tg.api.sendMessage(chat_id, "hello world", {
           "reply_markup": {
             "inline_keyboard": [
