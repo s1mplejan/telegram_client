@@ -1,9 +1,7 @@
 import 'package:telegram_client/telegram_client.dart';
-import 'package:switchscript/switchscript.dart';
 import 'dart:io';
 
 void main() async {
-
   stdout.write("Paste your token bot from @botfather here: ");
   var tokenBot = stdin.readLineSync().toString();
   if (tokenBot.isNotEmpty) {
@@ -14,24 +12,32 @@ void main() async {
       // ignore: non_constant_identifier_names
       var chat_id = chatId;
       // request raw auto update library latest
-      var options = {"chat_id": chat_id, "text": "hello world"};
+      var options = {
+        "chat_id": chat_id,
+        "text": "hello world",
+        "protect_content": true,
+        "reply_markup": {
+          "inline_keyboard": [
+            [
+              {"text": "form data nih bos", "url": "google.com"}
+            ]
+          ]
+        }
+      };
       try {
-        await tg.api.request("sendMessage", options);
+        await tg.api.request("sendMessage", options, true);
 
         await tg.api.sendMessage(chat_id, "hello world", {
           "reply_markup": {
             "inline_keyboard": [
               [
-                {
-                  "text": "hewlo",
-                  "url": "google.com"
-                }
+                {"text": "hewlo", "url": "google.com"}
               ]
             ]
           }
         });
         var request = await tg.api.request("getMe");
-        print(JSON.stringify(request, null, 2));
+        print(request);
       } catch (e) {
         try {
           await tg.api.sendMessage(chat_id, e.toString());

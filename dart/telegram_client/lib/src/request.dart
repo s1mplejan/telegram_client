@@ -29,38 +29,82 @@ class _Request {
   final Option;
   _Request(this._token, this.Option);
 
-  // ignore: non_constant_identifier_names
-  dynamic request(var method, [var parameters, var is_form]) async {
+  dynamic request(var method,
+      [var parameters = false,
+      // ignore: non_constant_identifier_names
+      var is_form = false]) async {
     if (typeData(method) != "string") {
       throw "tolong tulis method dalam bentuk string!";
     }
-    var option = {
-      "method": "post",
-    };
-    var url =
-        "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
-    if (typeData(parameters) == "object") {
-      option["body"] = convert.json.encode(parameters);
+    if (typeData(is_form) != "boolean") {
+      throw "tolong tulis is_form dalam bentuk boolean!";
     }
-
-    var response = await post(
-      Uri.parse(url),
-      headers: {
-        'Accept': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: option["body"],
-    );
-    if (response.statusCode == 200) {
-      return convert.json.decode(response.body);
+    if (is_form) {
+      var option = {
+        "method": "post",
+      };
+      var url =
+          "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
+      if (typeData(parameters) == "object") {
+        option["body"] = convert.json.encode(parameters);
+      }
+      Map params = parameters;
+      var form = MultipartRequest("post", Uri.parse(url));
+      params.forEach((key, value) {
+        if (typeData(value) == "object") {
+          if (typeData(value["is_post_file"]) == "boolean" &&
+              value["is_post_file"]) {
+          } else {
+            form.fields[key] = convert.json.encode(value);
+          }
+        } else if (typeData(value) == "string") {
+          form.fields[key] = value;
+        } else {
+          form.fields[key] = value.toString();
+        }
+      });
+      var response = await form.send();
+      if (response.statusCode == 200) {
+        var res = await Response.fromStream(response);
+        return convert.json.decode(res.body);
+      } else {
+        var res = await Response.fromStream(response);
+        throw convert.json.decode(res.body);
+      }
     } else {
-      throw convert.json.decode(response.body);
+      var option = {
+        "method": "post",
+      };
+      var url =
+          "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
+      if (typeData(parameters) == "object") {
+        option["body"] = convert.json.encode(parameters);
+      }
+      var response = await post(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+        body: option["body"],
+      );
+      if (response.statusCode == 200) {
+        return convert.json.decode(response.body);
+      } else {
+        throw convert.json.decode(response.body);
+      }
     }
   }
 
   dynamic requestForm(method, [var parameters]) async {
     return await request(method, parameters, true);
+  }
+
+  file(path, [var option]) {
+    var json_data = {
+      
+    };
   }
 
   // ignore: non_constant_identifier_names
