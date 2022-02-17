@@ -14,7 +14,7 @@ void main() async {
       // request raw auto update library latest
       var options = {
         "chat_id": chat_id,
-        "text": "hello world",
+        "caption": "hello world",
         "protect_content": true,
         "reply_markup": {
           "inline_keyboard": [
@@ -25,7 +25,7 @@ void main() async {
         }
       };
       try {
-        await tg.api.request("sendMessage", options, true);
+        await tg.api.request("sendDocument", options, true);
 
         await tg.api.sendMessage(chat_id, "hello world", {
           "reply_markup": {

@@ -50,10 +50,12 @@ class _Request {
       }
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
-      params.forEach((key, value) {
+      params.forEach((key, value) async {
         if (typeData(value) == "object") {
           if (typeData(value["is_post_file"]) == "boolean" &&
               value["is_post_file"]) {
+            var files = await MultipartFile.fromPath("document", "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin/test.dart");
+            form.files.add(files);
           } else {
             form.fields[key] = convert.json.encode(value);
           }
@@ -102,9 +104,7 @@ class _Request {
   }
 
   file(path, [var option]) {
-    var json_data = {
-      
-    };
+    var json_data = {};
   }
 
   // ignore: non_constant_identifier_names
