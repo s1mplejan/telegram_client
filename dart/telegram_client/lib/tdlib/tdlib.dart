@@ -1,4 +1,7 @@
 // ignore: slash_for_doc_comments
+// ignore_for_file: void_checks
+
+// ignore: slash_for_doc_comments
 /**
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 SPDX-License-Identifier: MIT
@@ -24,8 +27,8 @@ part of telegram_client;
 
 class Tdlib {
   final String _pathTdl;
-  Map<String, dynamic> option;
-  final Map<String, dynamic> _optionDefault = {
+  Map<String, dynamic> optionTdlib;
+  final Map<String, dynamic> _optionTdlibDefault = {
     '@type': 'tdlibParameters',
     'api_id': 0,
     'api_hash': '',
@@ -40,15 +43,15 @@ class Tdlib {
     "database_key": ""
   };
   late ffi.Pointer client = _client_create();
-
-  Tdlib(this._pathTdl, this.option) {
-    option.forEach((key, value) {
-      _optionDefault[key.toString().toLowerCase()] = value;
-    });
+  EventEmitter emitter = EventEmitter();
+  Tdlib(this._pathTdl, this.optionTdlib) {
+    if (typeData(optionTdlib) == "object") {
+      _optionTdlibDefault.addAll(optionTdlib);
+    }
 
     clientRequest({
       "@type": "setLogVerbosityLevel",
-      "new_verbosity_level": _optionDefault['new_verbosity_level']
+      "new_verbosity_level": _optionTdlibDefault['new_verbosity_level']
     });
   }
 
@@ -106,14 +109,31 @@ class Tdlib {
 
   clientSend(jsonsend) {
     _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
-    
-    clienReceive(1.0);
-    clienReceive(1.0);
-    var receive = clienReceive(1.0);
-    if (typeData(receive) == "string") {
-      return convert.json.decode(receive);
-    } else {
-      return {};
+    while (true) {
+      var receive = clienReceive(1.0);
+      if (typeData(receive) == "string") {
+        return convert.json.decode(receive);
+      }
+    }
+  }
+
+  Map<String, dynamic> invoke(data, [bool is_api = false]) {
+    if (typeData(data) != "object") {
+      data = {};
+    }
+    _client_send(client, convert.json.encode(data).toNativeUtf8());
+    while (true) {
+      var receive = clienReceive(1.0);
+      if (typeData(receive) == "string") {
+        var update = convert.json.decode(receive);
+        if (typeData(update) == "object") {
+          if (is_api) {
+            return update;
+          } else {
+            return update;
+          }
+        }
+      }
     }
   }
 
@@ -127,7 +147,6 @@ class Tdlib {
     }
   }
 
-
   void clientDestroy() {
     return _client_destroy(client);
   }
@@ -140,9 +159,16 @@ class Tdlib {
     }
   }
 
-  on(callback, [double timeout = 1.0]) async {
+  // ignore: non_constant_identifier_names
+  bot(token_bot) async {
+    if (typeData(token_bot) != "string") {
+      throw {};
+    }
+    if (!getBoolean(token_bot)) {
+      throw {};
+    }
     while (true) {
-      var update = clienReceive(timeout);
+      var update = clienReceive(1.0);
       // ignore: unnecessary_null_comparison
       if (typeData(update) == "string" && update.toString().isNotEmpty) {
         var updateOrigin = convert.json.decode(update);
@@ -156,35 +182,85 @@ class Tdlib {
                   "authorizationStateWaitTdlibParameters") {
                 var optin = {
                   "@type": 'setTdlibParameters',
-                  'parameters': _optionDefault
+                  'parameters': _optionTdlibDefault
                 };
-                clientRequest(optin);
-                /*
-                clientSend({
-                  '@type': 'setDatabaseEncryptionKey',
-                  'new_encryption_key': _optionDefault["database_key"]
-                });
-                */
+                invoke(optin);
+
+                try {
+                  invoke({
+                    '@type': 'setDatabaseEncryptionKey',
+                    'new_encryption_key': _optionTdlibDefault["database_key"]
+                  });
+                } catch (e) {}
               }
 
               if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
-                clientRequest({
+                invoke({
                   "@type": 'checkDatabaseEncryptionKey',
-                  'encryption_key': _optionDefault["database_key"]
+                  'encryption_key': _optionTdlibDefault["database_key"]
                 });
               }
             }
           }
           if (updateOrigin["@type"] == "updateConnectionState" &&
               updateOrigin["state"]["@type"] == "connectionStateReady") {
-            clientRequest({
-              "@type": "checkAuthenticationBotToken",
-              "token": "5059078949:AAF0lFQGmcWyDjLPaCMYc6Xcp3kgcS_lFQU"
-            });
+            invoke(
+                {"@type": "checkAuthenticationBotToken", "token": token_bot});
           }
-          callback(updateOrigin);
         }
+        emitter.emit("update", null, updateOrigin);
       }
     }
+  }
+
+  // ignore: non_constant_identifier_names
+  on(type_update, callback) async {
+    if (typeData(type_update) != "string") {
+      throw {};
+    }
+    if (!getBoolean(type_update)) {
+      throw {};
+    }
+    if (type_update.toString().toLowerCase() == "update") {
+      emitter.on("update", null, (Event ev, context) {
+        return callback(ev.eventData);
+      });
+    }
+  }
+
+  request(String method, [var option]) {
+    if (method.isEmpty) {
+      throw "tolong isi methodya!";
+    }
+    if (typeData(option) != "object") {
+      option = {};
+    }
+
+    if (getBoolean(option["chat_id"])) {
+      if (typeData(option["chat_id"]) == "string" &&
+          option["chat_id"].toString().length > 4) {}
+    }
+
+    if (getBoolean(option["user_id"])) {
+      if (typeData(option["user_id"]) == "string" &&
+          option["user_id"].toString().length > 4) {}
+    }
+
+    if (RegExp("^sendMessage\$", caseSensitive: false).hasMatch(method)) {
+      return sendMessage(option["chat_id"], option["text"]);
+    }
+  }
+
+  sendMessage(chat_id, text) {
+    return invoke({
+      "@type": "sendMessage",
+      "chat_id": chat_id,
+      "input_message_content": {
+        "@type": "inputMessageText",
+        "text": {"@type": "formattedText", "text": text, "entitiees": []},
+        "disableWebPagePreview": false,
+        "clearDraft": false
+      }
+    });
   }
 }

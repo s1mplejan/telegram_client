@@ -1,4 +1,5 @@
 import 'package:telegram_client/telegram_client.dart';
+import 'package:telegram_client/telegram_client.dart' as client;
 
 void main() {
   var option = {
@@ -9,30 +10,18 @@ void main() {
     'files_directory':
         "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin/bot"
   };
-  var tdl = Tdlib("/home/azkadev/Desktop/azkauserrobot/libtdjson.so", option);
-  tdl.on((update) async {
+  var tg =
+      Tdlib("/home/azkadev/Downloads/azkauserrobot-1.0.1/libtdjson.so", option);
+  tg.on("update", (update) async {
     if (update["@type"] == "updateNewMessage" &&
         update["message"]["@type"] == "message") {
       var msg = update["message"];
       var chatId = msg["chat_id"];
       if (!msg["is_outgoing"]) {
-        var option = {
-          "@type": "sendMessage",
-          "chat_id": chatId,
-          "input_message_content": {
-            "@type": "inputMessageText",
-            "text": {
-              "@type": "formattedText",
-              "text": update.toString(),
-              "entitiees": []
-            },
-            "disableWebPagePreview": false,
-            "clearDraft": false
-          }
-        };
-        var anu = tdl.clientSend(option);
-        print(anu);
+        tg.request(
+            "sendMessage", {"chat_id": chatId, "text": "Hello world"});
       }
     }
   });
+  tg.bot("5141871612:AAGKvhsIdiKkCDOQ7bjIOhZ3-F1BWtnuYfk");
 }
