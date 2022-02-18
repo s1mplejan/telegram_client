@@ -92,7 +92,17 @@ class _Request {
         body: option["body"],
       );
       if (response.statusCode == 200) {
-        return convert.json.decode(response.body);
+        if (method.toString().toLowerCase() == "getfile") {
+          var getFile = convert.json.decode(response.body);
+          var url = Option["api"].toString().toLowerCase() +
+              "file/" +
+              Option["type"].toString().toLowerCase();
+          getFile["result"]["file_url"] =
+              url + _token.toString() + "/" + getFile["result"]["file_path"];
+          return getFile;
+        } else {
+          return convert.json.decode(response.body);
+        }
       } else {
         throw convert.json.decode(response.body);
       }

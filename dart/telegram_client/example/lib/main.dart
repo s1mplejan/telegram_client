@@ -108,20 +108,18 @@ class MainPageState extends State<MainPage> {
                 ),
                 TextButton(
                   onPressed: () async {
-                    String? selectedDirectory =
-                        await FilePicker.platform.getDirectoryPath();
-
-                    if (selectedDirectory != null) {
-                      // User canceled the picker
-                      print(selectedDirectory);
+                    FilePickerResult? result =
+                        await FilePicker.platform.pickFiles();
+                    if (result != null) {
+                      var file = result.files.single;
+                      try {
+                        var send = await tg.request("getFile", {
+                          "file_id":
+                              "BQACAgUAAxkDAAIEkWIOfR6BNKBxD81zboiQZUcSj1b4AAJDBAAC9i55VGlDO00jEpSLIwQ"
+                        });
+                        print(send["result"]["file_url"]);
+                      } catch (e) {}
                     }
-                    return print("oke");
-                    try {
-                      tg.request("sendMessage", {
-                        "chat_id": int.parse(chat_id.text),
-                        "text": text.text
-                      });
-                    } catch (e) {}
                   },
                   child: const Center(
                     child: Text("send"),

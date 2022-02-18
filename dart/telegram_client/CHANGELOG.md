@@ -13,3 +13,7 @@
 ## 0.0.4
 
 - remove libtdjson.
+
+## 0.0.5
+
+- add file_link in method getFile.
