@@ -43,21 +43,38 @@ class Tdlib {
     "database_key": ""
   };
   late ffi.Pointer client = _client_create();
+  late ffi.Pointer clien = _client_create_id.call();
+  bool is_stop = false;
   EventEmitter emitter = EventEmitter();
   Tdlib(this._pathTdl, this.optionTdlib) {
     if (typeData(optionTdlib) == "object") {
       _optionTdlibDefault.addAll(optionTdlib);
     }
 
-    clientRequest({
-      "@type": "setLogVerbosityLevel",
-      "new_verbosity_level": _optionTdlibDefault['new_verbosity_level']
-    });
+    client_execute.call(
+        client,
+        convert.json.encode({
+          "@type": "setLogVerbosityLevel",
+          "new_verbosity_level": _optionTdlibDefault['new_verbosity_level']
+        }).toNativeUtf8());
+    _client_send.call(
+        client,
+        convert.json.encode({
+          '@type': 'getAuthorizationState',
+          '@extra': 1.01234
+        }).toNativeUtf8());
   }
 
   // ignore: non_constant_identifier_names
   ffi.DynamicLibrary TdlibPathFile() {
     return ffi.DynamicLibrary.open(_pathTdl);
+  }
+
+  ffi.Pointer Function() get _client_create_id {
+    return TdlibPathFile()
+        .lookup<ffi.NativeFunction<ffi.Pointer Function()>>(
+            'td_create_client_id')
+        .asFunction();
   }
 
   // ignore: non_constant_identifier_names
@@ -107,23 +124,13 @@ class Tdlib {
         .asFunction();
   }
 
-  clientSend(jsonsend) {
-    _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
-    while (true) {
-      var receive = clienReceive(1.0);
-      if (typeData(receive) == "string") {
-        return convert.json.decode(receive);
-      }
-    }
-  }
-
-  Map<String, dynamic> invoke(data, [bool is_api = false]) {
+  Future<Map<String, dynamic>> invoke(data, [bool is_api = false]) async {
     if (typeData(data) != "object") {
       data = {};
     }
     _client_send(client, convert.json.encode(data).toNativeUtf8());
     while (true) {
-      var receive = clienReceive(1.0);
+      var receive = await clienReceive(1.0);
       if (typeData(receive) == "string") {
         var update = convert.json.decode(receive);
         if (typeData(update) == "object") {
@@ -137,21 +144,11 @@ class Tdlib {
     }
   }
 
-  clientRequest(jsonsend) {
-    _client_send(client, convert.json.encode(jsonsend).toNativeUtf8());
-    var receive = clienReceive(1.0);
-    if (typeData(receive) == "string") {
-      return convert.json.decode(receive);
-    } else {
-      return {};
-    }
-  }
-
   void clientDestroy() {
     return _client_destroy(client);
   }
 
-  String clienReceive([double timeout = 10.0]) {
+  Future<String> clienReceive([double timeout = 10.0]) async {
     try {
       return _client_receive(client, timeout).toDartString();
     } catch (e) {
@@ -160,15 +157,17 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names
-  bot(token_bot) async {
+  Future<void> bot(token_bot) async {
     if (typeData(token_bot) != "string") {
       throw {};
     }
     if (!getBoolean(token_bot)) {
       throw {};
     }
-    while (true) {
-      var update = clienReceive(1.0);
+
+    
+    while (!is_stop) {
+      var update = await clienReceive(1.0);
       // ignore: unnecessary_null_comparison
       if (typeData(update) == "string" && update.toString().isNotEmpty) {
         var updateOrigin = convert.json.decode(update);
@@ -184,37 +183,35 @@ class Tdlib {
                   "@type": 'setTdlibParameters',
                   'parameters': _optionTdlibDefault
                 };
-                invoke(optin);
 
-                try {
-                  invoke({
-                    '@type': 'setDatabaseEncryptionKey',
-                    'new_encryption_key': _optionTdlibDefault["database_key"]
-                  });
-                } catch (e) {}
+                _client_send.call(
+                    client, convert.json.encode(optin).toNativeUtf8());
               }
 
               if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
-                invoke({
-                  "@type": 'checkDatabaseEncryptionKey',
-                  'encryption_key': _optionTdlibDefault["database_key"]
-                });
+                _client_send.call(
+                    client,
+                    convert.json.encode({
+                      "@type": 'checkDatabaseEncryptionKey',
+                      'encryption_key': _optionTdlibDefault["database_key"]
+                    }).toNativeUtf8());
               }
             }
           }
           if (updateOrigin["@type"] == "updateConnectionState" &&
               updateOrigin["state"]["@type"] == "connectionStateReady") {
-            invoke(
+            await invoke(
                 {"@type": "checkAuthenticationBotToken", "token": token_bot});
           }
         }
         emitter.emit("update", null, updateOrigin);
       }
     }
+    _client_destroy.call(client);
   }
 
   // ignore: non_constant_identifier_names
-  on(type_update, callback) async {
+  void on(type_update, callback) async {
     if (typeData(type_update) != "string") {
       throw {};
     }
