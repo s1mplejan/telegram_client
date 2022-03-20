@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'dart:isolate';
-import 'package:telegram_client/telegram_client.dart';
-import 'dart:io';
+import 'core/lib.dart';
 
 var path = Directory.current.path;
 var option = {
@@ -12,7 +9,7 @@ var option = {
 };
 Tdlib tg =
     Tdlib("/home/azkadev/Downloads/azkauserrobot-1.0.1/libtdjson.so", option);
-    
+
 void main() async {
   runApp(
     MaterialApp(
@@ -29,17 +26,7 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title, required this.tg})
       : super(key: key);
   final Tdlib tg;
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -47,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String text = "hellow rold";
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -62,39 +50,31 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() async {
     super.initState();
     ReceivePort port = ReceivePort();
-
     await Isolate.spawn(telegram, port.sendPort);
 
-    port.listen((update) async{
-      if (update["@type"] == "updateNewMessage" &&
-          update["message"]["@type"] == "message") {
-        var msg = update["message"];
+    port.listen((update_td) async {
+      UpdateTd update = update_td;
+      print(update.update);
+      if (update.update["@type"] == "updateNewMessage" &&
+          update.update["message"]["@type"] == "message") {
+        var msg = update.update["message"];
         var chatId = msg["chat_id"];
         if (!msg["is_outgoing"]) {
-          print(update["message"]["content"]);
-          if (typeData(update["message"]["content"]) == "object" &&
-              typeData(update["message"]["content"]["text"]) == "object") {
-            setState(() {
-              _counter++;
-              text = update["message"]["content"]["text"]["text"];
-            });
-          return await tg.request(
-              "sendMessage", {"chat_id": chatId, "text": "apa lo"});
-          }
+          
         }
       }
     });
   }
 
   void telegram(SendPort sendPort) async {
-    tg.on("update", (update) async {
+    tg.on("update", (UpdateTd update) async {
       sendPort.send(update);
-      if (update["@type"] == "updateNewMessage" &&
-          update["message"]["@type"] == "message") {
-        var msg = update["message"];
+      if (update.update["@type"] == "updateNewMessage" &&
+          update.update["message"]["@type"] == "message") {
+        var msg = update.update["message"];
         var chatId = msg["chat_id"];
         if (!msg["is_outgoing"]) {
-          return await tg.request(
+          return await update.tg.request(
               "sendMessage", {"chat_id": chatId, "text": "Hello world"});
         }
       }

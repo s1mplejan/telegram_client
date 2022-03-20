@@ -95,6 +95,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  hexaminate:
+    dependency: "direct main"
+    description:
+      name: hexaminate
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   http:
     dependency: transitive
     description:
@@ -183,7 +190,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.5"
+    version: "0.0.6"
   term_glyph:
     dependency: transitive
     description:

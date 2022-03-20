@@ -11,15 +11,23 @@ void main() async {
       'database_directory': "$path/bot",
       'files_directory': "$path/bot",
     };
-    var tg = Tdlib("$path/libtdjson.so", option);
-    tg.on("update", (update) async {
-      print(update);
-      if (update["@type"] == "updateNewMessage" &&
-          update["message"]["@type"] == "message") {
-        var msg = update["message"];
-        var chatId = msg["chat_id"];
-        if (!msg["is_outgoing"]) {
-          tg.request("sendMessage", {"chat_id": chatId, "text": "Hello world"});
+    Tdlib tg = Tdlib(
+        "/home/azkadev/Downloads/azkauserrobot-1.0.1/libtdjson.so", option);
+    tg.on("update", (UpdateTd update) async {
+      if (update.message.is_found) {
+        var msg = update.message;
+        if (!msg.is_outgoing) {
+          if (msg.text == "/start") {
+            update.tg.request("sendMessage", {
+              "chat_id": msg.chat.id,
+              "text": "start message"
+            });
+          } else {
+            update.tg.request("sendMessage", {
+              "chat_id": msg.chat.id,
+              "text": "Echo ${msg.text ?? "undefined"}"
+            });
+          }
         }
       }
     });

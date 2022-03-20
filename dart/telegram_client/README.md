@@ -148,35 +148,26 @@ void main() {
     'database_directory':"/home/azkadev/Documents/telegram_client/dart/telegram_client/bin/bot",
     'files_directory': "/home/azkadev/Documents/telegram_client/dart/telegram_client/bin/bot"
   };
-  var tdl = Tdlib("/home/azkadev/Desktop/azkauserrobot/libtdjson.so", option);
-  tdl.on((update, client) {
-    if (update["@type"] == "updateNewMessage" &&
-        update["message"]["@type"] == "message") {
-      var msg = update["message"];
-      var chatId = msg["chat_id"];
-      if (!msg["is_outgoing"]) {
-        var option = {
-          "@type": "sendMessage",
-          "chat_id": chatId,
-          "input_message_content": {
-            "@type": "inputMessageText",
-            "text": {
-              "@type": "formattedText",
-              "text": "hello world",
-              "entitiees": []
-            },
-            "disableWebPagePreview": false,
-            "clearDraft": false
-          }
-        };
-        return tdl.clientSend(option);
+  Tdlib tg = Tdlib("/home/azkadev/Desktop/azkauserrobot/libtdjson.so", option);
+  tg.on("update", (UpdateTd update) async {
+    if (update.message.is_found) {
+      var msg = update.message;
+      if (!msg.is_outgoing) {
+        if (msg.text == "/start") {
+          return tg.request("sendMessage", {
+            "chat_id": msg.chat.id,
+            "text": "start message"
+          });
+        } else {
+          return tg.request("sendMessage", {
+            "chat_id": msg.chat.id,
+            "text": "Echo ${msg.text ?? "undefined"}"
+          });
+        }
       }
     }
   });
-  tdl.clientSend({
-    "@type": "checkAuthenticationBotToken",
-    "token": "token_your_bot"
-  });
+  await tg.bot("2123043767:AAEY0KTdVYo0JTRmFF5S4QPBnvoCdpe2yPI");
 }
 ```
 

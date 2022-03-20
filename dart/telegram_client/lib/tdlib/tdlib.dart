@@ -157,7 +157,7 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names
-  Future<void> bot(token_bot) async {
+  Future<void> bot(token_bot, [bool auto_stop = false]) async {
     if (typeData(token_bot) != "string") {
       throw {};
     }
@@ -165,7 +165,6 @@ class Tdlib {
       throw {};
     }
 
-    
     while (!is_stop) {
       var update = await clienReceive(1.0);
       // ignore: unnecessary_null_comparison
@@ -202,6 +201,9 @@ class Tdlib {
               updateOrigin["state"]["@type"] == "connectionStateReady") {
             await invoke(
                 {"@type": "checkAuthenticationBotToken", "token": token_bot});
+            if (auto_stop) {
+              is_stop = true;
+            }
           }
         }
         emitter.emit("update", null, updateOrigin);
@@ -220,7 +222,7 @@ class Tdlib {
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        return callback(ev.eventData);
+        return callback(UpdateTd(this, ev.eventData as Map));
       });
     }
   }
@@ -260,4 +262,118 @@ class Tdlib {
       }
     });
   }
+}
+
+class UpdateTd {
+  late Tdlib tg;
+  late Map update;
+  UpdateTd(this.tg, this.update);
+
+  Map get raw {
+    return update;
+  }
+
+  String get type {
+    return update["@type"];
+  }
+
+  // ignore: non_constant_identifier_names
+  UpdateChannelPost get channel_post {
+    return UpdateChannelPost(tg, update);
+  }
+
+  UpdateMessage get message {
+    return UpdateMessage(tg, update);
+  }
+}
+
+class UpdateChannelPost {
+  late Tdlib tg;
+  late Map update;
+  UpdateChannelPost(this.tg, this.update);
+}
+
+class UpdateMessage {
+  late Tdlib tg;
+  late Map update;
+  UpdateMessage(this.tg, this.update);
+
+  // ignore: non_constant_identifier_names
+  bool get is_found {
+    return getBoolean(update["message"]);
+  }
+
+  String get type {
+    return update["message"]["@type"];
+  }
+
+  // ignore: non_constant_identifier_names
+  bool get is_outgoing {
+    return update["message"]["is_outgoing"];
+  }
+
+  UpdateFrom get from {
+    return UpdateFrom(tg, update);
+  }
+
+  UpdateChat get chat {
+    return UpdateChat(tg, update);
+  }
+
+  String? get text {
+    try {
+      return update["message"]["content"]["text"]["text"];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  MessagePhoto get photo {
+    return MessagePhoto(tg, update);
+  }
+
+  MessageAudio get audio {
+    return MessageAudio(tg, update);
+  }
+
+  MessageEntities get entities {
+    return MessageEntities(tg, update);
+  }
+  
+}
+
+class UpdateFrom {
+  late Tdlib tg;
+  late Map update;
+  UpdateFrom(this.tg, this.update);
+  int get id {
+    return update["message"]["chat_id"];
+  }
+}
+
+class UpdateChat {
+  late Tdlib tg;
+  late Map update;
+  UpdateChat(this.tg, this.update);
+  int get id {
+    return update["message"]["chat_id"];
+  }
+}
+
+class MessagePhoto {
+  late Tdlib tg;
+  late Map update;
+  MessagePhoto(this.tg, this.update);
+}
+
+class MessageAudio {
+  late Tdlib tg;
+  late Map update;
+  MessageAudio(this.tg, this.update);
+}
+
+class MessageEntities {
+  late Tdlib tg;
+  late Map update;
+  MessageEntities(this.tg, this.update);
 }

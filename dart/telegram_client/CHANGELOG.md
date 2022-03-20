@@ -17,3 +17,13 @@
 ## 0.0.5
 
 - add file_link in method getFile.
+
+## 0.0.6
+
+- add library hexaminate.
+
+## 0.0.7
+
+- add pretty update.
+
+
