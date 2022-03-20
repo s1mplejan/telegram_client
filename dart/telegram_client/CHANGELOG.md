@@ -27,3 +27,6 @@
 - add pretty update.
 
 
+## 0.0.8
+
+- add pretty update.

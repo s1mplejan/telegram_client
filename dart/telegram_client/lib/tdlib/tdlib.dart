@@ -30,16 +30,20 @@ class Tdlib {
   Map<String, dynamic> optionTdlib;
   final Map<String, dynamic> _optionTdlibDefault = {
     '@type': 'tdlibParameters',
-    'api_id': 0,
-    'api_hash': '',
+    'api_id': 1917085,
+    'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
     'database_directory': "",
     'files_directory': "",
+    "use_file_database": true,
+    "use_chat_info_database": true,
+    "use_message_database": true,
+    "use_secret_chats": true,
     'enable_storage_optimizer': true,
     'system_language_code': 'en',
     'new_verbosity_level': 0,
     'application_version': 'v1',
-    'device_model': 'dart',
-    'system_version': 'azkadev',
+    'device_model': 'Telegram Client Hexaminate',
+    'system_version': Platform.operatingSystem,
     "database_key": ""
   };
   late ffi.Pointer client = _client_create();
@@ -157,6 +161,49 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names
+  Future<void> user() async {
+    while (!is_stop) {
+      var update = await clienReceive(1.0);
+      // ignore: unnecessary_null_comparison
+      if (typeData(update) == "string" && update.toString().isNotEmpty) {
+        var updateOrigin = convert.json.decode(update);
+
+        if (typeData(updateOrigin) == "object") {
+          if (updateOrigin["@type"] == "updateAuthorizationState") {
+            var authState = updateOrigin["authorization_state"];
+
+            if (typeData(authState) == "object") {
+              if (authState["@type"] ==
+                  "authorizationStateWaitTdlibParameters") {
+                var optin = {
+                  "@type": 'setTdlibParameters',
+                  'parameters': _optionTdlibDefault
+                };
+
+                _client_send.call(
+                    client, convert.json.encode(optin).toNativeUtf8());
+              }
+
+              if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
+                _client_send.call(
+                    client,
+                    convert.json.encode({
+                      "@type": 'checkDatabaseEncryptionKey',
+                      'encryption_key': _optionTdlibDefault["database_key"]
+                    }).toNativeUtf8());
+              }
+            }
+          }
+          if (updateOrigin["@type"] == "updateConnectionState" &&
+              updateOrigin["state"]["@type"] == "connectionStateReady") {}
+        }
+        emitter.emit("update", null, updateOrigin);
+      }
+    }
+    _client_destroy.call(client);
+  }
+
+  // ignore: non_constant_identifier_names
   Future<void> bot(token_bot, [bool auto_stop = false]) async {
     if (typeData(token_bot) != "string") {
       throw {};
@@ -213,7 +260,7 @@ class Tdlib {
   }
 
   // ignore: non_constant_identifier_names
-  void on(type_update, callback) async {
+  void on(type_update, void Function(UpdateTd update) callback) async {
     if (typeData(type_update) != "string") {
       throw {};
     }
@@ -247,6 +294,17 @@ class Tdlib {
 
     if (RegExp("^sendMessage\$", caseSensitive: false).hasMatch(method)) {
       return sendMessage(option["chat_id"], option["text"]);
+    }
+  }
+
+  Future<Map<String, dynamic>> requestApi(String method,
+      [Map? parameters]) async {
+    var json = {"@type": method, ...parameters ?? {}};
+    var result = await invoke(json);
+    if (result["@type"] == "error") {
+      throw result;
+    } else {
+      return result;
     }
   }
 
@@ -339,7 +397,6 @@ class UpdateMessage {
   MessageEntities get entities {
     return MessageEntities(tg, update);
   }
-  
 }
 
 class UpdateFrom {
