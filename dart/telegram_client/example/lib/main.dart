@@ -1,15 +1,9 @@
-import 'core/lib.dart';
+import 'package:flutter/material.dart';
+import 'dart:isolate';
+import 'package:telegram_client/telegram_client.dart';
+import 'dart:io';
 
-var path = Directory.current.path;
-var option = {
-  'api_id': 1917085,
-  'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
-  'database_directory': "$path/bot",
-  'files_directory': "$path/bot",
-};
-Tdlib tg =
-    Tdlib("/home/azkadev/Downloads/azkauserrobot-1.0.1/libtdjson.so", option);
-
+String path = Directory.current.path;
 void main() async {
   runApp(
     MaterialApp(
@@ -17,15 +11,13 @@ void main() async {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page', tg: tg),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     ),
   );
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, required this.tg})
-      : super(key: key);
-  final Tdlib tg;
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -51,31 +43,41 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     ReceivePort port = ReceivePort();
     await Isolate.spawn(telegram, port.sendPort);
-
     port.listen((update_td) async {
-      UpdateTd update = update_td;
-      print(update.update);
-      if (update.update["@type"] == "updateNewMessage" &&
-          update.update["message"]["@type"] == "message") {
-        var msg = update.update["message"];
-        var chatId = msg["chat_id"];
-        if (!msg["is_outgoing"]) {
-          
-        }
-      }
+      setState(() {
+        text = update_td;
+      });
     });
   }
 
   void telegram(SendPort sendPort) async {
+    if (Platform.isAndroid) {
+      path = "/data/data/com.example.example/files";
+    }
+    var option = {
+      'api_id': 1917085,
+      'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
+      'database_directory': "$path/bot",
+      'files_directory': "$path/bot",
+    };
+    Tdlib tg = Tdlib("libtdjson.so", option);
+
     tg.on("update", (UpdateTd update) async {
-      sendPort.send(update);
-      if (update.update["@type"] == "updateNewMessage" &&
-          update.update["message"]["@type"] == "message") {
-        var msg = update.update["message"];
-        var chatId = msg["chat_id"];
-        if (!msg["is_outgoing"]) {
-          return await update.tg.request(
-              "sendMessage", {"chat_id": chatId, "text": "Hello world"});
+      sendPort.send(update.raw);
+      if (update.message.is_found) {
+        if (update.message.text!.isNotEmpty) {
+          sendPort.send(update.message.text);
+        }
+        if (RegExp("^/ping", caseSensitive: false)
+            .hasMatch(update.message.text ?? "")) {
+          return await tg.request("sendMessage",
+              {"chat_id": update.message.chat.id, "text": "Pong"});
+        }
+        if (update.message.text == "/start") {
+          return await tg.request("sendMessage", {
+            "chat_id": update.message.chat.id,
+            "text": "Hello saya adalah bot"
+          });
         }
       }
     });

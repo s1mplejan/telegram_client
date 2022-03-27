@@ -1,5 +1,5 @@
 // ignore: slash_for_doc_comments
-// ignore_for_file: void_checks
+// ignore_for_file: void_checks, non_constant_identifier_names
 
 // ignore: slash_for_doc_comments
 /**
@@ -49,6 +49,7 @@ class Tdlib {
   late ffi.Pointer client = _client_create();
   late ffi.Pointer clien = _client_create_id.call();
   bool is_stop = false;
+  bool is_android = Platform.isAndroid;
   EventEmitter emitter = EventEmitter();
   Tdlib(this._pathTdl, this.optionTdlib) {
     if (typeData(optionTdlib) == "object") {
@@ -69,7 +70,6 @@ class Tdlib {
         }).toNativeUtf8());
   }
 
-  // ignore: non_constant_identifier_names
   ffi.DynamicLibrary TdlibPathFile() {
     return ffi.DynamicLibrary.open(_pathTdl);
   }
@@ -77,54 +77,51 @@ class Tdlib {
   ffi.Pointer Function() get _client_create_id {
     return TdlibPathFile()
         .lookup<ffi.NativeFunction<ffi.Pointer Function()>>(
-            'td_create_client_id')
+            '${is_android ? "_" : ""}td_create_client_id')
         .asFunction();
   }
 
-  // ignore: non_constant_identifier_names
   ffi.Pointer Function() get _client_create {
     return TdlibPathFile()
         .lookup<ffi.NativeFunction<ffi.Pointer Function()>>(
-            'td_json_client_create')
+            '${is_android ? "_" : ""}td_json_client_create')
         .asFunction();
   }
 
-  // ignore: non_constant_identifier_names
   ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, double) get _client_receive {
     return TdlibPathFile()
         .lookup<
-            ffi.NativeFunction<
-                ffi.Pointer<pkgffi.Utf8> Function(
-                    ffi.Pointer, ffi.Double)>>('td_json_client_receive')
+                ffi.NativeFunction<
+                    ffi.Pointer<pkgffi.Utf8> Function(
+                        ffi.Pointer, ffi.Double)>>(
+            '${is_android ? "_" : ""}td_json_client_receive')
         .asFunction();
   }
 
-  // ignore: non_constant_identifier_names, unused_local_variable
+  // ignore: unused_local_variable
   void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>) get _client_send {
     return TdlibPathFile()
         .lookup<
             ffi.NativeFunction<
                 ffi.Void Function(ffi.Pointer,
-                    ffi.Pointer<pkgffi.Utf8>)>>('td_json_client_send')
+                    ffi.Pointer<pkgffi.Utf8>)>>('${is_android ? "_" : ""}td_json_client_send')
         .asFunction();
   }
 
   ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)
-      // ignore: non_constant_identifier_names
       get client_execute {
     return TdlibPathFile()
         .lookup<
             ffi.NativeFunction<
                 ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer,
-                    ffi.Pointer<pkgffi.Utf8>)>>('td_json_client_execute')
+                    ffi.Pointer<pkgffi.Utf8>)>>('${is_android ? "_" : ""}td_json_client_execute')
         .asFunction();
   }
 
-  // ignore: non_constant_identifier_names, unused_local_variable
   void Function(ffi.Pointer) get _client_destroy {
     return TdlibPathFile()
         .lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
-            'td_json_client_destroy')
+            '${is_android ? "_" : ""}td_json_client_destroy')
         .asFunction();
   }
 
@@ -163,7 +160,7 @@ class Tdlib {
   // ignore: non_constant_identifier_names
   Future<void> user() async {
     while (!is_stop) {
-      var update = await clienReceive(1.0);
+      var update = await clienReceive();
       // ignore: unnecessary_null_comparison
       if (typeData(update) == "string" && update.toString().isNotEmpty) {
         var updateOrigin = convert.json.decode(update);

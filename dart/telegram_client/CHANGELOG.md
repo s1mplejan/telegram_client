@@ -30,3 +30,7 @@
 ## 0.0.8
 
 - add pretty update.
+
+## 0.0.9
+
+- alpha support android.
