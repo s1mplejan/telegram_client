@@ -14,7 +14,7 @@ dev_dependencies:
 dependencies: 
   eventify: ^1.0.0
   ffi: ^1.1.2
-  hexaminate: ^0.0.3
+  hexaminate: ^0.0.5
   http: ^0.13.4
 
 executables:
