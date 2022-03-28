@@ -563,37 +563,36 @@ class Tdlib {
   }
 
   Future<dynamic> requestSendApi(String method, Map? parameters) async {
-    try {
-      String random = getRandom(15);
-      if (parameters != null) {
-        parameters["@extra"] = random;
-      } else {
-        parameters!["@extra"] = random;
-      }
-      _client_send.call(client,
-          convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
-      var count = 0;
-      bool condition = true;
-      var result = {};
-      on("update", (UpdateTd update) async {
-        try {
-          Map updateOrigin = update.raw;
-          if (updateOrigin["@extra"] == random) {
-            updateOrigin.remove("@extra");
-            result = updateOrigin;
-          }
-        } catch (e) {
-          rethrow;
+    String random = getRandom(15);
+    if (parameters != null) {
+      parameters["@extra"] = random;
+    } else {
+      parameters!["@extra"] = random;
+    }
+    _client_send.call(client,
+        convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
+    var count = 0;
+    bool condition = true;
+    var result = {};
+    on("update", (UpdateTd update) async {
+      try {
+        Map updateOrigin = update.raw;
+        if (updateOrigin["@extra"] == random) {
+          updateOrigin.remove("@extra");
+          result = updateOrigin;
         }
-      });
-      while (condition) {
-        await Future.delayed(Duration(seconds: 1));
-        if (typeof(result["@type"]) == "string") {
-          return result;
-        }
+      } catch (e) {
+        rethrow;
       }
-    } catch (e) {
-      rethrow;
+    });
+    while (condition) {
+      await Future.delayed(Duration(seconds: 1));
+      if (typeof(result["@type"]) == "string") {
+        if (result["@type"] == "error") {
+          throw result;
+        }
+        return result;
+      }
     }
   }
 

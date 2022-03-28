@@ -43,6 +43,6 @@
 
 - beta support android.
 
-## 0.1.2
+## 0.1.2 
 
-- change style method.
+- add throw error in method
