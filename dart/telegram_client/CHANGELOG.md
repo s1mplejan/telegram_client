@@ -45,4 +45,8 @@
 
 ## 0.1.2 
 
-- add throw error in method
+- add throw error in method.
+  
+## 0.1.3
+
+- fix parameters.

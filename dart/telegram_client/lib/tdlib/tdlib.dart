@@ -562,16 +562,16 @@ class Tdlib {
     }
   }
 
-  Future<dynamic> requestSendApi(String method, Map? parameters) async {
+  Future<dynamic> requestSendApi(String method, [var parameters]) async {
     String random = getRandom(15);
-    if (parameters != null) {
+    if (typeof(parameters) == "object") {
       parameters["@extra"] = random;
     } else {
-      parameters!["@extra"] = random;
+      parameters = {};
+      parameters["@extra"] = random;
     }
     _client_send.call(client,
         convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
-    var count = 0;
     bool condition = true;
     var result = {};
     on("update", (UpdateTd update) async {
