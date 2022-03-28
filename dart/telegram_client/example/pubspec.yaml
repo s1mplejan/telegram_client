@@ -35,10 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   telegram_client: 
-    path: /home/azkadev/Documents/telegram_client/dart/telegram_client
+    path: ../
   hexaminate: ^0.0.5
   markdown: ^4.0.1
-  stream_channel: ^2.1.0
 
 dev_dependencies:
   flutter_test:

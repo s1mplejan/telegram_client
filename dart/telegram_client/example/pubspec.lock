@@ -178,7 +178,7 @@ packages:
     source: hosted
     version: "1.10.0"
   stream_channel:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: stream_channel
       url: "https://pub.dartlang.org"
@@ -194,10 +194,10 @@ packages:
   telegram_client:
     dependency: "direct main"
     description:
-      path: "/home/azkadev/Documents/telegram_client/dart/telegram_client"
-      relative: false
+      path: ".."
+      relative: true
     source: path
-    version: "0.0.9"
+    version: "0.1.1"
   term_glyph:
     dependency: transitive
     description:
