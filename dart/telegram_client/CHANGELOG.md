@@ -42,3 +42,7 @@
 ## 0.1.1
 
 - beta support android.
+
+## 0.1.2
+
+- change style method.
