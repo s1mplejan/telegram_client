@@ -34,3 +34,11 @@
 ## 0.0.9
 
 - alpha support android.
+
+## 0.1.0
+
+- beta support android.
+
+## 0.1.1
+
+- beta support android.
