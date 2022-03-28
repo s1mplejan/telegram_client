@@ -50,3 +50,7 @@
 ## 0.1.3
 
 - fix parameters.
+
+## 0.1.4
+
+- fix bug method parameters.
