@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print, empty_catches
+// ignore_for_file: non_constant_identifier_names, avoid_print, empty_catches, dead_code
 
 import 'dart:convert';
 
@@ -126,10 +126,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
             try {
               var getChat = await tg_api.getChats(is_detail: true);
-              setState(() {
-                is_load_chat = false;
-                chats = getChat["result"];
-              });
+              if (getChat["ok"]) {
+                setState(() {
+                  is_load_chat = false;
+                  chats = getChat["result"];
+                });
+              } else {
+                setState(() {
+                  is_load_chat = false;
+                });
+              }
             } catch (e) {}
           }
         }
@@ -146,7 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     messages.insert(0, result["result"]);
                   });
                 }
+                List chat_ids_data = [];
                 for (var i = 0; i < chats.length; i++) {
+                  chat_ids_data.add(chats[i]["id"]);
                   if (chats[i]["id"] == result["result"]["chat"]["id"]) {
                     print("ada");
                     var new_chat_data = chats[i];
@@ -157,9 +165,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   }
                 }
-                return setState(() {
-                  chats.insert(0, result["result"]);
-                });
+                try {
+                  if (!chat_ids_data.contains(result["result"]["chat"]["id"])) {
+                    Map new_chat_data = {};
+                    result["result"]["chat"].forEach((key, value) {
+                      new_chat_data[key] = value;
+                    });
+                    new_chat_data["last_message"] = result["result"];
+                    return setState(() {
+                      chats.insert(0, new_chat_data);
+                    });
+                  }
+                } catch (e) {}
               } else {
                 print(result);
               }
@@ -424,342 +441,367 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     List<Widget> signInWidget() {
-      if (stateData["type"] == "chat") {
-        print("ya");
-        return [
-          Flexible(
-            child: MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: ListView.builder(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
+      try {
+        if (stateData["type"] == "chat") {
+          print("ya");
+          return [
+            Flexible(
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.builder(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  reverse: messages.isEmpty ? false : true,
+                  itemCount: messages.length,
+                  shrinkWrap: false,
+                  itemBuilder: (BuildContext context, int index) {
+                    var msg = messages[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        bottom: 3,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: messages.isEmpty
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: msg["is_outgoing"]
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
+                                    crossAxisAlignment: msg["is_outgoing"]
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(5.0),
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .5,
+                                          maxHeight: double.infinity,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: msg["is_outgoing"]
+                                              ? const Color(0xFFE3D8FF)
+                                              : const Color(0xFFFFFFFF),
+                                          borderRadius: msg["is_outgoing"]
+                                              ? const BorderRadius.only(
+                                                  topRight: Radius.circular(11),
+                                                  topLeft: Radius.circular(11),
+                                                  bottomRight:
+                                                      Radius.circular(0),
+                                                  bottomLeft:
+                                                      Radius.circular(11),
+                                                )
+                                              : const BorderRadius.only(
+                                                  topRight: Radius.circular(11),
+                                                  topLeft: Radius.circular(11),
+                                                  bottomRight:
+                                                      Radius.circular(11),
+                                                  bottomLeft:
+                                                      Radius.circular(0),
+                                                ),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  bottom: 7,
+                                                ),
+                                                child: Text(
+                                                  msg["from"]["first_name"] ??
+                                                      msg["from"]["title"] ??
+                                                      "",
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF594097),
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              msg["text"] ??
+                                                  "Unsupported Message Please Update App",
+                                              textAlign: TextAlign.start,
+                                              softWrap: true,
+                                              style: const TextStyle(
+                                                color: Color(0xFF2E1963),
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 7,
+                                                ),
+                                                child: Text(
+                                                  msg["date"].toString(),
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF594097),
+                                                    fontSize: 9,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ]),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                reverse: messages.isEmpty ? false : true,
-                itemCount: messages.length,
-                shrinkWrap: false,
-                itemBuilder: (BuildContext context, int index) {
-                  var msg = messages[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      left: 10,
-                      right: 10,
-                      bottom: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 2)],
+                ),
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 5,
+                  controller: messageController,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    hintText: "Type a message",
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
                     ),
-                    child: Column(
-                      mainAxisAlignment: messages.isEmpty
-                          ? MainAxisAlignment.center
-                          : MainAxisAlignment.start,
-                      children: [
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                    border: InputBorder.none,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(2.5),
+                      child: InkWell(
+                        child: const Icon(
+                          CupertinoIcons.hand_draw,
+                          color: Colors.pink,
+                          size: 25,
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkWell(
+                        child: const Icon(
+                          CupertinoIcons.arrow_right_square_fill,
+                          color: Colors.blue,
+                          size: 25,
+                        ),
+                        onTap: () async {
+                          try {
+                            await widget.tg.requestSendApi(
+                                "sendMessage",
+                                widget.tg.makeParametersApi({
+                                  "@type": "sendMessage",
+                                  "chat_id": stateData["state"]["id"],
+                                  "text": "hello"
+                                }));
+                          } catch (e) {}
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ];
+        }
+
+        return [
+          SizedBox(height: MediaQuery.of(context).padding.top),
+          ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: chats.length,
+              itemBuilder: (BuildContext ctx, int index) {
+                try {
+                  return SafeArea(
+                    minimum: const EdgeInsets.only(right: 10.0, left: 10.0),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Ink(
+                        width: MediaQuery.of(context).size.width,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffF0F8FF),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SafeArea(
+                          minimum: const EdgeInsets.all(10.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 6,
-                                ),
+                              const SizedBox(width: 15),
+                              Expanded(
                                 child: Column(
-                                  mainAxisAlignment: msg["is_outgoing"]
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                                  crossAxisAlignment: msg["is_outgoing"]
-                                      ? CrossAxisAlignment.end
-                                      : CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(5.0),
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        maxHeight: double.infinity,
+                                    Text(
+                                      chats[index]["first_name"] ??
+                                          chats[index]["title"] ??
+                                          "",
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
                                       ),
-                                      decoration: BoxDecoration(
-                                        color: msg["is_outgoing"]
-                                            ? const Color(0xFFE3D8FF)
-                                            : const Color(0xFFFFFFFF),
-                                        borderRadius: msg["is_outgoing"]
-                                            ? const BorderRadius.only(
-                                                topRight: Radius.circular(11),
-                                                topLeft: Radius.circular(11),
-                                                bottomRight: Radius.circular(0),
-                                                bottomLeft: Radius.circular(11),
-                                              )
-                                            : const BorderRadius.only(
-                                                topRight: Radius.circular(11),
-                                                topLeft: Radius.circular(11),
-                                                bottomRight:
-                                                    Radius.circular(11),
-                                                bottomLeft: Radius.circular(0),
-                                              ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 7,
-                                              ),
-                                              child: Text(
-                                                msg["from"]["first_name"] ??
-                                                    msg["from"]["title"] ??
-                                                    "",
-                                                textAlign: TextAlign.end,
-                                                style: const TextStyle(
-                                                  color: Color(0xFF594097),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            msg["text"] ??
-                                                "Unsupported Message Please Update App",
-                                            textAlign: TextAlign.start,
-                                            softWrap: true,
-                                            style: const TextStyle(
-                                              color: Color(0xFF2E1963),
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 7,
-                                              ),
-                                              child: Text(
-                                                msg["date"].toString(),
-                                                textAlign: TextAlign.end,
-                                                style: const TextStyle(
-                                                  color: Color(0xFF594097),
-                                                  fontSize: 9,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      (chats[index]["last_message"] != null)
+                                          ? (chats[index]["last_message"]
+                                                      ["text"] !=
+                                                  null)
+                                              ? (chats[index]["last_message"]
+                                                              ["text"]
+                                                          .toString()
+                                                          .length >
+                                                      10)
+                                                  ? chats[index]["last_message"]
+                                                          ["text"]
+                                                      .toString()
+                                                      .substring(1, 10)
+                                                  : chats[index]["last_message"]
+                                                      ["text"]
+                                              : "Unsupported message please update"
+                                          : "",
+                                      style: const TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ],
                                 ),
-                              )
-                            ]),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 2)],
-              ),
-              child: TextField(
-                minLines: 1,
-                maxLines: 5,
-                controller: messageController,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  hintText: "Type a message",
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                  border: InputBorder.none,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(2.5),
-                    child: InkWell(
-                      child: const Icon(
-                        CupertinoIcons.hand_draw,
-                        color: Colors.pink,
-                        size: 25,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: InkWell(
-                      child: const Icon(
-                        CupertinoIcons.arrow_right_square_fill,
-                        color: Colors.blue,
-                        size: 25,
-                      ),
-                      onTap: () async {
-                        try {
-                          await widget.tg.requestSendApi(
-                              "sendMessage",
-                              widget.tg.makeParametersApi({
-                                "@type": "sendMessage",
-                                "chat_id": stateData["state"]["id"],
-                                "text": "hello"
-                              }));
-                        } catch (e) {}
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ];
-      }
-      return [
-        SizedBox(height: MediaQuery.of(context).padding.top),
-        ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: chats.length,
-            itemBuilder: (BuildContext ctx, int index) {
-              return SafeArea(
-                minimum: const EdgeInsets.only(right: 10.0, left: 10.0),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Ink(
-                    width: MediaQuery.of(context).size.width,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF0F8FF),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: SafeArea(
-                      minimum: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(width: 15),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  chats[index]["first_name"] ??
-                                      chats[index]["title"] ??
-                                      "",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  (chats[index]["last_message"] != null)
-                                      ? (chats[index]["last_message"]["text"] !=
-                                              null)
-                                          ? (chats[index]["last_message"]
-                                                          ["text"]
-                                                      .toString()
-                                                      .length >
-                                                  10)
-                                              ? chats[index]["last_message"]
-                                                      ["text"]
-                                                  .toString()
-                                                  .substring(1, 10)
-                                              : chats[index]["last_message"]
-                                                  ["text"]
-                                          : "Unsupported message please update"
-                                      : "",
-                                  style: const TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  (chats[index]["last_message"] != null)
-                                      ? chats[index]["last_message"]["date"]
-                                          .toString()
-                                      : "",
-                                  style: const TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  constraints: const BoxConstraints(
-                                    maxHeight: double.infinity,
-                                    maxWidth: double.infinity,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffFF5216),
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        spreadRadius: 0,
-                                        blurRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: SafeArea(
-                                    minimum: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      chats[index]["detail"]["unread_count"]
-                                          .toString(),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      (chats[index]["last_message"] != null)
+                                          ? chats[index]["last_message"]["date"]
+                                              .toString()
+                                          : "",
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.blueGrey,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                  ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      constraints: const BoxConstraints(
+                                        maxHeight: double.infinity,
+                                        maxWidth: double.infinity,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffFF5216),
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            spreadRadius: 0,
+                                            blurRadius: 1,
+                                          ),
+                                        ],
+                                      ),
+                                      child: SafeArea(
+                                        minimum: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          (chats[index]["detail"]
+                                                          ["unread_count"] !=
+                                                      null &&
+                                                  chats[index]["detail"]
+                                                          ["unread_count"] !=
+                                                      0)
+                                              ? chats[index]["detail"]
+                                                      ["unread_count"]
+                                                  .toString()
+                                              : "",
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  onTap: () async {
-                    setState(() {
-                      is_load_chat = true;
-                    });
+                      onTap: () async {
+                        setState(() {
+                          is_load_chat = true;
+                        });
 
-                    var getchat = await tg_api.getChatHistory(
-                      chats[index]["id"],
-                    );
-                    setState(() {
-                      messages = getchat["result"]["messages"];
-                      stateData["type"] = "chat";
-                      stateData["state"] = chats[index];
-                      is_load_chat = false;
-                    });
-                  },
-                ),
-              );
-            })
-      ];
+                        var getchat = await tg_api.getChatHistory(
+                          chats[index]["id"],
+                        );
+                        setState(() {
+                          messages = getchat["result"]["messages"];
+                          stateData["type"] = "chat";
+                          stateData["state"] = chats[index];
+                          is_load_chat = false;
+                        });
+                      },
+                    ),
+                  );
+                } catch (e) {
+                  print("Error $index");
+                  print(chats[index]);
+                  print(e);
+                  return Container();
+                }
+              })
+        ];
+      } catch (e) {
+        return [Text(JSON.stringify(e, null, 2))];
+      }
     }
 
     return Scaffold(
@@ -889,6 +931,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ? null
           : FloatingActionButton(
               onPressed: () async {
+                return showPopUp("result", JSON.stringify(chats[0], null, 2));
                 setState(() {
                   is_load_chat = true;
                 });
@@ -941,10 +984,19 @@ class TelegramApi {
 
   getChat(dynamic chat_id, {bool is_detail = false}) async {
     try {
+      if (RegExp("^@[a-z0-9_]\$", caseSensitive: false)
+          .hasMatch(chat_id.toString())) {
+            
+          }
+      if (RegExp("^[0-9]+\$", caseSensitive: false)
+          .hasMatch(chat_id.toString())) {
+        try {
+          await getUser(chat_id);
+        } catch (e) {}
+      }
       var getchat =
           await tg_client.requestSendApi("getChat", {"chat_id": chat_id});
       Map json = {};
-
       if (RegExp("^chat\$", caseSensitive: false).hasMatch(getchat["@type"])) {
         var type_chat = getchat["type"]["@type"]
             .toString()
@@ -1081,7 +1133,7 @@ class TelegramApi {
           var getBasicGroup = await tg_client.requestSendApi("getBasicGroup", {
             "basic_group_id": int.parse(chat_id
                 .toString()
-                .replaceAll(RegExp("^-100", caseSensitive: false), ""))
+                .replaceAll(RegExp("^-", caseSensitive: false), ""))
           });
           json["id"] = chat_id;
           json["title"] = getchat["title"];
@@ -1093,7 +1145,27 @@ class TelegramApi {
                     RegExp("chatMemberStatus", caseSensitive: false), "");
           }
           json["type"] = "group";
-          json["detail"] = {"member_count": getBasicGroup["member_count"]};
+          json["detail"] = {
+            "member_count": getBasicGroup["member_count"],
+            "has_protected_content": getchat["has_protected_content"] ?? false,
+            "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+            "is_blocked": getchat["is_blocked"] ?? false,
+            "has_scheduled_messages":
+                getchat["has_scheduled_messages"] ?? false,
+            "can_be_deleted_only_for_self":
+                getchat["can_be_deleted_only_for_self"] ?? false,
+            "can_be_deleted_for_all_users":
+                getchat["can_be_deleted_for_all_users"] ?? false,
+            "can_be_reported": getchat["can_be_reported"] ?? false,
+            "default_disable_notification":
+                getchat["default_disable_notification"] ?? false,
+            "unread_count": getchat["unread_count"] ?? 0,
+            "last_read_inbox_message_id":
+                getchat["last_read_inbox_message_id"] ?? 0,
+            "last_read_outbox_message_id":
+                getchat["last_read_outbox_message_id"] ?? 0,
+            "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+          };
           if (is_detail) {
             if (typeof(getchat["last_message"]) == "object") {
               var last_message = await jsonMessage(getchat["last_message"],
@@ -1176,9 +1248,10 @@ class TelegramApi {
           }
         }
       }
+
       return {
         "ok": false,
-        "result": {"id": chat_id}
+        "result": {"id": chat_id, "detail": {}}
       };
     } catch (e) {
       return {"ok": false, "error": e};
@@ -1189,6 +1262,17 @@ class TelegramApi {
     try {
       var getchat = await getChat(chat_id);
       if (getchat["ok"]) {
+        if (getchat["type"] != "private" && getchat["type"] != "channel") {
+          try {
+            await tg_client.requestSendApi("getSupergroupMembers", {
+              "supergroup_id": int.parse(chat_id
+                  .toString()
+                  .replaceAll(RegExp("^-100", caseSensitive: false), "")),
+              "limit": 200
+            });
+          } catch (e) {}
+        }
+
         var getchathistory = await tg_client.requestSendApi("getChatHistory", {
           "chat_id": chat_id,
           "from_chat_id": getchat["result"]["detail"]
@@ -1382,3 +1466,4 @@ class JSON {
     }
   }
 }
+
