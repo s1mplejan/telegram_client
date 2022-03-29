@@ -54,3 +54,7 @@
 ## 0.1.4
 
 - fix bug method parameters.
+
+## 0.1.5
+
+- add api method and update.
