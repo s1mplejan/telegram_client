@@ -931,7 +931,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ? null
           : FloatingActionButton(
               onPressed: () async {
-                return showPopUp("result", JSON.stringify(chats[0], null, 2));
                 setState(() {
                   is_load_chat = true;
                 });
@@ -944,9 +943,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     is_load_chat = false;
                     chats = getChat["result"];
                   });
-                  print(getChat["result"][0]);
+
                   showPopUp(
-                      "result", JSON.stringify(getChat["result"][0], null, 2));
+                      "result", JSON.stringify(getChat["result"], null, 2));
                 } catch (e) {
                   print("error");
                   print(e);
@@ -984,10 +983,13 @@ class TelegramApi {
 
   getChat(dynamic chat_id, {bool is_detail = false}) async {
     try {
-      if (RegExp("^@[a-z0-9_]\$", caseSensitive: false)
-          .hasMatch(chat_id.toString())) {
-            
-          }
+      if (RegExp("^@.*\$", caseSensitive: false).hasMatch(chat_id.toString())) {
+        var search_public_chat = await tg_client
+            .requestSendApi("searchPublicChat", {"username": chat_id});
+        if (search_public_chat["@type"] == "chat") {
+          chat_id = search_public_chat["id"];
+        }
+      }
       if (RegExp("^[0-9]+\$", caseSensitive: false)
           .hasMatch(chat_id.toString())) {
         try {
@@ -1003,7 +1005,7 @@ class TelegramApi {
             .toLowerCase()
             .replaceAll(RegExp("chattype", caseSensitive: false), "");
 
-        if (getchat["type"]["is_channel"] ?? false) {
+        if (type_chat == "supergroup") {
           var getSupergroup = await tg_client.requestSendApi("getSupergroup", {
             "supergroup_id": int.parse(chat_id
                 .toString()
@@ -1021,70 +1023,8 @@ class TelegramApi {
                 .replaceAll(
                     RegExp("chatMemberStatus", caseSensitive: false), "");
           }
-          json["type"] = "channel";
-          json["detail"] = {
-            "member_count": getSupergroup["member_count"],
-            "administrator_count": 0,
-            "restricted_count": 0,
-            "banned_count": 0,
-            "has_protected_content": getchat["has_protected_content"] ?? false,
-            "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
-            "is_blocked": getchat["is_blocked"] ?? false,
-            "has_scheduled_messages":
-                getchat["has_scheduled_messages"] ?? false,
-            "can_be_deleted_only_for_self":
-                getchat["can_be_deleted_only_for_self"] ?? false,
-            "can_be_deleted_for_all_users":
-                getchat["can_be_deleted_for_all_users"] ?? false,
-            "can_be_reported": getchat["can_be_reported"] ?? false,
-            "default_disable_notification":
-                getchat["default_disable_notification"] ?? false,
-            "unread_count": getchat["unread_count"] ?? 0,
-            "last_read_inbox_message_id":
-                getchat["last_read_inbox_message_id"] ?? 0,
-            "last_read_outbox_message_id":
-                getchat["last_read_outbox_message_id"] ?? 0,
-            "unread_mention_count": getchat["unread_mention_count"] ?? 0,
-            "has_linked_chat": getSupergroup["has_linked_chat"],
-            "has_location": getSupergroup["has_location"],
-            "sign_messages": getSupergroup["sign_messages"],
-            "is_slow_mode_enabled": getSupergroup["is_slow_mode_enabled"],
-            "is_broadcast_group": getSupergroup["is_broadcast_group"],
-            "is_verified": getSupergroup["is_verified"],
-            "is_scam": getSupergroup["is_scam"],
-            "is_fake": getSupergroup["is_fake"]
-          };
-
-          if (is_detail) {
-            if (typeof(getchat["last_message"]) == "object") {
-              var last_message = await jsonMessage(getchat["last_message"],
-                  from_data: json, chat_data: json);
-              if (last_message["ok"]) {
-                json["last_message"] = last_message["result"];
-              }
-            }
-          }
-
-          return {"ok": true, "result": json};
-        } else if (type_chat == "supergroup") {
-          var getSupergroup = await tg_client.requestSendApi("getSupergroup", {
-            "supergroup_id": int.parse(chat_id
-                .toString()
-                .replaceAll(RegExp("^-100", caseSensitive: false), ""))
-          });
-          json["id"] = chat_id;
-          json["title"] = getchat["title"];
-          if (typeof(getSupergroup["username"]) == "string") {
-            json["username"] = getSupergroup["username"];
-          }
-          if (typeof(getSupergroup["status"]) == "object") {
-            json["status"] = getSupergroup["status"]["@type"]
-                .toString()
-                .toLowerCase()
-                .replaceAll(
-                    RegExp("chatMemberStatus", caseSensitive: false), "");
-          }
-          json["type"] = "supergroup";
+          json["type"] =
+              getchat["type"]["is_channel"] ? "channel" : "supergroup";
           json["detail"] = {
             "member_count": getSupergroup["member_count"],
             "administrator_count": 0,
@@ -1316,7 +1256,6 @@ class TelegramApi {
             chat_json = chat_data;
           }
         }
-
         if (is_chat_not_same) {
           var chatResult = await getChat(update["chat_id"]);
           if (chatResult["ok"]) {
@@ -1388,6 +1327,262 @@ class TelegramApi {
             }
           }
 
+          if (update["content"]["@type"] == "messagePhoto") {
+            json["type_content"] = "photo";
+            if (typeof(update["content"]["photo"]) == "object") {
+              if (update["content"]["photo"]["@type"] == "photo") {
+                var size_photo = [];
+                var photo = update["content"]["photo"]["sizes"];
+                for (var i = 0; i < photo.length; i++) {
+                  var photo_json = photo[i];
+                  var json_photo = {};
+                  if (photo_json["photo"]["remote"]["@type"] == "remoteFile") {
+                    json_photo["file_id"] = photo_json["photo"]["remote"]["id"];
+                  }
+                  if (photo_json["photo"]["remote"]["unique_id"] != null) {
+                    json_photo["file_unique_id"] =
+                        photo_json["photo"]["remote"]["unique_id"];
+                  }
+                  json_photo["file_size"] = photo_json["photo"]["size"];
+                  json_photo["width"] = photo_json["width"];
+                  json_photo["height"] = photo_json["height"];
+                  size_photo.add(json_photo);
+                }
+                json["photo"] = size_photo;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageVideo") {
+            json["type_content"] = "video";
+            if (typeof(update["content"]["video"]) == "object") {
+              if (update["content"]["video"]["@type"] == "video") {
+                var json_video = {};
+                var content_video = update["content"]["video"];
+                json_video["duration"] = content_video["duration"];
+                json_video["height"] = content_video["height"];
+                json_video["file_name"] = content_video["file_name"];
+                json_video["mime_type"] = content_video["mime_type"];
+                try {
+                  if (update["content"]["video"]["thumbnail"] != null &&
+                      update["content"]["video"]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_video["thumbnail"];
+                    var json_thumb = {};
+                    json_video["thumb"] = json_thumb;
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                  }
+                } catch (e) {}
+                json_video["file_id"] = content_video["video"]["remote"]["id"];
+                json_video["file_size"] = content_video["video"]["size"];
+                json["video"] = json_video;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageAudio") {
+            var type_content = "audio";
+            json["type_content"] = "audio";
+            if (typeof(update["content"]["audio"]) == "object") {
+              if (update["content"]["audio"]["@type"] == "audio") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["duration"] = content_update["duration"];
+                json_content["title"] = content_update["title"];
+                json_content["performer"] = content_update["performer"];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageAnimation") {
+            var type_content = "animation";
+            json["type_content"] = "animation";
+            if (typeof(update["content"]["animation"]) == "object") {
+              if (update["content"]["animation"]["@type"] == "animation") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["duration"] = content_update["duration"];
+                json_content["width"] = content_update["width"];
+                json_content["height"] = content_update["height"];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["has_stickers"] = content_update["has_stickers"];
+
+                try {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_update["thumbnail"];
+                    var json_thumb = {};
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                    json_content["thumb"] = json_thumb;
+                  }
+                } catch (e) {}
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageContact") {
+            var type_content = "contact";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["phone_number"] = content_update["phone_number"];
+                json_content["first_name"] = content_update["first_name"];
+                json_content["last_name"] = content_update["last_name"];
+                json_content["vcard"] = content_update["vcard"];
+                json_content["user_id"] = content_update["user_id"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messagePoll") {
+            var type_content = "poll";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["id"] = content_update["id"];
+                json_content["question"] = content_update["question"];
+                json_content["options"] = content_update["options"];
+                json_content["total_voter_count"] =
+                    content_update["total_voter_count"];
+                json_content["recent_voter_user_ids"] =
+                    content_update["recent_voter_user_ids"];
+                json_content["is_anonymous"] = content_update["is_anonymous"];
+                json_content["type"] = content_update["type"];
+                json_content["open_period"] = content_update["open_period"];
+                json_content["close_date"] = content_update["close_date"];
+                json_content["is_closed"] = content_update["is_closed"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageDocument") {
+            var type_content = "document";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageSticker") {
+            var type_content = "sticker";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["set_id"] = content_update["set_id"];
+                json_content["width"] = content_update["width"];
+                json_content["height"] = content_update["height"];
+                json_content["emoji"] = content_update["emoji"];
+                json_content["is_animated"] = content_update["is_animated"];
+                json_content["is_mask"] = content_update["is_mask"];
+
+                try {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_update["thumbnail"];
+                    var json_thumb = {};
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                    json_content["thumb"] = json_thumb;
+                  }
+                } catch (e) {}
+
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageVoiceNote") {
+            var type_content = "voice_note";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == "voiceNote") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+
+                json_content["duration"] = content_update["duration"];
+                json_content["waveform"] = content_update["waveform"];
+                json_content["mime_type"] = content_update["mime_type"];
+
+                json_content["file_id"] =
+                    content_update["voice"]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update["voice"]["remote"]["unique_id"];
+                json_content["file_size"] = content_update["voice"]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
           // caption
           if (typeof(update["content"]["caption"]) == "object") {
             if (update["content"]["caption"]["@type"] == "formattedText") {
@@ -1398,7 +1593,46 @@ class TelegramApi {
             }
           }
 
-          List new_entities = old_entities;
+          List new_entities = [];
+          for (var i = 0; i < old_entities.length; i++) {
+            var data_entities = old_entities[i];
+            try {
+              var json_entities = {};
+              json_entities["offset"] = data_entities["offset"];
+              json_entities["length"] = data_entities.length;
+              if (data_entities["type"]["@type"] != null) {
+                var type_entities = data_entities["type"]["@type"]
+                    .toString()
+                    .toLowerCase()
+                    .replaceAll(
+                        RegExp("textEntityType", caseSensitive: false), "")
+                    .replaceAll(
+                        RegExp("textUrl", caseSensitive: false), "text_link")
+                    .replaceAll(RegExp("bot_command", caseSensitive: false),
+                        "bot_command")
+                    .replaceAll(RegExp("mentionname", caseSensitive: false),
+                        "text_mention");
+                json_entities["type"] = type_entities;
+                if (data_entities["type"]["url"] != null) {
+                  json_entities["url"] = data_entities["type"]["url"];
+                }
+                if (type_entities == "text_mention" &&
+                    data_entities["type"]["user_id"] != null) {
+                  var entitiesUserId = data_entities["type"]["user_id"];
+                  var fromJson = {"id": entitiesUserId};
+                  try {
+                    var fromResult =
+                        await getChat(update["sender_id"]["user_id"]);
+                    if (fromResult["ok"]) {
+                      fromJson = fromResult["result"];
+                    }
+                  } catch (e) {}
+                  json_entities["user"] = fromJson;
+                }
+              }
+              new_entities.add(json_entities);
+            } catch (e) {}
+          }
           json["entities"] = new_entities;
         }
         return {"ok": true, "result": json};
@@ -1462,7 +1696,12 @@ class JSON {
       JsonEncoder encoder = JsonEncoder.withIndent(spaceText);
       return encoder.convert(value);
     } catch (e) {
-      return "";
+      print(e);
+      try {
+        return json.encode(value);
+      } catch (e) {
+        return "error";
+      }
     }
   }
 }
