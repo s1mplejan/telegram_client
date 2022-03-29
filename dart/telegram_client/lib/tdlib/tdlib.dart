@@ -1,5 +1,5 @@
 // ignore: slash_for_doc_comments
-// ignore_for_file: void_checks, non_constant_identifier_names
+// ignore_for_file: void_checks, non_constant_identifier_names, empty_catches
 
 // ignore: slash_for_doc_comments
 /**
@@ -570,10 +570,8 @@ class Tdlib {
     } else {
       parameters!["@extra"] = random;
     }
-    _client_send.call(
-        client,
-        convert.json
-            .encode({"@type": method, ...parameters}).toNativeUtf8());
+    _client_send.call(client,
+        convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
     bool condition = true;
     var result = {};
     on("update", (UpdateTd update) async {
@@ -610,6 +608,698 @@ class Tdlib {
       }
     });
   }
+
+  getChat(dynamic chat_id, {bool is_detail = false}) async {
+    try {
+      if (RegExp("^@.*\$", caseSensitive: false).hasMatch(chat_id.toString())) {
+        var search_public_chat =
+            await requestSendApi("searchPublicChat", {"username": chat_id});
+        if (search_public_chat["@type"] == "chat") {
+          chat_id = search_public_chat["id"];
+        }
+      }
+      var getchat = await requestSendApi("getChat", {"chat_id": chat_id});
+      Map json = {};
+      if (RegExp("^chat\$", caseSensitive: false).hasMatch(getchat["@type"])) {
+        var type_chat = getchat["type"]["@type"]
+            .toString()
+            .toLowerCase()
+            .replaceAll(RegExp("chattype", caseSensitive: false), "");
+
+        if (type_chat == "supergroup") {
+          var getSupergroup = await requestSendApi("getSupergroup", {
+            "supergroup_id": int.parse(chat_id
+                .toString()
+                .replaceAll(RegExp("^-100", caseSensitive: false), ""))
+          });
+          json["id"] = chat_id;
+          json["title"] = getchat["title"];
+          if (typeof(getSupergroup["username"]) == "string") {
+            json["username"] = getSupergroup["username"];
+          }
+          if (typeof(getSupergroup["status"]) == "object") {
+            json["status"] = getSupergroup["status"]["@type"]
+                .toString()
+                .toLowerCase()
+                .replaceAll(
+                    RegExp("chatMemberStatus", caseSensitive: false), "");
+          }
+          json["type"] =
+              getchat["type"]["is_channel"] ? "channel" : "supergroup";
+          json["detail"] = {
+            "member_count": getSupergroup["member_count"],
+            "administrator_count": 0,
+            "restricted_count": 0,
+            "banned_count": 0,
+            "has_protected_content": getchat["has_protected_content"] ?? false,
+            "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+            "is_blocked": getchat["is_blocked"] ?? false,
+            "has_scheduled_messages":
+                getchat["has_scheduled_messages"] ?? false,
+            "can_be_deleted_only_for_self":
+                getchat["can_be_deleted_only_for_self"] ?? false,
+            "can_be_deleted_for_all_users":
+                getchat["can_be_deleted_for_all_users"] ?? false,
+            "can_be_reported": getchat["can_be_reported"] ?? false,
+            "default_disable_notification":
+                getchat["default_disable_notification"] ?? false,
+            "unread_count": getchat["unread_count"] ?? 0,
+            "last_read_inbox_message_id":
+                getchat["last_read_inbox_message_id"] ?? 0,
+            "last_read_outbox_message_id":
+                getchat["last_read_outbox_message_id"] ?? 0,
+            "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+            "has_linked_chat": getSupergroup["has_linked_chat"],
+            "has_location": getSupergroup["has_location"],
+            "sign_messages": getSupergroup["sign_messages"],
+            "is_slow_mode_enabled": getSupergroup["is_slow_mode_enabled"],
+            "is_broadcast_group": getSupergroup["is_broadcast_group"],
+            "is_verified": getSupergroup["is_verified"],
+            "is_scam": getSupergroup["is_scam"],
+            "is_fake": getSupergroup["is_fake"]
+          };
+
+          if (is_detail) {
+            if (typeof(getchat["last_message"]) == "object") {
+              var last_message = await jsonMessage(getchat["last_message"],
+                  from_data: json, chat_data: json);
+              if (last_message["ok"]) {
+                json["last_message"] = last_message["result"];
+              }
+            }
+          }
+
+          return {"ok": true, "result": json};
+        } else if (type_chat == "basicgroup") {
+          var getBasicGroup = await requestSendApi("getBasicGroup", {
+            "basic_group_id": int.parse(chat_id
+                .toString()
+                .replaceAll(RegExp("^-", caseSensitive: false), ""))
+          });
+          json["id"] = chat_id;
+          json["title"] = getchat["title"];
+          if (typeof(getBasicGroup["status"]) == "object") {
+            json["status"] = getBasicGroup["status"]["@type"]
+                .toString()
+                .toLowerCase()
+                .replaceAll(
+                    RegExp("chatMemberStatus", caseSensitive: false), "");
+          }
+          json["type"] = "group";
+          json["detail"] = {
+            "member_count": getBasicGroup["member_count"],
+            "has_protected_content": getchat["has_protected_content"] ?? false,
+            "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+            "is_blocked": getchat["is_blocked"] ?? false,
+            "has_scheduled_messages":
+                getchat["has_scheduled_messages"] ?? false,
+            "can_be_deleted_only_for_self":
+                getchat["can_be_deleted_only_for_self"] ?? false,
+            "can_be_deleted_for_all_users":
+                getchat["can_be_deleted_for_all_users"] ?? false,
+            "can_be_reported": getchat["can_be_reported"] ?? false,
+            "default_disable_notification":
+                getchat["default_disable_notification"] ?? false,
+            "unread_count": getchat["unread_count"] ?? 0,
+            "last_read_inbox_message_id":
+                getchat["last_read_inbox_message_id"] ?? 0,
+            "last_read_outbox_message_id":
+                getchat["last_read_outbox_message_id"] ?? 0,
+            "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+          };
+          if (is_detail) {
+            if (typeof(getchat["last_message"]) == "object") {
+              var last_message = await jsonMessage(getchat["last_message"],
+                  from_data: json, chat_data: json);
+              if (last_message["ok"]) {
+                json["last_message"] = last_message["result"];
+              }
+            }
+          }
+          return {"ok": true, "result": json};
+        } else if (type_chat == "private") {
+          var get_user = await requestSendApi("getUser", {"user_id": chat_id});
+          if (RegExp("^user\$", caseSensitive: false)
+              .hasMatch(get_user["@type"])) {
+            var json = {};
+            json["id"] = get_user["id"];
+            try {
+              if (RegExp("^userTypeBot\$", caseSensitive: false)
+                  .hasMatch(get_user["type"]["@type"])) {
+                json["is_bot"] = true;
+              } else {
+                json["is_bot"] = false;
+              }
+            } catch (e) {
+              json["is_bot"] = false;
+            }
+            json["first_name"] = get_user["first_name"];
+            if (getBoolean(get_user["last_name"])) {
+              json["last_name"] = get_user["last_name"];
+            }
+            if (getBoolean(get_user["username"])) {
+              json["username"] = get_user["username"];
+            }
+            if (getBoolean(get_user["phone_number"])) {
+              json["phone_number"] = get_user["phone_number"];
+            }
+            if (getBoolean(get_user["language_code"])) {
+              json["language_code"] = get_user["language_code"];
+            }
+            json["type"] = 'private';
+            json["detail"] = {
+              "has_protected_content":
+                  getchat["has_protected_content"] ?? false,
+              "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+              "is_blocked": getchat["is_blocked"] ?? false,
+              "has_scheduled_messages":
+                  getchat["has_scheduled_messages"] ?? false,
+              "can_be_deleted_only_for_self":
+                  getchat["can_be_deleted_only_for_self"] ?? false,
+              "can_be_deleted_for_all_users":
+                  getchat["can_be_deleted_for_all_users"] ?? false,
+              "can_be_reported": getchat["can_be_reported"] ?? false,
+              "default_disable_notification":
+                  getchat["default_disable_notification"] ?? false,
+              "unread_count": getchat["unread_count"] ?? 0,
+              "last_read_inbox_message_id":
+                  getchat["last_read_inbox_message_id"] ?? 0,
+              "last_read_outbox_message_id":
+                  getchat["last_read_outbox_message_id"] ?? 0,
+              "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+              "is_contact": get_user["is_contact"],
+              "is_mutual_contact": get_user["is_mutual_contact"],
+              "is_verified": get_user["is_verified"],
+              "is_support": get_user["is_support"],
+              "is_scam": get_user["is_scam"],
+              "is_fake": get_user["is_fake"],
+              "have_acces": get_user["have_access"]
+            };
+            if (is_detail) {
+              if (typeof(getchat["last_message"]) == "object") {
+                var last_message = await jsonMessage(getchat["last_message"],
+                    from_data: json, chat_data: json);
+                if (last_message["ok"]) {
+                  json["last_message"] = last_message["result"];
+                }
+              }
+            }
+            return {"ok": true, "result": json};
+          }
+        }
+      }
+    } catch (e) {
+      if (RegExp("^[0-9]+\$", caseSensitive: false)
+          .hasMatch(chat_id.toString())) {
+        try {
+          return await getUser(chat_id);
+        } catch (e) {}
+      }
+    }
+    return {
+      "ok": false,
+      "result": {"id": chat_id, "detail": {}}
+    };
+  }
+
+  jsonMessage(Map update, {Map? from_data, Map? chat_data}) async {
+    try {
+      if (update["@type"] == "message") {
+        Map json = {};
+        Map chat_json = {"id": update["chat_id"]};
+        bool is_chat_not_same = true;
+        try {
+          if (chat_data != null) {
+            if (update["chat_id"] == chat_data["id"]) {
+              is_chat_not_same = false;
+              chat_json = chat_data;
+            }
+          }
+        } catch (e) {}
+        if (is_chat_not_same) {
+          try {
+            var chatResult = await getChat(update["chat_id"]);
+            if (chatResult["ok"]) {
+              chat_json = chatResult["result"];
+            }
+          } catch (e) {}
+        }
+
+        json["is_outgoing"] = update["is_outgoing"] ?? false;
+        json["is_pinned"] = update["is_pinned"] ?? false;
+        if (typeof(update["sender_id"]) == "object") {
+          if (update["sender_id"]["user_id"] != null) {
+            if (update["chat_id"] == update["sender_id"]["user_id"]) {
+              json["from"] = chat_json;
+            } else {
+              bool is_from_not_same = true;
+              Map from_json = {"id": update["sender_id"]["user_id"]};
+              if (from_data != null) {
+                if (update["chat_id"] == from_data["id"]) {
+                  is_from_not_same = false;
+                  from_json = from_data;
+                }
+              }
+              if (is_from_not_same) {
+                try {
+                  var fromResult =
+                      await getChat(update["sender_id"]["user_id"]);
+                  if (fromResult["ok"]) {
+                    from_json = fromResult["result"];
+                  }
+                } catch (e) {}
+              }
+              json["from"] = from_json;
+            }
+          }
+
+          if (update["sender_id"]["chat_id"] != null) {
+            if (update["chat_id"] == update["sender_id"]["chat_id"]) {
+              json["from"] = chat_json;
+            } else {
+              bool is_from_not_same = true;
+              Map from_json = {"id": update["sender_id"]["chat_id"]};
+              if (from_data != null) {
+                if (update["chat_id"] == from_data["id"]) {
+                  is_from_not_same = false;
+                  from_json = from_data;
+                }
+              }
+              if (is_from_not_same) {
+                try {
+                  var fromResult =
+                      await getChat(update["sender_id"]["chat_id"]);
+                  if (fromResult["ok"]) {
+                    from_json = fromResult["result"];
+                  }
+                } catch (e) {}
+              }
+              json["from"] = from_json;
+            }
+          }
+        }
+
+        json["chat"] = chat_json;
+        json["date"] = update["date"];
+        json["message_id"] = update["id"];
+        if (typeof(update["content"]) == "object") {
+          List old_entities = [];
+
+          if (update["content"]["@type"] == "messageText") {
+            json["type_content"] = "text";
+            if (typeof(update["content"]["text"]) == "object") {
+              if (update["content"]["text"]["@type"] == "formattedText") {
+                json["text"] = update["content"]["text"]["text"];
+                old_entities = update["content"]["text"]["entities"];
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messagePhoto") {
+            json["type_content"] = "photo";
+            if (typeof(update["content"]["photo"]) == "object") {
+              if (update["content"]["photo"]["@type"] == "photo") {
+                var size_photo = [];
+                var photo = update["content"]["photo"]["sizes"];
+                for (var i = 0; i < photo.length; i++) {
+                  var photo_json = photo[i];
+                  var json_photo = {};
+                  if (photo_json["photo"]["remote"]["@type"] == "remoteFile") {
+                    json_photo["file_id"] = photo_json["photo"]["remote"]["id"];
+                  }
+                  if (photo_json["photo"]["remote"]["unique_id"] != null) {
+                    json_photo["file_unique_id"] =
+                        photo_json["photo"]["remote"]["unique_id"];
+                  }
+                  json_photo["file_size"] = photo_json["photo"]["size"];
+                  json_photo["width"] = photo_json["width"];
+                  json_photo["height"] = photo_json["height"];
+                  size_photo.add(json_photo);
+                }
+                json["photo"] = size_photo;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageVideo") {
+            json["type_content"] = "video";
+            if (typeof(update["content"]["video"]) == "object") {
+              if (update["content"]["video"]["@type"] == "video") {
+                var json_video = {};
+                var content_video = update["content"]["video"];
+                json_video["duration"] = content_video["duration"];
+                json_video["height"] = content_video["height"];
+                json_video["file_name"] = content_video["file_name"];
+                json_video["mime_type"] = content_video["mime_type"];
+                try {
+                  if (update["content"]["video"]["thumbnail"] != null &&
+                      update["content"]["video"]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_video["thumbnail"];
+                    var json_thumb = {};
+                    json_video["thumb"] = json_thumb;
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                  }
+                } catch (e) {}
+                json_video["file_id"] = content_video["video"]["remote"]["id"];
+                json_video["file_size"] = content_video["video"]["size"];
+                json["video"] = json_video;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageAudio") {
+            var type_content = "audio";
+            json["type_content"] = "audio";
+            if (typeof(update["content"]["audio"]) == "object") {
+              if (update["content"]["audio"]["@type"] == "audio") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["duration"] = content_update["duration"];
+                json_content["title"] = content_update["title"];
+                json_content["performer"] = content_update["performer"];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageAnimation") {
+            var type_content = "animation";
+            json["type_content"] = "animation";
+            if (typeof(update["content"]["animation"]) == "object") {
+              if (update["content"]["animation"]["@type"] == "animation") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["duration"] = content_update["duration"];
+                json_content["width"] = content_update["width"];
+                json_content["height"] = content_update["height"];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["mime_type"] = content_update["mime_type"];
+                json_content["has_stickers"] = content_update["has_stickers"];
+
+                try {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_update["thumbnail"];
+                    var json_thumb = {};
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                    json_content["thumb"] = json_thumb;
+                  }
+                } catch (e) {}
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageContact") {
+            var type_content = "contact";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["phone_number"] = content_update["phone_number"];
+                json_content["first_name"] = content_update["first_name"];
+                json_content["last_name"] = content_update["last_name"];
+                json_content["vcard"] = content_update["vcard"];
+                json_content["user_id"] = content_update["user_id"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messagePoll") {
+            var type_content = "poll";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["id"] = content_update["id"];
+                json_content["question"] = content_update["question"];
+                json_content["options"] = content_update["options"];
+                json_content["total_voter_count"] =
+                    content_update["total_voter_count"];
+                json_content["recent_voter_user_ids"] =
+                    content_update["recent_voter_user_ids"];
+                json_content["is_anonymous"] = content_update["is_anonymous"];
+                json_content["type"] = content_update["type"];
+                json_content["open_period"] = content_update["open_period"];
+                json_content["close_date"] = content_update["close_date"];
+                json_content["is_closed"] = content_update["is_closed"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageDocument") {
+            var type_content = "document";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["file_name"] = content_update["file_name"];
+                json_content["mime_type"] = content_update["mime_type"];
+
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageSticker") {
+            var type_content = "sticker";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == type_content) {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+                json_content["set_id"] = content_update["set_id"];
+                json_content["width"] = content_update["width"];
+                json_content["height"] = content_update["height"];
+                json_content["emoji"] = content_update["emoji"];
+                json_content["is_animated"] = content_update["is_animated"];
+                json_content["is_mask"] = content_update["is_mask"];
+
+                try {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
+                    var content_thumb = content_update["thumbnail"];
+                    var json_thumb = {};
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_size"] = content_thumb["file"]["size"];
+                    json_thumb["width"] = content_thumb["width"];
+                    json_thumb["height"] = content_thumb["height"];
+                    json_content["thumb"] = json_thumb;
+                  }
+                } catch (e) {}
+
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          if (update["content"]["@type"] == "messageVoiceNote") {
+            var type_content = "voice_note";
+            json["type_content"] = type_content;
+            if (typeof(update["content"][type_content]) == "object") {
+              if (update["content"][type_content]["@type"] == "voiceNote") {
+                var json_content = {};
+                var content_update = update["content"][type_content];
+
+                json_content["duration"] = content_update["duration"];
+                json_content["waveform"] = content_update["waveform"];
+                json_content["mime_type"] = content_update["mime_type"];
+
+                json_content["file_id"] =
+                    content_update["voice"]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update["voice"]["remote"]["unique_id"];
+                json_content["file_size"] = content_update["voice"]["size"];
+                json[type_content] = json_content;
+              }
+            }
+          }
+
+          // caption
+          if (typeof(update["content"]["caption"]) == "object") {
+            if (update["content"]["caption"]["@type"] == "formattedText") {
+              if (update["content"]["caption"]["text"].toString().isNotEmpty) {
+                json["caption"] = update["content"]["caption"]["text"];
+              }
+              old_entities = update["content"]["caption"]["entities"];
+            }
+          }
+
+          List new_entities = [];
+          for (var i = 0; i < old_entities.length; i++) {
+            var data_entities = old_entities[i];
+            try {
+              var json_entities = {};
+              json_entities["offset"] = data_entities["offset"];
+              json_entities["length"] = data_entities.length;
+              if (data_entities["type"]["@type"] != null) {
+                var type_entities = data_entities["type"]["@type"]
+                    .toString()
+                    .toLowerCase()
+                    .replaceAll(
+                        RegExp("textEntityType", caseSensitive: false), "")
+                    .replaceAll(
+                        RegExp("textUrl", caseSensitive: false), "text_link")
+                    .replaceAll(RegExp("bot_command", caseSensitive: false),
+                        "bot_command")
+                    .replaceAll(RegExp("mentionname", caseSensitive: false),
+                        "text_mention");
+                json_entities["type"] = type_entities;
+                if (data_entities["type"]["url"] != null) {
+                  json_entities["url"] = data_entities["type"]["url"];
+                }
+                if (type_entities == "text_mention" &&
+                    data_entities["type"]["user_id"] != null) {
+                  var entitiesUserId = data_entities["type"]["user_id"];
+                  var fromJson = {"id": entitiesUserId};
+                  try {
+                    var fromResult =
+                        await getChat(update["sender_id"]["user_id"]);
+                    if (fromResult["ok"]) {
+                      fromJson = fromResult["result"];
+                    }
+                  } catch (e) {}
+                  json_entities["user"] = fromJson;
+                }
+              }
+              new_entities.add(json_entities);
+            } catch (e) {}
+          }
+          json["entities"] = new_entities;
+        }
+        if (json["chat"]["type"] != null) {
+          if (json["chat"]["type"] == "channel") {
+            return {
+              "ok": true,
+              "result": {"update_channel_post": json}
+            };
+          } else {
+            return {
+              "ok": true,
+              "result": {"update_message": json}
+            };
+          }
+        }
+        return {"ok": true, "result": json};
+      }
+    } catch (e) {
+      update["ok"] = false;
+      return update;
+    }
+    update["ok"] = false;
+    return update;
+  }
+
+  getUser(dynamic user_id) async {
+    var get_user = await requestSendApi("getUser", {"user_id": user_id});
+    if (RegExp("^user\$", caseSensitive: false).hasMatch(get_user["@type"])) {
+      var json = {};
+      json["id"] = get_user["id"];
+      try {
+        if (RegExp("^userTypeBot\$", caseSensitive: false)
+            .hasMatch(get_user["type"]["@type"])) {
+          json["is_bot"] = true;
+        } else {
+          json["is_bot"] = false;
+        }
+      } catch (e) {
+        json["is_bot"] = false;
+      }
+      json["first_name"] = get_user["first_name"];
+      if (getBoolean(get_user["last_name"])) {
+        json["last_name"] = get_user["last_name"];
+      }
+      if (getBoolean(get_user["username"])) {
+        json["username"] = get_user["username"];
+      }
+      if (getBoolean(get_user["phone_number"])) {
+        json["phone_number"] = get_user["phone_number"];
+      }
+      if (getBoolean(get_user["language_code"])) {
+        json["language_code"] = get_user["language_code"];
+      }
+      json["detail"] = {
+        "has_protected_content": false,
+        "is_marked_as_unread": false,
+        "is_blocked": false,
+        "has_scheduled_messages": false,
+        "can_be_deleted_only_for_self": false,
+        "can_be_deleted_for_all_users": false,
+        "can_be_reported": false,
+        "default_disable_notification": false,
+        "unread_count": 0,
+        "last_read_inbox_message_id": 0,
+        "last_read_outbox_message_id": 0,
+        "unread_mention_count": 0,
+        "is_contact": get_user["is_contact"],
+        "is_mutual_contact": get_user["is_mutual_contact"],
+        "is_verified": get_user["is_verified"],
+        "is_support": get_user["is_support"],
+        "is_scam": get_user["is_scam"],
+        "is_fake": get_user["is_fake"],
+        "have_acces": get_user["have_access"]
+      };
+      return {"ok": true, "result": json};
+    }
+    get_user["ok"] = false;
+    return get_user;
+  }
 }
 
 class UpdateTd {
@@ -621,11 +1311,26 @@ class UpdateTd {
     return update;
   }
 
+  Future<Map> get raw_api async {
+    if (update["@type"] == "updateNewMessage") {
+      try {
+        var getMessage = await tg.jsonMessage(update["message"]);
+        if (getMessage["ok"]) {
+          return getMessage["result"];
+        }
+        return update;
+      } catch (e) {
+        return update;
+      }
+    } else {
+      return update;
+    }
+  }
+
   String get type {
     return update["@type"];
   }
 
-  // ignore: non_constant_identifier_names
   UpdateChannelPost get channel_post {
     return UpdateChannelPost(tg, update);
   }
@@ -646,7 +1351,6 @@ class UpdateMessage {
   late Map update;
   UpdateMessage(this.tg, this.update);
 
-  // ignore: non_constant_identifier_names
   bool get is_found {
     return getBoolean(update["message"]);
   }
@@ -655,7 +1359,6 @@ class UpdateMessage {
     return update["message"]["@type"];
   }
 
-  // ignore: non_constant_identifier_names
   bool get is_outgoing {
     return update["message"]["is_outgoing"];
   }

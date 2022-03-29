@@ -1684,6 +1684,7 @@ class TelegramApi {
       return json;
     }
   }
+
 }
 
 class JSON {
@@ -1705,4 +1706,3 @@ class JSON {
     }
   }
 }
-
