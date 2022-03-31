@@ -813,7 +813,12 @@ class Tdlib {
           .hasMatch(chat_id.toString())) {
         try {
           return await getUser(chat_id);
-        } catch (e) {}
+        } catch (e) {
+          return {
+            "ok": true,
+            "result": {"id": chat_id, "type": "", "detail": {}}
+          };
+        }
       }
     }
     return {
@@ -822,80 +827,118 @@ class Tdlib {
     };
   }
 
-  jsonMessage(Map update, {Map? from_data, Map? chat_data}) async {
+  jsonMessage(Map update,
+      {Map? from_data,
+      Map? chat_data,
+      bool is_detail = false,
+      bool is_super_detail = false}) async {
     try {
       if (update["@type"] == "message") {
         Map json = {};
         Map chat_json = {"id": update["chat_id"]};
-        bool is_chat_not_same = true;
-        try {
-          if (chat_data != null) {
-            if (update["chat_id"] == chat_data["id"]) {
-              is_chat_not_same = false;
-              chat_json = chat_data;
-            }
+        if (update["is_channel_post"] ?? false) {
+          chat_json["type"] = "channel";
+        } else {
+          if (Regex("^-100", "i").exec(update["chat_id"])) {
+            chat_json["type"] = "supergroup";
+          } else if (Regex("^-", "i").exec(update["chat_id"])) {
+            chat_json["type"] = "group";
+          } else {
+            chat_json["type"] = "private";
           }
-        } catch (e) {}
-        if (is_chat_not_same) {
+        }
+
+        bool is_chat_not_same = true;
+        if (is_super_detail) {
           try {
-            var chatResult = await getChat(update["chat_id"]);
-            if (chatResult["ok"]) {
-              chat_json = chatResult["result"];
+            if (chat_data != null) {
+              if (update["chat_id"] == chat_data["id"]) {
+                is_chat_not_same = false;
+                chat_json = chat_data;
+              }
             }
           } catch (e) {}
+          if (is_chat_not_same) {
+            try {
+              var chatResult = await getChat(update["chat_id"]);
+              if (chatResult["ok"]) {
+                chat_json = chatResult["result"];
+              }
+            } catch (e) {}
+          }
         }
 
         json["is_outgoing"] = update["is_outgoing"] ?? false;
         json["is_pinned"] = update["is_pinned"] ?? false;
         if (typeof(update["sender_id"]) == "object") {
           if (update["sender_id"]["user_id"] != null) {
-            if (update["chat_id"] == update["sender_id"]["user_id"]) {
-              json["from"] = chat_json;
+            Map from_json = {"id": update["sender_id"]["user_id"]};
+            if (update["chat_id"] == from_json["id"]) {
+              from_json["type"] = chat_json["type"];
+            } else if (Regex("^-", "i").exec(from_json["chat_id"])) {
+              from_json["type"] = "group";
             } else {
-              bool is_from_not_same = true;
-              Map from_json = {"id": update["sender_id"]["user_id"]};
-              if (from_data != null) {
-                if (update["chat_id"] == from_data["id"]) {
-                  is_from_not_same = false;
-                  from_json = from_data;
+              from_json["type"] = "private";
+            }
+
+            if (is_super_detail) {
+              if (update["chat_id"] == update["sender_id"]["user_id"]) {
+                from_json = chat_json;
+              } else {
+                bool is_from_not_same = true;
+                if (from_data != null) {
+                  if (update["chat_id"] == from_data["id"]) {
+                    is_from_not_same = false;
+                    from_json = from_data;
+                  }
+                }
+                if (is_from_not_same) {
+                  try {
+                    var fromResult =
+                        await getChat(update["sender_id"]["user_id"]);
+                    if (fromResult["ok"]) {
+                      from_json = fromResult["result"];
+                    }
+                  } catch (e) {}
                 }
               }
-              if (is_from_not_same) {
-                try {
-                  var fromResult =
-                      await getChat(update["sender_id"]["user_id"]);
-                  if (fromResult["ok"]) {
-                    from_json = fromResult["result"];
-                  }
-                } catch (e) {}
-              }
-              json["from"] = from_json;
             }
+            json["from"] = from_json;
           }
 
           if (update["sender_id"]["chat_id"] != null) {
-            if (update["chat_id"] == update["sender_id"]["chat_id"]) {
-              json["from"] = chat_json;
+            Map from_json = {"id": update["sender_id"]["chat_id"]};
+            if (update["chat_id"] == from_json["id"]) {
+              from_json["type"] = chat_json["type"];
+            } else if (Regex("^-", "i").exec(from_json["chat_id"])) {
+              from_json["type"] = "group";
             } else {
-              bool is_from_not_same = true;
-              Map from_json = {"id": update["sender_id"]["chat_id"]};
-              if (from_data != null) {
-                if (update["chat_id"] == from_data["id"]) {
-                  is_from_not_same = false;
-                  from_json = from_data;
+              from_json["type"] = "private";
+            }
+
+            if (is_super_detail) {
+              if (update["chat_id"] == update["sender_id"]["chat_id"]) {
+                from_json = chat_json;
+              } else {
+                bool is_from_not_same = true;
+                if (from_data != null) {
+                  if (update["chat_id"] == from_data["id"]) {
+                    is_from_not_same = false;
+                    from_json = from_data;
+                  }
+                }
+                if (is_from_not_same) {
+                  try {
+                    var fromResult =
+                        await getChat(update["sender_id"]["chat_id"]);
+                    if (fromResult["ok"]) {
+                      from_json = fromResult["result"];
+                    }
+                  } catch (e) {}
                 }
               }
-              if (is_from_not_same) {
-                try {
-                  var fromResult =
-                      await getChat(update["sender_id"]["chat_id"]);
-                  if (fromResult["ok"]) {
-                    from_json = fromResult["result"];
-                  }
-                } catch (e) {}
-              }
-              json["from"] = from_json;
             }
+            json["from"] = from_json;
           }
         }
 
@@ -1223,17 +1266,33 @@ class Tdlib {
           }
           json["entities"] = new_entities;
         }
-        if (json["chat"]["type"] != null) {
-          if (json["chat"]["type"] == "channel") {
-            return {
-              "ok": true,
-              "result": {"update_channel_post": json}
-            };
+        if (is_detail) {
+          if (is_super_detail) {
+            if (json["chat"]["type"] != null) {
+              if (json["chat"]["type"] == "channel") {
+                return {
+                  "ok": true,
+                  "result": {"update_channel_post": json}
+                };
+              } else {
+                return {
+                  "ok": true,
+                  "result": {"update_message": json}
+                };
+              }
+            }
           } else {
-            return {
-              "ok": true,
-              "result": {"update_message": json}
-            };
+            if (json["chat"]["type"] == "channel") {
+              return {
+                "ok": true,
+                "result": {"update_channel_post": json}
+              };
+            } else {
+              return {
+                "ok": true,
+                "result": {"update_message": json}
+              };
+            }
           }
         }
         return {"ok": true, "result": json};
@@ -1311,10 +1370,28 @@ class UpdateTd {
     return update;
   }
 
+  Future<Map> get raw_api_light async {
+    if (update["@type"] == "updateNewMessage") {
+      try {
+        var getMessage =
+            await tg.jsonMessage(update["message"], is_detail: true);
+        if (getMessage["ok"]) {
+          return getMessage["result"];
+        }
+        return update;
+      } catch (e) {
+        return update;
+      }
+    } else {
+      return update;
+    }
+  }
+
   Future<Map> get raw_api async {
     if (update["@type"] == "updateNewMessage") {
       try {
-        var getMessage = await tg.jsonMessage(update["message"]);
+        var getMessage =
+            await tg.jsonMessage(update["message"], is_detail: false);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }

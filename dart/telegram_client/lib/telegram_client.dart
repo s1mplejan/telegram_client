@@ -9,7 +9,6 @@ import 'dart:convert' as convert;
 
 import 'package:ffi/ffi.dart' as pkgffi;
 import 'package:http/http.dart';
-import 'package:eventify/eventify.dart';
 import 'package:hexaminate/hexaminate.dart';
 
 part 'src/request.dart';

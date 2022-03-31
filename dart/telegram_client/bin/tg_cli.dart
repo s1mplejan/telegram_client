@@ -1,10 +1,10 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
-import 'package:hexaminate/hexaminate.dart';
 import 'package:telegram_client/telegram_client.dart';
 
 void main() async {
   String path = Directory.current.path;
-
   var option = {
     'api_id': 1917085,
     'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
@@ -40,11 +40,10 @@ void main() async {
         if (update.message.text!.isNotEmpty) {}
         if (RegExp("^/ping", caseSensitive: false)
             .hasMatch(update.message.text ?? "")) {
-          tg.requestSendApi("sendMessage",
-               tg.makeParameters("sendMessage", {
-                "chat_id": update.message.chat.id,
-                "text": "Pong jadi ye"
-              }));
+          tg.requestSendApi(
+              "sendMessage",
+              tg.makeParameters("sendMessage",
+                  {"chat_id": update.message.chat.id, "text": "Pong jadi ye"}));
         }
         if (update.message.text == "/stop") {
           tg.stop();

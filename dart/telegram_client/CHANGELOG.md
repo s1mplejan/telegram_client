@@ -58,3 +58,7 @@
 ## 0.1.5
 
 - add api method and update.
+  
+## 0.1.6
+
+- update library.
