@@ -470,7 +470,9 @@ class Tdlib {
     }
   }
 
-  dynamic parseMode(String text, String parse_mode, List entities) {
+  dynamic parseMode(String text, String? parse_mode, List? entities) {
+    parse_mode ??= "";
+    entities ??= [];
     dynamic pesan = {"text": text};
     var parseMode = 'textParseModeHTML';
     if (typeof(parse_mode) == "string") {
@@ -553,11 +555,12 @@ class Tdlib {
 
   Future<dynamic> requestSendApi(String method,
       [Map<String, dynamic>? parameters]) async {
+    parameters ??= {};
     String random = getRandom(15);
     if (typeof(parameters) == "object") {
-      parameters!["@extra"] = random;
+      parameters["@extra"] = random;
     } else {
-      parameters!["@extra"] = random;
+      parameters["@extra"] = random;
     }
     _client_send.call(client,
         convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
@@ -585,6 +588,49 @@ class Tdlib {
     }
   }
 
+  Future<Map> getMe() async {
+    var get_me = await requestSendApi("getMe");
+    Map result = {};
+    result["id"] = get_me["id"];
+    result["is_bot"] = false;
+    result["first_name"] = get_me["first_name"];
+    if (get_me["last_name"].toString().isNotEmpty) {
+      result["last_name"] = get_me["last_name"];
+    }
+    if (get_me["username"].toString().isNotEmpty) {
+      result["username"] = get_me["username"];
+    }
+    result["status"] = get_me["status"]["@type"]
+        .toString()
+        .toLowerCase()
+        .replace(Regex("userStatus", "i").run, "");
+    result["type_account"] = get_me["type"]["@type"]
+        .toString()
+        .toLowerCase()
+        .replace(Regex("userType", "i").run, "");
+    result["type"] = "private";
+    if (result["type_account"] == "bot") {
+      result["is_bot"] = true;
+    }
+    if (get_me["language_code"].toString().isNotEmpty) {
+      result["language_code"] = get_me["language_code"];
+    }
+    result["detail"] = {};
+    get_me.forEach((key, value) {
+      if (typeof(value) == "boolean") {
+        result["detail"][key.toString()] = value;
+      }
+    });
+
+    get_me["type"].forEach((key, value) {
+      if (typeof(value) == "boolean") {
+        result["detail"][key.toString()] = value;
+      }
+    });
+
+    return {"ok": true, "result": result};
+  }
+
   requestApi(String method, [Map<String, dynamic>? parameters]) async {
     parameters ??= {};
     if (Regex("^@.*", "i").exec(parameters["chat_id"])) {
@@ -604,15 +650,56 @@ class Tdlib {
       }
     }
 
-    if (Regex("^sendMessage\$", "i").exec(method)) {
-      return await requestSendApi(
-        "sendMessage",
-        makeParametersApi({
-          "@type": "sendMessage",
-          ...parameters,
-        }),
-      );
+    if (Regex(
+            "^(sendMessage|sendPhoto|sendVideo|sendAudio|sendDocument)\$", "i")
+        .exec(method)) {
+      Map result_request = {"ok": false};
+      if (Regex("^sendMessage\$", "i").exec(method)) {
+        result_request = await requestSendApi(
+          "sendMessage",
+          makeParametersApi({
+            "@type": "sendMessage",
+            ...parameters,
+          }),
+        );
+      } else {}
+      result_request["ok"] ??= true;
+      if (!result_request["ok"]) {
+        throw result_request;
+      }
+      result_request.remove("ok");
+      var result = {};
+      on("update", (UpdateTd update) async {
+        try {
+          Map updateOrigin = update.raw;
+          if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
+            if (updateOrigin["old_message_id"] == result_request["id"]) {
+              var json_message = await jsonMessage(updateOrigin["message"]);
+              if (json_message["ok"]) {
+                json_message["result"]["@type"] = "updateNewMessage";
+                result = json_message["result"];
+              } else {
+                json_message["result"]["@type"] = "error";
+                result = json_message["result"];
+              }
+            }
+          }
+        } catch (e) {
+          rethrow;
+        }
+      });
+      while (true) {
+        await Future.delayed(Duration(microseconds: 1));
+        if (typeof(result["@type"]) == "string") {
+          if (result["@type"] == "error") {
+            throw result;
+          }
+          result.remove("@type");
+          return {"ok": true, "result": result};
+        }
+      }
     }
+
     if (Regex("^joinChat\$", "i").exec(method)) {
       return await requestSendApi("joinChat", {
         "chat_id": parameters["chat_id"],
@@ -660,6 +747,25 @@ class Tdlib {
       "message_id": message_id,
     });
     return await jsonMessage(get_message);
+  }
+
+  editMessageText(dynamic chat_id, dynamic message_id, String text,
+      [String parse_mode = "html",
+      List? entities,
+      bool disable_web_page_preview = false]) async {
+    entities ??= [];
+    var pesan = parseMode(text, parse_mode, entities);
+    var get_message = await requestSendApi("editMessageText", {
+      "chat_id": chat_id,
+      "message_id": message_id,
+      "input_message_content": {
+        '@type': "inputMessageText",
+        "text": pesan,
+        "disable_web_page_preview": disable_web_page_preview,
+        "clear_draft": false
+      }
+    });
+    return get_message;
   }
 
   getChatMember(dynamic chat_id, dynamic user_id) async {
@@ -1426,7 +1532,7 @@ class Tdlib {
                 json_content["unique_id"] =
                     content_update["voice"]["remote"]["unique_id"];
                 json_content["file_size"] = content_update["voice"]["size"];
-                json[type_content] = json_content;
+                json["voice"] = json_content;
               }
             }
           }
