@@ -420,17 +420,6 @@ class Tdlib {
     }
   }
 
-  Future<Map<String, dynamic>> requestApi(String method,
-      [Map? parameters]) async {
-    var json = {"@type": method, ...parameters ?? {}};
-    var result = await invoke(json);
-    if (result["@type"] == "error") {
-      throw result;
-    } else {
-      return result;
-    }
-  }
-
   String getRandom(int length) {
     const ch = '0123456789abcdefghijklmnopqrstuvwxyz';
     Random r = Random();
@@ -586,13 +575,64 @@ class Tdlib {
       }
     });
     while (condition) {
-      await Future.delayed(Duration(milliseconds: 1));
+      await Future.delayed(Duration(microseconds: 1));
       if (typeof(result["@type"]) == "string") {
         if (result["@type"] == "error") {
           throw result;
         }
         return result;
       }
+    }
+  }
+
+  requestApi(String method, [Map<String, dynamic>? parameters]) async {
+    parameters ??= {};
+    if (Regex("^@.*", "i").exec(parameters["chat_id"])) {
+      var search_public_chat = await requestSendApi("searchPublicChat", {
+        "username": parameters["chat_id"],
+      });
+      if (search_public_chat["@type"] == "chat") {
+        parameters["chat_id"] = search_public_chat["id"];
+      }
+    }
+    if (Regex("^@.*", "i").exec(parameters["user_id"])) {
+      var search_public_chat = await requestSendApi("searchPublicChat", {
+        "username": parameters["user_id"],
+      });
+      if (search_public_chat["@type"] == "chat") {
+        parameters["user_id"] = search_public_chat["id"];
+      }
+    }
+
+    if (Regex("^sendMessage\$", "i").exec(method)) {
+      return await requestSendApi(
+        "sendMessage",
+        makeParametersApi({
+          "@type": "sendMessage",
+          ...parameters,
+        }),
+      );
+    }
+    if (Regex("^joinChat\$", "i").exec(method)) {
+      return await requestSendApi("joinChat", {
+        "chat_id": parameters["chat_id"],
+      });
+    }
+    if (Regex("^joinChatByInviteLink\$", "i").exec(method)) {
+      return await requestSendApi("joinChatByInviteLink", {
+        "invite_link": parameters["invite_link"],
+      });
+    }
+
+    if (Regex("^getChatMember\$", "i").exec(method)) {
+      return await getChatMember(parameters["chat_id"], parameters["user_id"]);
+    }
+    if (Regex("^getChat\$", "i").exec(method)) {
+      return await getChat(parameters["chat_id"], is_detail: true);
+    }
+
+    if (Regex("^getUser\$", "i").exec(method)) {
+      return await getUser(parameters["chat_id"]);
     }
   }
 
@@ -607,6 +647,74 @@ class Tdlib {
         "clearDraft": false
       }
     });
+  }
+
+  getMessage(
+    dynamic chat_id,
+    dynamic message_id, {
+    bool is_detail = false,
+    bool is_super_detail = false,
+  }) async {
+    var get_message = await requestSendApi("getMessage", {
+      "chat_id": chat_id,
+      "message_id": message_id,
+    });
+    return await jsonMessage(get_message);
+  }
+
+  getChatMember(dynamic chat_id, dynamic user_id) async {
+    chat_id ??= 0;
+    user_id ??= 0;
+    if (Regex("^@.*", "i").exec(chat_id)) {
+      var search_public_chat =
+          await requestSendApi("searchPublicChat", {"username": chat_id});
+      if (search_public_chat["@type"] == "chat") {
+        chat_id = search_public_chat["id"];
+      }
+    }
+    if (Regex("^@.*", "i").exec(user_id)) {
+      var search_public_chat =
+          await requestSendApi("searchPublicChat", {"username": user_id});
+      if (search_public_chat["@type"] == "chat") {
+        user_id = search_public_chat["id"];
+      }
+    }
+    var get_chat_member = await requestSendApi("getChatMember", {
+      "chat_id": chat_id,
+      "member_id": {
+        "@type": "messageSenderUser",
+        "user_id": user_id,
+      }
+    });
+
+    if (Regex("^chatMember\$", "i").exec(get_chat_member["@type"])) {
+      var json = {};
+
+      var get_user = await getUser(get_chat_member["member_id"]["user_id"]);
+      json["user"] = get_user["result"];
+      json["join_date"] = get_chat_member["joined_chat_date"];
+      var status = get_chat_member["status"];
+      json["status"] = status["@type"]
+          .toString()
+          .toLowerCase()
+          .replace(Regex("chatmemberstatus", "ig").run, "");
+      json["custom_title"] = status["custom_title"];
+      json["can_be_edited"] = status["can_be_edited"];
+      json["can_manage_chat"] = status["can_manage_chat"];
+      json["can_change_info"] = status["can_change_info"];
+      json["can_post_messages"] = status["can_post_messages"];
+      json["can_edit_messages"] = status["can_edit_messages"];
+      json["can_delete_messages"] = status["can_delete_messages"];
+      json["can_invite_users"] = status["can_invite_users"];
+      json["can_restrict_members"] = status["can_restrict_members"];
+      json["can_pin_messages"] = status["can_pin_messages"];
+      json["can_promote_members"] = status["can_promote_members"];
+      json["can_manage_voice_chats"] = status["can_manage_voice_chats"];
+      json["is_anonymous"] = status["is_anonymous"];
+      return {"ok": true, "result": json};
+    } else {
+      return {"ok": false, "result": {}};
+    }
   }
 
   getChat(dynamic chat_id, {bool is_detail = false}) async {
@@ -827,24 +935,44 @@ class Tdlib {
     };
   }
 
-  jsonMessage(Map update,
-      {Map? from_data,
-      Map? chat_data,
-      bool is_detail = false,
-      bool is_super_detail = false}) async {
+  jsonMessage(
+    Map update, {
+    Map? from_data,
+    Map? chat_data,
+    bool is_detail = false,
+    bool is_super_detail = false,
+  }) async {
     try {
       if (update["@type"] == "message") {
         Map json = {};
-        Map chat_json = {"id": update["chat_id"]};
+        Map chat_json = {
+          "id": update["chat_id"],
+          "first_name": "",
+          "title": "",
+          "type": "",
+          "detail": {},
+          "last_message": {}
+        };
         if (update["is_channel_post"] ?? false) {
           chat_json["type"] = "channel";
+          chat_json["title"] = "";
         } else {
           if (Regex("^-100", "i").exec(update["chat_id"])) {
             chat_json["type"] = "supergroup";
+            chat_json["title"] = "";
           } else if (Regex("^-", "i").exec(update["chat_id"])) {
             chat_json["type"] = "group";
+            chat_json["title"] = "";
           } else {
             chat_json["type"] = "private";
+          }
+        }
+
+        if (!is_super_detail) {
+          if (chat_json["type"] != "private") {
+            chat_json.remove("first_name");
+          } else {
+            chat_json.remove("title");
           }
         }
 
@@ -871,8 +999,16 @@ class Tdlib {
         json["is_outgoing"] = update["is_outgoing"] ?? false;
         json["is_pinned"] = update["is_pinned"] ?? false;
         if (typeof(update["sender_id"]) == "object") {
+          Map from_json = {
+            "id": 0,
+            "first_name": "",
+            "title": "",
+            "type": "",
+            "detail": {},
+            "last_message": {}
+          };
           if (update["sender_id"]["user_id"] != null) {
-            Map from_json = {"id": update["sender_id"]["user_id"]};
+            from_json["id"] = update["sender_id"]["user_id"];
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
             } else if (Regex("^-", "i").exec(from_json["chat_id"])) {
@@ -903,11 +1039,10 @@ class Tdlib {
                 }
               }
             }
-            json["from"] = from_json;
           }
 
           if (update["sender_id"]["chat_id"] != null) {
-            Map from_json = {"id": update["sender_id"]["chat_id"]};
+            from_json["id"] = update["sender_id"]["chat_id"];
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
             } else if (Regex("^-", "i").exec(from_json["chat_id"])) {
@@ -938,13 +1073,95 @@ class Tdlib {
                 }
               }
             }
-            json["from"] = from_json;
           }
+          if (!is_super_detail) {
+            if (from_json["type"] != "private") {
+              from_json.remove("first_name");
+            } else {
+              from_json.remove("title");
+            }
+          }
+          json["from"] = from_json;
         }
 
         json["chat"] = chat_json;
         json["date"] = update["date"];
         json["message_id"] = update["id"];
+        update.forEach((key, value) {
+          try {
+            if (typeof(value) == "boolean") {
+              json[key] = value;
+            }
+          } catch (e) {}
+        });
+
+        if (chat_json["type"] == "channel") {
+          if (update["author_signature"].toString().isNotEmpty) {
+            json["author_signature"] = update["author_signature"];
+          }
+        }
+
+        if (typeof(update["forward_info"]) == "object") {
+          var forward_info = update["forward_info"];
+          if (typeof(forward_info["origin"]) == "object") {
+            if (forward_info["origin"]["@type"] ==
+                "messageForwardOriginChannel") {
+              Map forward_json = {
+                "id": forward_info["origin"]["chat_id"],
+                "first_name": "",
+                "title": "",
+                "type": "",
+                "detail": {},
+                "last_message": {}
+              };
+              try {
+                var getchat_forward = await getChat(forward_json["id"]);
+                if (getchat_forward["ok"]) {
+                  forward_json = getchat_forward["result"];
+                }
+              } catch (e) {}
+              json["forward_from_chat"] = forward_json;
+              json["forward_from_message_id"] =
+                  forward_info["origin"]["message_id"] ?? 0;
+              json["forward_from_author_signature"] =
+                  forward_info["origin"]["author_signature"] ?? "";
+            }
+            if (forward_info["origin"]["@type"] == "messageForwardOriginUser") {
+              Map forward_json = {
+                "id": forward_info["origin"]["sender_user_id"],
+                "first_name": "",
+                "title": "",
+                "type": "",
+                "detail": {},
+                "last_message": {}
+              };
+              try {
+                var getuser_forward = await getUser(forward_json["id"]);
+                if (getuser_forward["ok"]) {
+                  forward_json = getuser_forward["result"];
+                }
+              } catch (e) {}
+              json["forward_from_chat"] = forward_json;
+            }
+          }
+          json["forward_date"] = forward_info["date"] ?? 0;
+        }
+
+        update["reply_to_message_id"] ??= 0;
+        update["reply_in_chat_id"] ??= 0;
+        if (update["reply_to_message_id"] != 0 &&
+            update["reply_in_chat_id"] != 0) {
+          try {
+            var get_message = await getMessage(
+              update["reply_in_chat_id"],
+              update["reply_to_message_id"],
+            );
+            if (get_message["ok"]) {
+              json["reply_to_message"] = get_message["result"];
+            }
+          } catch (e) {}
+        }
+
         if (typeof(update["content"]) == "object") {
           List old_entities = [];
 
@@ -1357,6 +1574,7 @@ class Tdlib {
       return {"ok": true, "result": json};
     }
     get_user["ok"] = false;
+    get_user["result"] = {"id": user_id};
     return get_user;
   }
 }

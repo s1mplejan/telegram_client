@@ -62,3 +62,11 @@
 ## 0.1.6
 
 - update library.
+  
+## 0.1.7
+
+- add short hand method getChatMember etc.
+
+## 0.1.8
+
+- add more update.
