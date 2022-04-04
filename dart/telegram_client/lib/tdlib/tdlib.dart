@@ -430,10 +430,15 @@ class Tdlib {
   Map<String, dynamic> makeParametersApi(Map<String, dynamic> parameters) {
     Map<String, dynamic> jsonResult = {"@type": ""};
     try {
-      if (RegExp("^(sendMessage)\$", caseSensitive: false)
-          .hasMatch(parameters["@type"])) {
+      String regexMethodSend =
+          r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
+      if (Regex(regexMethodSend, "i").exec(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
-        jsonResult["input_message_content"] = {};
+        jsonResult["input_message_content"] = {
+          "@type": "inputMessageText",
+          "disableWebPagePreview": false,
+          "clearDraft": false
+        };
 
         jsonResult["chat_id"] = parameters["chat_id"];
         if (getBoolean(parameters["parse_mode"])) {
@@ -450,16 +455,62 @@ class Tdlib {
         } else {
           parameters["entities"] = [];
         }
-        if (RegExp("^(sendMessage)\$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
-          var text = parseMode(parameters["text"].toString(),
-              parameters["parse_mode"], parameters["entities"]);
-          jsonResult["input_message_content"] = {
-            "@type": "inputMessageText",
-            "text": text,
-            "disableWebPagePreview": false,
-            "clearDraft": false
-          };
+        if (Regex(r"^(sendMessage)$", "i").exec(parameters["@type"])) {
+          var text = parseMode(
+            parameters["text"].toString(),
+            parameters["parse_mode"],
+            parameters["entities"],
+          );
+          jsonResult["input_message_content"]["@type"] = "inputMessageText";
+          jsonResult["input_message_content"]["text"] = text;
+        }
+        if (Regex(r"^(sendPhoto)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["photo"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessagePhoto";
+          jsonResult["input_message_content"]["photo"] = getDetailFile;
+        }
+        if (Regex(r"^(sendVoice)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["voice"]);
+          jsonResult["input_message_content"]["@type"] =
+              "inputMessageVoiceNote";
+          jsonResult["input_message_content"]["voice_note"] = getDetailFile;
+        }
+        if (Regex(r"^(sendSticker)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["sticker"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessageSticker";
+          jsonResult["input_message_content"]["sticker"] = getDetailFile;
+        }
+        if (Regex(r"^(sendAnimation)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["animation"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessageAnimation";
+          jsonResult["input_message_content"]["animation"] = getDetailFile;
+        }
+        if (Regex(r"^(sendDocument)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["document"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessageDocument";
+          jsonResult["input_message_content"]["document"] = getDetailFile;
+        }
+        if (Regex(r"^(sendAudio)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["audio"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessageAudio";
+          jsonResult["input_message_content"]["audio"] = getDetailFile;
+        }
+        if (Regex(r"^(sendVideo)$", "i").exec(parameters["@type"])) {
+          var getDetailFile = typeFile(parameters["video"]);
+          jsonResult["input_message_content"]["@type"] = "inputMessageVideo";
+          jsonResult["input_message_content"]["video"] = getDetailFile;
+        }
+        if (!Regex(r"^(sendMessage|sendLocation)$", "i").exec(parameters["@type"])) {
+          if (parameters["caption"] != null) {
+            var caption = parseMode(
+              (parameters["caption"] != null)
+                  ? parameters["caption"].toString()
+                  : "",
+              parameters["parse_mode"],
+              parameters["entities"],
+            );
+            jsonResult["input_message_content"]["caption"] = caption;
+          }
         }
         return jsonResult;
       }
@@ -468,6 +519,20 @@ class Tdlib {
     } catch (e) {
       return parameters;
     }
+  }
+
+  Map typeFile(String content) {
+    Map data = {};
+    if (Regex(r"^http", "i").exec(content)) {
+      data = {"@type": 'inputFileRemote', "id": content};
+    } else if (Regex(r"^(\/|\.\.?\/|~\/)", "i").exec(content)) {
+      data = {"@type": 'inputFileLocal', "path": content};
+    } else if (typeof(content) == 'number') {
+      data = {"@type": 'inputFileId', "id": content};
+    } else {
+      data = {"@type": 'inputFileRemote', "id": content};
+    }
+    return data;
   }
 
   dynamic parseMode(String text, String? parse_mode, List? entities) {
@@ -649,20 +714,25 @@ class Tdlib {
         parameters["user_id"] = search_public_chat["id"];
       }
     }
-
-    if (Regex(
-            "^(sendMessage|sendPhoto|sendVideo|sendAudio|sendDocument)\$", "i")
-        .exec(method)) {
+    List<String> methodSend = [
+      "sendMessage",
+      "sendPhoto",
+      "sendVideo",
+      "sendAudio",
+      "sendVoice",
+      "sendDocument"
+    ];
+    String regexMethodSend =
+        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
+    if (Regex(regexMethodSend, "i").exec(method)) {
       Map result_request = {"ok": false};
-      if (Regex("^sendMessage\$", "i").exec(method)) {
-        result_request = await requestSendApi(
-          "sendMessage",
-          makeParametersApi({
-            "@type": "sendMessage",
-            ...parameters,
-          }),
-        );
-      } else {}
+      result_request = await requestSendApi(
+        "sendMessage",
+        makeParametersApi({
+          "@type": method,
+          ...parameters,
+        }),
+      );
       result_request["ok"] ??= true;
       if (!result_request["ok"]) {
         throw result_request;
