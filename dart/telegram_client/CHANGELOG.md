@@ -74,3 +74,11 @@
 ## 0.1.9
 
 - add more.
+
+## 0.2.0
+
+- add more send pretty.
+  
+## 0.2.1
+
+- add more api update pretty.

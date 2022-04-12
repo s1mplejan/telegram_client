@@ -439,8 +439,17 @@ class Tdlib {
           "disableWebPagePreview": false,
           "clearDraft": false
         };
-
         jsonResult["chat_id"] = parameters["chat_id"];
+        if (typeof(parameters["disable_notification"]) == "boolean") {
+          jsonResult["disable_notification"] =
+              parameters["reply_to_message_id"];
+        }
+        if (typeof(parameters["reply_to_message_id"]) == "number") {
+          jsonResult["reply_to_message_id"] = parameters["reply_to_message_id"];
+        }
+        if (typeof(parameters["reply_markup"]) == "object") {
+          jsonResult["reply_markup"] = parameters["reply_markup"];
+        }
         if (getBoolean(parameters["parse_mode"])) {
           if (typeof(parameters["parse_mode"]) != "string") {
             parameters["parse_mode"] = "";
@@ -482,7 +491,8 @@ class Tdlib {
         }
         if (Regex(r"^(sendAnimation)$", "i").exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["animation"]);
-          jsonResult["input_message_content"]["@type"] = "inputMessageAnimation";
+          jsonResult["input_message_content"]["@type"] =
+              "inputMessageAnimation";
           jsonResult["input_message_content"]["animation"] = getDetailFile;
         }
         if (Regex(r"^(sendDocument)$", "i").exec(parameters["@type"])) {
@@ -500,7 +510,8 @@ class Tdlib {
           jsonResult["input_message_content"]["@type"] = "inputMessageVideo";
           jsonResult["input_message_content"]["video"] = getDetailFile;
         }
-        if (!Regex(r"^(sendMessage|sendLocation)$", "i").exec(parameters["@type"])) {
+        if (!Regex(r"^(sendMessage|sendLocation|sendSticker)$", "i")
+            .exec(parameters["@type"])) {
           if (parameters["caption"] != null) {
             var caption = parseMode(
               (parameters["caption"] != null)
@@ -738,6 +749,9 @@ class Tdlib {
         throw result_request;
       }
       result_request.remove("ok");
+      if (!parameters.containsKey("as_api")) {
+        return result_request;
+      }
       var result = {};
       on("update", (UpdateTd update) async {
         try {
@@ -770,25 +784,41 @@ class Tdlib {
       }
     }
 
-    if (Regex("^joinChat\$", "i").exec(method)) {
+    if (Regex(r"^joinChat$", "i").exec(method)) {
       return await requestSendApi("joinChat", {
         "chat_id": parameters["chat_id"],
       });
     }
-    if (Regex("^joinChatByInviteLink\$", "i").exec(method)) {
+    if (Regex(r"^joinChatByInviteLink$", "i").exec(method)) {
       return await requestSendApi("joinChatByInviteLink", {
         "invite_link": parameters["invite_link"],
       });
     }
 
-    if (Regex("^getChatMember\$", "i").exec(method)) {
+    if (Regex(r"^getChatMember$", "i").exec(method)) {
       return await getChatMember(parameters["chat_id"], parameters["user_id"]);
     }
-    if (Regex("^getChat\$", "i").exec(method)) {
+    if (Regex(r"^getChat$", "i").exec(method)) {
       return await getChat(parameters["chat_id"], is_detail: true);
     }
+    if (Regex(r"^getChats$", "i").exec(method)) {
+      var getChats = await requestSendApi("getChats", {"limit": 9999});
+      if (getChats["@type"] == "chats") {
+        List chat_ids = getChats["chat_ids"];
+        List array_chat = [];
+        for (var i = 0; i < chat_ids.length; i++) {
+          try {
+            var get_chat = await getChat(chat_ids[i]);
+            if (get_chat["ok"]) {
+              array_chat.add(get_chat["result"]);
+            }
+          } catch (e) {}
+        }
+        return {"ok": true, "result": array_chat};
+      }
+    }
 
-    if (Regex("^getUser\$", "i").exec(method)) {
+    if (Regex(r"^getUser$", "i").exec(method)) {
       return await getUser(parameters["chat_id"]);
     }
   }
@@ -816,7 +846,8 @@ class Tdlib {
       "chat_id": chat_id,
       "message_id": message_id,
     });
-    return await jsonMessage(get_message);
+    return await jsonMessage(get_message,
+        is_detail: is_detail, is_super_detail: is_super_detail);
   }
 
   editMessageText(dynamic chat_id, dynamic message_id, String text,
@@ -895,7 +926,7 @@ class Tdlib {
 
   getChat(dynamic chat_id, {bool is_detail = false}) async {
     try {
-      if (RegExp("^@.*\$", caseSensitive: false).hasMatch(chat_id.toString())) {
+      if (RegExp(r"^@.*$", caseSensitive: false).hasMatch(chat_id.toString())) {
         var search_public_chat =
             await requestSendApi("searchPublicChat", {"username": chat_id});
         if (search_public_chat["@type"] == "chat") {
@@ -904,7 +935,7 @@ class Tdlib {
       }
       var getchat = await requestSendApi("getChat", {"chat_id": chat_id});
       Map json = {};
-      if (RegExp("^chat\$", caseSensitive: false).hasMatch(getchat["@type"])) {
+      if (RegExp(r"^chat$", caseSensitive: false).hasMatch(getchat["@type"])) {
         var type_chat = getchat["type"]["@type"]
             .toString()
             .toLowerCase()
@@ -962,7 +993,10 @@ class Tdlib {
             "is_scam": getSupergroup["is_scam"],
             "is_fake": getSupergroup["is_fake"]
           };
-
+          if (getSupergroup["username"].toString().isEmpty) {
+            json.remove("username");
+            json["type"] = getchat["type"]["is_channel"] ? "channel" : "group";
+          }
           if (is_detail) {
             if (typeof(getchat["last_message"]) == "object") {
               var last_message = await jsonMessage(getchat["last_message"],
@@ -1207,7 +1241,7 @@ class Tdlib {
                 if (is_from_not_same) {
                   try {
                     var fromResult =
-                        await getChat(update["sender_id"]["user_id"]);
+                        await getUser(update["sender_id"]["user_id"]);
                     if (fromResult["ok"]) {
                       from_json = fromResult["result"];
                     }
@@ -1329,9 +1363,8 @@ class Tdlib {
             update["reply_in_chat_id"] != 0) {
           try {
             var get_message = await getMessage(
-              update["reply_in_chat_id"],
-              update["reply_to_message_id"],
-            );
+                update["reply_in_chat_id"], update["reply_to_message_id"],
+                is_detail: true, is_super_detail: true);
             if (get_message["ok"]) {
               json["reply_to_message"] = get_message["result"];
             }
@@ -1606,6 +1639,74 @@ class Tdlib {
               }
             }
           }
+          if (update["content"]["@type"] == "messageChatJoinByLink") {
+            json["type_content"] = "new_member";
+            Map new_member_from = json["from"];
+            try {
+              new_member_from.remove("detail");
+            } catch (e) {}
+            json["new_members"] = [new_member_from];
+          }
+          if (update["content"]["@type"] == "messageChatAddMembers") {
+            json["type_content"] = "new_member";
+            List new_members = [];
+            if (is_super_detail) {
+              for (var i = 0;
+                  i < update["content"]["member_user_ids"].length;
+                  i++) {
+                var loop_data = update["content"]["member_user_ids"][i];
+                try {
+                  Map result_user = await getUser(loop_data);
+                  try {
+                    result_user.remove("detail");
+                  } catch (e) {}
+                  new_members.add(result_user["result"]);
+                } catch (e) {
+                  new_members.add({
+                    "id": loop_data,
+                    "is_bot": false,
+                    "first_name": "",
+                    "last_name": "",
+                    "type": "private"
+                  });
+                }
+              }
+            } else {
+              new_members = update["content"]["member_user_ids"];
+            }
+            json["new_members"] = new_members;
+          }
+
+          if (update["content"]["@type"] == "messageChatDeleteMember") {
+            json["type_content"] = "left_member";
+            List left_member = [];
+            if (is_super_detail) {
+              try {
+                Map result_user = await getUser(update["content"]["user_id"]);
+                try {
+                  result_user.remove("detail");
+                } catch (e) {}
+                left_member.add(result_user["result"]);
+              } catch (e) {
+                left_member.add({
+                  "id": update["content"]["user_id"],
+                  "is_bot": false,
+                  "first_name": "",
+                  "last_name": "",
+                  "type": "private"
+                });
+              }
+            } else {
+              left_member.add({
+                "id": update["content"]["user_id"],
+                "is_bot": false,
+                "first_name": "",
+                "last_name": "",
+                "type": "private"
+              });
+            }
+            json["left_member"] = left_member;
+          }
 
           // caption
           if (typeof(update["content"]["caption"]) == "object") {
@@ -1623,7 +1724,7 @@ class Tdlib {
             try {
               var json_entities = {};
               json_entities["offset"] = data_entities["offset"];
-              json_entities["length"] = data_entities.length;
+              json_entities["length"] = data_entities["length"];
               if (data_entities["type"]["@type"] != null) {
                 var type_entities = data_entities["type"]["@type"]
                     .toString()
@@ -1689,6 +1790,85 @@ class Tdlib {
           }
         }
         return {"ok": true, "result": json};
+      }
+      if (update["@type"] == "updateNewCallbackQuery") {}
+      if (update["@type"] == "updateChatMember") {
+        Map json = {};
+        Map chat = {"id": update["chat_id"]};
+        Map from = {"id": update["actor_user_id"]};
+        if (is_super_detail) {
+          try {
+            var fromResult = await getChat(chat["id"]);
+            if (fromResult["ok"]) {
+              chat = fromResult["result"];
+            }
+          } catch (e) {}
+          try {
+            var fromResult = await getUser(from["id"]);
+            if (fromResult["ok"]) {
+              from = fromResult["result"];
+            }
+          } catch (e) {}
+        }
+        json["from"] = from;
+        json["chat"] = chat;
+        json["date"] = update["date"];
+        if (update["old_chat_member"]["@type"] == "chatMember") {
+          Map json_new_member = {};
+
+          if (update["old_chat_member"]["member_id"]["@type"] ==
+              "messageSenderUser") {
+            Map json_data_user = {
+              "id": update["old_chat_member"]["member_id"]["user_id"]
+            };
+            if (is_super_detail) {
+              try {
+                var fromResult = await getUser(json_data_user["id"]);
+                if (fromResult["ok"]) {
+                  json_data_user = fromResult["result"];
+                }
+              } catch (e) {}
+            }
+            json_new_member["user"] = json_data_user;
+          }
+
+          json_new_member["status"] = update["old_chat_member"]["status"]
+                  ["@type"]
+              .toString()
+              .replace(Regex(r"chatMemberStatus", "i").run, "")
+              .toLowerCase();
+          json["old_member"] = json_new_member;
+        }
+        if (update["new_chat_member"]["@type"] == "chatMember") {
+          Map json_new_member = {};
+
+          if (update["new_chat_member"]["member_id"]["@type"] ==
+              "messageSenderUser") {
+            Map json_data_user = {
+              "id": update["new_chat_member"]["member_id"]["user_id"]
+            };
+            if (is_super_detail) {
+              try {
+                var fromResult = await getUser(json_data_user["id"]);
+                if (fromResult["ok"]) {
+                  json_data_user = fromResult["result"];
+                }
+              } catch (e) {}
+            }
+            json_new_member["user"] = json_data_user;
+          }
+
+          json_new_member["status"] = update["new_chat_member"]["status"]
+                  ["@type"]
+              .toString()
+              .replace(Regex(r"chatMemberStatus", "i").run, "")
+              .toLowerCase();
+          json["new_member"] = json_new_member;
+        }
+        return {
+          "ok": true,
+          "result": {"chat_member": json}
+        };
       }
     } catch (e) {
       update["ok"] = false;
@@ -1782,10 +1962,13 @@ class UpdateTd {
   }
 
   Future<Map> get raw_api async {
-    if (update["@type"] == "updateNewMessage") {
+    if (Regex("updateNewMessage|updateChatMember", "i").exec(update["@type"])) {
       try {
-        var getMessage =
-            await tg.jsonMessage(update["message"], is_detail: false);
+        var getMessage = await tg.jsonMessage(
+          (update["@type"] == "updateNewMessage") ? update["message"] : update,
+          is_detail: true,
+          is_super_detail: true,
+        );
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
