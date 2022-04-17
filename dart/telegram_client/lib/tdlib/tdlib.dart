@@ -431,9 +431,12 @@ class Tdlib {
     Map<String, dynamic> jsonResult = {"@type": ""};
     try {
       String regexMethodSend =
-          r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
+          r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
       if (Regex(regexMethodSend, "i").exec(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
+        if (Regex("editMessage(Text)", "i").exec(parameters["@type"])) {
+          jsonResult["@type"] = parameters["@type"];
+        }
         jsonResult["input_message_content"] = {
           "@type": "inputMessageText",
           "disableWebPagePreview": false,
@@ -464,7 +467,14 @@ class Tdlib {
         } else {
           parameters["entities"] = [];
         }
-        if (Regex(r"^(sendMessage)$", "i").exec(parameters["@type"])) {
+        if (parameters.containsKey("message_id")) {
+          jsonResult["message_id"] = parameters["message_id"];
+        }
+        if (parameters.containsKey("reply_markup")) {
+          jsonResult["reply_markup"] = reply_markup(parameters["reply_markup"]);
+        }
+        if (Regex(r"^(sendMessage|editMessageText)$", "i")
+            .exec(parameters["@type"])) {
           var text = parseMode(
             parameters["text"].toString(),
             parameters["parse_mode"],
@@ -524,6 +534,34 @@ class Tdlib {
           }
         }
         return jsonResult;
+      }
+
+      if (Regex(r"^answerInlineQuery$", "i").exec(parameters["@type"])) {
+        parameters["@type"] = "answerInlineQuery";
+
+        if (typeof(parameters["results"]) == "array") {
+          List array_results = [];
+          for (var i = 0; i < parameters["results"].length; i++) {
+            Map loop_data = parameters["results"][i];
+
+            if (typeof(loop_data["type"]) == "string") {
+              loop_data["@type"] = loop_data["type"];
+              loop_data.remove("type");
+            }
+            if (typeof(loop_data["id"]) != "string") {
+              loop_data["id"] ??= "$i";
+              loop_data["id"] = (loop_data["id"].toString());
+            }
+
+            if (typeof(loop_data["reply_markup"]) == "object") {
+              loop_data["reply_markup"] =
+                  (reply_markup(loop_data["reply_markup"]));
+            }
+            array_results.add(loop_data);
+          }
+          parameters["results"] = array_results;
+        }
+        return parameters;
       }
 
       return parameters;
@@ -623,8 +661,6 @@ class Tdlib {
         "message": "Method not found"
       };
     } catch (e) {
-      print(parameters);
-
       return {"status_bool": false, "status_code": 400, "message": "Error"};
     }
   }
@@ -676,6 +712,9 @@ class Tdlib {
     if (get_me["username"].toString().isNotEmpty) {
       result["username"] = get_me["username"];
     }
+    if (get_me["phone_number"].toString().isNotEmpty) {
+      result["phone_number"] = get_me["phone_number"];
+    }
     result["status"] = get_me["status"]["@type"]
         .toString()
         .toLowerCase()
@@ -707,9 +746,102 @@ class Tdlib {
     return {"ok": true, "result": result};
   }
 
+  reply_markup(keyboard) {
+    try {
+      if (typeof(keyboard["inline_keyboard"]) == "array" &&
+          keyboard["inline_keyboard"].length > 0) {
+        Map json = {"@type": "replyMarkupInlineKeyboard"};
+        List array_rows = [];
+        for (var i = 0; i < keyboard["inline_keyboard"].length; i++) {
+          var loop_array_keyboard = keyboard["inline_keyboard"][i];
+          List array_loop = [];
+          for (var ii = 0; ii < loop_array_keyboard.length; ii++) {
+            var in_loop_array_keyboard = loop_array_keyboard[ii];
+            Map in_json_keyboard = {"@type": "inlineKeyboardButton"};
+            if (getBoolean(in_loop_array_keyboard["text"])) {
+              in_json_keyboard["text"] = in_loop_array_keyboard["text"];
+            }
+
+            if (getBoolean(in_loop_array_keyboard["url"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeUrl",
+                "url": in_loop_array_keyboard["url"]
+              };
+            }
+
+            if (getBoolean(in_loop_array_keyboard["login_url"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeLoginUrl",
+                "query": in_loop_array_keyboard["login_url"],
+              };
+            }
+            if (getBoolean(in_loop_array_keyboard["callback_data"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeCallback",
+                "data": buffer
+                    .from(in_loop_array_keyboard["callback_data"])
+                    .toStringEncode('base64')
+              };
+            }
+            if (getBoolean(in_loop_array_keyboard["callback_data_password"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeCallbackWithPassword",
+                "data": buffer
+                    .from(in_loop_array_keyboard["callback_data_password"])
+                    .toStringEncode('base64')
+              };
+            }
+
+            if (getBoolean(in_loop_array_keyboard["switch_inline_query"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query": in_loop_array_keyboard["switch_inline_query"],
+                "in_current_chat": false
+              };
+            }
+
+            if (getBoolean(
+                in_loop_array_keyboard["switch_inline_query_current_chat"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query":
+                    in_loop_array_keyboard["switch_inline_query_current_chat"],
+                "in_current_chat": true
+              };
+            }
+            if (getBoolean(in_loop_array_keyboard["callback_game"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query": in_loop_array_keyboard["callback_game"],
+                "in_current_chat": false
+              };
+            }
+            if (getBoolean(in_loop_array_keyboard["user_id"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeUser",
+                "user_id": in_loop_array_keyboard["user_id"],
+              };
+            }
+            if (getBoolean(in_loop_array_keyboard["pay"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeBuy"
+              };
+            }
+            array_loop.add(in_json_keyboard);
+          }
+          array_rows.add(array_loop);
+        }
+        json["rows"] = array_rows;
+        return json;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   requestApi(String method, [Map<String, dynamic>? parameters]) async {
     parameters ??= {};
-    if (Regex("^@.*", "i").exec(parameters["chat_id"])) {
+    if (Regex(r"^@.*", "i").exec(parameters["chat_id"])) {
       var search_public_chat = await requestSendApi("searchPublicChat", {
         "username": parameters["chat_id"],
       });
@@ -717,7 +849,7 @@ class Tdlib {
         parameters["chat_id"] = search_public_chat["id"];
       }
     }
-    if (Regex("^@.*", "i").exec(parameters["user_id"])) {
+    if (Regex(r"^@.*", "i").exec(parameters["user_id"])) {
       var search_public_chat = await requestSendApi("searchPublicChat", {
         "username": parameters["user_id"],
       });
@@ -734,11 +866,11 @@ class Tdlib {
       "sendDocument"
     ];
     String regexMethodSend =
-        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
+        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessageText)$";
     if (Regex(regexMethodSend, "i").exec(method)) {
       Map result_request = {"ok": false};
       result_request = await requestSendApi(
-        "sendMessage",
+        (Regex("editMessageText", "i").exec(method)) ? method : "sendMessage",
         makeParametersApi({
           "@type": method,
           ...parameters,
@@ -783,7 +915,25 @@ class Tdlib {
         }
       }
     }
-
+    if (Regex(r"^editMessageText$", "i").exec(method)) {
+      return await editMessageText(
+        parameters["chat_id"],
+        parameters["message_id"],
+        parameters["text"],
+        (typeof(parameters["parse_mode"] ?? "") == "string")
+            ? parameters["parse_mode"]
+            : "html",
+        (typeof(parameters["entities"] ?? []) == "array")
+            ? parameters["entities"]
+            : [],
+        (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean")
+            ? parameters["disable_web_page_preview"]
+            : false,
+        (typeof(parameters["reply_markup"] ?? {}) == "object")
+            ? parameters["reply_markup"]
+            : {},
+      );
+    }
     if (Regex(r"^joinChat$", "i").exec(method)) {
       return await requestSendApi("joinChat", {
         "chat_id": parameters["chat_id"],
@@ -821,6 +971,23 @@ class Tdlib {
     if (Regex(r"^getUser$", "i").exec(method)) {
       return await getUser(parameters["chat_id"]);
     }
+    if (Regex(r"^answerCallbackQuery$", "i").exec(method)) {
+      return await answerCallbackQuery(
+        parameters["callback_query_id"],
+        text: parameters["text"],
+        show_alert: parameters["show_alert"] ?? false,
+        url: parameters["url"],
+        cache_time: parameters["cache_time"],
+      );
+    }
+
+    return await requestSendApi(
+      method,
+      makeParametersApi({
+        "@type": method,
+        ...parameters,
+      }),
+    );
   }
 
   sendMessage(chat_id, text) {
@@ -853,12 +1020,14 @@ class Tdlib {
   editMessageText(dynamic chat_id, dynamic message_id, String text,
       [String parse_mode = "html",
       List? entities,
-      bool disable_web_page_preview = false]) async {
+      bool disable_web_page_preview = false,
+      Map? replyMarkup]) async {
     entities ??= [];
     var pesan = parseMode(text, parse_mode, entities);
     var get_message = await requestSendApi("editMessageText", {
       "chat_id": chat_id,
       "message_id": message_id,
+      "reply_markup": reply_markup(replyMarkup),
       "input_message_content": {
         '@type': "inputMessageText",
         "text": pesan,
@@ -1143,6 +1312,29 @@ class Tdlib {
       "ok": false,
       "result": {"id": chat_id, "detail": {}}
     };
+  }
+
+  answerCallbackQuery(callback_query_id,
+      {String? text,
+      bool show_alert = false,
+      String? url,
+      int? cache_time}) async {
+    Map<String, dynamic> data = {"callback_query_id": callback_query_id};
+
+    if (text != null) {
+      data["text"] = text;
+    }
+    data["show_alert"] = show_alert;
+
+    if (url != null) {
+      data["url"] = url;
+    }
+
+    if (cache_time != null) {
+      data["cache_time"] = cache_time;
+    }
+
+    return await requestSendApi("answerCallbackQuery", data);
   }
 
   jsonMessage(
@@ -1791,7 +1983,53 @@ class Tdlib {
         }
         return {"ok": true, "result": json};
       }
-      if (update["@type"] == "updateNewCallbackQuery") {}
+      if (update["@type"] == "updateNewCallbackQuery") {
+        Map json = {};
+        Map from = {"id": update["sender_user_id"]};
+        Map chat = {"id": update["chat_id"]};
+        json["id"] = update["id"];
+
+        if (is_super_detail) {
+          try {
+            var fromResult = await getChat(chat["id"]);
+            if (fromResult["ok"]) {
+              chat = fromResult["result"];
+            }
+          } catch (e) {}
+          try {
+            var fromResult = await getUser(from["id"]);
+            if (fromResult["ok"]) {
+              from = fromResult["result"];
+            }
+          } catch (e) {}
+        }
+
+        try {
+          var get_message = await getMessage(chat["id"], update["message_id"],
+              is_detail: true, is_super_detail: true);
+          if (get_message["ok"]) {
+            if (get_message["result"]["update_message"] != null) {
+              json["message"] = get_message["result"]["update_message"];
+            }
+
+            if (get_message["result"]["update_channel_post"] != null) {
+              json["message"] = get_message["result"]["update_channel_post"];
+            }
+          }
+        } catch (e) {}
+        json["message_id"] = update["message_id"];
+        json["from"] = from;
+        json["chat"] = chat;
+        json["chat_instance"] = update["chat_instance"];
+        json["data"] = buffer
+            .from(update["payload"]["data"], 'base64')
+            .toStringEncode('utf8');
+        return {
+          "ok": true,
+          "result": {"callback_query": json}
+        };
+      }
+
       if (update["@type"] == "updateChatMember") {
         Map json = {};
         Map chat = {"id": update["chat_id"]};
@@ -1815,7 +2053,6 @@ class Tdlib {
         json["date"] = update["date"];
         if (update["old_chat_member"]["@type"] == "chatMember") {
           Map json_new_member = {};
-
           if (update["old_chat_member"]["member_id"]["@type"] ==
               "messageSenderUser") {
             Map json_data_user = {
@@ -1865,9 +2102,39 @@ class Tdlib {
               .toLowerCase();
           json["new_member"] = json_new_member;
         }
+
         return {
           "ok": true,
           "result": {"chat_member": json}
+        };
+      }
+
+      if (update["@type"] == "updateNewInlineQuery") {
+        Map json = {};
+        Map from = {"id": update["sender_user_id"]};
+        json["id"] = update["id"];
+        try {
+          var fromResult = await getUser(from["id"]);
+          if (fromResult["ok"]) {
+            from = fromResult["result"];
+          }
+        } catch (e) {}
+        json["from"] = from;
+        json["chat_type"] = update["chat_type"]["@type"]
+            .toString()
+            .replace(Regex("chatType", "i").run, "")
+            .toLowerCase();
+        try {
+          if (json["chat_type"] == "supergroup" &&
+              update["chat_type"]["is_channel"]) {
+            json["chat_type"] = "channel";
+          }
+        } catch (e) {}
+        json["query"] = update["query"];
+        json["offset"] = update["offset"];
+        return {
+          "ok": true,
+          "result": {"inline_query": json}
         };
       }
     } catch (e) {
@@ -1880,12 +2147,11 @@ class Tdlib {
 
   getUser(dynamic user_id) async {
     var get_user = await requestSendApi("getUser", {"user_id": user_id});
-    if (RegExp("^user\$", caseSensitive: false).hasMatch(get_user["@type"])) {
+    if (Regex(r"^user$", "i").exec(get_user["@type"])) {
       var json = {};
       json["id"] = get_user["id"];
       try {
-        if (RegExp("^userTypeBot\$", caseSensitive: false)
-            .hasMatch(get_user["type"]["@type"])) {
+        if (Regex(r"^userTypeBot$", "i").exec(get_user["type"]["@type"])) {
           json["is_bot"] = true;
         } else {
           json["is_bot"] = false;
@@ -1906,6 +2172,7 @@ class Tdlib {
       if (getBoolean(get_user["language_code"])) {
         json["language_code"] = get_user["language_code"];
       }
+      json["type"] = "private";
       json["detail"] = {
         "has_protected_content": false,
         "is_marked_as_unread": false,
@@ -1945,7 +2212,10 @@ class UpdateTd {
   }
 
   Future<Map> get raw_api_light async {
-    if (update["@type"] == "updateNewMessage") {
+    if (Regex(
+            "updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery",
+            "i")
+        .exec(update["@type"])) {
       try {
         var getMessage =
             await tg.jsonMessage(update["message"], is_detail: true);
@@ -1962,7 +2232,10 @@ class UpdateTd {
   }
 
   Future<Map> get raw_api async {
-    if (Regex("updateNewMessage|updateChatMember", "i").exec(update["@type"])) {
+    if (Regex(
+            "updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery",
+            "i")
+        .exec(update["@type"])) {
       try {
         var getMessage = await tg.jsonMessage(
           (update["@type"] == "updateNewMessage") ? update["message"] : update,
