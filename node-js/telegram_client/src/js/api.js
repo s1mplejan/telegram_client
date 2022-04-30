@@ -69,7 +69,7 @@ class Api {
             if (String(method).toLocaleLowerCase() == "getfile") {
                 var getFile = await response.json();
                 var url = this["options"]["api"] + "file/" + String(this["options"]["type"]).toLocaleLowerCase();
-                getFile["result"]["file_url"] = url + this["token"] + "/" + getFile["result"]["file_path"];
+                getFile["result"]["links"] = url + this["token"] + "/" + getFile["result"]["file_path"];
                 return getFile;
             } else {
                 return await response.json();

@@ -1,5 +1,5 @@
 // ignore: slash_for_doc_comments
-// ignore_for_file: void_checks, non_constant_identifier_names, empty_catches
+// ignore_for_file: void_checks, non_constant_identifier_names, empty_catches, unused_element
 
 // ignore: slash_for_doc_comments
 /**
@@ -71,19 +71,7 @@ class Tdlib {
   }
 
   void start() {
-    client_execute.call(
-        client,
-        convert.json.encode({
-          "@type": "setLogVerbosityLevel",
-          "new_verbosity_level": optionTdlibDefault['new_verbosity_level']
-        }).toNativeUtf8());
-    _client_send.call(
-        client,
-        convert.json.encode({
-          '@type': 'getAuthorizationState',
-          '@extra': 1.01234
-        }).toNativeUtf8());
-
+    _td_set_log_verbosity_level.call(optionTdlibDefault['new_verbosity_level']);
     on("update", (UpdateTd update) async {
       try {
         Map updateOrigin = update.raw;
@@ -227,6 +215,13 @@ class Tdlib {
     return TdlibPathFile()
         .lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
             '${is_android ? "_" : ""}td_json_client_destroy')
+        .asFunction();
+  }
+
+  void Function(int) get _td_set_log_verbosity_level {
+    return TdlibPathFile()
+        .lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int8)>>(
+            '${is_android ? "_" : ""}td_set_log_verbosity_level')
         .asFunction();
   }
 

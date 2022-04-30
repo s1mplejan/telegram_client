@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  eventify:
-    dependency: transitive
-    description:
-      name: eventify
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -96,12 +89,12 @@ packages:
     source: sdk
     version: "0.0.0"
   hexaminate:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: hexaminate
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "0.1.2"
   http:
     dependency: transitive
     description:
@@ -197,7 +190,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.1"
+    version: "0.2.1"
   term_glyph:
     dependency: transitive
     description:

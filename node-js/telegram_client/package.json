@@ -1,6 +1,6 @@
 {
   "name": "telegram_client",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "library to make bot or user bot telegram auto update latest bot api version telegram only bot api",
   "main": "src/index.js",
   "homepage": "https://github.com/azkadev",
