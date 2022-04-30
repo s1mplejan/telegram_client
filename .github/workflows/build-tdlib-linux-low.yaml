@@ -11,6 +11,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade
+      - name: Install Depends
         run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev php-cli cmake g++
       - name: Clone Repo Tdlib
         run: |
