@@ -1,0 +1,36 @@
+name: Build Tdlib Low Linux Ubuntu Latest
+on: [workflow_dispatch]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - name: Update apt
+        run: |
+          sudo apt update
+          sudo apt upgrade
+        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev php-cli cmake g++
+      - name: Clone Repo Tdlib
+        run: |
+          git clone https://github.com/tdlib/td.git
+          cd td
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . --target prepare_cross_compiling
+          cd ..
+          php SplitSource.php
+          cd build
+          cmake --build . --target tdjson
+          cmake --build . --target tdjson_static
+          cd ..
+          php SplitSource.php --undo
+      - name: Release Apps
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.APP_VERSION }}
+          name: Tdlib Linux
+          token: ${{ secrets.TOKEN }}
+          artifacts: 'td/build/libtdjson.so.*'
