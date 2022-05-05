@@ -1471,6 +1471,7 @@ class Tdlib {
               }
             }
           }
+          
           if (!is_super_detail) {
             if (from_json["type"] != "private") {
               from_json.remove("first_name");
@@ -1947,6 +1948,7 @@ class Tdlib {
           }
           json["entities"] = new_entities;
         }
+
         if (is_detail) {
           if (is_super_detail) {
             if (json["chat"]["type"] != null) {
