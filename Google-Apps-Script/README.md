@@ -126,3 +126,46 @@ MX7LM0tJegNLBVVQUN-ggUvzwAZJHGahx
         }
     }
     ```
+
+## methods
+
+### constructor
+| No |       key       | value  | Deskripsi | `required` |
+|----|:---------------:|:------:|:----------|:----------:|
+| 1  |      `token`      | string token bot |           |   `yes`    |
+| 2  | `options` |  [object](#options-constructor)    |           |    `no`    |
+- examples
+```js
+var lib = new telegramclient.telegram("token_bot", {
+    "api": "url_api"
+});
+```
+
+### options constructor
+
+|  key   | value  | Deskripsi | `required` |
+|-------:|:------:|:----------|:----------:|
+| `api` | string url api telegram bot default: `https://api.telegram.org/` | |`no` |
+| `type` | string `bot` or `user` default: `bot` | | `no` |
+
+### api
+
+```js
+var lib = new telegramclient.telegram("token_bot");
+var tg = lib.api;
+```
+
+#### request
+| No |       key       | value  | Deskripsi | `required` |
+|----|:---------------:|:------:|:----------|:----------:|
+| 1  |      `methods`      | [string](https://core.telegram.org/bots/api#available-methods) | tulis nama method sesuai yang kamu inginkan  |   `yes`    |
+| 2  | `parameters` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
+| 3  | `form` |  boolean default: false    | jika anda kirim file dari web maka tulis true |    `no`    |
+| 4  | `blob` |  boolean default: false    |           |    `no`    |
+- examples
+```js
+request("sendMessage", {
+    "chat_id": 1234567,
+    "text": "hello world"
+});
+```
