@@ -115,7 +115,7 @@ class Tdlib {
         return result;
     }
 
-    async requestApi(method, parameters = {}) {
+    async request(method, parameters = {}) {
         return this.invoke(method, parameters);
     }
 
@@ -166,7 +166,11 @@ class Tdlib {
 
     async initIsolate() {
         while (true) {
-            await timer.setTimeout(1);
+            await timer.setTimeout(1,(){
+
+            }, {
+                
+            });
             var update = this.client_receive();
             if (update != null) {
                 if (update["@type"] == "updateAuthorizationState") {

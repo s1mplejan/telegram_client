@@ -12,25 +12,7 @@ void main() async {
     'files_directory': "$path/bost",
   };
   print(option.containsKey("api_id"));
-  Map<String, dynamic> _optionTdlibDefault = {
-    '@type': 'tdlibParameters',
-    'api_id': 1917085,
-    'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
-    'database_directory': "",
-    'files_directory': "",
-    "use_file_database": true,
-    "use_chat_info_database": true,
-    "use_message_database": true,
-    "use_secret_chats": true,
-    'enable_storage_optimizer': true,
-    'system_language_code': 'en',
-    'new_verbosity_level': 0,
-    'application_version': 'v1',
-    'device_model': 'Telegram Client Hexaminate',
-    'system_version': Platform.operatingSystem,
-    "database_key": "",
-    "start": true
-  };
+  Map<String, dynamic> _optionTdlibDefault = {'@type': 'tdlibParameters', 'api_id': 1917085, 'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894', 'database_directory': "", 'files_directory': "", "use_file_database": true, "use_chat_info_database": true, "use_message_database": true, "use_secret_chats": true, 'enable_storage_optimizer': true, 'system_language_code': 'en', 'new_verbosity_level': 0, 'application_version': 'v1', 'device_model': 'Telegram Client Hexaminate', 'system_version': Platform.operatingSystem, "database_key": "", "start": true};
   Tdlib tg = Tdlib("libtdjson.so", option);
   tg.on("update", (UpdateTd update) async {
     if (update.raw["@extra"] != null) {}
@@ -38,12 +20,8 @@ void main() async {
     if (update.message.is_found) {
       if (update.message.text != null) {
         if (update.message.text!.isNotEmpty) {}
-        if (RegExp("^/ping", caseSensitive: false)
-            .hasMatch(update.message.text ?? "")) {
-          tg.requestSendApi(
-              "sendMessage",
-              tg.makeParameters("sendMessage",
-                  {"chat_id": update.message.chat.id, "text": "Pong jadi ye"}));
+        if (RegExp("^/ping", caseSensitive: false).hasMatch(update.message.text ?? "")) {
+          tg.invoke("sendMessage", tg.makeParameters("sendMessage", {"chat_id": update.message.chat.id, "text": "Pong jadi ye"}));
         }
         if (update.message.text == "/stop") {
           tg.stop();
@@ -61,11 +39,11 @@ void main() async {
             'parameters': _optionTdlibDefault
           };
 
-          tg.requestApi("setTdlibParameters", optin);
+          tg.request("setTdlibParameters", optin);
         }
         if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
           /*
-          tg.requestApi("checkDatabaseEncryptionKey",
+          tg.request("checkDatabaseEncryptionKey",
               {'encryption_key': _optionTdlibDefault["database_key"]});
               */
         }
@@ -74,7 +52,7 @@ void main() async {
     if (updateOrigin["@type"] == "updateConnectionState" &&
         updateOrigin["state"]["@type"] == "connectionStateReady") {
       /*
-      tg.requestApi("checkAuthenticationBotToken",
+      tg.request("checkAuthenticationBotToken",
           {"token": "2123043767:AAEY0KTdVYo0JTRmFF5S4QPBnvoCdpe2yPI"});
     
     */

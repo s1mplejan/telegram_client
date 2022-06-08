@@ -82,3 +82,7 @@
 ## 0.2.1
 
 - add more api update pretty.
+  
+## 0.2.2
+
+- Update Docs + update library

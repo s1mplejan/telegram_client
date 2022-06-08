@@ -37,6 +37,9 @@ dependencies:
   telegram_client: 
     path: ../
   markdown: ^4.0.1
+  easy_isolate: ^1.3.0
+  hive_flutter: ^1.1.0
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
