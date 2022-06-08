@@ -1,4 +1,5 @@
-// ignore: slash_for_doc_comments
+// ignore_for_file: non_constant_identifier_names, slash_for_doc_comments
+
 /**
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 SPDX-License-Identifier: MIT
@@ -24,15 +25,8 @@ part of telegram_client;
 
 class TelegramBotApi {
   final String _token;
-  
-  final Map _options = {
-    "botPath": "/bot/",
-    "userPath": "/user/",
-    "port": 8080,
-    "type": "bot",
-    "logger": false,
-    "api": "https://api.telegram.org/"
-  };
+
+  final Map _options = {"botPath": "/bot/", "userPath": "/user/", "port": 8080, "type": "bot", "logger": false, "api": "https://api.telegram.org/"};
   TelegramBotApi(this._token, [Map? option]) {
     if (_token.isEmpty) {
       throw "please fill token bot";
@@ -59,31 +53,23 @@ class TelegramBotApi {
   }
 }
 
-
 class _Request {
-  final _token;
-  // ignore: non_constant_identifier_names
-  final Option;
-  _Request(this._token, this.Option);
+  final String _token;
 
-  dynamic request(var method,
-      [var parameters = false,
-      // ignore: non_constant_identifier_names
-      var is_form = false]) async {
-    if (typeData(method) != "string") {
-      throw "tolong tulis method dalam bentuk string!";
-    }
-    if (typeData(is_form) != "boolean") {
-      throw "tolong tulis is_form dalam bentuk boolean!";
-    }
+  final Map option;
+  _Request(this._token, this.option);
+
+  dynamic request(String method, [Map? parameters, bool? is_form = false]) async {
+    parameters ??= {};
+    is_form ??= false;
     if (is_form) {
       var option = {
         "method": "post",
       };
-      var url = "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
-      if (typeData(parameters) == "object") {
-        option["body"] = convert.json.encode(parameters);
-      }
+      var url = "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
+
+      option["body"] = convert.json.encode(parameters);
+
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
@@ -112,10 +98,10 @@ class _Request {
       var option = {
         "method": "post",
       };
-      var url = "${Option["api"].toString()}${Option["type"].toString()}${_token.toString()}/${method.toString()}";
-      if (typeData(parameters) == "object") {
-        option["body"] = convert.json.encode(parameters);
-      }
+      var url = "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
+
+      option["body"] = convert.json.encode(parameters);
+
       var response = await post(
         Uri.parse(url),
         headers: {
@@ -128,7 +114,7 @@ class _Request {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = Option["api"].toString().toLowerCase() + "file/" + Option["type"].toString().toLowerCase();
+          var url = option["api"].toString().toLowerCase() + "file/" + option["type"].toString().toLowerCase();
           getFile["result"]["file_url"] = url + _token.toString() + "/" + getFile["result"]["file_path"];
           return getFile;
         } else {
@@ -146,8 +132,8 @@ class _Request {
 
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
-    if (RegExp("^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path.toString().replaceAll(RegExp("^(./|/)", caseSensitive: false), "");
+    if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
+      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {
@@ -160,7 +146,6 @@ class _Request {
     return jsonData;
   }
 
-  // ignore: non_constant_identifier_names
   sendMessage(chat_id, text, [var parameters]) async {
     var option = {"chat_id": chat_id, "text": text};
     if (typeData(parameters) == "object") {
@@ -169,7 +154,6 @@ class _Request {
     return await request("sendMessage", option);
   }
 
-  // ignore: non_constant_identifier_names
   forwardMessage(chat_id, from_chat_id, message_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -182,7 +166,6 @@ class _Request {
     return await request("forwardMessage", option);
   }
 
-  // ignore: non_constant_identifier_names
   copydMessage(chat_id, from_chat_id, message_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -195,7 +178,6 @@ class _Request {
     return await request("copyMessage", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendPhoto(chat_id, photo, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -207,7 +189,6 @@ class _Request {
     return await request("sendPhoto", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendAudio(chat_id, audio, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -219,7 +200,6 @@ class _Request {
     return await request("sendAudio", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendDocument(chat_id, document, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -231,7 +211,6 @@ class _Request {
     return await request("sendDocument", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendVideo(chat_id, video, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -240,7 +219,6 @@ class _Request {
     return await request("sendVideo", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendAnimation(chat_id, animation, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -249,7 +227,6 @@ class _Request {
     return await request("sendAnimation", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendVoice(chat_id, voice, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -259,7 +236,6 @@ class _Request {
     return await request("sendVoice", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendVideoNote(chat_id, video_note, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -269,7 +245,6 @@ class _Request {
     return await request("sendVideoNote", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendMediaGroup(chat_id, media, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -279,7 +254,6 @@ class _Request {
     return await request("sendMediaGroup", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendLocation(chat_id, latitude, longitude, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -290,7 +264,6 @@ class _Request {
     return await request("sendLocation", option);
   }
 
-  // ignore: non_constant_identifier_names
   editMessageLiveLocation(latitude, longitude, [var parameters]) async {
     var option = {
       "latitude": latitude,
@@ -300,12 +273,10 @@ class _Request {
     return await request("editMessageLiveLocation", option);
   }
 
-  // ignore: non_constant_identifier_names
   stopMessageLiveLocation([var parameters]) async {
     return await request("stopMessageLiveLocation", parameters);
   }
 
-  // ignore: non_constant_identifier_names
   sendVenue(chat_id, latitude, longitude, title, address, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -318,7 +289,6 @@ class _Request {
     return await request("sendVenue", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendContact(chat_id, phone_number, first_name, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -329,7 +299,6 @@ class _Request {
     return await request("sendContact", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendPoll(chat_id, question, options, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -340,22 +309,18 @@ class _Request {
     return await request("sendPoll", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendDice(chat_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
     };
-
     return await request("sendDice", option);
   }
 
-  // ignore: non_constant_identifier_names
   sendChatAction(chat_id, action) async {
     var option = {"chat_id": chat_id, "action": action};
     return await request("sendChatAction", option);
   }
 
-  // ignore: non_constant_identifier_names
   getUserProfilePhotos(user_id, [var parameters]) async {
     var option = {
       "user_id": user_id,
@@ -364,13 +329,11 @@ class _Request {
     return await request("getUserProfilePhotos", option);
   }
 
-  // ignore: non_constant_identifier_names
   getFile(file_id) async {
     var option = {"file_id": file_id};
     return await request("getFile", option);
   }
 
-  // ignore: non_constant_identifier_names
   banChatMember(chat_id, user_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -380,7 +343,6 @@ class _Request {
     return await request("banChatMember", option);
   }
 
-  // ignore: non_constant_identifier_names
   unbanChatMember(chat_id, user_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -390,7 +352,6 @@ class _Request {
     return await request("unbanChatMember", option);
   }
 
-  // ignore: non_constant_identifier_names
   restrictChatMember(chat_id, user_id, permissions, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -401,7 +362,6 @@ class _Request {
     return await request("restrictChatMember", option);
   }
 
-  // ignore: non_constant_identifier_names
   promoteChatMember(chat_id, user_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -410,26 +370,21 @@ class _Request {
     return await request("promoteChatMember", option);
   }
 
-  // ignore: non_constant_identifier_names
   setChatAdministratorCustomTitle(chat_id, user_id, custom_title) async {
     var option = {"chat_id": chat_id, "user_id": user_id, "custom_title": custom_title};
     return await request("setChatAdministratorCustomTitle", option);
   }
 
-  // ignore: non_constant_identifier_names
   setChatPermissions(chat_id, permissions) async {
     var option = {"chat_id": chat_id, "permissions": permissions};
     return await request("setChatPermissions", option);
   }
 
-  /// asokaoskaosa
-  // ignore: non_constant_identifier_names
   exportChatInviteLink(chat_id) async {
     var option = {"chat_id": chat_id};
     return await request("exportChatInviteLink", option);
   }
 
-  // ignore: non_constant_identifier_names
   createChatInviteLink(chat_id, [var parameters]) async {
     var option = {
       "chat_id": chat_id,
@@ -437,48 +392,38 @@ class _Request {
     return await request("createChatInviteLink", option);
   }
 
-  // ignore: non_constant_identifier_names
   editChatInviteLink(chat_id, invite_link, [var parameters]) async {
     var option = {"chat_id": chat_id, "invite_link": invite_link};
-
     return await request("editChatInviteLink", option);
   }
 
-  // ignore: non_constant_identifier_names
   revokeChatInviteLink(chat_id, invite_link) async {
     var option = {"chat_id": chat_id, "invite_link": invite_link};
     return await request("revokeChatInviteLink", option);
   }
 
-  // ignore: non_constant_identifier_names
   approveChatJoinRequest(chat_id, user_id) async {
     var option = {"chat_id": chat_id, "user_id": user_id};
     return await request("approveChatJoinRequest", option);
   }
 
-  // ignore: non_constant_identifier_names
   declineChatJoinRequest(chat_id, user_id) async {
     var option = {"chat_id": chat_id, "user_id": user_id};
     return await request("declineChatJoinRequest", option);
   }
 
-  // ignore: non_constant_identifier_names
   setChatPhoto(chat_id, photo) async {
     var option = {"chat_id": chat_id, "photo": photo};
     return await request("setChatPhoto", option);
   }
 
-// ignore: non_constant_identifier_names
   deleteChatPhoto(chat_id) async {
     var option = {"chat_id": chat_id};
     return await request("deleteChatPhoto", option);
   }
 
-// ignore: non_constant_identifier_names
   setChatTitle(chat_id, title) async {
     var option = {"chat_id": chat_id, "title": title};
     return await request("setChatTitle", option);
   }
-
-  //--
 }

@@ -11,16 +11,15 @@ class Mtproto {
     }
   }
 
-invoke(String method, [Map? parameters]){
-
+  invoke(String method, [Map? parameters]) {
     parameters ??= {};
-}
-invokeSync(String method, [Map? parameters]){
+  }
 
+  invokeSync(String method, [Map? parameters]) {
     parameters ??= {};
-}
+  }
+
   request(String method, [Map? parameters]) {
     parameters ??= {};
-
   }
 }

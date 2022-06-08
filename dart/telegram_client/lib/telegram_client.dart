@@ -1,5 +1,5 @@
 library telegram_client;
-
+import 'dart:io';
 import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:math';

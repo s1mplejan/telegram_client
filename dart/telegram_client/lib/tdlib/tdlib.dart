@@ -42,14 +42,14 @@ class Tdlib {
     'new_verbosity_level': 0,
     'application_version': 'v1',
     'device_model': 'Telegram Client HexaMinate',
-    'system_version': "unknown os",
+    'system_version': Platform.operatingSystemVersion,
     "database_key": "",
     "start": true,
   };
   late ffi.Pointer client;
   late ffi.Pointer clien;
   bool is_stop = false;
-  bool is_android = false;
+  bool is_android = Platform.isAndroid;
   EventEmitter emitter = EventEmitter();
 
   bool starting = false;
@@ -62,6 +62,9 @@ class Tdlib {
   Tdlib(this._pathTdl, [Map<String, dynamic>? optionTdlib]) {
     if (optionTdlib != null) {
       optionTdlibDefault.addAll(optionTdlib);
+      if (optionTdlib["is_android"] == true) {
+        is_android = true;
+      }
     }
     if (typeof(optionTdlibDefault["start"]) == "boolean" && optionTdlibDefault["start"]) {
       client = _client_create();
@@ -197,7 +200,6 @@ class Tdlib {
             if (typeData(authState) == "object") {
               if (authState["@type"] == "authorizationStateWaitTdlibParameters") {
                 var optin = {"@type": 'setTdlibParameters', 'parameters': optionTdlibDefault};
-
                 _client_send.call(client, convert.json.encode(optin).toNativeUtf8());
               }
 
@@ -1724,6 +1726,34 @@ class Tdlib {
     get_user["ok"] = false;
     get_user["result"] = {"id": user_id};
     return get_user;
+  }
+
+  debugRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback}) async {
+    var result = {};
+    try {
+      parameters ??= {};
+      if (is_sync) {
+        result = invokeSync(method, parameters);
+      } else {
+        if (is_raw) {
+          result = await invoke(method, parameters);
+        } else {
+          result = await request(method, parameters);
+        }
+      }
+    } catch (e) {
+      if (e is Map) {
+        result = e;
+      }
+    }
+    if (is_log){
+      print(result);
+    }
+    if (callback!= null ){
+      return callback(result);
+    } else  {
+
+    }
   }
 }
 
