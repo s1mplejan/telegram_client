@@ -1,8 +1,18 @@
-# Telegram Client
-- id
-Telegram client adalah library untuk mempermudah membuat telegram sendiri seperti bot, userbot dan application
-- en
-Telegram client is a library to make it easier for you to build your own telegram such as bots, userbots and applications,
+# Telegram Client library
+<p align="center">
+  <img src="https://raw.githubusercontent.com/azkadev/telegram_client/main/assets/telegram.png" width="350px">
+</p>
+<h2 align="center">Fast, Enjoyable & Customizable Telegram Client</h2>
+
+[![Pub Version](https://img.shields.io/pub/v/telegram_client?label=pub.dev&labelColor=333940&logo=dart)](https://pub.dev/packages/telegram_client)
+
+## Features
+
+- 🚀 Cross platform: mobile, desktop, browser
+- ⚡ Great performance
+- ❤️ Simple, powerful, & intuitive API
+
+---
 
 ### Docs
 
