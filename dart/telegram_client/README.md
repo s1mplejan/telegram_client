@@ -1,7 +1,31 @@
-<h3 align="center">Telegram Client</h3>
+# Telegram Client library
 
-Library untuk Mempermudah membuat application telegram, ( bot / userbot ) telegram
+Telegram client dart library to make application telegram based flutter and userbot / bot support server side and client side
 
+- Tags:
+  #telegram #telegram_client #tdlib #mtproto #telegram_bot_api #telegram_dart #telegram_flutter #telegram_clone #telegram_userbot #telegram_bot
+
+- Seo
+  Telegram Dart
+  Telegram Client
+  Telegram Flutter
+  Telegram userbot
+  Telegram Bot
+  Telegram Tdlib
+  Tdlib
+  Mtproto
+  Telegram Bot Api
+  Telegram Library
+  Telegram clone
+  Telegram clone flutter
+  Tdlib Dart
+  Tdlib Flutter
+  Mtproto dart
+  Mtproto flutter
+  Telegram Bot Api
+  Telegram Bot Api dart
+  Telegram Bot Api Flutter
+---
 ## Install Library
 ```bash
 dart pub add telegram_client

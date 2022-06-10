@@ -86,3 +86,28 @@
 ## 0.2.2
 
 - Update Docs + update library
+
+## 0.2.3
+
+- update library + add support web.
+  
+## 0.2.4
+
+- test web.
+  
+## 0.2.5
+
+- delete bin/test.dart.
+
+## 0.2.6
+
+- fix bug in android.
+
+## 0.2.7
+- remove unused methods and add dart doc.
+  
+## 0.2.8
+- fix score :V.
+  
+## 0.2.9
+- add seo readme because i'm want my library popular 🥺️🥺️.

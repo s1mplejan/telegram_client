@@ -1,7 +1,7 @@
 name: telegram_client
-description: telegram client library to make bot or userbot Support Telegram Api and Support Tdlib Telegram Database Library.
-version: 0.2.2
-homepage: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/docs
+description: telegram client dart library to make bot or userbot Support application Telegram Bot Api, Support Tdlib Telegram Database Library and mtproto.
+version: 0.2.9
+homepage: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/doc
 repository: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client
 issue_tracker: https://github.com/azkadev/telegram_client/issues
 
@@ -9,12 +9,14 @@ environment:
   sdk: '>=2.14.4 <3.0.0'
 
 dev_dependencies:
-  lints: ^1.0.0
+  lints: ^2.0.0
 
 dependencies: 
   ffi: ^1.1.2
-  hexaminate: ^0.1.2
+  hexaminate: ^0.1.4
   http: ^0.13.4
+  universal_io: ^2.0.4
+  web_ffi: ^0.7.2
 
 executables:
   tg_cli: tg_cli

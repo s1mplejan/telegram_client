@@ -23,10 +23,34 @@ SOFTWARE.
 
 part of telegram_client;
 
+/// Telegram Bot Api library:
+/// example:
+/// ```dart
+/// TelegramBotApi tg = TelegramBotApi("token_bot");
+/// tg.api.request("sendMessage", {
+///   "chat_id": 12345,
+///   "text": "Hello world"
+/// });
+/// ````
+///
 class TelegramBotApi {
   final String _token;
 
-  final Map _options = {"botPath": "/bot/", "userPath": "/user/", "port": 8080, "type": "bot", "logger": false, "api": "https://api.telegram.org/"};
+  final Map _options = {
+    "botPath": "/bot/",
+    "userPath": "/user/",
+    "port": 8080,
+    "type": "bot",
+    "logger": false,
+    "api": "https://api.telegram.org/"
+  };
+
+  /// list methods:
+  /// api:
+  /// ```dart
+  /// tg.api.request("getMe");
+  /// ```
+  ///
   TelegramBotApi(this._token, [Map? option]) {
     if (_token.isEmpty) {
       throw "please fill token bot";
@@ -36,6 +60,26 @@ class TelegramBotApi {
     }
   }
 
+  /// call latest [Bot Api](https://core.telegram.org/bots/api#available-methods)
+  /// example:
+  /// [sendMessage]()
+  /// ```dart
+  /// tg.api.request("sendMessage", {
+  ///    "chat_id": 12345,
+  ///    "text": "hello world",
+  ///    "reply_markup": {
+  ///       "inline_keyboard": [
+  ///           [
+  ///               {
+  ///                 "text": "Azkadev",
+  ///                 "url": "https://github.com/azkadev"
+  ///               }
+  ///           ]
+  ///       ]
+  ///    }
+  /// });
+  /// ```
+  ///
   _Request get api {
     return _Request(_token, _options);
   }
@@ -59,14 +103,16 @@ class _Request {
   final Map option;
   _Request(this._token, this.option);
 
-  dynamic request(String method, [Map? parameters, bool? is_form = false]) async {
+  dynamic request(String method,
+      [Map? parameters, bool? is_form = false]) async {
     parameters ??= {};
     is_form ??= false;
     if (is_form) {
       var option = {
         "method": "post",
       };
-      var url = "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
+      var url =
+          "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
 
       option["body"] = convert.json.encode(parameters);
 
@@ -74,7 +120,8 @@ class _Request {
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
         if (typeData(value) == "object") {
-          if (typeData(value["is_post_file"]) == "boolean" && value["is_post_file"]) {
+          if (typeData(value["is_post_file"]) == "boolean" &&
+              value["is_post_file"]) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else {
@@ -98,7 +145,8 @@ class _Request {
       var option = {
         "method": "post",
       };
-      var url = "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
+      var url =
+          "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
 
       option["body"] = convert.json.encode(parameters);
 
@@ -114,8 +162,11 @@ class _Request {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = option["api"].toString().toLowerCase() + "file/" + option["type"].toString().toLowerCase();
-          getFile["result"]["file_url"] = url + _token.toString() + "/" + getFile["result"]["file_path"];
+          var url = option["api"].toString().toLowerCase() +
+              "file/" +
+              option["type"].toString().toLowerCase();
+          getFile["result"]["file_url"] =
+              url + _token.toString() + "/" + getFile["result"]["file_path"];
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -133,7 +184,9 @@ class _Request {
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
+      var filename = path
+          .toString()
+          .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {
@@ -277,7 +330,8 @@ class _Request {
     return await request("stopMessageLiveLocation", parameters);
   }
 
-  sendVenue(chat_id, latitude, longitude, title, address, [var parameters]) async {
+  sendVenue(chat_id, latitude, longitude, title, address,
+      [var parameters]) async {
     var option = {
       "chat_id": chat_id,
       "latitude": latitude,
@@ -371,7 +425,11 @@ class _Request {
   }
 
   setChatAdministratorCustomTitle(chat_id, user_id, custom_title) async {
-    var option = {"chat_id": chat_id, "user_id": user_id, "custom_title": custom_title};
+    var option = {
+      "chat_id": chat_id,
+      "user_id": user_id,
+      "custom_title": custom_title
+    };
     return await request("setChatAdministratorCustomTitle", option);
   }
 
