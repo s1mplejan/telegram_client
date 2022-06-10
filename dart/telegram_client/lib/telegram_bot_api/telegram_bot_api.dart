@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, slash_for_doc_comments
+// ignore_for_file: non_constant_identifier_names, slash_for_doc_comments, empty_catches
 
 /**
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -42,8 +42,28 @@ class TelegramBotApi {
     "port": 8080,
     "type": "bot",
     "logger": false,
-    "api": "https://api.telegram.org/"
+    "api": "https://api.telegram.org/",
+    "allowed_updates": [
+      "message",
+      "edited_message",
+      "channel_post",
+      "edited_channel_post",
+      "inline_query",
+      "chosen_inline_result",
+      "callback_query",
+      "shipping_query",
+      "pre_checkout_query",
+      "poll",
+      "poll_answer",
+      "my_chat_member",
+      "chat_member",
+      "chat_join_request"
+    ],
   };
+
+  EventEmitter emitter = EventEmitter();
+  Isolate? receiveIsolate;
+  ReceivePort? receivePort;
 
   /// list methods:
   /// api:
@@ -80,42 +100,90 @@ class TelegramBotApi {
   /// });
   /// ```
   ///
-  _Request get api {
-    return _Request(_token, _options);
+
+  /// add this for handle update api
+  void on(String type_update, void Function(UpdateApi update) callback) async {
+    if (type_update.isEmpty) {
+      throw {"message": "please add type_update"};
+    }
+    if (type_update.toString().toLowerCase() == "update") {
+      emitter.on("update", null, (Event ev, context) {
+        return callback(UpdateApi(ev.eventData as Map));
+      });
+    }
   }
 
-  _Request newBot(String newToken) {
-    var option = _options;
-    option["type"] = "bot";
-    return _Request(newToken, option);
+  /// add this for multithread on flutter apps
+  Future<void> initIsolate() async {
+    receivePort = ReceivePort();
+    receivePort!.listen((message) {
+      emitter.emit("update", null, message);
+    });
+    receiveIsolate = await Isolate.spawn((List args) async {
+      final SendPort sendPortToMain = args[0];
+      final Map option = args[1];
+      final String token = args[2];
+      TelegramBotApi tg = TelegramBotApi(token, option);
+      var offset = 0;
+      List allowed_updates = [];
+      int milliseconds = 1;
+      if (option["allowed_updates"] is List) {
+        allowed_updates = option["allowed_updates"];
+      }
+      if (option["delay_duration"] is int) {
+        milliseconds = option["delay_duration"];
+      }
+      while (true) {
+        await Future.delayed(Duration(milliseconds: milliseconds));
+        Map parameters = {
+          "offset": offset,
+        };
+        try {
+          parameters.addAll({"allowed_updates": allowed_updates});
+        } catch (e) {}
+        var getUpdates = await tg.request("getUpdates", parameters);
+        if (getUpdates is Map && getUpdates["ok"] is bool && getUpdates["ok"]) {
+          List updates = [];
+          try {
+            updates = getUpdates["result"];
+          } catch (e) {}
+          if (updates.isNotEmpty) {
+            for (var i = 0; i < updates.length; i++) {
+              var loop_data = updates[i];
+              try {
+                offset = (loop_data["update_id"] + 1);
+              } catch (e) {}
+              sendPortToMain.send(loop_data);
+            }
+          }
+        }
+      }
+    }, [
+      receivePort!.sendPort,
+      _options,
+      _token,
+    ], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
   }
 
-  _Request newUser(String newToken) {
-    var option = _options;
-    option["type"] = "user";
-    return _Request(newToken, option);
-  }
-}
-
-class _Request {
-  final String _token;
-
-  final Map option;
-  _Request(this._token, this.option);
-
+  /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods)
+  /// example:
+  /// ```dart
+  /// request("sendMessage", {
+  ///   "chat_id": 123456,
+  ///   "text": "<b>Hello</b> <code>word</code>",
+  ///   "parse_mode": "html"
+  /// });
+  /// ```
   dynamic request(String method,
       [Map? parameters, bool? is_form = false]) async {
     parameters ??= {};
     is_form ??= false;
+    var option = {
+      "method": "post",
+    };
+    var url =
+        "${_options["api"].toString()}${_options["type"].toString()}${_token.toString()}/${method.toString()}";
     if (is_form) {
-      var option = {
-        "method": "post",
-      };
-      var url =
-          "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
-
-      option["body"] = convert.json.encode(parameters);
-
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
@@ -142,14 +210,7 @@ class _Request {
         throw convert.json.decode(res.body);
       }
     } else {
-      var option = {
-        "method": "post",
-      };
-      var url =
-          "${option["api"].toString()}${option["type"].toString()}${_token.toString()}/${method.toString()}";
-
       option["body"] = convert.json.encode(parameters);
-
       var response = await post(
         Uri.parse(url),
         headers: {
@@ -162,11 +223,10 @@ class _Request {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = option["api"].toString().toLowerCase() +
-              "file/" +
-              option["type"].toString().toLowerCase();
+          var url =
+              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
           getFile["result"]["file_url"] =
-              url + _token.toString() + "/" + getFile["result"]["file_path"];
+              "$url$_token/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -177,10 +237,23 @@ class _Request {
     }
   }
 
+  /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods) with upload file
+  /// example:
+  /// ```dart
+  /// requestForm("sendDocument", {
+  ///   "chat_id": 123456,
+  ///   "document": tg.file("./doc.json"),
+  ///   "parse_mode": "html"
+  /// });
+  /// ```
   dynamic requestForm(method, [var parameters]) async {
     return await request(method, parameters, true);
   }
 
+  /// example:
+  /// ```dart
+  /// tg.file("./doc.json"),
+  /// ```
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
@@ -198,290 +271,27 @@ class _Request {
     }
     return jsonData;
   }
+}
 
-  sendMessage(chat_id, text, [var parameters]) async {
-    var option = {"chat_id": chat_id, "text": text};
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("sendMessage", option);
+/// Update td for make update support raw, raw api, raw api light
+class UpdateApi {
+  late Map update;
+
+  /// Update td for make update support raw, raw api, raw api light
+  UpdateApi(this.update);
+
+  /// update api raw from api
+  Map get raw {
+    return update;
   }
 
-  forwardMessage(chat_id, from_chat_id, message_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "from_chat_id": from_chat_id,
-      "message_id": message_id,
-    };
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("forwardMessage", option);
+  /// Update more pretty with minimalist
+  Map get raw_api_light {
+    return update;
   }
 
-  copydMessage(chat_id, from_chat_id, message_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "from_chat_id": from_chat_id,
-      "message_id": message_id,
-    };
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("copyMessage", option);
-  }
-
-  sendPhoto(chat_id, photo, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "photo": photo,
-    };
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("sendPhoto", option);
-  }
-
-  sendAudio(chat_id, audio, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "audio": audio,
-    };
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("sendAudio", option);
-  }
-
-  sendDocument(chat_id, document, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "document": document,
-    };
-    if (typeData(parameters) == "object") {
-      option.addAll(parameters);
-    }
-    return await request("sendDocument", option);
-  }
-
-  sendVideo(chat_id, video, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "video": video,
-    };
-    return await request("sendVideo", option);
-  }
-
-  sendAnimation(chat_id, animation, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "animation": animation,
-    };
-    return await request("sendAnimation", option);
-  }
-
-  sendVoice(chat_id, voice, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "voice": voice,
-    };
-
-    return await request("sendVoice", option);
-  }
-
-  sendVideoNote(chat_id, video_note, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "video_note": video_note,
-    };
-
-    return await request("sendVideoNote", option);
-  }
-
-  sendMediaGroup(chat_id, media, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "media": media,
-    };
-
-    return await request("sendMediaGroup", option);
-  }
-
-  sendLocation(chat_id, latitude, longitude, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "latitude": latitude,
-      "longitude": longitude,
-    };
-
-    return await request("sendLocation", option);
-  }
-
-  editMessageLiveLocation(latitude, longitude, [var parameters]) async {
-    var option = {
-      "latitude": latitude,
-      "longitude": longitude,
-    };
-
-    return await request("editMessageLiveLocation", option);
-  }
-
-  stopMessageLiveLocation([var parameters]) async {
-    return await request("stopMessageLiveLocation", parameters);
-  }
-
-  sendVenue(chat_id, latitude, longitude, title, address,
-      [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "latitude": latitude,
-      "longitude": longitude,
-      "title": title,
-      "address": address,
-    };
-
-    return await request("sendVenue", option);
-  }
-
-  sendContact(chat_id, phone_number, first_name, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "phone_number": phone_number,
-      "first_name": first_name,
-    };
-
-    return await request("sendContact", option);
-  }
-
-  sendPoll(chat_id, question, options, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "question": question,
-      "options": options,
-    };
-
-    return await request("sendPoll", option);
-  }
-
-  sendDice(chat_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-    };
-    return await request("sendDice", option);
-  }
-
-  sendChatAction(chat_id, action) async {
-    var option = {"chat_id": chat_id, "action": action};
-    return await request("sendChatAction", option);
-  }
-
-  getUserProfilePhotos(user_id, [var parameters]) async {
-    var option = {
-      "user_id": user_id,
-    };
-
-    return await request("getUserProfilePhotos", option);
-  }
-
-  getFile(file_id) async {
-    var option = {"file_id": file_id};
-    return await request("getFile", option);
-  }
-
-  banChatMember(chat_id, user_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "user_id": user_id,
-    };
-
-    return await request("banChatMember", option);
-  }
-
-  unbanChatMember(chat_id, user_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "user_id": user_id,
-    };
-
-    return await request("unbanChatMember", option);
-  }
-
-  restrictChatMember(chat_id, user_id, permissions, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "user_id": user_id,
-      "permissions": permissions,
-    };
-
-    return await request("restrictChatMember", option);
-  }
-
-  promoteChatMember(chat_id, user_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-      "user_id": user_id,
-    };
-    return await request("promoteChatMember", option);
-  }
-
-  setChatAdministratorCustomTitle(chat_id, user_id, custom_title) async {
-    var option = {
-      "chat_id": chat_id,
-      "user_id": user_id,
-      "custom_title": custom_title
-    };
-    return await request("setChatAdministratorCustomTitle", option);
-  }
-
-  setChatPermissions(chat_id, permissions) async {
-    var option = {"chat_id": chat_id, "permissions": permissions};
-    return await request("setChatPermissions", option);
-  }
-
-  exportChatInviteLink(chat_id) async {
-    var option = {"chat_id": chat_id};
-    return await request("exportChatInviteLink", option);
-  }
-
-  createChatInviteLink(chat_id, [var parameters]) async {
-    var option = {
-      "chat_id": chat_id,
-    };
-    return await request("createChatInviteLink", option);
-  }
-
-  editChatInviteLink(chat_id, invite_link, [var parameters]) async {
-    var option = {"chat_id": chat_id, "invite_link": invite_link};
-    return await request("editChatInviteLink", option);
-  }
-
-  revokeChatInviteLink(chat_id, invite_link) async {
-    var option = {"chat_id": chat_id, "invite_link": invite_link};
-    return await request("revokeChatInviteLink", option);
-  }
-
-  approveChatJoinRequest(chat_id, user_id) async {
-    var option = {"chat_id": chat_id, "user_id": user_id};
-    return await request("approveChatJoinRequest", option);
-  }
-
-  declineChatJoinRequest(chat_id, user_id) async {
-    var option = {"chat_id": chat_id, "user_id": user_id};
-    return await request("declineChatJoinRequest", option);
-  }
-
-  setChatPhoto(chat_id, photo) async {
-    var option = {"chat_id": chat_id, "photo": photo};
-    return await request("setChatPhoto", option);
-  }
-
-  deleteChatPhoto(chat_id) async {
-    var option = {"chat_id": chat_id};
-    return await request("deleteChatPhoto", option);
-  }
-
-  setChatTitle(chat_id, title) async {
-    var option = {"chat_id": chat_id, "title": title};
-    return await request("setChatTitle", option);
+  /// Update more pretty with minimalist
+  Map get raw_api {
+    return update;
   }
 }

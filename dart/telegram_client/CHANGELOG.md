@@ -111,3 +111,6 @@
   
 ## 0.2.9
 - add seo readme because i'm want my library popular 🥺️🥺️.
+  
+## 0.3.0
+- add long poll update for telegram bot api.

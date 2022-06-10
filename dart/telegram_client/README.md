@@ -171,10 +171,22 @@ more method check [tdlib-docs]()
 quickstart:
 ```dart
 import 'package:telegram_client/telegram_client.dart';
-void main() async {
+void main(List<String> args) async {
   TelegramBotApi tg = TelegramBotApi("token_bot");
-  var send = await tg.api.request("getMe");
-  print(send);
+  // add this if you want your bot get update longpoll
+  tg.on("update", (UpdateApi update_origin) async {
+    var update = update_origin.raw;
+    print(update);
+    if (update["message"] is Map) {
+      var msg = update["message"];
+      if (msg["text"] is String) {
+        if (RegExp("/start", caseSensitive: false).hasMatch(msg["text"])) {
+          return await tg.request("sendMessage", {"chat_id": msg["chat"]["id"], "text": "Hello world"});
+        }
+      }
+    }
+  });
+  await tg.initIsolate(); // add this if you want your bot get update longpoll
 }
 ```
 #### constructor
@@ -188,9 +200,6 @@ void main() async {
 TelegramBotApi tg = TelegramBotApi("token_bot");
 ```
 
-#### Api
-
-
 ##### request 
 | No |       key       | value  | Deskripsi | `required` |
 |----|:---------------:|:------:|:----------|:----------:|
@@ -198,7 +207,7 @@ TelegramBotApi tg = TelegramBotApi("token_bot");
 | 2  | `parameters` |  [object](#methods-1)    | parameters di butuhkan jika method membutuhkannya |    `options`    |
 - examples
 ```dart
-tg.api.request("sendMessage", {
+tg.request("sendMessage", {
   "chat_id": 123456,
   "text": "Hello world"
 });
