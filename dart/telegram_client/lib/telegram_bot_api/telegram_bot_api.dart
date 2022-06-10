@@ -21,7 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 **/
 
-part of telegram_client;
+import 'dart:convert' as convert;
+import 'package:http/http.dart';
+import 'package:hexaminate/hexaminate.dart';
+import 'dart:isolate';
 
 /// Telegram Bot Api library:
 /// example:

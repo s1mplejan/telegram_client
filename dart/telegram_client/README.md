@@ -1,31 +1,21 @@
 # Telegram Client library
+<p align="center">
+  <img src="https://raw.githubusercontent.com/azkadev/telegram_client/main/assets/telegram.png" width="350px">
+</p>
+<h2 align="center">Fast, Enjoyable & Customizable Telegram Client</h2>
+
+[![Pub Version](https://img.shields.io/pub/v/telegram_client?label=pub.dev&labelColor=333940&logo=dart)](https://pub.dev/packages/telegram_client)
 
 Telegram client dart library to make application telegram based flutter and userbot / bot support server side and client side
 
-- Tags:
-  #telegram #telegram_client #tdlib #mtproto #telegram_bot_api #telegram_dart #telegram_flutter #telegram_clone #telegram_userbot #telegram_bot
+## Features
 
-- Seo
-  Telegram Dart
-  Telegram Client
-  Telegram Flutter
-  Telegram userbot
-  Telegram Bot
-  Telegram Tdlib
-  Tdlib
-  Mtproto
-  Telegram Bot Api
-  Telegram Library
-  Telegram clone
-  Telegram clone flutter
-  Tdlib Dart
-  Tdlib Flutter
-  Mtproto dart
-  Mtproto flutter
-  Telegram Bot Api
-  Telegram Bot Api dart
-  Telegram Bot Api Flutter
+- 🚀 Cross platform: mobile, desktop, browser
+- ⚡ Great performance
+- ❤️ Simple, powerful, & intuitive API
+
 ---
+
 ## Install Library
 ```bash
 dart pub add telegram_client
@@ -225,3 +215,30 @@ void main() async {
   });
 }
 ```
+
+
+
+- Tags:
+  #telegram #telegram_client #tdlib #mtproto #telegram_bot_api #telegram_dart #telegram_flutter #telegram_clone #telegram_userbot #telegram_bot
+
+- Seo
+  Telegram Dart
+  Telegram Client
+  Telegram Flutter
+  Telegram userbot
+  Telegram Bot
+  Telegram Tdlib
+  Tdlib
+  Mtproto
+  Telegram Bot Api
+  Telegram Library
+  Telegram clone
+  Telegram clone flutter
+  Tdlib Dart
+  Tdlib Flutter
+  Mtproto dart
+  Mtproto flutter
+  Telegram Bot Api
+  Telegram Bot Api dart
+  Telegram Bot Api Flutter
+---

@@ -114,3 +114,12 @@
   
 ## 0.3.0
 - add long poll update for telegram bot api.
+  
+## 0.3.1
+- patch support web.
+
+## 0.3.2
+- update ffi packages.
+  
+## 0.3.3
+- update readme.
