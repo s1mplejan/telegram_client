@@ -6,6 +6,12 @@
 
 [![Pub Version](https://img.shields.io/pub/v/telegram_client?label=pub.dev&labelColor=333940&logo=dart)](https://pub.dev/packages/telegram_client)
 
+## Screenshot
+
+<img src="https://user-images.githubusercontent.com/82513502/173317680-880af2ef-ba04-4b71-988e-1c5b949b4acb.png" width="250px"><img src="https://user-images.githubusercontent.com/82513502/173317680-880af2ef-ba04-4b71-988e-1c5b949b4acb.png" width="250px"><img src="https://user-images.githubusercontent.com/82513502/173317680-880af2ef-ba04-4b71-988e-1c5b949b4acb.png" width="250px"><img src="https://user-images.githubusercontent.com/82513502/173317680-880af2ef-ba04-4b71-988e-1c5b949b4acb.png" width="250px">
+
+
+
 ## Features
 
 - 🚀 Cross platform: mobile, desktop, browser
