@@ -1,0 +1,47 @@
+Performing C++ SOURCE FILE Test HAVE_CXX_FLAG_WCXX14_COMPAT_PEDANTIC failed with the following output:
+Change Dir: /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ff623/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ff623.dir/build.make CMakeFiles/cmTC_ff623.dir/build
+gmake[1]: Entering directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ff623.dir/src.cxx.o
+/usr/bin/c++ -DHAVE_CXX_FLAG_WCXX14_COMPAT_PEDANTIC  -std=c++14 -fno-omit-frame-pointer -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit-fallthrough=2 -Wpointer-arith -Wcast-qual -Wsign-compare -Wduplicated-branches -Wduplicated-cond -Walloc-zero -Wlogical-op -Wno-tautological-compare -Wpointer-arith -Wvla -Wnon-virtual-dtor -Wno-unused-parameter -Wconversion -Wno-sign-conversion -Wc++14-compat-pedantic   -Wc++14-compat-pedantic -o CMakeFiles/cmTC_ff623.dir/src.cxx.o -c /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command-line option '-Wc++14-compat-pedantic'
+c++: error: unrecognized command-line option '-Wc++14-compat-pedantic'
+gmake[1]: *** [CMakeFiles/cmTC_ff623.dir/build.make:78: CMakeFiles/cmTC_ff623.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ff623/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAVE_CXX_FLAG_WUNUSED_COMMAND_LINE_ARGUMENT failed with the following output:
+Change Dir: /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_21be3/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_21be3.dir/build.make CMakeFiles/cmTC_21be3.dir/build
+gmake[1]: Entering directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_21be3.dir/src.cxx.o
+/usr/bin/c++ -DHAVE_CXX_FLAG_WUNUSED_COMMAND_LINE_ARGUMENT  -std=c++14 -fno-omit-frame-pointer -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit-fallthrough=2 -Wpointer-arith -Wcast-qual -Wsign-compare -Wduplicated-branches -Wduplicated-cond -Walloc-zero -Wlogical-op -Wno-tautological-compare -Wpointer-arith -Wvla -Wnon-virtual-dtor -Wno-unused-parameter -Wconversion -Wno-sign-conversion -Wdeprecated -Wno-unused-command-line-argument   -Wunused-command-line-argument -o CMakeFiles/cmTC_21be3.dir/src.cxx.o -c /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command-line option '-Wunused-command-line-argument'; did you mean '-Wunused-dummy-argument'?
+gmake[1]: *** [CMakeFiles/cmTC_21be3.dir/build.make:78: CMakeFiles/cmTC_21be3.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_21be3/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAVE_CXX_FLAG_QUNUSED_ARGUMENTS failed with the following output:
+Change Dir: /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_30810/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_30810.dir/build.make CMakeFiles/cmTC_30810.dir/build
+gmake[1]: Entering directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_30810.dir/src.cxx.o
+/usr/bin/c++ -DHAVE_CXX_FLAG_QUNUSED_ARGUMENTS  -std=c++14 -fno-omit-frame-pointer -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit-fallthrough=2 -Wpointer-arith -Wcast-qual -Wsign-compare -Wduplicated-branches -Wduplicated-cond -Walloc-zero -Wlogical-op -Wno-tautological-compare -Wpointer-arith -Wvla -Wnon-virtual-dtor -Wno-unused-parameter -Wconversion -Wno-sign-conversion -Wdeprecated -Qunused-arguments   -Qunused-arguments -o CMakeFiles/cmTC_30810.dir/src.cxx.o -c /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command-line option '-Qunused-arguments'
+c++: error: unrecognized command-line option '-Qunused-arguments'
+gmake[1]: *** [CMakeFiles/cmTC_30810.dir/build.make:78: CMakeFiles/cmTC_30810.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/build_native/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_30810/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }

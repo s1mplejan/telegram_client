@@ -10,7 +10,12 @@
 
 extern "C" {
 
-EXPORT void *_td_json_client_create() {
+
+EXPORT void _td_set_log_message_callback(int max_verbosity_level, td_log_message_callback_ptr callback){
+  return td_set_log_message_callback(max_verbosity_level, callback);
+}
+
+EXPORT void *_td_json_client_create() { 
   return td_json_client_create();
 }
 

@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+e04c4ccf3d6fe9d7b4be1206740666ea /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/tdlib-src/tdutils/generate/auto/extension_to_mime_type.cpp
+797eff554d162d24f67aa7b56feaa811 /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/tdlib-src/tdutils/generate/auto/mime_type_to_extension.cpp
+3096c92632e106d55ed539d6560d4704 /home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/tdlib-src/tdutils/generate/auto/mime_type_to_extension.gperf
+96d402f4cdf60f597e42bfe49148e0d1 td/CMakeFiles/git_commit
+8874a6193efa7680e6ab79a59301c14a td/CMakeFiles/prepare_cross_compiling
+2af885297213cc23cda169f3527681f2 td/td/generate/CMakeFiles/tl_generate_c
+35af8629d49fabd4a7e7a7127ec65160 td/td/generate/CMakeFiles/tl_generate_common
+48d3ccc9779a015db0304e3542a20f89 td/td/generate/CMakeFiles/tl_generate_json
+cf07900778ed86685e7c0047c7c2b2f6 td/td/generate/CMakeFiles/tl_generate_tlo
+5bc95ee2afc8a6b7d0993175c284d4af td/tdutils/generate/CMakeFiles/tdmime_auto

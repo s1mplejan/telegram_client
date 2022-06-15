@@ -1,0 +1,9 @@
+prefix=/usr/local
+
+Name: tdutils
+Description: Telegram Library - Utils
+Version: 1.8.3
+
+CFlags: -I"${prefix}/include"
+Libs: -L"${prefix}/lib" -ltdutils
+Libs.private: -pthread -L"/home/hexaminate/Documents/HEXAMINATE/library/telegram_client/tdlib/android/tddroid/build-folder/../openssl/arm64/lib" -l:libcrypto.a -ldl -L"/home/hexaminate/Android/Sdk/ndk/24.0.8215888/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21" -l:libz.so -llog

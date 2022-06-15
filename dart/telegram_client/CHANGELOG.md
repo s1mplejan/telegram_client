@@ -123,3 +123,6 @@
   
 ## 0.3.3
 - update readme.
+  
+## 0.3.4
+- fix log tdlib android.
