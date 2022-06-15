@@ -1,1 +1,0 @@
-/usr/bin/cc  -ffunction-sections -fdata-sections  -Wl,--gc-sections -Wl,--exclude-libs,ALL CMakeFiles/tl-parser.dir/crc32.c.o CMakeFiles/tl-parser.dir/tlc.c.o CMakeFiles/tl-parser.dir/tl-parser.c.o -o tl-parser  -lm 

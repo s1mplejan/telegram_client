@@ -1,2 +1,0 @@
-/usr/bin/ar qc libtdapi.a CMakeFiles/tdapi.dir/td/generate/auto/td/telegram/td_api.cpp.o
-/usr/bin/ranlib libtdapi.a
