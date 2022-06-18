@@ -126,3 +126,6 @@
   
 ## 0.3.4
 - fix log tdlib android.
+  
+## 0.3.5
+- update api structur.
