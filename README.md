@@ -29,9 +29,9 @@
     - ✅️ support server side & client side
     - ✅️ support multi token ( bot / userbot ) 
     - ✅️ support bot and userbot
-    - ✅️ support telegram-bot-api ( local / [Bot-Api](https://core.telegram.org/bots/api#recent-changes )
-    - ✅️ support long poll update bot api
-    - ✅️ support telegram database library ( [TDLIB](https://github.com/tdlib/td) )
+    - ✅️ support telegram-bot-api (local / [Bot-Api](https://core.telegram.org/bots/api#recent-changes)
+    - ✅️ Support long poll update bot api
+    - ✅️ Support telegram database library ( [TDLIB](https://github.com/tdlib/td) )
     - ✅️ Add more Api Humanize pretty update and method api humanize
     
 - ```telegram client node```
