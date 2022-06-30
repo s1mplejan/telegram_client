@@ -129,3 +129,12 @@
   
 ## 0.3.5
 - update api structur.
+
+## 0.3.6
+- set message_id tdlib to message_id api
+  
+## 0.3.7
+- add method appRequest for make easy app
+
+## 0.3.8
+- update

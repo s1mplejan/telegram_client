@@ -1047,8 +1047,12 @@ class Tdlib {
   /// return result like bot api:
   /// {
   /// }
-  getChat(dynamic chat_id,
-      {bool is_detail = false, bool is_super_detail = false}) async {
+  getChat(
+    dynamic chat_id, {
+    bool is_detail = false,
+    bool is_super_detail = false,
+    bool is_more_detail = false,
+  }) async {
     try {
       if (RegExp(r"^@.*$", caseSensitive: false).hasMatch(chat_id.toString())) {
         var search_public_chat =
@@ -1130,7 +1134,7 @@ class Tdlib {
               }
             }
           }
-          if (is_super_detail) {
+          if (is_more_detail) {
             var getSuperGroupFullInfo = {};
             try {
               getSuperGroupFullInfo = await invoke("getSupergroupFullInfo", {
@@ -1311,7 +1315,7 @@ class Tdlib {
                 } catch (e) {}
               }
             }
-            if (is_super_detail) {
+            if (is_more_detail) {
               try {
                 var getUserFullInfo = {};
                 try {
@@ -1432,6 +1436,7 @@ class Tdlib {
     Map? chat_data,
     bool is_detail = false,
     bool is_super_detail = false,
+    bool is_more_detail = false,
   }) async {
     try {
       if (update["@type"] == "message") {
@@ -1479,8 +1484,12 @@ class Tdlib {
           } catch (e) {}
           if (is_chat_not_same) {
             try {
-              var chatResult = await getChat(update["chat_id"],
-                  is_detail: is_detail, is_super_detail: is_super_detail);
+              var chatResult = await getChat(
+                update["chat_id"],
+                is_detail: is_detail,
+                is_super_detail: is_super_detail,
+                is_more_detail: is_more_detail,
+              );
               if (chatResult["ok"]) {
                 chat_json = chatResult["result"];
               }
@@ -1490,7 +1499,7 @@ class Tdlib {
 
         json["is_outgoing"] = update["is_outgoing"] ?? false;
         json["is_pinned"] = update["is_pinned"] ?? false;
-        if (typeof(update["sender_id"]) == "object") {
+        if (update["sender_id"] is Map) {
           Map from_json = {
             "id": 0,
             "first_name": "",
@@ -1579,8 +1588,8 @@ class Tdlib {
 
         json["chat"] = chat_json;
         json["date"] = update["date"];
-        json["message_id"] = update["id"];
-        json["api_message_id"] = getMessageId(json["message_id"], true);
+        json["message_id"] = getMessageId(update["id"], true);
+        json["raw_message_id"] = update["id"];
         update.forEach((key, value) {
           try {
             if (typeof(value) == "boolean") {
@@ -2118,7 +2127,8 @@ class Tdlib {
             }
           }
         } catch (e) {}
-        json["message_id"] = update["message_id"];
+        json["message_id"] = getMessageId(update["message_id"], true);
+        json["raw_message_id"] = update["message_id"];
         json["from"] = from;
         json["chat"] = chat;
         json["chat_instance"] = update["chat_instance"];
@@ -2341,6 +2351,37 @@ class Tdlib {
     if (callback != null) {
       return callback(result);
     } else {}
+  }
+
+  /// if you build flutter apps recommended to call this for call api
+  Future<Map> appRequest(
+    String method, {
+    Map<String, dynamic>? parameters,
+    bool is_sync = false,
+    bool is_raw = false,
+    bool is_log = false,
+  }) async {
+    var result = {};
+    try {
+      parameters ??= {};
+      if (is_sync) {
+        result = invokeSync(method, parameters);
+      } else {
+        if (is_raw) {
+          result = await invoke(method, parameters);
+        } else {
+          result = await request(method, parameters);
+        }
+      }
+    } catch (e) {
+      if (e is Map) {
+        result = e;
+      }
+    }
+    if (is_log) {
+      print(result);
+    }
+    return result;
   }
 }
 
