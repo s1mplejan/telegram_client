@@ -111,11 +111,12 @@ class Tdlib {
         is_android = true;
       }
     }
-    if (typeof(optionTdlibDefault["start"]) == "boolean" && optionTdlibDefault["start"]) {
+    if (optionTdlibDefault["start"] is bool && optionTdlibDefault["start"]) {
       client_id = client_create().address;
       start();
     }
   }
+
   num getMessageId(num message_id, [bool is_reverse = false]) {
     if (is_reverse) {
       return (message_id ~/ 1048576);
@@ -125,14 +126,17 @@ class Tdlib {
   }
 
   /// if you don't like set authtdlib you can call this method by default this automatically start
-  void start() {
+  void start({int? clientId}) {
+    clientId ??= client_id;
     if (optionTdlibDefault['new_verbosity_level'] is int == false) {
       optionTdlibDefault['new_verbosity_level'] = 0;
     }
 
-    invokeSync("setLogVerbosityLevel", parameters: {
-      "new_verbosity_level": optionTdlibDefault['new_verbosity_level'],
-    });
+    invokeSync("setLogVerbosityLevel",
+        parameters: {
+          "new_verbosity_level": optionTdlibDefault['new_verbosity_level'],
+        },
+        clientId: clientId);
     on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         Map updateOrigin = update.raw;
@@ -143,16 +147,14 @@ class Tdlib {
           if (typeData(authState) == "object") {
             if (authState["@type"] == "authorizationStateWaitTdlibParameters") {
               var optin = {"@type": 'setTdlibParameters', 'parameters': optionTdlibDefault};
-
-              _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode(optin).toNativeUtf8());
+              _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode(optin).toNativeUtf8());
             }
-
             if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
               bool isEncrypted = authState['is_encrypted'] ?? false;
               if (isEncrypted) {
-                _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
               } else {
-                _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
               }
             }
           }
@@ -186,7 +188,7 @@ class Tdlib {
       final String pathTdl = args[3];
       option["start"] = false;
       Tdlib tg = Tdlib(pathTdl, option);
-
+      tg.client_id = clientId;
       while (true) {
         var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
         if (update.address != 0) {
@@ -1964,17 +1966,29 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  debugRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback}) async {
+  voidRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
     var result = {};
     try {
       parameters ??= {};
       if (is_sync) {
-        result = invokeSync(method, parameters:parameters);
+        result = invokeSync(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+        );
       } else {
         if (is_raw) {
-          result = await invoke(method, parameters: parameters);
+          result = await invoke(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
         } else {
-          result = await request(method, parameters: parameters);
+          result = await request(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
         }
       }
     } catch (e) {
@@ -1991,23 +2005,68 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  Future<Map> appRequest(
-    String method, {
-    Map<String, dynamic>? parameters,
-    bool is_sync = false,
-    bool is_raw = false,
-    bool is_log = false,
-  }) async {
+  debugRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
     var result = {};
     try {
       parameters ??= {};
       if (is_sync) {
-        result = invokeSync(method, parameters:parameters);
+        result = invokeSync(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+        );
       } else {
         if (is_raw) {
-          result = await invoke(method, parameters: parameters);
+          result = await invoke(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
         } else {
-          result = await request(method, parameters: parameters);
+          result = await request(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
+        }
+      }
+    } catch (e) {
+      if (e is Map) {
+        result = e;
+      }
+    }
+    if (is_log) {
+      print(result);
+    }
+    if (callback != null) {
+      return callback(result);
+    } else {}
+  }
+
+  /// if you build flutter apps recommended to call this for call api
+  Future<Map> appRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, int? clientId}) async {
+    var result = {};
+    try {
+      parameters ??= {};
+      if (is_sync) {
+        result = invokeSync(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+        );
+      } else {
+        if (is_raw) {
+          result = await invoke(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
+        } else {
+          result = await request(
+            method,
+            parameters: parameters,
+            clientId: clientId,
+          );
         }
       }
     } catch (e) {
