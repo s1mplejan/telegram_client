@@ -2,8 +2,7 @@
 
 ## cheat sheet
 
-- Multiple clone bot 
-
+- Multiple clone bot long poll update
 ```dart
   if (msg["text"] is String) {
     if (RegExp(r"^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$", caseSensitive: false).hasMatch(msg["text"])) {
