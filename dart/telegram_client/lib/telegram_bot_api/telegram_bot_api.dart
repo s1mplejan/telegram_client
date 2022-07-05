@@ -30,7 +30,7 @@ import 'dart:isolate';
 /// example:
 /// ```dart
 /// TelegramBotApi tg = TelegramBotApi("token_bot");
-/// tg.api.request("sendMessage", {
+/// tg.request("sendMessage",  parameters: {
 ///   "chat_id": 12345,
 ///   "text": "Hello world"
 /// });
@@ -69,7 +69,7 @@ class TelegramBotApi {
   /// example:
   /// [sendMessage]()
   /// ```dart
-  /// tg.api.request("sendMessage", {
+  /// tg.api.request("sendMessage",  parameters: {
   ///    "chat_id": 12345,
   ///    "text": "hello world",
   ///    "reply_markup": {
@@ -158,7 +158,7 @@ class TelegramBotApi {
   /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods)
   /// example:
   /// ```dart
-  /// request("sendMessage", {
+  /// request("sendMessage", parameters: {
   ///   "chat_id": 123456,
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
@@ -226,7 +226,7 @@ class TelegramBotApi {
   /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods) with upload file
   /// example:
   /// ```dart
-  /// requestForm("sendDocument", {
+  /// requestForm("sendDocument",  parameters: {
   ///   "chat_id": 123456,
   ///   "document": tg.file("./doc.json"),
   ///   "parse_mode": "html"
