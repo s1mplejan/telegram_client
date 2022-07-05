@@ -66,7 +66,7 @@ class Tdlib {
     "database_key": "",
     "start": true,
   };
-  late ffi.Pointer client;
+  late int client_id = 0;
   bool is_stop = false;
   bool is_android = Platform.isAndroid;
   EventEmitter emitter = EventEmitter();
@@ -112,7 +112,7 @@ class Tdlib {
       }
     }
     if (typeof(optionTdlibDefault["start"]) == "boolean" && optionTdlibDefault["start"]) {
-      client = client_create();
+      client_id = client_create().address;
       start();
     }
   }
@@ -131,7 +131,7 @@ class Tdlib {
     }
 
     invokeSync("setLogVerbosityLevel", {"new_verbosity_level": optionTdlibDefault['new_verbosity_level']});
-    on("update", (UpdateTd update) async {
+    on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         Map updateOrigin = update.raw;
 
@@ -142,15 +142,15 @@ class Tdlib {
             if (authState["@type"] == "authorizationStateWaitTdlibParameters") {
               var optin = {"@type": 'setTdlibParameters', 'parameters': optionTdlibDefault};
 
-              _client_send.call(client, convert.json.encode(optin).toNativeUtf8());
+              _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode(optin).toNativeUtf8());
             }
 
             if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
               bool isEncrypted = authState['is_encrypted'] ?? false;
               if (isEncrypted) {
-                _client_send.call(client, convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
               } else {
-                _client_send.call(client, convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
               }
             }
           }
@@ -171,8 +171,8 @@ class Tdlib {
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientAddress}) async {
-    clientAddress ??= client.address;
+  Future<void> initIsolate({int? clientId}) async {
+    clientId ??= client_id;
     receivePort = ReceivePort();
     receivePort!.listen((message) {
       emitter.emit("update", null, message);
@@ -194,15 +194,13 @@ class Tdlib {
               updateOrigin = convert.json.decode(update.toDartString());
             } catch (e) {}
             if (updateOrigin != null) {
-              try {
-                updateOrigin["client_id"] = clientId;
-              } catch (e) {}
+              updateOrigin["client_id"] = clientId;
               sendPortToMain.send(updateOrigin);
             }
           }
         }
       }
-    }, [receivePort!.sendPort, optionTdlibDefault, clientAddress, _pathTdl, is_android], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
+    }, [receivePort!.sendPort, optionTdlibDefault, clientId, _pathTdl, is_android], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
   }
 
   /// open dynamic native library
@@ -231,29 +229,32 @@ class Tdlib {
     return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>('${is_android ? "_" : ""}td_json_client_destroy').asFunction();
   }
 
-  void clientDestroy({ int? clientAddress }) {
-    clientAddress ??= client.address; 
-    return _client_destroy(ffi.Pointer.fromAddress(clientAddress));
+  void clientDestroy({int? clientId}) {
+    clientId ??= client_id;
+    return _client_destroy(ffi.Pointer.fromAddress(clientId));
   }
 
   /// check update from server
-  Future<String> clienReceive({int? clientAddress ,double timeout = 10.0}) async {
-    clientAddress ??= client.address; 
+  Future<String> clienReceive({int? clientId, double timeout = 10.0}) async {
+    clientId ??= client_id;
     try {
-      return _client_receive(ffi.Pointer.fromAddress(clientAddress), timeout).toDartString();
+      return _client_receive(ffi.Pointer.fromAddress(clientId), timeout).toDartString();
     } catch (e) {
       return "";
     }
   }
 
   /// add this for handle update api
-  void on(String type_update, void Function(UpdateTd update) callback) async {
+  void on(String type_update, void Function(UpdateTd update, Tdlib ctx) callback) async {
     if (!getBoolean(type_update)) {
       throw {};
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        return callback(UpdateTd(this, ev.eventData as Map));
+        optionTdlibDefault["start"] = false;
+        var tg = Tdlib(_pathTdl, optionTdlibDefault);
+        tg.client_id = (ev.eventData as Map)["client_id"];
+        return callback(UpdateTd(this, ev.eventData as Map), tg);
       });
     }
   }
@@ -430,7 +431,7 @@ class Tdlib {
       try {
         pesan = convert.json.decode(client_execute
             .call(
-                client,
+                ffi.Pointer.fromAddress(client_id),
                 convert.json.encode({
                   "@type": 'parseTextEntities',
                   "parse_mode": {"@type": parseMode},
@@ -457,8 +458,8 @@ class Tdlib {
   ///   }
   /// });
   /// ```
-  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientAddress }) async {
-    clientAddress ??= client.address; 
+  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientId}) async {
+    clientId ??= client_id;
     parameters ??= {};
     String random = getRandom(15);
     if (typeof(parameters) == "object") {
@@ -466,10 +467,10 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    _client_send.call(ffi.Pointer.fromAddress(clientAddress), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
+    _client_send.call(ffi.Pointer.fromAddress(clientId), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
     bool condition = true;
     var result = {};
-    on("update", (UpdateTd update) async {
+    on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         Map updateOrigin = update.raw;
         if (updateOrigin["@extra"] == random) {
@@ -504,12 +505,12 @@ class Tdlib {
   Map invokeSync(String method, [Map<String, dynamic>? parameters]) {
     parameters ??= {};
     String random = getRandom(15);
-    if (typeof(parameters) == "object") {
+    if (parameters is Map) {
       parameters["@extra"] = random;
     } else {
       parameters["@extra"] = random;
     }
-    return convert.json.decode(client_execute(client, convert.json.encode({"@type": method, ...parameters}).toNativeUtf8()).toDartString());
+    return convert.json.decode(client_execute(ffi.Pointer.fromAddress(client_id), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8()).toDartString());
   }
 
   /// call api getMe with return human api
@@ -668,7 +669,7 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(String method,{Map<String, dynamic>? parameters}) async {
+  request(String method, {Map<String, dynamic>? parameters}) async {
     parameters ??= {};
     if (Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"]) && typeof(parameters["chat_id"]) == "string") {
       var search_public_chat = await invoke("searchPublicChat", parameters: {
@@ -691,8 +692,7 @@ class Tdlib {
       Map result_request = {"ok": false};
       result_request = await invoke(
         (Regex("editMessageText", "i").exec(method)) ? method : "sendMessage",
-        parameters:
-        makeParametersApi({
+        parameters: makeParametersApi({
           "@type": method,
           ...parameters,
         }),
@@ -706,7 +706,7 @@ class Tdlib {
         return result_request;
       }
       var result = {};
-      on("update", (UpdateTd update) async {
+      on("update", (UpdateTd update, Tdlib ctx) async {
         try {
           Map updateOrigin = update.raw;
           if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
@@ -1970,9 +1970,9 @@ class Tdlib {
         result = invokeSync(method, parameters);
       } else {
         if (is_raw) {
-          result = await invoke(method, parameters:parameters);
+          result = await invoke(method, parameters: parameters);
         } else {
-          result = await request(method,parameters:parameters);
+          result = await request(method, parameters: parameters);
         }
       }
     } catch (e) {

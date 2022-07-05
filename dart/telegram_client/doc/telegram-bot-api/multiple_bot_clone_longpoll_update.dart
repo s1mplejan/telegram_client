@@ -44,7 +44,7 @@ void main(List<String> args) async {
             try {
               var getMe = await tg.request("getMe", tokenBot: tokenBot);
               if (getMe is Map && getMe["ok"] is bool && getMe["ok"] && getMe["result"] is Map) {
-                await tg.initIsolate(tokenBot: msg["text"]);
+                await tg.initIsolate(tokenBot: tokenBot);
                 getMe["result"].forEach((key, value) {
                   message += "\n${key.toString()}: ${value.toString()}";
                 });
