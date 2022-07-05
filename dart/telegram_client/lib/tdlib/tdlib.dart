@@ -130,7 +130,9 @@ class Tdlib {
       optionTdlibDefault['new_verbosity_level'] = 0;
     }
 
-    invokeSync("setLogVerbosityLevel", {"new_verbosity_level": optionTdlibDefault['new_verbosity_level']});
+    invokeSync("setLogVerbosityLevel", parameters: {
+      "new_verbosity_level": optionTdlibDefault['new_verbosity_level'],
+    });
     on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         Map updateOrigin = update.raw;
@@ -502,7 +504,8 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>"
   /// });
   /// ```
-  Map invokeSync(String method, [Map<String, dynamic>? parameters]) {
+  Map invokeSync(String method, {Map<String, dynamic>? parameters, int? clientId}) {
+    clientId ??= client_id;
     parameters ??= {};
     String random = getRandom(15);
     if (parameters is Map) {
@@ -510,7 +513,7 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    return convert.json.decode(client_execute(ffi.Pointer.fromAddress(client_id), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8()).toDartString());
+    return convert.json.decode(client_execute(ffi.Pointer.fromAddress(clientId), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8()).toDartString());
   }
 
   /// call api getMe with return human api
@@ -669,20 +672,29 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(String method, {Map<String, dynamic>? parameters}) async {
+  request(String method, {Map<String, dynamic>? parameters, int? clientId}) async {
+    clientId ??= client_id;
     parameters ??= {};
-    if (Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"]) && typeof(parameters["chat_id"]) == "string") {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {
-        "username": parameters["chat_id"],
-      });
+    if (parameters["chat_id"] is String && Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
+      var search_public_chat = await invoke(
+        "searchPublicChat",
+        parameters: {
+          "username": parameters["chat_id"],
+        },
+        clientId: clientId,
+      );
       if (search_public_chat["@type"] == "chat") {
         parameters["chat_id"] = search_public_chat["id"];
       }
     }
-    if (Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"]) && typeof(parameters["user_id"]) == "string") {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {
-        "username": parameters["user_id"],
-      });
+    if (parameters["user_id"] is String && Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"])) {
+      var search_public_chat = await invoke(
+        "searchPublicChat",
+        parameters: {
+          "username": parameters["user_id"],
+        },
+        clientId: clientId,
+      );
       if (search_public_chat["@type"] == "chat") {
         parameters["user_id"] = search_public_chat["id"];
       }
@@ -692,10 +704,13 @@ class Tdlib {
       Map result_request = {"ok": false};
       result_request = await invoke(
         (Regex("editMessageText", "i").exec(method)) ? method : "sendMessage",
-        parameters: makeParametersApi({
-          "@type": method,
-          ...parameters,
-        }),
+        parameters: makeParametersApi(
+          {
+            "@type": method,
+            ...parameters,
+          },
+        ),
+        clientId: clientId,
       );
       result_request["ok"] ??= true;
       if (!result_request["ok"]) {
@@ -748,18 +763,29 @@ class Tdlib {
       );
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
-      return await invoke("joinChat", parameters: {
-        "chat_id": parameters["chat_id"],
-      });
+      return await invoke(
+        "joinChat",
+        parameters: {
+          "chat_id": parameters["chat_id"],
+        },
+        clientId: clientId,
+      );
     }
     if (Regex(r"^joinChatByInviteLink$", "i").exec(method)) {
-      return await invoke("joinChatByInviteLink", parameters: {
-        "invite_link": parameters["invite_link"],
-      });
+      return await invoke(
+        "joinChatByInviteLink",
+        parameters: {
+          "invite_link": parameters["invite_link"],
+        },
+        clientId: clientId,
+      );
     }
 
     if (Regex(r"^getChatMember$", "i").exec(method)) {
-      return await getChatMember(parameters["chat_id"], parameters["user_id"]);
+      return await getChatMember(
+        parameters["chat_id"],
+        parameters["user_id"],
+      );
     }
     if (Regex(r"^getMe$", "i").exec(method)) {
       return await getMe();
@@ -768,7 +794,13 @@ class Tdlib {
       return await getChat(parameters["chat_id"], is_detail: true);
     }
     if (Regex(r"^getChats$", "i").exec(method)) {
-      var getChats = await invoke("getChats", parameters: {"limit": 9999});
+      var getChats = await invoke(
+        "getChats",
+        parameters: {
+          "limit": 9999,
+        },
+        clientId: clientId,
+      );
       if (getChats["@type"] == "chats") {
         List chat_ids = getChats["chat_ids"];
         List array_chat = [];
@@ -801,16 +833,19 @@ class Tdlib {
     if (parameters["is_sync"] != null) {
       return invokeSync(
         method,
-        makeParametersApi({"@type": method, ...parameters}),
-      );
-    } else {
-      return await invoke(
-        method,
         parameters: makeParametersApi({
           "@type": method,
           ...parameters,
         }),
+        clientId: clientId,
       );
+    } else {
+      return await invoke(method,
+          parameters: makeParametersApi({
+            "@type": method,
+            ...parameters,
+          }),
+          clientId: clientId);
     }
   }
 
@@ -1934,7 +1969,7 @@ class Tdlib {
     try {
       parameters ??= {};
       if (is_sync) {
-        result = invokeSync(method, parameters);
+        result = invokeSync(method, parameters:parameters);
       } else {
         if (is_raw) {
           result = await invoke(method, parameters: parameters);
@@ -1967,7 +2002,7 @@ class Tdlib {
     try {
       parameters ??= {};
       if (is_sync) {
-        result = invokeSync(method, parameters);
+        result = invokeSync(method, parameters:parameters);
       } else {
         if (is_raw) {
           result = await invoke(method, parameters: parameters);

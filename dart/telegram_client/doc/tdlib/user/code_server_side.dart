@@ -40,11 +40,10 @@ void main() async {
         }
         if (update.message.is_found) {
           if (RegExp("^/ping", caseSensitive: false).hasMatch(update.message.text ?? "")) {
-            
             return await ctx.request("sendMessage", parameters: {
               "chat_id": update.message.chat.id,
               "text": "Pong",
-            });
+            }, clientId: update.raw["client_id"]);
           }
           if (update.message.text == "/start") {
             return await tg.request("sendMessage", parameters: {"chat_id": update.message.chat.id, "text": "Hello saya adalah bot"});
