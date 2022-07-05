@@ -21,20 +21,20 @@ void main() async {
             if (authStateType == "authorizationStateWaitPhoneNumber") {
               stdout.write("Phone number: ");
               var phoneNumber = stdin.readLineSync().toString();
-              print(await tg.request("setAuthenticationPhoneNumber",
+              print(await tg.request("setAuthenticationPhoneNumber", parameters:
                   {"phone_number": phoneNumber}));
             }
             if (authStateType == "authorizationStateWaitCode") {
               stdout.write("Code: ");
               var code = stdin.readLineSync().toString();
               print(
-                  await tg.request("checkAuthenticationCode", {"code": code}));
+                  await tg.request("checkAuthenticationCode", parameters:{"code": code}));
             }
             if (authStateType == "authorizationStateWaitPassword") {
               stdout.write("Password: ");
               var password = stdin.readLineSync().toString();
               print(await tg.request(
-                  "checkAuthenticationPassword", {"password": password}));
+                  "checkAuthenticationPassword", parameters:{"password": password}));
             }
             if (authStateType == "authorizationStateReady") {
               print("succes login");
@@ -45,10 +45,10 @@ void main() async {
           if (RegExp("^/ping", caseSensitive: false)
               .hasMatch(update.message.text ?? "")) {
             return await tg.request("sendMessage",
-                {"chat_id": update.message.chat.id, "text": "Pong"});
+                parameters:{"chat_id": update.message.chat.id, "text": "Pong"});
           }
           if (update.message.text == "/start") {
-            return await tg.request("sendMessage", {
+            return await tg.request("sendMessage", parameters:{
               "chat_id": update.message.chat.id,
               "text": "Hello saya adalah bot"
             });

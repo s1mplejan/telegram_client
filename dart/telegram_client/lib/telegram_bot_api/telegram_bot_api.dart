@@ -46,22 +46,7 @@ class TelegramBotApi {
     "type": "bot",
     "logger": false,
     "api": "https://api.telegram.org/",
-    "allowed_updates": [
-      "message",
-      "edited_message",
-      "channel_post",
-      "edited_channel_post",
-      "inline_query",
-      "chosen_inline_result",
-      "callback_query",
-      "shipping_query",
-      "pre_checkout_query",
-      "poll",
-      "poll_answer",
-      "my_chat_member",
-      "chat_member",
-      "chat_join_request"
-    ],
+    "allowed_updates": ["message", "edited_message", "channel_post", "edited_channel_post", "inline_query", "chosen_inline_result", "callback_query", "shipping_query", "pre_checkout_query", "poll", "poll_answer", "my_chat_member", "chat_member", "chat_join_request"],
   };
 
   EventEmitter emitter = EventEmitter();
@@ -75,9 +60,6 @@ class TelegramBotApi {
   /// ```
   ///
   TelegramBotApi(this._token, [Map? option]) {
-    if (_token.isEmpty) {
-      throw "please fill token bot";
-    }
     if (option != null) {
       _options.addAll(option);
     }
@@ -105,19 +87,23 @@ class TelegramBotApi {
   ///
 
   /// add this for handle update api
-  void on(String type_update, void Function(UpdateApi update) callback) async {
+  void on(String type_update, void Function(UpdateApi update, TelegramBotApi ctx) callback) async {
     if (type_update.isEmpty) {
       throw {"message": "please add type_update"};
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        return callback(UpdateApi(ev.eventData as Map));
+        if (ev.eventData is Map) {
+          var json_update = ev.eventData as Map;
+          return callback(UpdateApi(ev.eventData as Map), TelegramBotApi(json_update["token_bot"]));
+        }
       });
     }
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate() async {
+  Future<void> initIsolate({String? tokenBot}) async {
+    tokenBot ??= _token;
     receivePort = ReceivePort();
     receivePort!.listen((message) {
       emitter.emit("update", null, message);
@@ -144,7 +130,7 @@ class TelegramBotApi {
         try {
           parameters.addAll({"allowed_updates": allowed_updates});
         } catch (e) {}
-        var getUpdates = await tg.request("getUpdates", parameters);
+        var getUpdates = await tg.request("getUpdates", parameters: parameters, tokenBot: token);
         if (getUpdates is Map && getUpdates["ok"] is bool && getUpdates["ok"]) {
           List updates = [];
           try {
@@ -156,6 +142,7 @@ class TelegramBotApi {
               try {
                 offset = (loop_data["update_id"] + 1);
               } catch (e) {}
+              loop_data["token_bot"] = token;
               sendPortToMain.send(loop_data);
             }
           }
@@ -164,7 +151,7 @@ class TelegramBotApi {
     }, [
       receivePort!.sendPort,
       _options,
-      _token,
+      tokenBot,
     ], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
   }
 
@@ -177,22 +164,19 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(String method,
-      [Map? parameters, bool? is_form = false]) async {
+  dynamic request(String method, {Map? parameters, bool is_form = false, String? tokenBot}) async {
     parameters ??= {};
-    is_form ??= false;
+    tokenBot ??= _token;
     var option = {
       "method": "post",
     };
-    var url =
-        "${_options["api"].toString()}${_options["type"].toString()}${_token.toString()}/${method.toString()}";
+    var url = "${_options["api"].toString()}${_options["type"].toString()}${tokenBot.toString()}/${method.toString()}";
     if (is_form) {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
         if (typeData(value) == "object") {
-          if (typeData(value["is_post_file"]) == "boolean" &&
-              value["is_post_file"]) {
+          if (typeData(value["is_post_file"]) == "boolean" && value["is_post_file"]) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else {
@@ -226,16 +210,15 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url =
-              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
-          getFile["result"]["file_url"] =
-              "$url$_token/${getFile["result"]["file_path"]}";
+          var url = "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
+          getFile["result"]["file_url"] = "$url$_token/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
         }
       } else {
-        throw convert.json.decode(response.body);
+        var json = convert.json.decode(response.body);
+        throw json;
       }
     }
   }
@@ -249,8 +232,9 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic requestForm(method, [var parameters]) async {
-    return await request(method, parameters, true);
+  dynamic requestForm(method, {var parameters, String? tokenBot}) async {
+    tokenBot ??= _token;
+    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot);
   }
 
   /// example:
@@ -260,9 +244,7 @@ class TelegramBotApi {
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path
-          .toString()
-          .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
+      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {

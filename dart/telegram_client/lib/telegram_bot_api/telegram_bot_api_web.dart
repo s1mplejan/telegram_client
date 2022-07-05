@@ -70,9 +70,6 @@ class TelegramBotApi {
   /// ```
   ///
   TelegramBotApi(this._token, [Map? option]) {
-    if (_token.isEmpty) {
-      throw "please fill token bot";
-    }
     if (option != null) {
       _options.addAll(option);
     }
@@ -108,22 +105,19 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(String method,
-      [Map? parameters, bool? is_form = false]) async {
+   dynamic request(String method, {Map? parameters, bool is_form = false, String? tokenBot}) async {
     parameters ??= {};
-    is_form ??= false;
+    tokenBot ??= _token;
     var option = {
       "method": "post",
     };
-    var url =
-        "${_options["api"].toString()}${_options["type"].toString()}${_token.toString()}/${method.toString()}";
+    var url = "${_options["api"].toString()}${_options["type"].toString()}${tokenBot.toString()}/${method.toString()}";
     if (is_form) {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
         if (typeData(value) == "object") {
-          if (typeData(value["is_post_file"]) == "boolean" &&
-              value["is_post_file"]) {
+          if (typeData(value["is_post_file"]) == "boolean" && value["is_post_file"]) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else {
@@ -157,16 +151,15 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url =
-              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
-          getFile["result"]["file_url"] =
-              "$url$_token/${getFile["result"]["file_path"]}";
+          var url = "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
+          getFile["result"]["file_url"] = "$url$_token/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
         }
       } else {
-        throw convert.json.decode(response.body);
+        var json = convert.json.decode(response.body);
+        throw json;
       }
     }
   }
@@ -180,10 +173,10 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic requestForm(method, [var parameters]) async {
-    return await request(method, parameters, true);
+  dynamic requestForm(method, {var parameters, String? tokenBot}) async {
+    tokenBot ??= _token;
+    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot);
   }
-
   /// example:
   /// ```dart
   /// tg.file("./doc.json"),

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches
+// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check
 
 // ignore: slash_for_doc_comments
 /**
@@ -417,7 +417,7 @@ class Tdlib {
     entities ??= [];
     dynamic pesan = {"text": text};
     var parseMode = 'textParseModeHTML';
-    if (typeof(parse_mode) == "string") {
+    if (parse_mode is String) {
       parse_mode = parse_mode.toLowerCase();
       if (parse_mode == 'markdown') {
         parseMode = 'textParseModeMarkdown';
@@ -426,7 +426,7 @@ class Tdlib {
       }
     }
 
-    if (typeof(parse_mode) == "string") {
+    if (parse_mode is String) {
       try {
         pesan = convert.json.decode(client_execute
             .call(
@@ -457,7 +457,8 @@ class Tdlib {
   ///   }
   /// });
   /// ```
-  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters}) async {
+  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientAddress }) async {
+    clientAddress ??= client.address; 
     parameters ??= {};
     String random = getRandom(15);
     if (typeof(parameters) == "object") {
@@ -465,7 +466,7 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    _client_send.call(client, convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
+    _client_send.call(ffi.Pointer.fromAddress(clientAddress), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
     bool condition = true;
     var result = {};
     on("update", (UpdateTd update) async {
@@ -667,7 +668,7 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(String method, {Map<String, dynamic>? parameters}) async {
+  request(String method,{Map<String, dynamic>? parameters}) async {
     parameters ??= {};
     if (Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"]) && typeof(parameters["chat_id"]) == "string") {
       var search_public_chat = await invoke("searchPublicChat", parameters: {
@@ -1938,7 +1939,7 @@ class Tdlib {
         if (is_raw) {
           result = await invoke(method, parameters: parameters);
         } else {
-          result = await request(method, parameters:parameters);
+          result = await request(method, parameters: parameters);
         }
       }
     } catch (e) {
