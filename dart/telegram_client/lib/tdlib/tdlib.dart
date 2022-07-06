@@ -295,7 +295,7 @@ class Tdlib {
           jsonUpdate["client_option"]["start"] = false;
           var tg = Tdlib(_pathTdl, jsonUpdate["client_option"]);
           tg.client_id = jsonUpdate["client_id"];
-          return callback(UpdateTd(this, jsonUpdate), tg);
+          return callback(UpdateTd(tg, jsonUpdate), tg);
         }
       });
     }
