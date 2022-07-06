@@ -175,8 +175,11 @@ class Tdlib {
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientId}) async {
+  Future<void> initIsolate({int? clientId,  Map<String, dynamic>? clientOption}) async {
     clientId ??= client_id;
+    if (clientOption != null) {
+      optionTdlibDefault.addAll(clientOption);
+    }
     receivePort = ReceivePort();
     receivePort!.listen((message) {
       emitter.emit("update", null, message);
@@ -192,13 +195,14 @@ class Tdlib {
       while (true) {
         var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
         if (update.address != 0) {
-          if (typeof(update.toDartString()) == "string" && update.toDartString().toString().isNotEmpty) {
+          if (update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
             Map? updateOrigin;
             try {
               updateOrigin = convert.json.decode(update.toDartString());
             } catch (e) {}
             if (updateOrigin != null) {
               updateOrigin["client_id"] = clientId;
+              updateOrigin["client_option"] = option;
               sendPortToMain.send(updateOrigin);
             }
           }
@@ -255,11 +259,32 @@ class Tdlib {
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        optionTdlibDefault["start"] = false;
-        var tg = Tdlib(_pathTdl, optionTdlibDefault);
-        tg.client_id = (ev.eventData as Map)["client_id"];
-        return callback(UpdateTd(this, ev.eventData as Map), tg);
+        if (ev.eventData is Map) {
+          Map jsonUpdate = (ev.eventData as Map);
+          jsonUpdate["client_option"]["start"] = false;
+          var tg = Tdlib(_pathTdl, jsonUpdate["client_option"]);
+          tg.client_id = jsonUpdate["client_id"];
+          return callback(UpdateTd(this, jsonUpdate), tg);
+        }
       });
+    }
+  }
+
+  void initClient(Map update, {required Map<String, dynamic> tdlibParameters}) async {
+    if (update["authorization_state"] is Map) {
+      var authStateType = update["authorization_state"]["@type"];
+      if (authStateType == "authorizationStateWaitTdlibParameters") {
+        optionTdlibDefault.addAll(tdlibParameters);
+        await invoke("setTdlibParameters", parameters: {"parameters": optionTdlibDefault});
+      }
+      if (authStateType == "authorizationStateWaitEncryptionKey") {
+        bool isEncrypted = update["authorization_state"]['is_encrypted'] ?? false;
+        if (isEncrypted) {
+          await invoke("checkDatabaseEncryptionKey", parameters: {"encryption_key": ""});
+        } else {
+          await invoke("setDatabaseEncryptionKey", parameters: {"new_encryption_key": ""});
+        }
+      }
     }
   }
 
@@ -298,11 +323,7 @@ class Tdlib {
         } else {
           parameters["parse_mode"] = "";
         }
-        if (getBoolean(parameters["entities"])) {
-          if (typeof(parameters["entities"]) != "array") {
-            parameters["entities"] = [];
-          }
-        } else {
+        if (parameters["entities"] is List == false) {
           parameters["entities"] = [];
         }
         if (parameters.containsKey("message_id")) {
