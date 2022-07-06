@@ -103,6 +103,7 @@ class TelegramBotApi {
 
   /// add this for multithread on flutter apps
   Future<void> initIsolate({String? tokenBot}) async {
+    await Future.delayed(Duration(seconds: 2));
     tokenBot ??= _token;
     receivePort = ReceivePort();
     receivePort!.listen((message) {

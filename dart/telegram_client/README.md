@@ -51,14 +51,49 @@ flutter pub add telegram_client
 ## Tdlib
 
 quickstart:
+- single
 ```dart
+import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
-void main() async {
-  Tdlib tg = Tdlib("libtdjson.so");
-  tg.on("update", (UpdateTd update) {
+void main(List<String> args) async {
+  var path = Directory.current.path;
+  Tdlib tg = Tdlib("libtdjson.so", {
+    'api_id': 12345,
+    'api_hash': 'abcdefgjjaijiajdisd',
+    'database_directory': "$path/user/",
+    'files_directory': "$path/user/",
+  });
+  tg.on("update", (UpdateTd update, Tdlib ctx) {
     print(update.raw);
   });
-  tg.initIsolate();
+  await tg.initIsolate();
+}
+```
+- multi
+```dart
+import 'dart:io';
+import 'package:telegram_client/telegram_client.dart';
+void main(List<String> args) async {
+  var path = Directory.current.path;
+  Tdlib tg = Tdlib("libtdjson.so", {
+    'api_id': 12345678,
+    'api_hash': 'asaskaoskaoskoa',
+    'database_directory': "$path/user_0/",
+    'files_directory': "$path/user_0/",
+  });
+  tg.on("update", (UpdateTd update, Tdlib ctx) {
+    if (tg.client_id == ctx.client_id) {
+      print("user_0");
+    } else {
+      print("user_1");
+    }
+    print(update.raw);
+  });
+  await tg.initIsolate();
+  await tg.initIsolateNewClient(clientId: tg.client_create().address, clientOption: {
+    'database_directory': "$path/user_1/",
+    'files_directory': "$path/user_1/",
+  });
 }
 ```
 
@@ -94,7 +129,7 @@ Tdlib tg = Tdlib("./tdjson.so", {
 | 2  | `function` |  [object](#object)    | parameters di butuhkan jika method membutuhkannya |    `yes`    |
 - examples
 ```js
-tg.on("update", (UpdateTd update) {
+tg.on("update", (UpdateTd update, Tdlib ctx) {
   print(update.raw);    
 });
 ```
@@ -102,6 +137,8 @@ tg.on("update", (UpdateTd update) {
 #### initIsolate
 | No |       key       | value  | Deskripsi | `required` |
 |----|:---------------:|:------:|:----------|:----------:|
+| 1  |`clientId`| int addres client_create | |`no`|
+| 2  | `clientOption` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
 - examples
 ```js
 tg.initIsolate();
@@ -114,7 +151,7 @@ tg.initIsolate();
 | 2  | `parameters` |  [object](#methods-1)    | parameters di butuhkan jika method membutuhkannya |    `options`    |
 - examples
 ```js
-tg.request("sendMessage", {
+tg.request("sendMessage", parameters: {
   "chat_id": 123456,
   "text": "Hello world"
 });
@@ -167,26 +204,30 @@ more method check [tdlib-docs]()
 ## TelegramBotApi
 
 quickstart:
+- single
 ```dart
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
-  TelegramBotApi tg = TelegramBotApi("token_bot");
-  // add this if you want your bot get update longpoll
-  tg.on("update", (UpdateApi update_origin) async {
-    var update = update_origin.raw;
-    print(update);
-    if (update["message"] is Map) {
-      var msg = update["message"];
-      if (msg["text"] is String) {
-        if (RegExp("/start", caseSensitive: false).hasMatch(msg["text"])) {
-          return await tg.request("sendMessage", {"chat_id": msg["chat"]["id"], "text": "Hello world"});
-        }
-      }
-    }
+  TelegramBotApi tg = TelegramBotApi("token");
+  tg.on("update", (UpdateApi update, TelegramBotApi ctx) {
+    print(update.raw);
   });
-  await tg.initIsolate(); // add this if you want your bot get update longpoll
+  await tg.initIsolate(); // add this jika ingin menggunakan long poll update
 }
 ```
+- multi
+```dart
+import 'package:telegram_client/telegram_client.dart';
+void main(List<String> args) async {
+  TelegramBotApi tg = TelegramBotApi("token");
+  tg.on("update", (UpdateApi update, TelegramBotApi ctx) {
+    print(update.raw);
+  });
+  await tg.initIsolate();
+  await tg.initIsolate(tokenBot: "new_token_bot");
+}
+```
+
 #### constructor
 
 | No |       key       | value  | Deskripsi | `required` |
@@ -205,7 +246,7 @@ TelegramBotApi tg = TelegramBotApi("token_bot");
 | 2  | `parameters` |  [object](#methods-1)    | parameters di butuhkan jika method membutuhkannya |    `options`    |
 - examples
 ```dart
-tg.request("sendMessage", {
+tg.request("sendMessage", parameters:{
   "chat_id": 123456,
   "text": "Hello world"
 });

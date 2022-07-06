@@ -221,9 +221,9 @@ class Tdlib {
         client_option["database_directory"] = clientOption["database_directory"];
       }
     } else {
-        throw {
-          "message": "initIsolateNewClient database_directory harus isi!",
-        };
+      throw {
+        "message": "initIsolateNewClient database_directory harus isi!",
+      };
     }
     if (clientOption["files_directory"] is String && (clientOption["files_directory"] as String).isNotEmpty) {
       if (client_option["files_directory"] == clientOption["files_directory"]) {
@@ -234,9 +234,9 @@ class Tdlib {
         client_option["files_directory"] = clientOption["files_directory"];
       }
     } else {
-        throw {
-          "message": "initIsolateNewClient files_directory harus isi!",
-        };
+      throw {
+        "message": "initIsolateNewClient files_directory harus isi!",
+      };
     }
 
     await initIsolate(clientId: clientId, clientOption: clientOption);
@@ -301,11 +301,13 @@ class Tdlib {
     }
   }
 
-  Future<void> initClient(UpdateTd update, {required Map<String, dynamic> tdlibParameters, int? clientId}) async {
+  Future<void> initClient(UpdateTd update, {Map<String, dynamic>? tdlibParameters, int? clientId}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
-        client_option.addAll(tdlibParameters);
+        if (tdlibParameters != null) {
+          client_option.addAll(tdlibParameters);
+        }
         await invoke(
           "setTdlibParameters",
           parameters: {
