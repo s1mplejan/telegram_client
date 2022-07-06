@@ -21,17 +21,20 @@ void main() async {
             if (authStateType == "authorizationStateWaitPhoneNumber") {
               stdout.write("Phone number: ");
               var phoneNumber = stdin.readLineSync().toString();
-              print(await ctx.request("setAuthenticationPhoneNumber", parameters: {"phone_number": phoneNumber}));
+              print(await ctx.request("setAuthenticationPhoneNumber",
+                  parameters: {"phone_number": phoneNumber}));
             }
             if (authStateType == "authorizationStateWaitCode") {
               stdout.write("Code: ");
               var code = stdin.readLineSync().toString();
-              print(await tg.request("checkAuthenticationCode", parameters: {"code": code}));
+              print(await tg.request("checkAuthenticationCode",
+                  parameters: {"code": code}));
             }
             if (authStateType == "authorizationStateWaitPassword") {
               stdout.write("Password: ");
               var password = stdin.readLineSync().toString();
-              print(await tg.request("checkAuthenticationPassword", parameters: {"password": password}));
+              print(await tg.request("checkAuthenticationPassword",
+                  parameters: {"password": password}));
             }
             if (authStateType == "authorizationStateReady") {
               print("succes login");
@@ -39,14 +42,20 @@ void main() async {
           }
         }
         if (update.message.is_found) {
-          if (RegExp("^/ping", caseSensitive: false).hasMatch(update.message.text ?? "")) {
-            return await ctx.request("sendMessage", parameters: {
-              "chat_id": update.message.chat.id,
-              "text": "Pong",
-            }, clientId: update.raw["client_id"]);
+          if (RegExp("^/ping", caseSensitive: false)
+              .hasMatch(update.message.text ?? "")) {
+            return await ctx.request("sendMessage",
+                parameters: {
+                  "chat_id": update.message.chat.id,
+                  "text": "Pong",
+                },
+                clientId: update.raw["client_id"]);
           }
           if (update.message.text == "/start") {
-            return await tg.request("sendMessage", parameters: {"chat_id": update.message.chat.id, "text": "Hello saya adalah bot"});
+            return await tg.request("sendMessage", parameters: {
+              "chat_id": update.message.chat.id,
+              "text": "Hello saya adalah bot"
+            });
           }
         }
       } catch (e) {

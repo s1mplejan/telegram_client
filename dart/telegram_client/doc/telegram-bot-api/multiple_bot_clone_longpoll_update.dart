@@ -21,7 +21,9 @@ void main(List<String> args) async {
           );
         }
         if (RegExp(r"^/ping$", caseSensitive: false).hasMatch(msg["text"])) {
-          var time = ((DateTime.now().millisecondsSinceEpoch / 1000) - msg["date"]).toStringAsFixed(3);
+          var time =
+              ((DateTime.now().millisecondsSinceEpoch / 1000) - msg["date"])
+                  .toStringAsFixed(3);
           var result = await ctx.request(
             "sendMessage",
             parameters: {
@@ -38,12 +40,16 @@ void main(List<String> args) async {
           });
         }
         if (msg["text"] is String) {
-          if (RegExp(r"^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$", caseSensitive: false).hasMatch(msg["text"])) {
+          if (RegExp(r"^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$", caseSensitive: false)
+              .hasMatch(msg["text"])) {
             var tokenBot = msg["text"];
             var message = "Succes Clone\n";
             try {
               var getMe = await tg.request("getMe", tokenBot: tokenBot);
-              if (getMe is Map && getMe["ok"] is bool && getMe["ok"] && getMe["result"] is Map) {
+              if (getMe is Map &&
+                  getMe["ok"] is bool &&
+                  getMe["ok"] &&
+                  getMe["result"] is Map) {
                 await tg.initIsolate(tokenBot: tokenBot);
                 getMe["result"].forEach((key, value) {
                   message += "\n${key.toString()}: ${value.toString()}";
