@@ -47,7 +47,7 @@ import 'package:hexaminate/hexaminate.dart';
 class Tdlib {
   final String _pathTdl;
 
-  final Map<String, dynamic> optionTdlibDefault = {
+  late Map<String, dynamic> client_option = {
     '@type': 'tdlibParameters',
     'api_id': 1917085,
     'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
@@ -106,12 +106,20 @@ class Tdlib {
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
   Tdlib(this._pathTdl, [Map<String, dynamic>? optionTdlib]) {
     if (optionTdlib != null) {
-      optionTdlibDefault.addAll(optionTdlib);
+      client_option.addAll(optionTdlib);
       if (optionTdlib["is_android"] == true) {
         is_android = true;
       }
     }
-    if (optionTdlibDefault["start"] is bool && optionTdlibDefault["start"]) {
+
+    if (client_option['new_verbosity_level'] is int == false) {
+      client_option['new_verbosity_level'] = 0;
+    }
+    invokeSync("setLogVerbosityLevel", parameters: {
+      "new_verbosity_level": client_option['new_verbosity_level'],
+    });
+
+    if (client_option["start"] is bool && client_option["start"]) {
       client_id = client_create().address;
       start();
     }
@@ -128,33 +136,22 @@ class Tdlib {
   /// if you don't like set authtdlib you can call this method by default this automatically start
   void start({int? clientId}) {
     clientId ??= client_id;
-    if (optionTdlibDefault['new_verbosity_level'] is int == false) {
-      optionTdlibDefault['new_verbosity_level'] = 0;
-    }
-
-    invokeSync("setLogVerbosityLevel",
-        parameters: {
-          "new_verbosity_level": optionTdlibDefault['new_verbosity_level'],
-        },
-        clientId: clientId);
     on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         Map updateOrigin = update.raw;
-
         if (updateOrigin["@type"] == "updateAuthorizationState") {
           var authState = updateOrigin["authorization_state"];
-
-          if (typeData(authState) == "object") {
+          if (authState is Map) {
             if (authState["@type"] == "authorizationStateWaitTdlibParameters") {
-              var optin = {"@type": 'setTdlibParameters', 'parameters': optionTdlibDefault};
+              var optin = {"@type": 'setTdlibParameters', 'parameters': client_option};
               _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode(optin).toNativeUtf8());
             }
             if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
               bool isEncrypted = authState['is_encrypted'] ?? false;
               if (isEncrypted) {
-                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': client_option["database_key"]}).toNativeUtf8());
               } else {
-                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': optionTdlibDefault["database_key"]}).toNativeUtf8());
+                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': client_option["database_key"]}).toNativeUtf8());
               }
             }
           }
@@ -175,10 +172,10 @@ class Tdlib {
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientId,  Map<String, dynamic>? clientOption}) async {
+  Future<void> initIsolate({int? clientId, Map<String, dynamic>? clientOption}) async {
     clientId ??= client_id;
     if (clientOption != null) {
-      optionTdlibDefault.addAll(clientOption);
+      client_option.addAll(clientOption);
     }
     receivePort = ReceivePort();
     receivePort!.listen((message) {
@@ -208,7 +205,7 @@ class Tdlib {
           }
         }
       }
-    }, [receivePort!.sendPort, optionTdlibDefault, clientId, _pathTdl, is_android], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
+    }, [receivePort!.sendPort, client_option, clientId, _pathTdl, is_android], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
   }
 
   /// open dynamic native library
@@ -270,19 +267,55 @@ class Tdlib {
     }
   }
 
-  void initClient(Map update, {required Map<String, dynamic> tdlibParameters}) async {
-    if (update["authorization_state"] is Map) {
-      var authStateType = update["authorization_state"]["@type"];
+  Future<void> initClient(UpdateTd update, {Map<String, dynamic>? tdlibParameters, int? clientId}) async {
+    if (update.raw["authorization_state"] is Map) {
+      var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
-        optionTdlibDefault.addAll(tdlibParameters);
-        await invoke("setTdlibParameters", parameters: {"parameters": optionTdlibDefault});
+        if (tdlibParameters != null) {
+          if (tdlibParameters["database_directory"] is String == false) {
+            throw {"message": "initClient database_directory not set"};
+          }
+          if (tdlibParameters["files_directory"] is String == false) {
+            throw {"message": "initClient files_directory not set"};
+          }
+
+          if ((tdlibParameters["database_directory"] as String).isEmpty) {
+            throw {"message": "initClient database_directory harus isi"};
+          }
+          if ((tdlibParameters["files_directory"] as String).isEmpty) {
+            throw {"message": "initClient files_directory harus isi"};
+          }
+          if (client_option["database_directory"] == tdlibParameters["database_directory"] || client_option["files_directory"] == tdlibParameters["files_directory"]) {
+            throw {"message": "initClient files_directory and database_directory harus beda!"};
+          }
+          client_option.addAll(tdlibParameters);
+        }
+        await invoke(
+          "setTdlibParameters",
+          parameters: {
+            "parameters": client_option,
+          },
+          clientId: clientId,
+        );
       }
       if (authStateType == "authorizationStateWaitEncryptionKey") {
-        bool isEncrypted = update["authorization_state"]['is_encrypted'] ?? false;
+        bool isEncrypted = update.raw["authorization_state"]['is_encrypted'];
         if (isEncrypted) {
-          await invoke("checkDatabaseEncryptionKey", parameters: {"encryption_key": ""});
+          await invoke(
+            "checkDatabaseEncryptionKey",
+            parameters: {
+              "encryption_key": "",
+            },
+            clientId: clientId,
+          );
         } else {
-          await invoke("setDatabaseEncryptionKey", parameters: {"new_encryption_key": ""});
+          await invoke(
+            "setDatabaseEncryptionKey",
+            parameters: {
+              "new_encryption_key": "",
+            },
+            clientId: clientId,
+          );
         }
       }
     }
@@ -2111,6 +2144,14 @@ class UpdateTd {
   /// return json update origin from api origin
   Map get raw {
     return update;
+  }
+
+  int get client_id {
+    return update["client_id"];
+  }
+
+  int get client_option {
+    return update["client_option"];
   }
 
   /// return json update api minimalist from api origin
