@@ -173,6 +173,7 @@ class Tdlib {
 
   /// add this for multithread on flutter apps
   Future<void> initIsolate({int? clientId, Map<String, dynamic>? clientOption}) async {
+    await Future.delayed(Duration(seconds: 2));
     clientId ??= client_id;
     if (clientOption != null) {
       client_option.addAll(clientOption);
@@ -206,6 +207,39 @@ class Tdlib {
         }
       }
     }, [receivePort!.sendPort, client_option, clientId, _pathTdl, is_android], onExit: receivePort!.sendPort, onError: receivePort!.sendPort);
+  }
+
+  /// add this for multithread new client on flutter apps
+  Future<void> initIsolateNewClient({required int clientId, required Map<String, dynamic> clientOption}) async {
+    await Future.delayed(Duration(seconds: 2));
+    if (clientOption["database_directory"] is String && (clientOption["database_directory"] as String).isNotEmpty) {
+      if (client_option["database_directory"] == clientOption["database_directory"]) {
+        throw {
+          "message": "initIsolateNewClient database_directory harus beda!",
+        };
+      } else {
+        client_option["database_directory"] = clientOption["database_directory"];
+      }
+    } else {
+        throw {
+          "message": "initIsolateNewClient database_directory harus isi!",
+        };
+    }
+    if (clientOption["files_directory"] is String && (clientOption["files_directory"] as String).isNotEmpty) {
+      if (client_option["files_directory"] == clientOption["files_directory"]) {
+        throw {
+          "message": "initIsolateNewClient files_directory harus beda!",
+        };
+      } else {
+        client_option["files_directory"] = clientOption["files_directory"];
+      }
+    } else {
+        throw {
+          "message": "initIsolateNewClient files_directory harus isi!",
+        };
+    }
+
+    await initIsolate(clientId: clientId, clientOption: clientOption);
   }
 
   /// open dynamic native library
@@ -267,29 +301,11 @@ class Tdlib {
     }
   }
 
-  Future<void> initClient(UpdateTd update, {Map<String, dynamic>? tdlibParameters, int? clientId}) async {
+  Future<void> initClient(UpdateTd update, {required Map<String, dynamic> tdlibParameters, int? clientId}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
-        if (tdlibParameters != null) {
-          if (tdlibParameters["database_directory"] is String == false) {
-            throw {"message": "initClient database_directory not set"};
-          }
-          if (tdlibParameters["files_directory"] is String == false) {
-            throw {"message": "initClient files_directory not set"};
-          }
-
-          if ((tdlibParameters["database_directory"] as String).isEmpty) {
-            throw {"message": "initClient database_directory harus isi"};
-          }
-          if ((tdlibParameters["files_directory"] as String).isEmpty) {
-            throw {"message": "initClient files_directory harus isi"};
-          }
-          if (client_option["database_directory"] == tdlibParameters["database_directory"] || client_option["files_directory"] == tdlibParameters["files_directory"]) {
-            throw {"message": "initClient files_directory and database_directory harus beda!"};
-          }
-          client_option.addAll(tdlibParameters);
-        }
+        client_option.addAll(tdlibParameters);
         await invoke(
           "setTdlibParameters",
           parameters: {
@@ -2150,7 +2166,7 @@ class UpdateTd {
     return update["client_id"];
   }
 
-  int get client_option {
+  Map get client_option {
     return update["client_option"];
   }
 
