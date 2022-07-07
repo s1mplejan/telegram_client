@@ -141,3 +141,6 @@
   
 ## 0.3.9
 - mempermudah multi client di tdlib dan telegram bot api ( semua method belum fungsi normal hanya method invoke dan request yang bisa, untuk lain bisa normal jika tidak menggunakan multi client )
+
+## 0.3.10
+- fix result request multi client
