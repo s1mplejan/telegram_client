@@ -144,3 +144,6 @@
 
 ## 0.3.10
 - fix result request multi client
+  
+## 0.3.11
+- fix some method request multi client
