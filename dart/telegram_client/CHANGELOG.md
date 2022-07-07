@@ -147,3 +147,6 @@
   
 ## 0.3.11
 - fix some method request multi client
+
+## 0.3.11
+- add future error appRequest method

@@ -2692,6 +2692,7 @@ class Tdlib {
         }
       }
     } catch (e) {
+      return Future.error(e);
       if (e is Map) {
         result = e;
       }
