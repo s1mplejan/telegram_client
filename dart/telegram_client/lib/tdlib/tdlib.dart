@@ -181,7 +181,6 @@ class Tdlib {
       final Map<String, dynamic> option = args[1];
       final int clientId = args[2];
       final String pathTdl = args[3];
-      option["start"] = false;
       Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
       while (true) {
         var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
@@ -192,9 +191,7 @@ class Tdlib {
               updateOrigin = convert.json.decode(update.toDartString());
             } catch (e) {}
             if (updateOrigin != null) {
-              updateOrigin["client_id"] = clientId;
-              updateOrigin["client_option"] = option;
-              sendPortToMain.send(updateOrigin);
+              sendPortToMain.send([updateOrigin, clientId, option]);
             }
           }
         }
@@ -284,11 +281,9 @@ class Tdlib {
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        if (ev.eventData is Map) {
-          try {
-            Map jsonUpdate = (ev.eventData as Map);
-            return callback(UpdateTd(this, jsonUpdate));
-          } catch (e) {}
+        if (ev.eventData is List) {
+          List jsonUpdate = (ev.eventData as List);
+          return callback(UpdateTd(this, update: jsonUpdate[0], clientId: jsonUpdate[1], clientOption: jsonUpdate[2]));
         }
       });
     }
@@ -2257,50 +2252,53 @@ class Tdlib {
 class UpdateTd {
   late Tdlib tg;
   late Map update;
-  UpdateTd(this.tg, this.update);
+  late int clientId;
+  late Map<String, dynamic> clientOption;
+  UpdateTd(this.tg, {required this.update, required this.clientId, required this.clientOption});
 
   /// return json update origin from api origin
-  Map get raw {
+  Map get raw { 
     return update;
   }
 
+  int get client_id {
+    return clientId;
+  }
+
+  Map get client_option {
+    return clientOption;
+  }
+
   Tdlib get client {
-    var clientTg = tg;
-    return Tdlib(tg.pathTdl, clientOption: update["client_option"], clientId: update["client_id"]);
+    return Tdlib(tg.pathTdl, clientOption: clientOption, clientId: clientId);
   }
 
   /// return json update api minimalist from api origin
   Future<Map> get raw_api_light async {
     if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage(update["message"], is_detail: true, clientId: update["client_id"]);
+        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, clientId: clientId);
         if (getMessage["ok"]) {
           return getMessage["result"];
-        }
-        return update;
-      } catch (e) {
-        return update;
+        } 
+      } catch (e) { 
       }
-    } else {
-      return update;
+    } else { 
     }
+    return update;
   }
 
   /// return json update api full from api origin
   Future<Map> get raw_api async {
     if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, is_super_detail: true, clientId: update["client_id"]);
+        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, is_super_detail: true, clientId: clientId);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
-        return update;
-      } catch (e) {
-        return update;
-      }
-    } else {
-      return update;
-    }
+      } catch (e) {}
+    } else {}
+    return update;
   }
 
   /// return type update

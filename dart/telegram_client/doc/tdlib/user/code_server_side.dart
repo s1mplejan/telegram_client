@@ -13,7 +13,7 @@ void main() async {
       'files_directory': "$path/user",
     };
     Tdlib tg = Tdlib("$path/libtdjson.so", clientOption: option);
-    tg.on("update", (UpdateTd update, Tdlib ctx) async {
+    tg.on("update", (UpdateTd update) async {
       try {
         if (update.raw["@type"] == "updateAuthorizationState") {
           if (typeof(update.raw["authorization_state"]) == "object") {
@@ -21,7 +21,7 @@ void main() async {
             if (authStateType == "authorizationStateWaitPhoneNumber") {
               stdout.write("Phone number: ");
               var phoneNumber = stdin.readLineSync().toString();
-              print(await ctx.request("setAuthenticationPhoneNumber",
+              print(await update.client.request("setAuthenticationPhoneNumber",
                   parameters: {"phone_number": phoneNumber}));
             }
             if (authStateType == "authorizationStateWaitCode") {
@@ -44,7 +44,7 @@ void main() async {
         if (update.message.is_found) {
           if (RegExp("^/ping", caseSensitive: false)
               .hasMatch(update.message.text ?? "")) {
-            return await ctx.request("sendMessage",
+            return await update.client.request("sendMessage",
                 parameters: {
                   "chat_id": update.message.chat.id,
                   "text": "Pong",

@@ -4,14 +4,15 @@ import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> args) async {
   TelegramBotApi tg = TelegramBotApi("");
-  tg.on("update", (UpdateApi update_origin, TelegramBotApi ctx) async {
+  tg.on("update", (UpdateApi update_origin) async {
     var update = update_origin.raw;
     if (update["message"] is Map) {
       var msg = update["message"];
 
       if (msg["text"] is String) {
+        print(update);
         if (RegExp("/start", caseSensitive: false).hasMatch(msg["text"])) {
-          return await ctx.request(
+          return await update_origin.client.request(
             "sendMessage",
             parameters: {
               "chat_id": msg["chat"]["id"],
@@ -21,10 +22,8 @@ void main(List<String> args) async {
           );
         }
         if (RegExp(r"^/ping$", caseSensitive: false).hasMatch(msg["text"])) {
-          var time =
-              ((DateTime.now().millisecondsSinceEpoch / 1000) - msg["date"])
-                  .toStringAsFixed(3);
-          var result = await ctx.request(
+          var time = ((DateTime.now().millisecondsSinceEpoch / 1000) - msg["date"]).toStringAsFixed(3);
+          var result = await update_origin.client.request(
             "sendMessage",
             parameters: {
               "chat_id": msg["chat"]["id"],
@@ -32,7 +31,7 @@ void main(List<String> args) async {
               "as_api": true,
             },
           );
-          return await ctx.request("editMessageText", parameters: {
+          return await update_origin.client.request("editMessageText", parameters: {
             "chat_id": msg["chat"]["id"],
             "text": "Pong: $time",
             "parse_mode": "html",
@@ -40,16 +39,12 @@ void main(List<String> args) async {
           });
         }
         if (msg["text"] is String) {
-          if (RegExp(r"^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$", caseSensitive: false)
-              .hasMatch(msg["text"])) {
+          if (RegExp(r"^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$", caseSensitive: false).hasMatch(msg["text"])) {
             var tokenBot = msg["text"];
             var message = "Succes Clone\n";
             try {
               var getMe = await tg.request("getMe", tokenBot: tokenBot);
-              if (getMe is Map &&
-                  getMe["ok"] is bool &&
-                  getMe["ok"] &&
-                  getMe["result"] is Map) {
+              if (getMe is Map && getMe["ok"] is bool && getMe["ok"] && getMe["result"] is Map) {
                 await tg.initIsolate(tokenBot: tokenBot);
                 getMe["result"].forEach((key, value) {
                   message += "\n${key.toString()}: ${value.toString()}";
@@ -60,7 +55,7 @@ void main(List<String> args) async {
             } catch (e) {
               message = "Failed Clone";
             }
-            var result = await ctx.request("sendMessage", parameters: {
+            var result = await update_origin.client.request("sendMessage", parameters: {
               "chat_id": msg["chat"]["id"],
               "text": message,
               "as_api": true,
@@ -70,5 +65,5 @@ void main(List<String> args) async {
       }
     }
   });
-  await tg.initIsolate(tokenBot: "main_token_bot");
+  await tg.initIsolate(tokenBot: "5446193287:AAEgs9FhBH3i69UlxqrZ_yP7SWS7hr99o_c");
 }
