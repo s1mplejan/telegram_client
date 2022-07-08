@@ -12,7 +12,7 @@ void main() async {
       'database_directory': "$path/user",
       'files_directory': "$path/user",
     };
-    Tdlib tg = Tdlib("$path/libtdjson.so", option);
+    Tdlib tg = Tdlib("$path/libtdjson.so", clientOption: option);
     tg.on("update", (UpdateTd update, Tdlib ctx) async {
       try {
         if (update.raw["@type"] == "updateAuthorizationState") {

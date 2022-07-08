@@ -159,3 +159,6 @@
   
 ## 0.3.15
 - remove easy_isolate
+  
+## 0.3.16
+- improve multi client in one thread

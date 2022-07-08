@@ -45,7 +45,7 @@ import 'package:hexaminate/hexaminate.dart';
 /// ````
 ///
 class Tdlib {
-  final String _pathTdl;
+  final String pathTdl;
 
   late Map<String, dynamic> client_option = {
     '@type': 'tdlibParameters',
@@ -102,7 +102,7 @@ class Tdlib {
   /// ````
   ///
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(this._pathTdl, {Map<String, dynamic>? clientOption, int? clientId}) {
+  Tdlib(this.pathTdl, {Map<String, dynamic>? clientOption, int? clientId}) {
     if (clientOption != null) {
       client_option.addAll(clientOption);
       if (clientOption["is_android"] == true) {
@@ -137,7 +137,7 @@ class Tdlib {
   /// if you don't like set authtdlib you can call this method by default this automatically start
   void start({int? clientId}) {
     clientId ??= client_id;
-    on("update", (UpdateTd update, Tdlib ctx) async {
+    on("update", (UpdateTd update) async {
       try {
         Map updateOrigin = update.raw;
         if (updateOrigin["@type"] == "updateAuthorizationState") {
@@ -199,7 +199,7 @@ class Tdlib {
           }
         }
       }
-    }, [receivePort.sendPort, client_option, clientId, _pathTdl, is_android], onExit: receivePort.sendPort, onError: receivePort.sendPort);
+    }, [receivePort.sendPort, client_option, clientId, pathTdl, is_android], onExit: receivePort.sendPort, onError: receivePort.sendPort);
   }
 
   /// add this for multithread new client on flutter apps
@@ -237,7 +237,7 @@ class Tdlib {
 
   /// open dynamic native library
   ffi.DynamicLibrary TdlibPathFile() {
-    return ffi.DynamicLibrary.open(_pathTdl);
+    return ffi.DynamicLibrary.open(pathTdl);
   }
 
   /// create client id for multi client
@@ -278,7 +278,7 @@ class Tdlib {
   }
 
   /// add this for handle update api
-  void on(String type_update, void Function(UpdateTd update, Tdlib ctx) callback) async {
+  void on(String type_update, void Function(UpdateTd update) callback) async {
     if (!getBoolean(type_update)) {
       throw {};
     }
@@ -287,9 +287,7 @@ class Tdlib {
         if (ev.eventData is Map) {
           try {
             Map jsonUpdate = (ev.eventData as Map);
-            jsonUpdate["client_option"]["start"] = false;
-            var tg = Tdlib(_pathTdl, clientOption: jsonUpdate["client_option"], clientId: jsonUpdate["client_id"]);
-            return callback(UpdateTd(this, jsonUpdate, tg), tg);
+            return callback(UpdateTd(this, jsonUpdate));
           } catch (e) {}
         }
       });
@@ -542,7 +540,7 @@ class Tdlib {
     _client_send.call(ffi.Pointer.fromAddress(clientId), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
     bool condition = true;
     var result = {};
-    on("update", (UpdateTd update, Tdlib ctx) async {
+    on("update", (UpdateTd update) async {
       try {
         Map updateOrigin = update.raw;
         if (updateOrigin["@extra"] == random) {
@@ -809,7 +807,7 @@ class Tdlib {
         return result_request;
       }
       var result = {};
-      on("update", (UpdateTd update, Tdlib ctx) async {
+      on("update", (UpdateTd update) async {
         try {
           Map updateOrigin = update.raw;
           if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
@@ -2259,8 +2257,7 @@ class Tdlib {
 class UpdateTd {
   late Tdlib tg;
   late Map update;
-  late Tdlib tgClient;
-  UpdateTd(this.tg, this.update, this.tgClient);
+  UpdateTd(this.tg, this.update);
 
   /// return json update origin from api origin
   Map get raw {
@@ -2269,23 +2266,14 @@ class UpdateTd {
 
   Tdlib get client {
     var clientTg = tg;
-    clientTg.client_id = tgClient.client_id;
-    return clientTg;
-  }
-
-  int get client_id {
-    return tgClient.client_id;
-  }
-
-  Map get client_option {
-    return tgClient.client_option;
+    return Tdlib(tg.pathTdl, clientOption: update["client_option"], clientId: update["client_id"]);
   }
 
   /// return json update api minimalist from api origin
   Future<Map> get raw_api_light async {
     if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage(update["message"], is_detail: true, clientId: tgClient.client_id);
+        var getMessage = await tg.jsonMessage(update["message"], is_detail: true, clientId: update["client_id"]);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
@@ -2302,7 +2290,7 @@ class UpdateTd {
   Future<Map> get raw_api async {
     if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, is_super_detail: true, clientId: tgClient.client_id);
+        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, is_super_detail: true, clientId: update["client_id"]);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
