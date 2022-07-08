@@ -46,7 +46,22 @@ class TelegramBotApi {
     "type": "bot",
     "logger": false,
     "api": "https://api.telegram.org/",
-    "allowed_updates": ["message", "edited_message", "channel_post", "edited_channel_post", "inline_query", "chosen_inline_result", "callback_query", "shipping_query", "pre_checkout_query", "poll", "poll_answer", "my_chat_member", "chat_member", "chat_join_request"],
+    "allowed_updates": [
+      "message",
+      "edited_message",
+      "channel_post",
+      "edited_channel_post",
+      "inline_query",
+      "chosen_inline_result",
+      "callback_query",
+      "shipping_query",
+      "pre_checkout_query",
+      "poll",
+      "poll_answer",
+      "my_chat_member",
+      "chat_member",
+      "chat_join_request"
+    ],
   };
 
   EventEmitter emitter = EventEmitter();
@@ -93,7 +108,8 @@ class TelegramBotApi {
       emitter.on("update", null, (Event ev, context) {
         if (ev.eventData is List) {
           var jsonUpdate = ev.eventData as List;
-          return callback(UpdateApi(jsonUpdate[0], tokenBot: jsonUpdate[1], clientOption: jsonUpdate[2]));
+          return callback(UpdateApi(jsonUpdate[0],
+              tokenBot: jsonUpdate[1], clientOption: jsonUpdate[2]));
         }
       });
     }
@@ -131,7 +147,8 @@ class TelegramBotApi {
         try {
           parameters.addAll({"allowed_updates": allowed_updates});
         } catch (e) {}
-        var getUpdates = await tg.request("getUpdates", parameters: parameters, tokenBot: token);
+        var getUpdates = await tg.request("getUpdates",
+            parameters: parameters, tokenBot: token);
         if (getUpdates is Map && getUpdates["ok"] is bool && getUpdates["ok"]) {
           List updates = [];
           try {
@@ -164,19 +181,22 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(String method, {Map? parameters, bool is_form = false, String? tokenBot}) async {
+  dynamic request(String method,
+      {Map? parameters, bool is_form = false, String? tokenBot}) async {
     parameters ??= {};
     tokenBot ??= token;
     var option = {
       "method": "post",
     };
-    var url = "${client_option["api"].toString()}${client_option["type"].toString()}${tokenBot.toString()}/${method.toString()}";
+    var url =
+        "${client_option["api"].toString()}${client_option["type"].toString()}${tokenBot.toString()}/${method.toString()}";
     if (is_form) {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
         if (typeData(value) == "object") {
-          if (typeData(value["is_post_file"]) == "boolean" && value["is_post_file"]) {
+          if (typeData(value["is_post_file"]) == "boolean" &&
+              value["is_post_file"]) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else {
@@ -210,8 +230,10 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
-          getFile["result"]["file_url"] = "$url$token/${getFile["result"]["file_path"]}";
+          var url =
+              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
+          getFile["result"]["file_url"] =
+              "$url$token/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -234,7 +256,8 @@ class TelegramBotApi {
   /// ```
   dynamic requestForm(method, {var parameters, String? tokenBot}) async {
     tokenBot ??= token;
-    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot);
+    return await request(method,
+        parameters: parameters, is_form: true, tokenBot: tokenBot);
   }
 
   /// example:
@@ -244,7 +267,9 @@ class TelegramBotApi {
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
+      var filename = path
+          .toString()
+          .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {

@@ -162,3 +162,6 @@
   
 ## 0.3.16
 - improve multi client in one thread
+
+## 0.3.17
+- delete some key for make secret update and improve speed

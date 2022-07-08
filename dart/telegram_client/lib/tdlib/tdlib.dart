@@ -170,13 +170,14 @@ class Tdlib {
     clientId ??= client_id;
     if (clientOption != null) {
       client_option.addAll(clientOption);
+    } else {
+      clientOption = client_option;
     }
-
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) {
       emitter.emit("update", null, message);
     });
-    Isolate receiveIsolate = await Isolate.spawn((List args) {
+    await Isolate.spawn((List args) {
       final SendPort sendPortToMain = args[0];
       final Map<String, dynamic> option = args[1];
       final int clientId = args[2];
@@ -196,7 +197,7 @@ class Tdlib {
           }
         }
       }
-    }, [receivePort.sendPort, client_option, clientId, pathTdl, is_android], onExit: receivePort.sendPort, onError: receivePort.sendPort);
+    }, [receivePort.sendPort, clientOption, clientId, pathTdl, is_android], onExit: receivePort.sendPort, onError: receivePort.sendPort);
   }
 
   /// add this for multithread new client on flutter apps
@@ -2257,7 +2258,7 @@ class UpdateTd {
   UpdateTd(this.tg, {required this.update, required this.clientId, required this.clientOption});
 
   /// return json update origin from api origin
-  Map get raw { 
+  Map get raw {
     return update;
   }
 
@@ -2280,11 +2281,9 @@ class UpdateTd {
         var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, clientId: clientId);
         if (getMessage["ok"]) {
           return getMessage["result"];
-        } 
-      } catch (e) { 
-      }
-    } else { 
-    }
+        }
+      } catch (e) {}
+    } else {}
     return update;
   }
 

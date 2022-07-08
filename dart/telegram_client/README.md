@@ -57,13 +57,13 @@ import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   var path = Directory.current.path;
-  Tdlib tg = Tdlib("libtdjson.so", {
+  Tdlib tg = Tdlib("libtdjson.so", clientOption: {
     'api_id': 12345,
     'api_hash': 'abcdefgjjaijiajdisd',
     'database_directory': "$path/user/",
     'files_directory': "$path/user/",
   });
-  tg.on("update", (UpdateTd update, Tdlib ctx) {
+  tg.on("update", (UpdateTd update) {
     print(update.raw);
   });
   await tg.initIsolate();
@@ -75,14 +75,14 @@ import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   var path = Directory.current.path;
-  Tdlib tg = Tdlib("libtdjson.so", {
+  Tdlib tg = Tdlib("libtdjson.so", clientOption:{
     'api_id': 12345678,
     'api_hash': 'asaskaoskaoskoa',
     'database_directory': "$path/user_0/",
     'files_directory': "$path/user_0/",
   });
-  tg.on("update", (UpdateTd update, Tdlib ctx) {
-    if (tg.client_id == ctx.client_id) {
+  tg.on("update", (UpdateTd update) {
+    if (tg.client_id == update.client_id) {
       print("user_0");
     } else {
       print("user_1");
@@ -102,10 +102,10 @@ void main(List<String> args) async {
 | No |       key       | value  | Deskripsi | `required` |
 |----|:---------------:|:------:|:----------|:----------:|
 | 1  |`path_tdlib`|String path tdlib| |`yes`|
-| 2  | `options_tdlib` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
+| 2  | `clientOption` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
 - examples
 ```js
-Tdlib tg = Tdlib("./tdjson.so", {
+Tdlib tg = Tdlib("./tdjson.so", clientOption: {
   'api_id': 123435,
   'api_hash': 'asmamskmaks',
   'database_directory': "",
@@ -129,7 +129,7 @@ Tdlib tg = Tdlib("./tdjson.so", {
 | 2  | `function` |  [object](#object)    | parameters di butuhkan jika method membutuhkannya |    `yes`    |
 - examples
 ```js
-tg.on("update", (UpdateTd update, Tdlib ctx) {
+tg.on("update", (UpdateTd update) {
   print(update.raw);    
 });
 ```
@@ -209,7 +209,7 @@ quickstart:
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   TelegramBotApi tg = TelegramBotApi("token");
-  tg.on("update", (UpdateApi update, TelegramBotApi ctx) {
+  tg.on("update", (UpdateApi update) {
     print(update.raw);
   });
   await tg.initIsolate(); // add this jika ingin menggunakan long poll update
@@ -220,7 +220,7 @@ void main(List<String> args) async {
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   TelegramBotApi tg = TelegramBotApi("token");
-  tg.on("update", (UpdateApi update, TelegramBotApi ctx) {
+  tg.on("update", (UpdateApi update) {
     print(update.raw);
   });
   await tg.initIsolate();
@@ -233,7 +233,7 @@ void main(List<String> args) async {
 | No |       key       | value  | Deskripsi | `required` |
 |----|:---------------:|:------:|:----------|:----------:|
 | 1  |`string_token_bot`| String token bot [@botfather](https://t.me/botfather)| |`yes`|
-| 2  | `options_tdlib` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
+| 2  | `clientOption` |  [object](https://core.telegram.org/bots/api#available-methods)    | parameters di butuhkan jika method membutuhkannya |    `no`    |
 - examples
 ```js
 TelegramBotApi tg = TelegramBotApi("token_bot");
