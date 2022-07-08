@@ -148,5 +148,14 @@
 ## 0.3.11
 - fix some method request multi client
 
-## 0.3.11
+## 0.3.12
 - add future error appRequest method
+  
+## 0.3.13
+- add new isolate for make more fast easy application
+  
+## 0.3.14
+- remove dead code
+  
+## 0.3.15
+- remove easy_isolate
