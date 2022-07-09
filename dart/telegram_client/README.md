@@ -16,11 +16,14 @@ Telegram client dart library to make application telegram based flutter and user
 
 ## Examples App use Telegram Client
 
-1. Azkagram
+1. [Azkagram](https://github.com/azkadev/azkagram)
 
 <img src="https://raw.githubusercontent.com/azkadev/azkagram/main/screenshot/home.png" width="250px"><img src="https://raw.githubusercontent.com/azkadev/azkagram/main/screenshot/me.png" width="250px"><img src="https://user-images.githubusercontent.com/82513502/173319331-9e96fbe7-3e66-44b2-8577-f6685d86a368.png" width="250px"><img src="https://user-images.githubusercontent.com/82513502/173319541-19a60407-f410-4e95-8ac0-d0da2eaf2457.png" width="250px">
 
+## Examples Bot use Telegram Client
 
+1. [AzkadevBot](https://t.me/azkadevbot)
+  Telegram clone bot and userbot
 
 ---
 
@@ -49,7 +52,7 @@ flutter pub add telegram_client
 - [Mtproto](#mtproto)
 
 ## Tdlib
-
+gunakan ini untuk membuat userbot / bot / application based tdlib,
 quickstart:
 - single
 ```dart
@@ -202,6 +205,7 @@ more method check [tdlib-docs]()
 | 2  | `photo` | String| |`yes`|
 
 ## TelegramBotApi
+Gunakan ini untuk berinteraksi dengan api telegram, semua method disini sudah auto update
 
 quickstart:
 - single
@@ -253,6 +257,7 @@ tg.request("sendMessage", parameters:{
 ```
 
 ## MtProto
+Untuk mtproto telegram ini belum jadi ya karena saya belum mengerti cara connect mtproto
 Quickstart:
 ```dart
 import 'package:telegram_client/telegram_client.dart';

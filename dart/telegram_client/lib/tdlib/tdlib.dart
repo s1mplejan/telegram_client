@@ -144,20 +144,35 @@ class Tdlib {
           var authState = updateOrigin["authorization_state"];
           if (authState is Map) {
             if (authState["@type"] == "authorizationStateWaitTdlibParameters") {
-              var optin = {"@type": 'setTdlibParameters', 'parameters': client_option};
-              _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode(optin).toNativeUtf8());
+              var optin = {
+                "@type": 'setTdlibParameters',
+                'parameters': client_option
+              };
+              _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id),
+                  convert.json.encode(optin).toNativeUtf8());
             }
             if (authState["@type"] == "authorizationStateWaitEncryptionKey") {
               bool isEncrypted = authState['is_encrypted'] ?? false;
               if (isEncrypted) {
-                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({"@type": 'checkDatabaseEncryptionKey', 'encryption_key': client_option["database_key"]}).toNativeUtf8());
+                _client_send.call(
+                    ffi.Pointer.fromAddress(clientId ?? client_id),
+                    convert.json.encode({
+                      "@type": 'checkDatabaseEncryptionKey',
+                      'encryption_key': client_option["database_key"]
+                    }).toNativeUtf8());
               } else {
-                _client_send.call(ffi.Pointer.fromAddress(clientId ?? client_id), convert.json.encode({'@type': 'setDatabaseEncryptionKey', 'new_encryption_key': client_option["database_key"]}).toNativeUtf8());
+                _client_send.call(
+                    ffi.Pointer.fromAddress(clientId ?? client_id),
+                    convert.json.encode({
+                      '@type': 'setDatabaseEncryptionKey',
+                      'new_encryption_key': client_option["database_key"]
+                    }).toNativeUtf8());
               }
             }
           }
         }
-        if (updateOrigin["@type"] == "updateConnectionState" && updateOrigin["state"]["@type"] == "connectionStateReady") {}
+        if (updateOrigin["@type"] == "updateConnectionState" &&
+            updateOrigin["state"]["@type"] == "connectionStateReady") {}
       } catch (e) {
         print(e);
       }
@@ -165,7 +180,8 @@ class Tdlib {
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientId, Map<String, dynamic>? clientOption}) async {
+  Future<void> initIsolate(
+      {int? clientId, Map<String, dynamic>? clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     clientId ??= client_id;
     if (clientOption != null) {
@@ -181,12 +197,14 @@ class Tdlib {
         final SendPort sendPortToMain = args[0];
         final Map<String, dynamic> option = args[1];
         final int clientId = args[2];
-        final String pathTdl = args[3]; 
+        final String pathTdl = args[3];
         Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
         while (true) {
-          var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
+          var update =
+              tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
           if (update.address != 0) {
-            if (update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
+            if (update.toDartString() is String &&
+                update.toDartString().toString().isNotEmpty) {
               Map? updateOrigin;
               try {
                 updateOrigin = convert.json.decode(update.toDartString());
@@ -207,22 +225,28 @@ class Tdlib {
   }
 
   /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient({required int clientId, required Map<String, dynamic> clientOption}) async {
+  Future<void> initIsolateNewClient(
+      {required int clientId,
+      required Map<String, dynamic> clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
-    if (clientOption["database_directory"] is String && (clientOption["database_directory"] as String).isNotEmpty) {
-      if (client_option["database_directory"] == clientOption["database_directory"]) {
+    if (clientOption["database_directory"] is String &&
+        (clientOption["database_directory"] as String).isNotEmpty) {
+      if (client_option["database_directory"] ==
+          clientOption["database_directory"]) {
         throw {
           "message": "initIsolateNewClient database_directory harus beda!",
         };
       } else {
-        client_option["database_directory"] = clientOption["database_directory"];
+        client_option["database_directory"] =
+            clientOption["database_directory"];
       }
     } else {
       throw {
         "message": "initIsolateNewClient database_directory harus isi!",
       };
     }
-    if (clientOption["files_directory"] is String && (clientOption["files_directory"] as String).isNotEmpty) {
+    if (clientOption["files_directory"] is String &&
+        (clientOption["files_directory"] as String).isNotEmpty) {
       if (client_option["files_directory"] == clientOption["files_directory"]) {
         throw {
           "message": "initIsolateNewClient files_directory harus beda!",
@@ -246,24 +270,48 @@ class Tdlib {
 
   /// create client id for multi client
   ffi.Pointer Function() get client_create {
-    return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Pointer Function()>>('${is_android ? "_" : ""}td_json_client_create').asFunction();
+    return TdlibPathFile()
+        .lookup<ffi.NativeFunction<ffi.Pointer Function()>>(
+            '${is_android ? "_" : ""}td_json_client_create')
+        .asFunction();
   }
 
   ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, double) get _client_receive {
-    return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Double)>>('${is_android ? "_" : ""}td_json_client_receive').asFunction();
+    return TdlibPathFile()
+        .lookup<
+                ffi.NativeFunction<
+                    ffi.Pointer<pkgffi.Utf8> Function(
+                        ffi.Pointer, ffi.Double)>>(
+            '${is_android ? "_" : ""}td_json_client_receive')
+        .asFunction();
   }
 
   // ignore: unused_local_variable
   void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>) get _client_send {
-    return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>>('${is_android ? "_" : ""}td_json_client_send').asFunction();
+    return TdlibPathFile()
+        .lookup<
+                ffi.NativeFunction<
+                    ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>>(
+            '${is_android ? "_" : ""}td_json_client_send')
+        .asFunction();
   }
 
-  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>) get client_execute {
-    return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>>('${is_android ? "_" : ""}td_json_client_execute').asFunction();
+  ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)
+      get client_execute {
+    return TdlibPathFile()
+        .lookup<
+                ffi.NativeFunction<
+                    ffi.Pointer<pkgffi.Utf8> Function(
+                        ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>>(
+            '${is_android ? "_" : ""}td_json_client_execute')
+        .asFunction();
   }
 
   void Function(ffi.Pointer) get _client_destroy {
-    return TdlibPathFile().lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>('${is_android ? "_" : ""}td_json_client_destroy').asFunction();
+    return TdlibPathFile()
+        .lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
+            '${is_android ? "_" : ""}td_json_client_destroy')
+        .asFunction();
   }
 
   void clientDestroy({int? clientId}) {
@@ -275,14 +323,16 @@ class Tdlib {
   Future<String> clienReceive({int? clientId, double timeout = 10.0}) async {
     clientId ??= client_id;
     try {
-      return _client_receive(ffi.Pointer.fromAddress(clientId), timeout).toDartString();
+      return _client_receive(ffi.Pointer.fromAddress(clientId), timeout)
+          .toDartString();
     } catch (e) {
       return "";
     }
   }
 
   /// add this for handle update api
-  void on(String type_update, void Function(UpdateTd update) callback, {void Function(Object data)? onError}) async {
+  void on(String type_update, void Function(UpdateTd update) callback,
+      {void Function(Object data)? onError}) async {
     if (!getBoolean(type_update)) {
       throw {};
     }
@@ -309,7 +359,8 @@ class Tdlib {
   }
 
   /// set up authorizationStateWaitTdlibParameters new client without more code
-  Future<void> initClient(UpdateTd update, {Map<String, dynamic>? tdlibParameters, int? clientId}) async {
+  Future<void> initClient(UpdateTd update,
+      {Map<String, dynamic>? tdlibParameters, int? clientId}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
@@ -351,23 +402,30 @@ class Tdlib {
   String getRandom(int length) {
     const ch = '0123456789abcdefghijklmnopqrstuvwxyz';
     Random r = Random();
-    return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
+    return String.fromCharCodes(
+        Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
   }
 
   /// convert api json method [bot api] to tdlib
   Map<String, dynamic> makeParametersApi(Map<String, dynamic> parameters) {
     Map<String, dynamic> jsonResult = {"@type": ""};
     try {
-      String regexMethodSend = r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
+      String regexMethodSend =
+          r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
       if (Regex(regexMethodSend, "i").exec(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
         if (Regex("editMessage(Text)", "i").exec(parameters["@type"])) {
           jsonResult["@type"] = parameters["@type"];
         }
-        jsonResult["input_message_content"] = {"@type": "inputMessageText", "disableWebPagePreview": false, "clearDraft": false};
+        jsonResult["input_message_content"] = {
+          "@type": "inputMessageText",
+          "disableWebPagePreview": false,
+          "clearDraft": false
+        };
         jsonResult["chat_id"] = parameters["chat_id"];
         if (typeof(parameters["disable_notification"]) == "boolean") {
-          jsonResult["disable_notification"] = parameters["reply_to_message_id"];
+          jsonResult["disable_notification"] =
+              parameters["reply_to_message_id"];
         }
         if (typeof(parameters["reply_to_message_id"]) == "number") {
           jsonResult["reply_to_message_id"] = parameters["reply_to_message_id"];
@@ -391,7 +449,8 @@ class Tdlib {
         if (parameters.containsKey("reply_markup")) {
           jsonResult["reply_markup"] = reply_markup(parameters["reply_markup"]);
         }
-        if (Regex(r"^(sendMessage|editMessageText)$", "i").exec(parameters["@type"])) {
+        if (Regex(r"^(sendMessage|editMessageText)$", "i")
+            .exec(parameters["@type"])) {
           var text = parseMode(
             parameters["text"].toString(),
             parameters["parse_mode"],
@@ -407,7 +466,8 @@ class Tdlib {
         }
         if (Regex(r"^(sendVoice)$", "i").exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["voice"]);
-          jsonResult["input_message_content"]["@type"] = "inputMessageVoiceNote";
+          jsonResult["input_message_content"]["@type"] =
+              "inputMessageVoiceNote";
           jsonResult["input_message_content"]["voice_note"] = getDetailFile;
         }
         if (Regex(r"^(sendSticker)$", "i").exec(parameters["@type"])) {
@@ -417,7 +477,8 @@ class Tdlib {
         }
         if (Regex(r"^(sendAnimation)$", "i").exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["animation"]);
-          jsonResult["input_message_content"]["@type"] = "inputMessageAnimation";
+          jsonResult["input_message_content"]["@type"] =
+              "inputMessageAnimation";
           jsonResult["input_message_content"]["animation"] = getDetailFile;
         }
         if (Regex(r"^(sendDocument)$", "i").exec(parameters["@type"])) {
@@ -435,10 +496,13 @@ class Tdlib {
           jsonResult["input_message_content"]["@type"] = "inputMessageVideo";
           jsonResult["input_message_content"]["video"] = getDetailFile;
         }
-        if (!Regex(r"^(sendMessage|sendLocation|sendSticker)$", "i").exec(parameters["@type"])) {
+        if (!Regex(r"^(sendMessage|sendLocation|sendSticker)$", "i")
+            .exec(parameters["@type"])) {
           if (parameters["caption"] != null) {
             var caption = parseMode(
-              (parameters["caption"] != null) ? parameters["caption"].toString() : "",
+              (parameters["caption"] != null)
+                  ? parameters["caption"].toString()
+                  : "",
               parameters["parse_mode"],
               parameters["entities"],
             );
@@ -466,7 +530,8 @@ class Tdlib {
             }
 
             if (typeof(loop_data["reply_markup"]) == "object") {
-              loop_data["reply_markup"] = (reply_markup(loop_data["reply_markup"]));
+              loop_data["reply_markup"] =
+                  (reply_markup(loop_data["reply_markup"]));
             }
             array_results.add(loop_data);
           }
@@ -542,8 +607,12 @@ class Tdlib {
   ///   }
   /// });
   /// ```
-  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientId}) async {
+  Future<dynamic> invoke(String method,
+      {Map<String, dynamic>? parameters, int? clientId}) async {
     clientId ??= client_id;
+    if (clientId == 0) {
+      clientId = client_id;
+    }
     parameters ??= {};
     String random = getRandom(15);
     if (typeof(parameters) == "object") {
@@ -551,7 +620,8 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    _client_send.call(ffi.Pointer.fromAddress(clientId), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
+    _client_send.call(ffi.Pointer.fromAddress(clientId),
+        convert.json.encode({"@type": method, ...parameters}).toNativeUtf8());
     bool condition = true;
     var result = {};
     on("update", (UpdateTd update) async {
@@ -571,12 +641,6 @@ class Tdlib {
         if (result["@type"] == "error") {
           throw result;
         }
-        if (result.containsKey("client_id")) {
-          result.remove("client_id");
-        }
-        if (result.containsKey("client_option")) {
-          result.remove("client_option");
-        }
         return result;
       }
     }
@@ -592,8 +656,12 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>"
   /// });
   /// ```
-  Map invokeSync(String method, {Map<String, dynamic>? parameters, int? clientId}) {
+  Map invokeSync(String method,
+      {Map<String, dynamic>? parameters, int? clientId}) {
     clientId ??= client_id;
+    if (clientId == 0) {
+      clientId = client_id;
+    }
     parameters ??= {};
     String random = getRandom(15);
     if (parameters is Map) {
@@ -601,16 +669,14 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    var result = convert.json.decode(client_execute(ffi.Pointer.fromAddress(clientId), convert.json.encode({"@type": method, ...parameters}).toNativeUtf8()).toDartString());
+    var result = convert.json.decode(client_execute(
+            ffi.Pointer.fromAddress(clientId),
+            convert.json
+                .encode({"@type": method, ...parameters}).toNativeUtf8())
+        .toDartString());
 
     if (result["@type"] == "error") {
       throw result;
-    }
-    if (result.containsKey("client_id")) {
-      result.remove("client_id");
-    }
-    if (result.containsKey("client_option")) {
-      result.remove("client_option");
     }
     return result;
   }
@@ -652,8 +718,14 @@ class Tdlib {
     if (get_me["phone_number"].toString().isNotEmpty) {
       result["phone_number"] = get_me["phone_number"];
     }
-    result["status"] = get_me["status"]["@type"].toString().toLowerCase().replace(Regex("userStatus", "i").run, "");
-    result["type_account"] = get_me["type"]["@type"].toString().toLowerCase().replace(Regex("userType", "i").run, "");
+    result["status"] = get_me["status"]["@type"]
+        .toString()
+        .toLowerCase()
+        .replace(Regex("userStatus", "i").run, "");
+    result["type_account"] = get_me["type"]["@type"]
+        .toString()
+        .toLowerCase()
+        .replace(Regex("userType", "i").run, "");
     result["type"] = "private";
     if (result["type_account"] == "bot") {
       result["is_bot"] = true;
@@ -682,13 +754,15 @@ class Tdlib {
           "file_id": "",
         };
         if (get_me["profile_photo"]["big"] is Map) {
-          (get_me["profile_photo"]["big"]["local"] as Map).forEach((key, value) {
+          (get_me["profile_photo"]["big"]["local"] as Map)
+              .forEach((key, value) {
             if (key != "@type") {
               result["profile_photo"][key.toString()] = value;
             }
           });
           if (get_me["profile_photo"]["big"]["remote"] is Map) {
-            result["profile_photo"]["file_id"] = get_me["profile_photo"]["big"]["remote"]["id"];
+            result["profile_photo"]["file_id"] =
+                get_me["profile_photo"]["big"]["remote"]["id"];
           }
         }
       }
@@ -703,7 +777,8 @@ class Tdlib {
   /// only support bot
   reply_markup(keyboard) {
     try {
-      if (typeof(keyboard["inline_keyboard"]) == "array" && keyboard["inline_keyboard"].length > 0) {
+      if (typeof(keyboard["inline_keyboard"]) == "array" &&
+          keyboard["inline_keyboard"].length > 0) {
         Map json = {"@type": "replyMarkupInlineKeyboard"};
         List array_rows = [];
         for (var i = 0; i < keyboard["inline_keyboard"].length; i++) {
@@ -717,7 +792,10 @@ class Tdlib {
             }
 
             if (getBoolean(in_loop_array_keyboard["url"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeUrl", "url": in_loop_array_keyboard["url"]};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeUrl",
+                "url": in_loop_array_keyboard["url"]
+              };
             }
 
             if (getBoolean(in_loop_array_keyboard["login_url"])) {
@@ -727,21 +805,45 @@ class Tdlib {
               };
             }
             if (getBoolean(in_loop_array_keyboard["callback_data"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeCallback", "data": buffer.from(in_loop_array_keyboard["callback_data"]).toStringEncode('base64')};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeCallback",
+                "data": buffer
+                    .from(in_loop_array_keyboard["callback_data"])
+                    .toStringEncode('base64')
+              };
             }
             if (getBoolean(in_loop_array_keyboard["callback_data_password"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeCallbackWithPassword", "data": buffer.from(in_loop_array_keyboard["callback_data_password"]).toStringEncode('base64')};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeCallbackWithPassword",
+                "data": buffer
+                    .from(in_loop_array_keyboard["callback_data_password"])
+                    .toStringEncode('base64')
+              };
             }
 
             if (getBoolean(in_loop_array_keyboard["switch_inline_query"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeSwitchInline", "query": in_loop_array_keyboard["switch_inline_query"], "in_current_chat": false};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query": in_loop_array_keyboard["switch_inline_query"],
+                "in_current_chat": false
+              };
             }
 
-            if (getBoolean(in_loop_array_keyboard["switch_inline_query_current_chat"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeSwitchInline", "query": in_loop_array_keyboard["switch_inline_query_current_chat"], "in_current_chat": true};
+            if (getBoolean(
+                in_loop_array_keyboard["switch_inline_query_current_chat"])) {
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query":
+                    in_loop_array_keyboard["switch_inline_query_current_chat"],
+                "in_current_chat": true
+              };
             }
             if (getBoolean(in_loop_array_keyboard["callback_game"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeSwitchInline", "query": in_loop_array_keyboard["callback_game"], "in_current_chat": false};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeSwitchInline",
+                "query": in_loop_array_keyboard["callback_game"],
+                "in_current_chat": false
+              };
             }
             if (getBoolean(in_loop_array_keyboard["user_id"])) {
               in_json_keyboard["type"] = {
@@ -750,7 +852,9 @@ class Tdlib {
               };
             }
             if (getBoolean(in_loop_array_keyboard["pay"])) {
-              in_json_keyboard["type"] = {"@type": "inlineKeyboardButtonTypeBuy"};
+              in_json_keyboard["type"] = {
+                "@type": "inlineKeyboardButtonTypeBuy"
+              };
             }
             array_loop.add(in_json_keyboard);
           }
@@ -772,10 +876,12 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(String method, {Map<String, dynamic>? parameters, int? clientId}) async {
+  request(String method,
+      {Map<String, dynamic>? parameters, int? clientId}) async {
     clientId ??= client_id;
     parameters ??= {};
-    if (parameters["chat_id"] is String && Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
+    if (parameters["chat_id"] is String &&
+        Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -787,7 +893,8 @@ class Tdlib {
         parameters["chat_id"] = search_public_chat["id"];
       }
     }
-    if (parameters["user_id"] is String && Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"])) {
+    if (parameters["user_id"] is String &&
+        Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"])) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -799,7 +906,8 @@ class Tdlib {
         parameters["user_id"] = search_public_chat["id"];
       }
     }
-    String regexMethodSend = r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessageText)$";
+    String regexMethodSend =
+        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessageText)$";
     if (Regex(regexMethodSend, "i").exec(method)) {
       Map result_request = {"ok": false};
       result_request = await invoke(
@@ -859,10 +967,18 @@ class Tdlib {
         parameters["chat_id"],
         parameters["message_id"],
         parameters["text"],
-        (typeof(parameters["parse_mode"] ?? "") == "string") ? parameters["parse_mode"] : "html",
-        (typeof(parameters["entities"] ?? []) == "array") ? parameters["entities"] : [],
-        (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean") ? parameters["disable_web_page_preview"] : false,
-        (typeof(parameters["reply_markup"] ?? {}) == "object") ? parameters["reply_markup"] : {},
+        (typeof(parameters["parse_mode"] ?? "") == "string")
+            ? parameters["parse_mode"]
+            : "html",
+        (typeof(parameters["entities"] ?? []) == "array")
+            ? parameters["entities"]
+            : [],
+        (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean")
+            ? parameters["disable_web_page_preview"]
+            : false,
+        (typeof(parameters["reply_markup"] ?? {}) == "object")
+            ? parameters["reply_markup"]
+            : {},
       );
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
@@ -895,7 +1011,8 @@ class Tdlib {
       return await getMe(clientId: clientId);
     }
     if (Regex(r"^getChat$", "i").exec(method)) {
-      return await getChat(parameters["chat_id"], is_detail: true, clientId: clientId);
+      return await getChat(parameters["chat_id"],
+          is_detail: true, clientId: clientId);
     }
     if (Regex(r"^getChats$", "i").exec(method)) {
       var getChats = await invoke(
@@ -911,7 +1028,8 @@ class Tdlib {
         for (var i = 0; i < chat_ids.length; i++) {
           await Future.delayed(Duration(microseconds: 1));
           try {
-            var get_chat = await getChat(chat_ids[i], is_detail: true, is_super_detail: true, clientId: clientId);
+            var get_chat = await getChat(chat_ids[i],
+                is_detail: true, is_super_detail: true, clientId: clientId);
             if (get_chat["ok"]) {
               array_chat.add(get_chat["result"]);
             }
@@ -928,7 +1046,12 @@ class Tdlib {
       );
     }
     if (Regex(r"^answerCallbackQuery$", "i").exec(method)) {
-      return await answerCallbackQuery(parameters["callback_query_id"], text: parameters["text"], show_alert: parameters["show_alert"] ?? false, url: parameters["url"], cache_time: parameters["cache_time"], clientId: clientId);
+      return await answerCallbackQuery(parameters["callback_query_id"],
+          text: parameters["text"],
+          show_alert: parameters["show_alert"] ?? false,
+          url: parameters["url"],
+          cache_time: parameters["cache_time"],
+          clientId: clientId);
     }
 
     if (parameters["is_sync"] != null) {
@@ -963,7 +1086,10 @@ class Tdlib {
   ///   }
   /// }
   /// ```
-  getMessage(dynamic chat_id, dynamic message_id, {bool is_detail = false, bool is_super_detail = false, required int? clientId}) async {
+  getMessage(dynamic chat_id, dynamic message_id,
+      {bool is_detail = false,
+      bool is_super_detail = false,
+      required int? clientId}) async {
     clientId ??= client_id;
     var get_message = await invoke("getMessage", parameters: {
       "chat_id": chat_id,
@@ -984,14 +1110,23 @@ class Tdlib {
   ///
   /// }
   /// ```
-  editMessageText(dynamic chat_id, dynamic message_id, String text, [String parse_mode = "html", List? entities, bool disable_web_page_preview = false, Map? replyMarkup]) async {
+  editMessageText(dynamic chat_id, dynamic message_id, String text,
+      [String parse_mode = "html",
+      List? entities,
+      bool disable_web_page_preview = false,
+      Map? replyMarkup]) async {
     entities ??= [];
     var pesan = parseMode(text, parse_mode, entities);
     var get_message = await invoke("editMessageText", parameters: {
       "chat_id": chat_id,
       "message_id": message_id,
       "reply_markup": reply_markup(replyMarkup),
-      "input_message_content": {'@type': "inputMessageText", "text": pesan, "disable_web_page_preview": disable_web_page_preview, "clear_draft": false}
+      "input_message_content": {
+        '@type': "inputMessageText",
+        "text": pesan,
+        "disable_web_page_preview": disable_web_page_preview,
+        "clear_draft": false
+      }
     });
     return get_message;
   }
@@ -1005,18 +1140,21 @@ class Tdlib {
   ///   }
   /// }
   /// ```
-  getChatMember(dynamic chat_id, dynamic user_id, {required int? clientId}) async {
+  getChatMember(dynamic chat_id, dynamic user_id,
+      {required int? clientId}) async {
     clientId ??= client_id;
     chat_id ??= 0;
     user_id ??= 0;
     if (Regex("^@.*", "i").exec(chat_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": chat_id});
+      var search_public_chat =
+          await invoke("searchPublicChat", parameters: {"username": chat_id});
       if (search_public_chat["@type"] == "chat") {
         chat_id = search_public_chat["id"];
       }
     }
     if (Regex("^@.*", "i").exec(user_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": user_id});
+      var search_public_chat =
+          await invoke("searchPublicChat", parameters: {"username": user_id});
       if (search_public_chat["@type"] == "chat") {
         user_id = search_public_chat["id"];
       }
@@ -1039,7 +1177,10 @@ class Tdlib {
       json["user"] = get_user["result"];
       json["join_date"] = get_chat_member["joined_chat_date"];
       var status = get_chat_member["status"];
-      json["status"] = status["@type"].toString().toLowerCase().replace(Regex("chatmemberstatus", "ig").run, "");
+      json["status"] = status["@type"]
+          .toString()
+          .toLowerCase()
+          .replace(Regex("chatmemberstatus", "ig").run, "");
       json["custom_title"] = status["custom_title"];
       json["can_be_edited"] = status["can_be_edited"];
       json["can_manage_chat"] = status["can_manage_chat"];
@@ -1063,7 +1204,11 @@ class Tdlib {
   /// return result like bot api:
   /// {
   /// }
-  getChat(dynamic chat_id, {bool is_detail = false, bool is_super_detail = false, bool is_more_detail = false, required int? clientId}) async {
+  getChat(dynamic chat_id,
+      {bool is_detail = false,
+      bool is_super_detail = false,
+      bool is_more_detail = false,
+      required int? clientId}) async {
     clientId ??= client_id;
     try {
       if (RegExp(r"^@.*$", caseSensitive: false).hasMatch(chat_id.toString())) {
@@ -1087,12 +1232,19 @@ class Tdlib {
       );
       Map json = {};
       if (RegExp(r"^chat$", caseSensitive: false).hasMatch(getchat["@type"])) {
-        var type_chat = getchat["type"]["@type"].toString().toLowerCase().replaceAll(RegExp("chattype", caseSensitive: false), "");
+        var type_chat = getchat["type"]["@type"]
+            .toString()
+            .toLowerCase()
+            .replaceAll(RegExp("chattype", caseSensitive: false), "");
 
         if (type_chat == "supergroup") {
           var getSupergroup = await invoke(
             "getSupergroup",
-            parameters: {"supergroup_id": int.parse(chat_id.toString().replaceAll(RegExp("^-100", caseSensitive: false), ""))},
+            parameters: {
+              "supergroup_id": int.parse(chat_id
+                  .toString()
+                  .replaceAll(RegExp("^-100", caseSensitive: false), ""))
+            },
             clientId: clientId,
           );
           json["id"] = chat_id;
@@ -1101,10 +1253,46 @@ class Tdlib {
             json["username"] = getSupergroup["username"];
           }
           if (getSupergroup["status"] is Map) {
-            json["status"] = getSupergroup["status"]["@type"].toString().toLowerCase().replaceAll(RegExp("chatMemberStatus", caseSensitive: false), "");
+            json["status"] = getSupergroup["status"]["@type"]
+                .toString()
+                .toLowerCase()
+                .replaceAll(
+                    RegExp("chatMemberStatus", caseSensitive: false), "");
           }
-          json["type"] = getchat["type"]["is_channel"] ? "channel" : "supergroup";
-          json["detail"] = {"member_count": getSupergroup["member_count"], "administrator_count": 0, "restricted_count": 0, "banned_count": 0, "has_protected_content": getchat["has_protected_content"] ?? false, "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false, "is_blocked": getchat["is_blocked"] ?? false, "has_scheduled_messages": getchat["has_scheduled_messages"] ?? false, "can_be_deleted_only_for_self": getchat["can_be_deleted_only_for_self"] ?? false, "can_be_deleted_for_all_users": getchat["can_be_deleted_for_all_users"] ?? false, "can_be_reported": getchat["can_be_reported"] ?? false, "default_disable_notification": getchat["default_disable_notification"] ?? false, "unread_count": getchat["unread_count"] ?? 0, "last_read_inbox_message_id": getchat["last_read_inbox_message_id"] ?? 0, "last_read_outbox_message_id": getchat["last_read_outbox_message_id"] ?? 0, "unread_mention_count": getchat["unread_mention_count"] ?? 0, "has_linked_chat": getSupergroup["has_linked_chat"], "has_location": getSupergroup["has_location"], "sign_messages": getSupergroup["sign_messages"], "is_slow_mode_enabled": getSupergroup["is_slow_mode_enabled"], "is_broadcast_group": getSupergroup["is_broadcast_group"], "is_verified": getSupergroup["is_verified"], "is_scam": getSupergroup["is_scam"], "is_fake": getSupergroup["is_fake"]};
+          json["type"] =
+              getchat["type"]["is_channel"] ? "channel" : "supergroup";
+          json["detail"] = {
+            "member_count": getSupergroup["member_count"],
+            "administrator_count": 0,
+            "restricted_count": 0,
+            "banned_count": 0,
+            "has_protected_content": getchat["has_protected_content"] ?? false,
+            "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+            "is_blocked": getchat["is_blocked"] ?? false,
+            "has_scheduled_messages":
+                getchat["has_scheduled_messages"] ?? false,
+            "can_be_deleted_only_for_self":
+                getchat["can_be_deleted_only_for_self"] ?? false,
+            "can_be_deleted_for_all_users":
+                getchat["can_be_deleted_for_all_users"] ?? false,
+            "can_be_reported": getchat["can_be_reported"] ?? false,
+            "default_disable_notification":
+                getchat["default_disable_notification"] ?? false,
+            "unread_count": getchat["unread_count"] ?? 0,
+            "last_read_inbox_message_id":
+                getchat["last_read_inbox_message_id"] ?? 0,
+            "last_read_outbox_message_id":
+                getchat["last_read_outbox_message_id"] ?? 0,
+            "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+            "has_linked_chat": getSupergroup["has_linked_chat"],
+            "has_location": getSupergroup["has_location"],
+            "sign_messages": getSupergroup["sign_messages"],
+            "is_slow_mode_enabled": getSupergroup["is_slow_mode_enabled"],
+            "is_broadcast_group": getSupergroup["is_broadcast_group"],
+            "is_verified": getSupergroup["is_verified"],
+            "is_scam": getSupergroup["is_scam"],
+            "is_fake": getSupergroup["is_fake"]
+          };
           if (getSupergroup["username"].toString().isEmpty) {
             json.remove("username");
             json["type"] = getchat["type"]["is_channel"] ? "channel" : "group";
@@ -1128,22 +1316,33 @@ class Tdlib {
               getSuperGroupFullInfo = await invoke(
                 "getSupergroupFullInfo",
                 parameters: {
-                  "supergroup_id": int.parse(chat_id.toString().replaceAll(RegExp("^-100", caseSensitive: false), "")),
+                  "supergroup_id": int.parse(chat_id
+                      .toString()
+                      .replaceAll(RegExp("^-100", caseSensitive: false), "")),
                 },
                 clientId: clientId,
               );
             } catch (e) {}
             if (getSuperGroupFullInfo["photo"] is Map) {
-              json["profile_photo"] = {"id": getSuperGroupFullInfo["photo"]["id"], "path": "", "file_id": ""};
+              json["profile_photo"] = {
+                "id": getSuperGroupFullInfo["photo"]["id"],
+                "path": "",
+                "file_id": ""
+              };
               if (getSuperGroupFullInfo["photo"]["@type"] == "chatPhoto") {
                 if (getSuperGroupFullInfo["photo"]["sizes"] is List) {
                   try {
-                    var getPhoto = getSuperGroupFullInfo["photo"]["sizes"][getSuperGroupFullInfo["photo"]["sizes"].length - 1];
-                    var getPathPhoto = getPhoto["photo"]["local"]["path"] as String;
+                    var getPhoto = getSuperGroupFullInfo["photo"]["sizes"]
+                        [getSuperGroupFullInfo["photo"]["sizes"].length - 1];
+                    var getPathPhoto =
+                        getPhoto["photo"]["local"]["path"] as String;
                     json["profile_photo"]["path"] = getPathPhoto;
-                    (json["profile_photo"] as Map).addAll(getPhoto["photo"]["local"]);
-                    json["profile_photo"]["file_id"] = getPhoto["photo"]["remote"]["id"];
-                    json["profile_photo"]["file_unique_id"] = getPhoto["photo"]["remote"]["unique_id"];
+                    (json["profile_photo"] as Map)
+                        .addAll(getPhoto["photo"]["local"]);
+                    json["profile_photo"]["file_id"] =
+                        getPhoto["photo"]["remote"]["id"];
+                    json["profile_photo"]["file_unique_id"] =
+                        getPhoto["photo"]["remote"]["unique_id"];
                   } catch (e) {}
                 }
               }
@@ -1169,9 +1368,12 @@ class Tdlib {
               });
             } catch (e) {}
 
-            if (json["profile_photo"] is Map && RegExp(r"^([0-9]+)$", caseSensitive: false).hasMatch(json["profile_photo"]["id"])) {
+            if (json["profile_photo"] is Map &&
+                RegExp(r"^([0-9]+)$", caseSensitive: false)
+                    .hasMatch(json["profile_photo"]["id"])) {
               try {
-                json["profile_photo"]["id"] = (int.parse(json["profile_photo"]["id"]));
+                json["profile_photo"]["id"] =
+                    (int.parse(json["profile_photo"]["id"]));
               } catch (e) {}
             }
           }
@@ -1181,14 +1383,20 @@ class Tdlib {
           var getBasicGroup = await invoke(
             "getBasicGroup",
             parameters: {
-              "basic_group_id": int.parse(chat_id.toString().replaceAll(RegExp("^-", caseSensitive: false), "")),
+              "basic_group_id": int.parse(chat_id
+                  .toString()
+                  .replaceAll(RegExp("^-", caseSensitive: false), "")),
             },
             clientId: clientId,
           );
           json["id"] = chat_id;
           json["title"] = getchat["title"];
           if (typeof(getBasicGroup["status"]) == "object") {
-            json["status"] = getBasicGroup["status"]["@type"].toString().toLowerCase().replaceAll(RegExp("chatMemberStatus", caseSensitive: false), "");
+            json["status"] = getBasicGroup["status"]["@type"]
+                .toString()
+                .toLowerCase()
+                .replaceAll(
+                    RegExp("chatMemberStatus", caseSensitive: false), "");
           }
           json["type"] = "group";
           json["detail"] = {
@@ -1196,14 +1404,20 @@ class Tdlib {
             "has_protected_content": getchat["has_protected_content"] ?? false,
             "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
             "is_blocked": getchat["is_blocked"] ?? false,
-            "has_scheduled_messages": getchat["has_scheduled_messages"] ?? false,
-            "can_be_deleted_only_for_self": getchat["can_be_deleted_only_for_self"] ?? false,
-            "can_be_deleted_for_all_users": getchat["can_be_deleted_for_all_users"] ?? false,
+            "has_scheduled_messages":
+                getchat["has_scheduled_messages"] ?? false,
+            "can_be_deleted_only_for_self":
+                getchat["can_be_deleted_only_for_self"] ?? false,
+            "can_be_deleted_for_all_users":
+                getchat["can_be_deleted_for_all_users"] ?? false,
             "can_be_reported": getchat["can_be_reported"] ?? false,
-            "default_disable_notification": getchat["default_disable_notification"] ?? false,
+            "default_disable_notification":
+                getchat["default_disable_notification"] ?? false,
             "unread_count": getchat["unread_count"] ?? 0,
-            "last_read_inbox_message_id": getchat["last_read_inbox_message_id"] ?? 0,
-            "last_read_outbox_message_id": getchat["last_read_outbox_message_id"] ?? 0,
+            "last_read_inbox_message_id":
+                getchat["last_read_inbox_message_id"] ?? 0,
+            "last_read_outbox_message_id":
+                getchat["last_read_outbox_message_id"] ?? 0,
             "unread_mention_count": getchat["unread_mention_count"] ?? 0,
           };
           if (is_detail) {
@@ -1228,11 +1442,13 @@ class Tdlib {
             },
             clientId: clientId,
           );
-          if (RegExp("^user\$", caseSensitive: false).hasMatch(get_user["@type"])) {
+          if (RegExp("^user\$", caseSensitive: false)
+              .hasMatch(get_user["@type"])) {
             var json = {};
             json["id"] = get_user["id"];
             try {
-              if (RegExp("^userTypeBot\$", caseSensitive: false).hasMatch(get_user["type"]["@type"])) {
+              if (RegExp("^userTypeBot\$", caseSensitive: false)
+                  .hasMatch(get_user["type"]["@type"])) {
                 json["is_bot"] = true;
               } else {
                 json["is_bot"] = false;
@@ -1254,7 +1470,34 @@ class Tdlib {
               json["language_code"] = get_user["language_code"];
             }
             json["type"] = 'private';
-            json["detail"] = {"has_protected_content": getchat["has_protected_content"] ?? false, "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false, "is_blocked": getchat["is_blocked"] ?? false, "has_scheduled_messages": getchat["has_scheduled_messages"] ?? false, "can_be_deleted_only_for_self": getchat["can_be_deleted_only_for_self"] ?? false, "can_be_deleted_for_all_users": getchat["can_be_deleted_for_all_users"] ?? false, "can_be_reported": getchat["can_be_reported"] ?? false, "default_disable_notification": getchat["default_disable_notification"] ?? false, "unread_count": getchat["unread_count"] ?? 0, "last_read_inbox_message_id": getchat["last_read_inbox_message_id"] ?? 0, "last_read_outbox_message_id": getchat["last_read_outbox_message_id"] ?? 0, "unread_mention_count": getchat["unread_mention_count"] ?? 0, "is_contact": get_user["is_contact"], "is_mutual_contact": get_user["is_mutual_contact"], "is_verified": get_user["is_verified"], "is_support": get_user["is_support"], "is_scam": get_user["is_scam"], "is_fake": get_user["is_fake"], "have_acces": get_user["have_access"]};
+            json["detail"] = {
+              "has_protected_content":
+                  getchat["has_protected_content"] ?? false,
+              "is_marked_as_unread": getchat["is_marked_as_unread"] ?? false,
+              "is_blocked": getchat["is_blocked"] ?? false,
+              "has_scheduled_messages":
+                  getchat["has_scheduled_messages"] ?? false,
+              "can_be_deleted_only_for_self":
+                  getchat["can_be_deleted_only_for_self"] ?? false,
+              "can_be_deleted_for_all_users":
+                  getchat["can_be_deleted_for_all_users"] ?? false,
+              "can_be_reported": getchat["can_be_reported"] ?? false,
+              "default_disable_notification":
+                  getchat["default_disable_notification"] ?? false,
+              "unread_count": getchat["unread_count"] ?? 0,
+              "last_read_inbox_message_id":
+                  getchat["last_read_inbox_message_id"] ?? 0,
+              "last_read_outbox_message_id":
+                  getchat["last_read_outbox_message_id"] ?? 0,
+              "unread_mention_count": getchat["unread_mention_count"] ?? 0,
+              "is_contact": get_user["is_contact"],
+              "is_mutual_contact": get_user["is_mutual_contact"],
+              "is_verified": get_user["is_verified"],
+              "is_support": get_user["is_support"],
+              "is_scam": get_user["is_scam"],
+              "is_fake": get_user["is_fake"],
+              "have_acces": get_user["have_access"]
+            };
             if (is_detail) {
               if (getchat["last_message"] is Map) {
                 try {
@@ -1283,17 +1526,27 @@ class Tdlib {
                   );
                 } catch (e) {}
                 if (getUserFullInfo["photo"] is Map) {
-                  json["profile_photo"] = {"id": getUserFullInfo["photo"]["id"], "path": "", "file_id": ""};
+                  json["profile_photo"] = {
+                    "id": getUserFullInfo["photo"]["id"],
+                    "path": "",
+                    "file_id": ""
+                  };
                   if (getUserFullInfo["photo"]["@type"] == "chatPhoto") {
                     if (getUserFullInfo["photo"]["sizes"] is List) {
                       try {
-                        var getPhoto = getUserFullInfo["photo"]["sizes"][getUserFullInfo["photo"]["sizes"].length - 1];
-                        var getPathPhoto = getPhoto["photo"]["local"]["path"] as String;
+                        var getPhoto = getUserFullInfo["photo"]["sizes"]
+                            [getUserFullInfo["photo"]["sizes"].length - 1];
+                        var getPathPhoto =
+                            getPhoto["photo"]["local"]["path"] as String;
                         json["profile_photo"]["path"] = getPathPhoto;
-                        (json["profile_photo"] as Map).addAll(getPhoto["photo"]["local"]);
-                        json["profile_photo"]["id"] = getPhoto["photo"]["local"]["id"];
-                        json["profile_photo"]["file_id"] = getPhoto["photo"]["remote"]["id"];
-                        json["profile_photo"]["file_unique_id"] = getPhoto["photo"]["remote"]["unique_id"];
+                        (json["profile_photo"] as Map)
+                            .addAll(getPhoto["photo"]["local"]);
+                        json["profile_photo"]["id"] =
+                            getPhoto["photo"]["local"]["id"];
+                        json["profile_photo"]["file_id"] =
+                            getPhoto["photo"]["remote"]["id"];
+                        json["profile_photo"]["file_unique_id"] =
+                            getPhoto["photo"]["remote"]["unique_id"];
                       } catch (e) {}
                     }
                   }
@@ -1319,9 +1572,12 @@ class Tdlib {
                   });
                 } catch (e) {}
 
-                if (json["profile_photo"] is Map && RegExp(r"^([0-9]+)$", caseSensitive: false).hasMatch(json["profile_photo"]["id"])) {
+                if (json["profile_photo"] is Map &&
+                    RegExp(r"^([0-9]+)$", caseSensitive: false)
+                        .hasMatch(json["profile_photo"]["id"])) {
                   try {
-                    json["profile_photo"]["id"] = (int.parse(json["profile_photo"]["id"]));
+                    json["profile_photo"]["id"] =
+                        (int.parse(json["profile_photo"]["id"]));
                   } catch (e) {}
                 }
               } catch (e) {
@@ -1333,7 +1589,8 @@ class Tdlib {
         }
       }
     } catch (e) {
-      if (RegExp("^[0-9]+\$", caseSensitive: false).hasMatch(chat_id.toString())) {
+      if (RegExp("^[0-9]+\$", caseSensitive: false)
+          .hasMatch(chat_id.toString())) {
         try {
           return await getUser(
             chat_id,
@@ -1354,7 +1611,12 @@ class Tdlib {
   }
 
   /// answerCallbackQuery for bot only
-  answerCallbackQuery(callback_query_id, {String? text, bool show_alert = false, String? url, int? cache_time, required int? clientId}) async {
+  answerCallbackQuery(callback_query_id,
+      {String? text,
+      bool show_alert = false,
+      String? url,
+      int? cache_time,
+      required int? clientId}) async {
     clientId ??= client_id;
 
     Map<String, dynamic> data = {"callback_query_id": callback_query_id};
@@ -1372,16 +1634,30 @@ class Tdlib {
       data["cache_time"] = cache_time;
     }
 
-    return await invoke("answerCallbackQuery", parameters: data, clientId: clientId);
+    return await invoke("answerCallbackQuery",
+        parameters: data, clientId: clientId);
   }
 
   /// convert tdlib update to bot api for more humanize
-  jsonMessage(Map update, {Map? from_data, Map? chat_data, bool is_detail = false, bool is_super_detail = false, bool is_more_detail = false, required int? clientId}) async {
+  jsonMessage(Map update,
+      {Map? from_data,
+      Map? chat_data,
+      bool is_detail = false,
+      bool is_super_detail = false,
+      bool is_more_detail = false,
+      required int? clientId}) async {
     clientId ??= client_id;
     try {
       if (update["@type"] == "message") {
         Map json = {};
-        Map chat_json = {"id": update["chat_id"], "first_name": "", "title": "", "type": "", "detail": {}, "last_message": {}};
+        Map chat_json = {
+          "id": update["chat_id"],
+          "first_name": "",
+          "title": "",
+          "type": "",
+          "detail": {},
+          "last_message": {}
+        };
         if (update["is_channel_post"] ?? false) {
           chat_json["type"] = "channel";
           chat_json["title"] = "";
@@ -1417,7 +1693,11 @@ class Tdlib {
           } catch (e) {}
           if (is_chat_not_same) {
             try {
-              var chatResult = await getChat(update["chat_id"], is_detail: is_detail, is_super_detail: is_super_detail, is_more_detail: is_more_detail, clientId: clientId);
+              var chatResult = await getChat(update["chat_id"],
+                  is_detail: is_detail,
+                  is_super_detail: is_super_detail,
+                  is_more_detail: is_more_detail,
+                  clientId: clientId);
               if (chatResult["ok"]) {
                 chat_json = chatResult["result"];
               }
@@ -1428,7 +1708,14 @@ class Tdlib {
         json["is_outgoing"] = update["is_outgoing"] ?? false;
         json["is_pinned"] = update["is_pinned"] ?? false;
         if (update["sender_id"] is Map) {
-          Map from_json = {"id": 0, "first_name": "", "title": "", "type": "", "detail": {}, "last_message": {}};
+          Map from_json = {
+            "id": 0,
+            "first_name": "",
+            "title": "",
+            "type": "",
+            "detail": {},
+            "last_message": {}
+          };
           if (update["sender_id"]["user_id"] != null) {
             from_json["id"] = update["sender_id"]["user_id"];
             if (update["chat_id"] == from_json["id"]) {
@@ -1513,8 +1800,8 @@ class Tdlib {
 
         json["chat"] = chat_json;
         json["date"] = update["date"];
-        json["message_id"] = getMessageId(update["id"], true);
-        json["raw_message_id"] = update["id"];
+        json["message_id"] = update["id"];
+        json["api_message_id"] = getMessageId(update["id"], true);
         update.forEach((key, value) {
           try {
             if (typeof(value) == "boolean") {
@@ -1532,21 +1819,40 @@ class Tdlib {
         if (typeof(update["forward_info"]) == "object") {
           var forward_info = update["forward_info"];
           if (typeof(forward_info["origin"]) == "object") {
-            if (forward_info["origin"]["@type"] == "messageForwardOriginChannel") {
-              Map forward_json = {"id": forward_info["origin"]["chat_id"], "first_name": "", "title": "", "type": "", "detail": {}, "last_message": {}};
+            if (forward_info["origin"]["@type"] ==
+                "messageForwardOriginChannel") {
+              Map forward_json = {
+                "id": forward_info["origin"]["chat_id"],
+                "first_name": "",
+                "title": "",
+                "type": "",
+                "detail": {},
+                "last_message": {}
+              };
               try {
-                var getchat_forward = await getChat(forward_json["id"], clientId: clientId);
+                var getchat_forward =
+                    await getChat(forward_json["id"], clientId: clientId);
                 if (getchat_forward["ok"]) {
                   forward_json = getchat_forward["result"];
                 }
               } catch (e) {}
               json["forward_from_chat"] = forward_json;
-              json["forward_from_message_id"] = forward_info["origin"]["message_id"] ?? 0;
-              json["api_forward_from_message_id"] = getMessageId(json["forward_from_message_id"], true);
-              json["forward_from_author_signature"] = forward_info["origin"]["author_signature"] ?? "";
+              json["forward_from_message_id"] =
+                  forward_info["origin"]["message_id"] ?? 0;
+              json["api_forward_from_message_id"] =
+                  getMessageId(json["forward_from_message_id"], true);
+              json["forward_from_author_signature"] =
+                  forward_info["origin"]["author_signature"] ?? "";
             }
             if (forward_info["origin"]["@type"] == "messageForwardOriginUser") {
-              Map forward_json = {"id": forward_info["origin"]["sender_user_id"], "first_name": "", "title": "", "type": "", "detail": {}, "last_message": {}};
+              Map forward_json = {
+                "id": forward_info["origin"]["sender_user_id"],
+                "first_name": "",
+                "title": "",
+                "type": "",
+                "detail": {},
+                "last_message": {}
+              };
               try {
                 var getuser_forward = await getUser(
                   forward_json["id"],
@@ -1564,7 +1870,8 @@ class Tdlib {
 
         update["reply_to_message_id"] ??= 0;
         update["reply_in_chat_id"] ??= 0;
-        if (update["reply_to_message_id"] != 0 && update["reply_in_chat_id"] != 0) {
+        if (update["reply_to_message_id"] != 0 &&
+            update["reply_in_chat_id"] != 0) {
           try {
             var get_message = await getMessage(
               update["reply_in_chat_id"],
@@ -1575,7 +1882,10 @@ class Tdlib {
             );
             if (get_message["ok"]) {
               json["reply_to_message"] = get_message["result"];
-              json["reply_to_message"]["message_id"] = getMessageId(json["reply_to_message"]["message_id"], true);
+              json["reply_to_message"]["message_id"] =
+                  json["reply_to_message"]["message_id"];
+              json["reply_to_message"]["api_message_id"] =
+                  getMessageId(json["reply_to_message"]["message_id"], true);
             }
           } catch (e) {}
         }
@@ -1610,7 +1920,8 @@ class Tdlib {
                     json_photo["file_id"] = photo_json["photo"]["remote"]["id"];
                   }
                   if (photo_json["photo"]["remote"]["unique_id"] != null) {
-                    json_photo["file_unique_id"] = photo_json["photo"]["remote"]["unique_id"];
+                    json_photo["file_unique_id"] =
+                        photo_json["photo"]["remote"]["unique_id"];
                   }
                   json_photo["file_size"] = photo_json["photo"]["size"];
                   json_photo["width"] = photo_json["width"];
@@ -1633,12 +1944,18 @@ class Tdlib {
                 json_video["file_name"] = content_video["file_name"];
                 json_video["mime_type"] = content_video["mime_type"];
                 try {
-                  if (update["content"]["video"]["thumbnail"] != null && update["content"]["video"]["thumbnail"]["@type"].toString().toLowerCase() == "thumbnail") {
+                  if (update["content"]["video"]["thumbnail"] != null &&
+                      update["content"]["video"]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
                     var content_thumb = content_video["thumbnail"];
                     var json_thumb = {};
                     json_video["thumb"] = json_thumb;
-                    json_thumb["file_id"] = content_thumb["file"]["remote"]["id"];
-                    json_thumb["file_unique_id"] = content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
                     json_thumb["file_size"] = content_thumb["file"]["size"];
                     json_thumb["width"] = content_thumb["width"];
                     json_thumb["height"] = content_thumb["height"];
@@ -1663,9 +1980,12 @@ class Tdlib {
                 json_content["performer"] = content_update["performer"];
                 json_content["file_name"] = content_update["file_name"];
                 json_content["mime_type"] = content_update["mime_type"];
-                json_content["file_id"] = content_update[type_content]["remote"]["id"];
-                json_content["unique_id"] = content_update[type_content]["remote"]["unique_id"];
-                json_content["file_size"] = content_update[type_content]["size"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
                 json[type_content] = json_content;
               }
             }
@@ -1687,20 +2007,29 @@ class Tdlib {
                 json_content["has_stickers"] = content_update["has_stickers"];
 
                 try {
-                  if (update["content"][type_content]["thumbnail"] != null && update["content"][type_content]["thumbnail"]["@type"].toString().toLowerCase() == "thumbnail") {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
                     var content_thumb = content_update["thumbnail"];
                     var json_thumb = {};
-                    json_thumb["file_id"] = content_thumb["file"]["remote"]["id"];
-                    json_thumb["file_unique_id"] = content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
                     json_thumb["file_size"] = content_thumb["file"]["size"];
                     json_thumb["width"] = content_thumb["width"];
                     json_thumb["height"] = content_thumb["height"];
                     json_content["thumb"] = json_thumb;
                   }
                 } catch (e) {}
-                json_content["file_id"] = content_update[type_content]["remote"]["id"];
-                json_content["unique_id"] = content_update[type_content]["remote"]["unique_id"];
-                json_content["file_size"] = content_update[type_content]["size"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
                 json[type_content] = json_content;
               }
             }
@@ -1733,8 +2062,10 @@ class Tdlib {
                 json_content["id"] = content_update["id"];
                 json_content["question"] = content_update["question"];
                 json_content["options"] = content_update["options"];
-                json_content["total_voter_count"] = content_update["total_voter_count"];
-                json_content["recent_voter_user_ids"] = content_update["recent_voter_user_ids"];
+                json_content["total_voter_count"] =
+                    content_update["total_voter_count"];
+                json_content["recent_voter_user_ids"] =
+                    content_update["recent_voter_user_ids"];
                 json_content["is_anonymous"] = content_update["is_anonymous"];
                 json_content["type"] = content_update["type"];
                 json_content["open_period"] = content_update["open_period"];
@@ -1755,9 +2086,12 @@ class Tdlib {
                 json_content["file_name"] = content_update["file_name"];
                 json_content["mime_type"] = content_update["mime_type"];
 
-                json_content["file_id"] = content_update[type_content]["remote"]["id"];
-                json_content["unique_id"] = content_update[type_content]["remote"]["unique_id"];
-                json_content["file_size"] = content_update[type_content]["size"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
                 json[type_content] = json_content;
               }
             }
@@ -1778,11 +2112,17 @@ class Tdlib {
                 json_content["is_mask"] = content_update["is_mask"];
 
                 try {
-                  if (update["content"][type_content]["thumbnail"] != null && update["content"][type_content]["thumbnail"]["@type"].toString().toLowerCase() == "thumbnail") {
+                  if (update["content"][type_content]["thumbnail"] != null &&
+                      update["content"][type_content]["thumbnail"]["@type"]
+                              .toString()
+                              .toLowerCase() ==
+                          "thumbnail") {
                     var content_thumb = content_update["thumbnail"];
                     var json_thumb = {};
-                    json_thumb["file_id"] = content_thumb["file"]["remote"]["id"];
-                    json_thumb["file_unique_id"] = content_thumb["file"]["remote"]["unique_id"];
+                    json_thumb["file_id"] =
+                        content_thumb["file"]["remote"]["id"];
+                    json_thumb["file_unique_id"] =
+                        content_thumb["file"]["remote"]["unique_id"];
                     json_thumb["file_size"] = content_thumb["file"]["size"];
                     json_thumb["width"] = content_thumb["width"];
                     json_thumb["height"] = content_thumb["height"];
@@ -1790,9 +2130,12 @@ class Tdlib {
                   }
                 } catch (e) {}
 
-                json_content["file_id"] = content_update[type_content]["remote"]["id"];
-                json_content["unique_id"] = content_update[type_content]["remote"]["unique_id"];
-                json_content["file_size"] = content_update[type_content]["size"];
+                json_content["file_id"] =
+                    content_update[type_content]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update[type_content]["remote"]["unique_id"];
+                json_content["file_size"] =
+                    content_update[type_content]["size"];
                 json[type_content] = json_content;
               }
             }
@@ -1810,8 +2153,10 @@ class Tdlib {
                 json_content["waveform"] = content_update["waveform"];
                 json_content["mime_type"] = content_update["mime_type"];
 
-                json_content["file_id"] = content_update["voice"]["remote"]["id"];
-                json_content["unique_id"] = content_update["voice"]["remote"]["unique_id"];
+                json_content["file_id"] =
+                    content_update["voice"]["remote"]["id"];
+                json_content["unique_id"] =
+                    content_update["voice"]["remote"]["unique_id"];
                 json_content["file_size"] = content_update["voice"]["size"];
                 json["voice"] = json_content;
               }
@@ -1829,7 +2174,9 @@ class Tdlib {
             json["type_content"] = "new_member";
             List new_members = [];
             if (is_super_detail) {
-              for (var i = 0; i < update["content"]["member_user_ids"].length; i++) {
+              for (var i = 0;
+                  i < update["content"]["member_user_ids"].length;
+                  i++) {
                 var loop_data = update["content"]["member_user_ids"][i];
                 try {
                   Map result_user = await getUser(
@@ -1841,7 +2188,13 @@ class Tdlib {
                   } catch (e) {}
                   new_members.add(result_user["result"]);
                 } catch (e) {
-                  new_members.add({"id": loop_data, "is_bot": false, "first_name": "", "last_name": "", "type": "private"});
+                  new_members.add({
+                    "id": loop_data,
+                    "is_bot": false,
+                    "first_name": "",
+                    "last_name": "",
+                    "type": "private"
+                  });
                 }
               }
             } else {
@@ -1864,10 +2217,22 @@ class Tdlib {
                 } catch (e) {}
                 left_member.add(result_user["result"]);
               } catch (e) {
-                left_member.add({"id": update["content"]["user_id"], "is_bot": false, "first_name": "", "last_name": "", "type": "private"});
+                left_member.add({
+                  "id": update["content"]["user_id"],
+                  "is_bot": false,
+                  "first_name": "",
+                  "last_name": "",
+                  "type": "private"
+                });
               }
             } else {
-              left_member.add({"id": update["content"]["user_id"], "is_bot": false, "first_name": "", "last_name": "", "type": "private"});
+              left_member.add({
+                "id": update["content"]["user_id"],
+                "is_bot": false,
+                "first_name": "",
+                "last_name": "",
+                "type": "private"
+              });
             }
             json["left_member"] = left_member;
           }
@@ -1890,16 +2255,29 @@ class Tdlib {
               json_entities["offset"] = data_entities["offset"];
               json_entities["length"] = data_entities["length"];
               if (data_entities["type"]["@type"] != null) {
-                var type_entities = data_entities["type"]["@type"].toString().toLowerCase().replaceAll(RegExp("textEntityType", caseSensitive: false), "").replaceAll(RegExp("textUrl", caseSensitive: false), "text_link").replaceAll(RegExp("bot_command", caseSensitive: false), "bot_command").replaceAll(RegExp("mentionname", caseSensitive: false), "text_mention");
+                var type_entities = data_entities["type"]["@type"]
+                    .toString()
+                    .toLowerCase()
+                    .replaceAll(
+                        RegExp("textEntityType", caseSensitive: false), "")
+                    .replaceAll(
+                        RegExp("textUrl", caseSensitive: false), "text_link")
+                    .replaceAll(RegExp("bot_command", caseSensitive: false),
+                        "bot_command")
+                    .replaceAll(RegExp("mentionname", caseSensitive: false),
+                        "text_mention");
                 json_entities["type"] = type_entities;
                 if (data_entities["type"]["url"] != null) {
                   json_entities["url"] = data_entities["type"]["url"];
                 }
-                if (type_entities == "text_mention" && data_entities["type"]["user_id"] != null) {
+                if (type_entities == "text_mention" &&
+                    data_entities["type"]["user_id"] != null) {
                   var entitiesUserId = data_entities["type"]["user_id"];
                   var fromJson = {"id": entitiesUserId};
                   try {
-                    var fromResult = await getChat(update["sender_id"]["user_id"], clientId: clientId);
+                    var fromResult = await getChat(
+                        update["sender_id"]["user_id"],
+                        clientId: clientId);
                     if (fromResult["ok"]) {
                       fromJson = fromResult["result"];
                     }
@@ -1986,12 +2364,14 @@ class Tdlib {
             }
           }
         } catch (e) {}
-        json["message_id"] = getMessageId(update["message_id"], true);
-        json["raw_message_id"] = update["message_id"];
+        json["api_message_id"] = getMessageId(update["message_id"], true);
+        json["message_id"] = update["message_id"];
         json["from"] = from;
         json["chat"] = chat;
         json["chat_instance"] = update["chat_instance"];
-        json["data"] = buffer.from(update["payload"]["data"], 'base64').toStringEncode('utf8');
+        json["data"] = buffer
+            .from(update["payload"]["data"], 'base64')
+            .toStringEncode('utf8');
         return {
           "ok": true,
           "result": {"callback_query": json}
@@ -2021,8 +2401,11 @@ class Tdlib {
         json["date"] = update["date"];
         if (update["old_chat_member"]["@type"] == "chatMember") {
           Map json_new_member = {};
-          if (update["old_chat_member"]["member_id"]["@type"] == "messageSenderUser") {
-            Map json_data_user = {"id": update["old_chat_member"]["member_id"]["user_id"]};
+          if (update["old_chat_member"]["member_id"]["@type"] ==
+              "messageSenderUser") {
+            Map json_data_user = {
+              "id": update["old_chat_member"]["member_id"]["user_id"]
+            };
             if (is_super_detail) {
               try {
                 var fromResult = await getUser(
@@ -2037,14 +2420,21 @@ class Tdlib {
             json_new_member["user"] = json_data_user;
           }
 
-          json_new_member["status"] = update["old_chat_member"]["status"]["@type"].toString().replace(Regex(r"chatMemberStatus", "i").run, "").toLowerCase();
+          json_new_member["status"] = update["old_chat_member"]["status"]
+                  ["@type"]
+              .toString()
+              .replace(Regex(r"chatMemberStatus", "i").run, "")
+              .toLowerCase();
           json["old_member"] = json_new_member;
         }
         if (update["new_chat_member"]["@type"] == "chatMember") {
           Map json_new_member = {};
 
-          if (update["new_chat_member"]["member_id"]["@type"] == "messageSenderUser") {
-            Map json_data_user = {"id": update["new_chat_member"]["member_id"]["user_id"]};
+          if (update["new_chat_member"]["member_id"]["@type"] ==
+              "messageSenderUser") {
+            Map json_data_user = {
+              "id": update["new_chat_member"]["member_id"]["user_id"]
+            };
             if (is_super_detail) {
               try {
                 var fromResult = await getUser(
@@ -2059,7 +2449,11 @@ class Tdlib {
             json_new_member["user"] = json_data_user;
           }
 
-          json_new_member["status"] = update["new_chat_member"]["status"]["@type"].toString().replace(Regex(r"chatMemberStatus", "i").run, "").toLowerCase();
+          json_new_member["status"] = update["new_chat_member"]["status"]
+                  ["@type"]
+              .toString()
+              .replace(Regex(r"chatMemberStatus", "i").run, "")
+              .toLowerCase();
           json["new_member"] = json_new_member;
         }
 
@@ -2080,9 +2474,13 @@ class Tdlib {
           }
         } catch (e) {}
         json["from"] = from;
-        json["chat_type"] = update["chat_type"]["@type"].toString().replace(Regex("chatType", "i").run, "").toLowerCase();
+        json["chat_type"] = update["chat_type"]["@type"]
+            .toString()
+            .replace(Regex("chatType", "i").run, "")
+            .toLowerCase();
         try {
-          if (json["chat_type"] == "supergroup" && update["chat_type"]["is_channel"]) {
+          if (json["chat_type"] == "supergroup" &&
+              update["chat_type"]["is_channel"]) {
             json["chat_type"] = "channel";
           }
         } catch (e) {}
@@ -2145,7 +2543,27 @@ class Tdlib {
         json["language_code"] = get_user["language_code"];
       }
       json["type"] = "private";
-      json["detail"] = {"has_protected_content": false, "is_marked_as_unread": false, "is_blocked": false, "has_scheduled_messages": false, "can_be_deleted_only_for_self": false, "can_be_deleted_for_all_users": false, "can_be_reported": false, "default_disable_notification": false, "unread_count": 0, "last_read_inbox_message_id": 0, "last_read_outbox_message_id": 0, "unread_mention_count": 0, "is_contact": get_user["is_contact"], "is_mutual_contact": get_user["is_mutual_contact"], "is_verified": get_user["is_verified"], "is_support": get_user["is_support"], "is_scam": get_user["is_scam"], "is_fake": get_user["is_fake"], "have_acces": get_user["have_access"]};
+      json["detail"] = {
+        "has_protected_content": false,
+        "is_marked_as_unread": false,
+        "is_blocked": false,
+        "has_scheduled_messages": false,
+        "can_be_deleted_only_for_self": false,
+        "can_be_deleted_for_all_users": false,
+        "can_be_reported": false,
+        "default_disable_notification": false,
+        "unread_count": 0,
+        "last_read_inbox_message_id": 0,
+        "last_read_outbox_message_id": 0,
+        "unread_mention_count": 0,
+        "is_contact": get_user["is_contact"],
+        "is_mutual_contact": get_user["is_mutual_contact"],
+        "is_verified": get_user["is_verified"],
+        "is_support": get_user["is_support"],
+        "is_scam": get_user["is_scam"],
+        "is_fake": get_user["is_fake"],
+        "have_acces": get_user["have_access"]
+      };
       return {"ok": true, "result": json};
     }
     get_user["ok"] = false;
@@ -2154,7 +2572,13 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  voidRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
+  voidRequest(String method,
+      {Map<String, dynamic>? parameters,
+      bool is_sync = false,
+      bool is_raw = false,
+      bool is_log = false,
+      void Function(dynamic res)? callback,
+      int? clientId}) async {
     var result = {};
     try {
       parameters ??= {};
@@ -2193,7 +2617,13 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  debugRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
+  debugRequest(String method,
+      {Map<String, dynamic>? parameters,
+      bool is_sync = false,
+      bool is_raw = false,
+      bool is_log = false,
+      void Function(dynamic res)? callback,
+      int? clientId}) async {
     var result = {};
     try {
       parameters ??= {};
@@ -2232,7 +2662,12 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  Future<Map> appRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, int? clientId}) async {
+  Future<Map> appRequest(String method,
+      {Map<String, dynamic>? parameters,
+      bool is_sync = false,
+      bool is_raw = false,
+      bool is_log = false,
+      int? clientId}) async {
     var result = {};
     try {
       parameters ??= {};
@@ -2273,7 +2708,10 @@ class UpdateTd {
   late Map update;
   late int clientId;
   late Map<String, dynamic> clientOption;
-  UpdateTd(this.tg, {required this.update, required this.clientId, required this.clientOption});
+  UpdateTd(this.tg,
+      {required this.update,
+      required this.clientId,
+      required this.clientOption});
 
   /// return json update origin from api origin
   Map get raw {
@@ -2294,9 +2732,17 @@ class UpdateTd {
 
   /// return json update api minimalist from api origin
   Future<Map> get raw_api_light async {
-    if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
+    if (Regex(
+            "updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery",
+            "i")
+        .exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, clientId: clientId);
+        var getMessage = await tg.jsonMessage(
+            (update["@type"] == "updateNewMessage")
+                ? update["message"]
+                : update,
+            is_detail: true,
+            clientId: clientId);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
@@ -2307,9 +2753,18 @@ class UpdateTd {
 
   /// return json update api full from api origin
   Future<Map> get raw_api async {
-    if (Regex("updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery", "i").exec(update["@type"])) {
+    if (Regex(
+            "updateNewMessage|updateChatMember|updateNewCallbackQuery|updateNewInlineQuery",
+            "i")
+        .exec(update["@type"])) {
       try {
-        var getMessage = await tg.jsonMessage((update["@type"] == "updateNewMessage") ? update["message"] : update, is_detail: true, is_super_detail: true, clientId: clientId);
+        var getMessage = await tg.jsonMessage(
+            (update["@type"] == "updateNewMessage")
+                ? update["message"]
+                : update,
+            is_detail: true,
+            is_super_detail: true,
+            clientId: clientId);
         if (getMessage["ok"]) {
           return getMessage["result"];
         }
