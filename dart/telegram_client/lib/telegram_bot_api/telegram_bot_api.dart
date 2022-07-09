@@ -125,7 +125,7 @@ class TelegramBotApi {
     receivePort.listen((message) {
       emitter.emit("update", null, message);
     });
-    Isolate receiveIsolate = await Isolate.spawn((List args) async {
+    await Isolate.spawn((List args) async {
       final SendPort sendPortToMain = args[0];
       final Map option = args[1];
       final String token = args[2];

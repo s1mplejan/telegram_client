@@ -165,3 +165,6 @@
 
 ## 0.3.17
 - delete some key for make secret update and improve speed
+  
+## 0.3.18
+- fix bug 

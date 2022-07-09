@@ -170,34 +170,40 @@ class Tdlib {
     clientId ??= client_id;
     if (clientOption != null) {
       client_option.addAll(clientOption);
-    } else {
-      clientOption = client_option;
     }
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) {
       emitter.emit("update", null, message);
     });
-    await Isolate.spawn((List args) {
-      final SendPort sendPortToMain = args[0];
-      final Map<String, dynamic> option = args[1];
-      final int clientId = args[2];
-      final String pathTdl = args[3];
-      Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
-      while (true) {
-        var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
-        if (update.address != 0) {
-          if (update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
-            Map? updateOrigin;
-            try {
-              updateOrigin = convert.json.decode(update.toDartString());
-            } catch (e) {}
-            if (updateOrigin != null) {
-              sendPortToMain.send([updateOrigin, clientId, option]);
+
+    await Isolate.spawn(
+      (List args) {
+        final SendPort sendPortToMain = args[0];
+        final Map<String, dynamic> option = args[1];
+        final int clientId = args[2];
+        final String pathTdl = args[3]; 
+        Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
+        while (true) {
+          var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
+          if (update.address != 0) {
+            if (update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
+              Map? updateOrigin;
+              try {
+                updateOrigin = convert.json.decode(update.toDartString());
+              } catch (e) {}
+              if (updateOrigin != null) {
+                sendPortToMain.send([updateOrigin, clientId, option]);
+              }
             }
           }
         }
-      }
-    }, [receivePort.sendPort, clientOption, clientId, pathTdl, is_android], onExit: receivePort.sendPort, onError: receivePort.sendPort);
+      },
+      [receivePort.sendPort, client_option, clientId, pathTdl, is_android],
+      onExit: receivePort.sendPort,
+      onError: receivePort.sendPort,
+    ).catchError((onError) {
+      print("eror");
+    });
   }
 
   /// add this for multithread new client on flutter apps
@@ -276,15 +282,27 @@ class Tdlib {
   }
 
   /// add this for handle update api
-  void on(String type_update, void Function(UpdateTd update) callback) async {
+  void on(String type_update, void Function(UpdateTd update) callback, {void Function(Object data)? onError}) async {
     if (!getBoolean(type_update)) {
       throw {};
     }
     if (type_update.toString().toLowerCase() == "update") {
       emitter.on("update", null, (Event ev, context) {
-        if (ev.eventData is List) {
-          List jsonUpdate = (ev.eventData as List);
-          return callback(UpdateTd(this, update: jsonUpdate[0], clientId: jsonUpdate[1], clientOption: jsonUpdate[2]));
+        try {
+          if (ev.eventData is List) {
+            List jsonUpdate = (ev.eventData as List);
+            return callback(UpdateTd(
+              this,
+              update: jsonUpdate[0],
+              clientId: jsonUpdate[1],
+              clientOption: jsonUpdate[2],
+            ));
+          }
+        } catch (e) {
+          print(e);
+          if (onError != null) {
+            return onError(e);
+          }
         }
       });
     }
