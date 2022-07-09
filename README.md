@@ -73,8 +73,9 @@ flutter pub add telegram_client
 ```
 
 - [Doc + Example](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/doc)
-- [Youtube-Tutorial](https://youtube.com/c/hexaminate)
-
+- [Youtube](https://youtube.com/c/hexaminate)
+- [Telegram Group Support](https://t.me/developer_group_chat)
+  
 ## Feature
 
 - Support Server Side and Client Side
