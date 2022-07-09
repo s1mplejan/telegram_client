@@ -25,10 +25,7 @@ Telegram client dart library to make application telegram based flutter and user
 1. [AzkadevBot](https://t.me/azkadevbot)
   Telegram clone bot and userbot
 
-<img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_1.png" width="350px">
-<img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_2.png" width="350">
-<img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_3.png" width="350px">
-<img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_4.png" width="350px">
+<img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_1.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_2.png" width="350"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_3.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_4.png" width="350px">
 
 ---
 
