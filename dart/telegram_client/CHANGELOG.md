@@ -171,3 +171,6 @@
 
 ## 0.3.19
 - fix bug
+
+## 0.3.20
+- update readme

@@ -10,7 +10,7 @@ Telegram client dart library to make application telegram based flutter and user
 
 ## Features
 
-- 🚀 Cross platform: mobile, desktop, browser
+- 🚀 Cross platform: mobile, desktop, browser, server
 - ⚡ Great performance
 - ❤️ Simple, powerful, & intuitive API
 
@@ -29,6 +29,38 @@ Telegram client dart library to make application telegram based flutter and user
 
 ---
 
+### Docs
+
+- Just Read On [Wiki](https://github.com/azkadev/telegram_client/wiki)
+ 
+### Feature
+- ```telegram client dart```
+    - ✅️ support server side & client side
+    - ✅️ support multi token ( bot / userbot ) 
+    - ✅️ support bot and userbot
+    - ✅️ support telegram-bot-api (local / [Bot-Api](https://core.telegram.org/bots/api#recent-changes)
+    - ✅️ Support long poll update bot api
+    - ✅️ Support telegram database library ( [TDLIB](https://github.com/tdlib/td) )
+    - ✅️ Add more Api Humanize pretty update and method api humanize
+    - ✅️ Easy handle multi client
+    
+- ```telegram client node```
+    - ✅️ support server side & client side
+    - ✅️ support multi token ( bot / userbot )
+    - ✅️ support bot and userbot
+    - ✅️ support telegram-bot-api local server
+    - ✅️ support telegram database library ( [TDLIB](https://github.com/tdlib/td) )
+    - ✅️ Add more Api Humanize pretty update and method api humanize
+
+- ```telegram client google apps script```
+    - ✅️ support multi token ( bot / userbot )
+    - ✅️ support bot and userbot
+    - ❌️ support telegram-bot-api local server
+    - ❌️ support telegram database library ( Tdlib )
+    
+    
+🔜️ Support Other language code
+
 # Dart
 
 ## Install Library
@@ -41,8 +73,9 @@ flutter pub add telegram_client
 ```
 
 - [Doc + Example](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/doc)
-- [Youtube-Tutorial](https://youtube.com/c/hexaminate)
-
+- [Youtube](https://youtube.com/c/hexaminate)
+- [Telegram Group Support](https://t.me/developer_group_chat)
+  
 ## Feature
 
 - Support Server Side and Client Side
