@@ -10,7 +10,7 @@ Telegram client dart library to make application telegram based flutter and user
 
 ## Features
 
-- 🚀 Cross platform: mobile, desktop, browser
+- 🚀 Cross platform: mobile, desktop, browser, server
 - ⚡ Great performance
 - ❤️ Simple, powerful, & intuitive API
 

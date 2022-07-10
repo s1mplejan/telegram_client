@@ -172,18 +172,19 @@ class Tdlib {
       client_option.addAll(clientOption);
     }
     ReceivePort receivePort = ReceivePort();
-    receivePort.listen((message) {
+    receivePort.listen((message) async {
       emitter.emit("update", null, message);
     });
 
     await Isolate.spawn(
-      (List args) {
+      (List args) async {
         final SendPort sendPortToMain = args[0];
         final Map<String, dynamic> option = args[1];
         final int clientId = args[2];
         final String pathTdl = args[3];
         Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
         while (true) {
+          await Future.delayed(Duration(milliseconds: 1));
           var update = tg._client_receive(ffi.Pointer.fromAddress(clientId), 1.0);
           if (update.address != 0) {
             if (update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
@@ -235,8 +236,8 @@ class Tdlib {
         "message": "initIsolateNewClient files_directory harus isi!",
       };
     }
-
-    await initIsolate(clientId: clientId, clientOption: clientOption);
+    client_option.addAll(clientOption);
+    await initIsolate(clientId: clientId, clientOption: client_option);
   }
 
   /// open dynamic native library
@@ -838,7 +839,7 @@ class Tdlib {
         }
       });
       while (true) {
-        await Future.delayed(Duration(microseconds: 1));
+        await Future.delayed(Duration(milliseconds: 1));
         if (typeof(result["@type"]) == "string") {
           if (result["@type"] == "error") {
             throw result;
@@ -849,15 +850,7 @@ class Tdlib {
       }
     }
     if (Regex(r"^editMessageText$", "i").exec(method)) {
-      return await editMessageText(
-        parameters["chat_id"],
-        parameters["message_id"],
-        parameters["text"],
-        (typeof(parameters["parse_mode"] ?? "") == "string") ? parameters["parse_mode"] : "html",
-        (typeof(parameters["entities"] ?? []) == "array") ? parameters["entities"] : [],
-        (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean") ? parameters["disable_web_page_preview"] : false,
-        (typeof(parameters["reply_markup"] ?? {}) == "object") ? parameters["reply_markup"] : {},
-      );
+      return await editMessageText(parameters["chat_id"], parameters["message_id"], parameters["text"], parse_mode: (typeof(parameters["parse_mode"] ?? "") == "string") ? parameters["parse_mode"] : "html", entities: (typeof(parameters["entities"] ?? []) == "array") ? parameters["entities"] : [], disable_web_page_preview: (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean") ? parameters["disable_web_page_preview"] : false, replyMarkup: (typeof(parameters["reply_markup"] ?? {}) == "object") ? parameters["reply_markup"] : {}, clientId: clientId);
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
       return await invoke(
@@ -903,7 +896,7 @@ class Tdlib {
         List chat_ids = getChats["chat_ids"];
         List array_chat = [];
         for (var i = 0; i < chat_ids.length; i++) {
-          await Future.delayed(Duration(microseconds: 1));
+          await Future.delayed(Duration(milliseconds: 1));
           try {
             var get_chat = await getChat(chat_ids[i], is_detail: true, is_super_detail: true, clientId: clientId);
             if (get_chat["ok"]) {
@@ -957,16 +950,17 @@ class Tdlib {
   ///   }
   /// }
   /// ```
-  getMessage(dynamic chat_id, dynamic message_id, {bool is_detail = false, bool is_super_detail = false, required int? clientId}) async {
+  getMessage(dynamic chat_id, dynamic message_id, {bool is_detail = false, bool is_skip_reply_message = false, bool is_super_detail = false, required int? clientId}) async {
     clientId ??= client_id;
     var get_message = await invoke("getMessage", parameters: {
       "chat_id": chat_id,
       "message_id": message_id,
-    });
+    }, clientId: clientId);
     return await jsonMessage(
       get_message,
       is_detail: is_detail,
       is_super_detail: is_super_detail,
+      is_skip_reply_message: is_skip_reply_message,
       clientId: clientId,
     );
   }
@@ -978,15 +972,18 @@ class Tdlib {
   ///
   /// }
   /// ```
-  editMessageText(dynamic chat_id, dynamic message_id, String text, [String parse_mode = "html", List? entities, bool disable_web_page_preview = false, Map? replyMarkup]) async {
+  editMessageText(dynamic chat_id, dynamic message_id, String text, {String parse_mode = "html", List? entities, bool disable_web_page_preview = false, Map? replyMarkup, required int? clientId}) async {
+    clientId ??= client_id;
     entities ??= [];
     var pesan = parseMode(text, parse_mode, entities);
-    var get_message = await invoke("editMessageText", parameters: {
-      "chat_id": chat_id,
-      "message_id": message_id,
-      "reply_markup": reply_markup(replyMarkup),
-      "input_message_content": {'@type': "inputMessageText", "text": pesan, "disable_web_page_preview": disable_web_page_preview, "clear_draft": false}
-    });
+    var get_message = await invoke("editMessageText",
+        parameters: {
+          "chat_id": chat_id,
+          "message_id": message_id,
+          "reply_markup": reply_markup(replyMarkup),
+          "input_message_content": {'@type': "inputMessageText", "text": pesan, "disable_web_page_preview": disable_web_page_preview, "clear_draft": false}
+        },
+        clientId: clientId);
     return get_message;
   }
 
@@ -1004,13 +1001,13 @@ class Tdlib {
     chat_id ??= 0;
     user_id ??= 0;
     if (Regex("^@.*", "i").exec(chat_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": chat_id});
+      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": chat_id,},clientId: clientId);
       if (search_public_chat["@type"] == "chat") {
         chat_id = search_public_chat["id"];
       }
     }
     if (Regex("^@.*", "i").exec(user_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": user_id});
+      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": user_id, }, clientId: clientId);
       if (search_public_chat["@type"] == "chat") {
         user_id = search_public_chat["id"];
       }
@@ -1021,7 +1018,7 @@ class Tdlib {
         "@type": "messageSenderUser",
         "user_id": user_id,
       }
-    });
+    }, clientId: clientId);
 
     if (Regex("^chatMember\$", "i").exec(get_chat_member["@type"])) {
       var json = {};
@@ -1066,7 +1063,7 @@ class Tdlib {
           parameters: {
             "username": chat_id,
           },
-          clientId: client_id,
+          clientId: clientId,
         );
         if (search_public_chat["@type"] == "chat") {
           chat_id = search_public_chat["id"];
@@ -1370,7 +1367,7 @@ class Tdlib {
   }
 
   /// convert tdlib update to bot api for more humanize
-  jsonMessage(Map update, {Map? from_data, Map? chat_data, bool is_detail = false, bool is_super_detail = false, bool is_more_detail = false, required int? clientId}) async {
+  jsonMessage(Map update, {Map? from_data, Map? chat_data, bool is_detail = false, bool is_skip_reply_message = false, bool is_super_detail = false, bool is_more_detail = false, required int? clientId}) async {
     clientId ??= client_id;
     try {
       if (update["@type"] == "message") {
@@ -1558,7 +1555,7 @@ class Tdlib {
 
         update["reply_to_message_id"] ??= 0;
         update["reply_in_chat_id"] ??= 0;
-        if (update["reply_to_message_id"] != 0 && update["reply_in_chat_id"] != 0) {
+        if (update["reply_to_message_id"] != 0 && update["reply_in_chat_id"] != 0 && !is_skip_reply_message) {
           try {
             var get_message = await getMessage(
               update["reply_in_chat_id"],
@@ -2150,6 +2147,7 @@ class Tdlib {
 
   /// if you build flutter apps recommended to call this for call api
   voidRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
+    clientId ??= client_id;
     var result = {};
     try {
       parameters ??= {};
@@ -2189,6 +2187,7 @@ class Tdlib {
 
   /// if you build flutter apps recommended to call this for call api
   debugRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, void Function(dynamic res)? callback, int? clientId}) async {
+    clientId ??= client_id;
     var result = {};
     try {
       parameters ??= {};
@@ -2228,6 +2227,7 @@ class Tdlib {
 
   /// if you build flutter apps recommended to call this for call api
   Future<Map> appRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, int? clientId}) async {
+    clientId ??= client_id;
     var result = {};
     try {
       parameters ??= {};
@@ -2282,7 +2282,6 @@ class UpdateTd {
   Map get raw {
     return update;
   }
-
 
   /// return json update api minimalist from api origin
   Future<Map> get raw_api_light async {
