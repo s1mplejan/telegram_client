@@ -75,6 +75,7 @@ class Tdlib {
   Completer? stopping;
   bool running = false;
   bool get isRunning => running;
+  late List state_data = [];
 
   /// Cheatset
   ///
@@ -176,7 +177,7 @@ class Tdlib {
       emitter.emit("update", null, message);
     });
 
-    await Isolate.spawn(
+    Isolate isolate = await Isolate.spawn(
       (List args) async {
         final SendPort sendPortToMain = args[0];
         final Map<String, dynamic> option = args[1];
@@ -204,6 +205,10 @@ class Tdlib {
       onError: receivePort.sendPort,
     ).catchError((onError) {
       print("eror");
+    });
+    state_data.add({
+      "client_id": clientId,
+      "isolate": isolate,
     });
   }
 
@@ -952,10 +957,12 @@ class Tdlib {
   /// ```
   getMessage(dynamic chat_id, dynamic message_id, {bool is_detail = false, bool is_skip_reply_message = false, bool is_super_detail = false, required int? clientId}) async {
     clientId ??= client_id;
-    var get_message = await invoke("getMessage", parameters: {
-      "chat_id": chat_id,
-      "message_id": message_id,
-    }, clientId: clientId);
+    var get_message = await invoke("getMessage",
+        parameters: {
+          "chat_id": chat_id,
+          "message_id": message_id,
+        },
+        clientId: clientId);
     return await jsonMessage(
       get_message,
       is_detail: is_detail,
@@ -1001,24 +1008,34 @@ class Tdlib {
     chat_id ??= 0;
     user_id ??= 0;
     if (Regex("^@.*", "i").exec(chat_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": chat_id,},clientId: clientId);
+      var search_public_chat = await invoke("searchPublicChat",
+          parameters: {
+            "username": chat_id,
+          },
+          clientId: clientId);
       if (search_public_chat["@type"] == "chat") {
         chat_id = search_public_chat["id"];
       }
     }
     if (Regex("^@.*", "i").exec(user_id)) {
-      var search_public_chat = await invoke("searchPublicChat", parameters: {"username": user_id, }, clientId: clientId);
+      var search_public_chat = await invoke("searchPublicChat",
+          parameters: {
+            "username": user_id,
+          },
+          clientId: clientId);
       if (search_public_chat["@type"] == "chat") {
         user_id = search_public_chat["id"];
       }
     }
-    var get_chat_member = await invoke("getChatMember", parameters: {
-      "chat_id": chat_id,
-      "member_id": {
-        "@type": "messageSenderUser",
-        "user_id": user_id,
-      }
-    }, clientId: clientId);
+    var get_chat_member = await invoke("getChatMember",
+        parameters: {
+          "chat_id": chat_id,
+          "member_id": {
+            "@type": "messageSenderUser",
+            "user_id": user_id,
+          }
+        },
+        clientId: clientId);
 
     if (Regex("^chatMember\$", "i").exec(get_chat_member["@type"])) {
       var json = {};
