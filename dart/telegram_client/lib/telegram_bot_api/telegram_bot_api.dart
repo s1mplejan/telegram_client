@@ -65,6 +65,7 @@ class TelegramBotApi {
   };
 
   EventEmitter emitter = EventEmitter();
+  late List state_data = [];
 
   /// list methods:
   /// api:
@@ -120,12 +121,11 @@ class TelegramBotApi {
     await Future.delayed(Duration(seconds: 2));
     tokenBot ??= token;
     clientOption ??= client_option;
-
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) {
       emitter.emit("update", null, message);
     });
-    await Isolate.spawn((List args) async {
+    Isolate isolate = await Isolate.spawn((List args) async {
       final SendPort sendPortToMain = args[0];
       final Map option = args[1];
       final String token = args[2];
@@ -170,6 +170,32 @@ class TelegramBotApi {
       clientOption,
       tokenBot,
     ], onExit: receivePort.sendPort, onError: receivePort.sendPort);
+
+    state_data.add({
+      "token_bot": tokenBot,
+      "isolate": isolate,
+      "receive_port": receivePort,
+    });
+  }
+
+  // exit
+  bool exit(String? tokenBot) {
+    for (var i = 0; i < state_data.length; i++) {
+      var loop_data = state_data[i];
+      if (loop_data is Map &&
+          loop_data["isolate"] is Isolate &&
+          loop_data["token_bot"] == tokenBot) {
+        Isolate isolate = loop_data["isolate"] as Isolate;
+        isolate.kill();
+        try {
+          ReceivePort receive_port = loop_data["receive_port"] as ReceivePort;
+          receive_port.close();
+        } catch (e) {}
+        state_data.removeAt(i);
+        return true;
+      }
+    }
+    return false;
   }
 
   /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods)

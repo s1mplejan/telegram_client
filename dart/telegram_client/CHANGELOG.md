@@ -174,3 +174,6 @@
 
 ## 0.3.20
 - update readme
+  
+## 0.3.21
+- add method exit
