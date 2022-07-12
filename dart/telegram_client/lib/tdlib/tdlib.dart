@@ -114,9 +114,6 @@ class Tdlib {
       client_option["start"] = false;
       client_id = clientId;
     }
-    if (client_option['database_key'] is String && (client_option['database_key'] as String).isNotEmpty) {
-      client_option['database_key'] = convert.base64.encode(convert.utf8.encode(client_option["database_key"]));
-    }
     if (client_option['new_verbosity_level'] is int == false) {
       client_option['new_verbosity_level'] = 0;
     }
@@ -368,17 +365,19 @@ class Tdlib {
       if (authStateType == "authorizationStateWaitEncryptionKey") {
         bool isEncrypted = update.raw["authorization_state"]['is_encrypted'];
         if (isEncrypted) {
-          await invoke("checkDatabaseEncryptionKey",
-              parameters: {
-                "encryption_key": client_option["database_key"],
-              },
-              clientId: clientId,
-              isVoid: isVoid);
+          await invoke(
+            "checkDatabaseEncryptionKey",
+            parameters: {
+              "encryption_key": convert.base64.encode(convert.utf8.encode(client_option["database_key"])),
+            },
+            clientId: clientId,
+            isVoid: isVoid,
+          );
         } else {
           await invoke(
             "setDatabaseEncryptionKey",
             parameters: {
-              "new_encryption_key": client_option["database_key"],
+              "new_encryption_key": convert.base64.encode(convert.utf8.encode(client_option["database_key"])),
             },
             clientId: clientId,
             isVoid: isVoid,
