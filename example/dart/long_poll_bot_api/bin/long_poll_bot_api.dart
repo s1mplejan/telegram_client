@@ -21,7 +21,7 @@ void main(List<String> args) async {
       var chat_id = msg["chat"]["id"];
       if (msg["text"] is Map) {
         if (RegExp("/start", caseSensitive: false).hasMatch(msg["text"])) {
-          return await tg.request("sendMessage", {
+          return await tg.request("sendMessage", parameters: {
             "chat_id": chat_id,
             "text": "Hello world",
             "reply_markup": {
@@ -34,7 +34,7 @@ void main(List<String> args) async {
           });
         }
       }
-      return await tg.request("sendMessage", {"chat_id": chat_id, "text": json.encode(update)});
+      return await tg.request("sendMessage", parameters: {"chat_id": chat_id, "text": json.encode(update)});
     }
   });
   await tg.initIsolate();

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check, void_checks
+// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check
 
 // ignore: slash_for_doc_comments
 /**
@@ -47,7 +47,7 @@ import 'package:hexaminate/hexaminate.dart';
 class Tdlib {
   final String pathTdl;
 
-  late Map client_option = {
+  late Map<String, dynamic> client_option = {
     '@type': 'tdlibParameters',
     'api_id': 1917085,
     'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
@@ -103,7 +103,7 @@ class Tdlib {
   /// ````
   ///
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(this.pathTdl, {Map? clientOption, int? clientId}) {
+  Tdlib(this.pathTdl, {Map<String, dynamic>? clientOption, int? clientId}) {
     if (clientOption != null) {
       client_option.addAll(clientOption);
       if (clientOption["is_android"] == true) {
@@ -161,7 +161,7 @@ class Tdlib {
   }
 
   /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientId, Map? clientOption}) async {
+  Future<void> initIsolate({int? clientId, Map<String, dynamic>? clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     clientId ??= client_id;
     if (clientOption != null) {
@@ -175,7 +175,7 @@ class Tdlib {
     Isolate isolate = await Isolate.spawn(
       (List args) async {
         final SendPort sendPortToMain = args[0];
-        final Map option = args[1];
+        final Map<String, dynamic> option = args[1];
         final int clientId = args[2];
         final String pathTdl = args[3];
         Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
@@ -222,7 +222,7 @@ class Tdlib {
   }
 
   /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient({required int clientId, required Map clientOption}) async {
+  Future<void> initIsolateNewClient({required int clientId, required Map<String, dynamic> clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     // if (clientOption["database_directory"] is String && (clientOption["database_directory"] as String).isNotEmpty) {
     //   if (client_option["database_directory"] == clientOption["database_directory"]) {
@@ -301,7 +301,7 @@ class Tdlib {
   }
 
   /// add this for handle update api
-  void on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) async {
+  void on(String type_update, void Function(UpdateTd update) callback, {void Function(Object data)? onError}) async {
     if (!getBoolean(type_update)) {
       throw {};
     }
@@ -327,7 +327,7 @@ class Tdlib {
   }
 
   /// set up authorizationStateWaitTdlibParameters new client without more code
-  Future<void> initClient(UpdateTd update, {Map? tdlibParameters, int? clientId, bool isVoid = false}) async {
+  Future<void> initClient(UpdateTd update, {Map<String, dynamic>? tdlibParameters, int? clientId, bool isVoid = false}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
@@ -2304,11 +2304,11 @@ class Tdlib {
 class UpdateTd {
   late Map update;
   late int client_id;
-  late Map client_option;
+  late Map<String, dynamic> client_option;
   UpdateTd({
     required this.update,
     required int clientId,
-    required Map clientOption,
+    required Map<String, dynamic> clientOption,
   }) {
     client_id = clientId;
     client_option = clientOption;

@@ -177,3 +177,13 @@
   
 ## 0.3.21
 - add method exit
+  
+## 0.3.22
+- add params isClose method exit
+
+## 0.3.23
+- recode native api method
+  
+## 0.3.24
+- delete some method
+  
