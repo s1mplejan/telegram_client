@@ -76,6 +76,7 @@ class Tdlib {
   bool running = false;
   bool get isRunning => running;
   late List state_data = [];
+  late ffi.DynamicLibrary TdlibPathFile = ffi.DynamicLibrary.process();
 
   /// Cheatset
   ///
@@ -104,6 +105,7 @@ class Tdlib {
   ///
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
   Tdlib(this.pathTdl, {Map? clientOption, int? clientId}) {
+    TdlibPathFile = ffi.DynamicLibrary.open(pathTdl);
     if (clientOption != null) {
       client_option.addAll(clientOption);
       if (clientOption["is_android"] == true) {
@@ -254,21 +256,16 @@ class Tdlib {
     await initIsolate(clientId: clientId, clientOption: client_option);
   }
 
-  /// open dynamic native library
-  ffi.DynamicLibrary TdlibPathFile() {
-    return ffi.DynamicLibrary.open(pathTdl);
-  }
-
   /// create client id for multi client
   int client_create() {
-    return TdlibPathFile().lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>('${is_android ? "_" : ""}td_json_client_create').call().address;
+    return TdlibPathFile.lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>('${is_android ? "_" : ""}td_json_client_create').call().address;
   }
 
   /// fetch update
   Map<String, dynamic>? client_receive(int? clientId, [double timeout = 1.0]) {
     clientId ??= client_id;
     try {
-      var update = TdlibPathFile().lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Double), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, double)>('${is_android ? "_" : ""}td_json_client_receive').call(ffi.Pointer.fromAddress(clientId), timeout);
+      var update = TdlibPathFile.lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Double), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, double)>('${is_android ? "_" : ""}td_json_client_receive').call(ffi.Pointer.fromAddress(clientId), timeout);
       if (update.address != 0 && update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
         Map<String, dynamic>? updateOrigin;
         try {
@@ -285,19 +282,19 @@ class Tdlib {
   /// client_send
   void client_send(int? clientId, [Map? parameters]) {
     clientId ??= client_id;
-    return TdlibPathFile().lookupFunction<ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_send').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8());
+    return TdlibPathFile.lookupFunction<ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_send').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8());
   }
 
   /// client_execute
   Map<String, dynamic> client_execute(int? clientId, [Map? parameters]) {
     clientId ??= client_id;
-    return convert.json.decode(TdlibPathFile().lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_execute').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8()).toDartString());
+    return convert.json.decode(TdlibPathFile.lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_execute').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8()).toDartString());
   }
 
   /// client_destroy
   void client_destroy(int? clientId) {
     clientId ??= client_id;
-    return TdlibPathFile().lookupFunction<ffi.Void Function(ffi.Pointer), void Function(ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy').call(ffi.Pointer.fromAddress(clientId));
+    return TdlibPathFile.lookupFunction<ffi.Void Function(ffi.Pointer), void Function(ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy').call(ffi.Pointer.fromAddress(clientId));
   }
 
   /// add this for handle update api
@@ -877,24 +874,20 @@ class Tdlib {
       return await editMessageText(parameters["chat_id"], parameters["message_id"], parameters["text"], parse_mode: (typeof(parameters["parse_mode"] ?? "") == "string") ? parameters["parse_mode"] : "html", entities: (typeof(parameters["entities"] ?? []) == "array") ? parameters["entities"] : [], disable_web_page_preview: (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean") ? parameters["disable_web_page_preview"] : false, replyMarkup: (typeof(parameters["reply_markup"] ?? {}) == "object") ? parameters["reply_markup"] : {}, clientId: clientId);
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
-      return await invoke(
-        "joinChat",
-        parameters: {
-          "chat_id": parameters["chat_id"],
-        },
-        clientId: clientId,
-        isVoid: isVoid
-      );
+      return await invoke("joinChat",
+          parameters: {
+            "chat_id": parameters["chat_id"],
+          },
+          clientId: clientId,
+          isVoid: isVoid);
     }
     if (Regex(r"^joinChatByInviteLink$", "i").exec(method)) {
-      return await invoke(
-        "joinChatByInviteLink",
-        parameters: {
-          "invite_link": parameters["invite_link"],
-        },
-        clientId: clientId,
-        isVoid: isVoid
-      );
+      return await invoke("joinChatByInviteLink",
+          parameters: {
+            "invite_link": parameters["invite_link"],
+          },
+          clientId: clientId,
+          isVoid: isVoid);
     }
 
     if (Regex(r"^getChatMember$", "i").exec(method)) {
