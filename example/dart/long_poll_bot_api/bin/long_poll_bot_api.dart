@@ -6,13 +6,13 @@ import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> args) async {
-  stdout.write("Token: ");
-  var token = stdin.readLineSync().toString();
-  if (token.isEmpty) {
-    print("please add token bot");
-    exit(1);
-  }
-  TelegramBotApi tg = TelegramBotApi(token);
+  // stdout.write("Token: ");
+  // var token = stdin.readLineSync().toString();
+  // if (token.isEmpty) {
+  //   print("please add token bot");
+  //   exit(1);
+  // }
+  TelegramBotApi tg = TelegramBotApi("5350027730:AAGtIcgHOUz_dZm98NL__E-e4xYXHLGExO0");
   print(await tg.request("getMe"));
   tg.on("update", (UpdateApi update_api) async {
     var update = update_api.raw;
