@@ -23,8 +23,6 @@ jobs:
           cmake --build .
           cd ..
           php SplitSource.php --undo
-          cd ..
-          ls -l td/tdlib
       - name: Release Apps
         uses: ncipollo/release-action@v1
         with:
