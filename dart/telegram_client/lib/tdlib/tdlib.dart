@@ -70,7 +70,9 @@ class Tdlib {
   bool is_stop = false;
   bool is_android = Platform.isAndroid;
   EventEmitter emitter = EventEmitter();
-
+  late int count_request_loop = 0;
+  late Duration delay_update = Duration(milliseconds: 1);
+  late double timeOutUpdate;
   bool starting = false;
   Completer? stopping;
   bool running = false;
@@ -104,7 +106,17 @@ class Tdlib {
   /// ````
   ///
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(this.pathTdl, {Map? clientOption, int? clientId}) {
+  Tdlib(
+    this.pathTdl, {
+    Map? clientOption,
+    int? clientId,
+    this.count_request_loop = 10000000,
+    Duration? delayUpdate,
+    this.timeOutUpdate = 1.0,
+  }) {
+    if (delayUpdate != null) {
+      delay_update = delayUpdate;
+    }
     TdlibPathFile = ffi.DynamicLibrary.open(pathTdl);
     if (clientOption != null) {
       client_option.addAll(clientOption);
@@ -166,8 +178,9 @@ class Tdlib {
   Future<void> initIsolate({int? clientId, Map? clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     clientId ??= client_id;
+    var client_new_option = client_option;
     if (clientOption != null) {
-      client_option.addAll(clientOption);
+      client_new_option.addAll(clientOption);
     }
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) async {
@@ -176,20 +189,22 @@ class Tdlib {
 
     Isolate isolate = await Isolate.spawn(
       (List args) async {
-        final SendPort sendPortToMain = args[0];
-        final Map option = args[1];
-        final int clientId = args[2];
-        final String pathTdl = args[3];
+        SendPort sendPortToMain = args[0];
+        Map option = args[1];
+        int clientId = args[2];
+        String pathTdl = args[3];
+        Duration duration = args[5];
+        double timeout = args[6];
         Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
         while (true) {
-          await Future.delayed(Duration(milliseconds: 1));
-          var updateOrigin = tg.client_receive(clientId);
+          await Future.delayed(duration);
+          var updateOrigin = tg.client_receive(clientId, timeout);
           if (updateOrigin != null) {
             sendPortToMain.send([updateOrigin, clientId, option]);
           }
         }
       },
-      [receivePort.sendPort, client_option, clientId, pathTdl, is_android],
+      [receivePort.sendPort, client_new_option, clientId, pathTdl, is_android, delay_update, timeOutUpdate],
       onExit: receivePort.sendPort,
       onError: receivePort.sendPort,
     ).catchError((onError) {
@@ -204,12 +219,12 @@ class Tdlib {
 
   // exit
   bool exit(int clientId, {bool isClose = false}) {
-    if (isClose) {
-      invoke("close", clientId: clientId).catchError((onError) {});
-    }
     for (var i = 0; i < state_data.length; i++) {
       var loop_data = state_data[i];
       if (loop_data is Map && loop_data["isolate"] is Isolate && loop_data["client_id"] == clientId) {
+        if (isClose) {
+          invoke("close", clientId: clientId).catchError((onError) {});
+        }
         Isolate isolate = loop_data["isolate"] as Isolate;
         isolate.kill();
         try {
@@ -298,12 +313,12 @@ class Tdlib {
   }
 
   /// add this for handle update api
-  void on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) async {
+  void on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) {
     if (!getBoolean(type_update)) {
       throw {};
     }
     if (type_update.toString().toLowerCase() == "update") {
-      emitter.on("update", null, (Event ev, context) {
+      emitter.on("update", null, (Event ev, context) async {
         try {
           if (ev.eventData is List) {
             List jsonUpdate = (ev.eventData as List);
@@ -323,18 +338,29 @@ class Tdlib {
     }
   }
 
+  bool existClientId(int clientId) {
+    for (var i = 0; i < state_data.length; i++) {
+      var loop_data = state_data[i];
+      if (loop_data is Map && loop_data["isolate"] is Isolate && loop_data["client_id"] == clientId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// set up authorizationStateWaitTdlibParameters new client without more code
   Future<void> initClient(UpdateTd update, {Map? tdlibParameters, int? clientId, bool isVoid = false}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
+        var optios = client_option;
         if (tdlibParameters != null) {
-          client_option.addAll(tdlibParameters);
+          optios.addAll(tdlibParameters);
         }
         await invoke(
           "setTdlibParameters",
           parameters: {
-            "parameters": client_option,
+            "parameters": optios,
           },
           clientId: clientId,
           isVoid: isVoid,
@@ -382,24 +408,31 @@ class Tdlib {
       String regexMethodSend = r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
       if (Regex(regexMethodSend, "i").exec(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
+        jsonResult["options"] = {
+          "@type": "messageSendOptions",
+        };
+        parameters.forEach((key, value) {
+          if (value is bool) {
+            try {
+              jsonResult["options"][key.toString()] = value;
+            } catch (e) {}
+          }
+        });
         if (Regex("editMessage(Text)", "i").exec(parameters["@type"])) {
           jsonResult["@type"] = parameters["@type"];
         }
         jsonResult["input_message_content"] = {"@type": "inputMessageText", "disableWebPagePreview": false, "clearDraft": false};
         jsonResult["chat_id"] = parameters["chat_id"];
-        if (typeof(parameters["disable_notification"]) == "boolean") {
+        if (parameters["disable_notification"] is bool) {
           jsonResult["disable_notification"] = parameters["reply_to_message_id"];
         }
-        if (typeof(parameters["reply_to_message_id"]) == "number") {
+        if (parameters["reply_to_message_id"] is int) {
           jsonResult["reply_to_message_id"] = parameters["reply_to_message_id"];
         }
-        if (typeof(parameters["reply_markup"]) == "object") {
+        if (parameters["reply_markup"] is Map) {
           jsonResult["reply_markup"] = parameters["reply_markup"];
         }
-        if (getBoolean(parameters["parse_mode"])) {
-          if (typeof(parameters["parse_mode"]) != "string") {
-            parameters["parse_mode"] = "";
-          }
+        if (parameters["parse_mode"] is String) {
         } else {
           parameters["parse_mode"] = "";
         }
@@ -472,21 +505,21 @@ class Tdlib {
       if (Regex(r"^answerInlineQuery$", "i").exec(parameters["@type"])) {
         parameters["@type"] = "answerInlineQuery";
 
-        if (typeof(parameters["results"]) == "array") {
+        if (parameters["results"] is List) {
           List array_results = [];
           for (var i = 0; i < parameters["results"].length; i++) {
             Map loop_data = parameters["results"][i];
 
-            if (typeof(loop_data["type"]) == "string") {
+            if (loop_data["type"] is String) {
               loop_data["@type"] = loop_data["type"];
               loop_data.remove("type");
             }
-            if (typeof(loop_data["id"]) != "string") {
+            if (loop_data["id"] is String == false) {
               loop_data["id"] ??= "$i";
               loop_data["id"] = (loop_data["id"].toString());
             }
 
-            if (typeof(loop_data["reply_markup"]) == "object") {
+            if (loop_data["reply_markup"] is Map) {
               loop_data["reply_markup"] = (reply_markup(loop_data["reply_markup"]));
             }
             array_results.add(loop_data);
@@ -509,7 +542,7 @@ class Tdlib {
       data = {"@type": 'inputFileRemote', "id": content};
     } else if (Regex(r"^(\/|\.\.?\/|~\/)", "i").exec(content)) {
       data = {"@type": 'inputFileLocal', "path": content};
-    } else if (typeof(content) == 'number') {
+    } else if (content is int) {
       data = {"@type": 'inputFileId', "id": content};
     } else {
       data = {"@type": 'inputFileRemote', "id": content};
@@ -566,36 +599,58 @@ class Tdlib {
     }
     parameters ??= {};
     String random = getRandom(15);
-    if (typeof(parameters) == "object") {
+    if (parameters is Map) {
       parameters["@extra"] = random;
     } else {
       parameters["@extra"] = random;
     }
-    client_send(clientId, {"@type": method, ...parameters});
+    var requestMethod = {
+      "@type": method,
+      "client_id": clientId,
+      ...parameters,
+    };
+    await Future.delayed(Duration(milliseconds: 1));
+    client_send(
+      clientId,
+      requestMethod,
+    );
     if (isVoid) {
       return;
     }
-    bool condition = true;
     var result = {};
+    late int count = 0;
     on("update", (UpdateTd update) async {
       try {
-        Map updateOrigin = update.raw;
-        if (updateOrigin["@extra"] == random) {
-          updateOrigin.remove("@extra");
-          result = updateOrigin;
+        if (update.client_id == clientId) {
+          Map updateOrigin = update.raw;
+          if (updateOrigin["@extra"] == random) {
+            updateOrigin.remove("@extra");
+            result = updateOrigin;
+          }
         }
       } catch (e) {
-        rethrow;
+        result["@type"] = "error";
       }
     });
-    while (condition) {
+
+    while (true) {
       await Future.delayed(Duration(microseconds: 1));
-      if (typeof(result["@type"]) == "string") {
+      if (result["@type"] is String) {
         if (result["@type"] == "error") {
+          result["invoke_request"] = requestMethod;
           throw result;
         }
         return result;
       }
+      if (count >= count_request_loop) {
+        result = {
+          "@type": "error",
+          "message": "time out limit",
+          "invoke_request": requestMethod,
+        };
+        throw result;
+      }
+      count++;
     }
   }
 
@@ -621,9 +676,16 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
-    var result = client_execute(clientId, {"@type": method, ...parameters});
+    var requestMethod = {
+      "@type": method,
+      "client_id": clientId,
+      ...parameters,
+    };
+
+    var result = client_execute(clientId, requestMethod);
 
     if (result["@type"] == "error") {
+      result["invoke_request"] = requestMethod;
       throw result;
     }
     return result;
@@ -683,7 +745,7 @@ class Tdlib {
     });
 
     get_me["type"].forEach((key, value) {
-      if (typeof(value) == "boolean") {
+      if (value is bool) {
         result["detail"][key.toString()] = value;
       }
     });
@@ -717,7 +779,7 @@ class Tdlib {
   /// only support bot
   reply_markup(keyboard) {
     try {
-      if (typeof(keyboard["inline_keyboard"]) == "array" && keyboard["inline_keyboard"].length > 0) {
+      if (keyboard["inline_keyboard"] is List && keyboard["inline_keyboard"].length > 0) {
         Map json = {"@type": "replyMarkupInlineKeyboard"};
         List array_rows = [];
         for (var i = 0; i < keyboard["inline_keyboard"].length; i++) {
@@ -786,7 +848,7 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(String method, {Map<String, dynamic>? parameters, int? clientId, bool isVoid = false}) async {
+  request(String method, {Map? parameters, int? clientId, bool isVoid = false}) async {
     clientId ??= client_id;
     parameters ??= {};
     if (parameters["chat_id"] is String && Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
@@ -861,7 +923,7 @@ class Tdlib {
       });
       while (true) {
         await Future.delayed(Duration(milliseconds: 1));
-        if (typeof(result["@type"]) == "string") {
+        if (result["@type"] is String) {
           if (result["@type"] == "error") {
             throw result;
           }
@@ -871,7 +933,7 @@ class Tdlib {
       }
     }
     if (Regex(r"^editMessageText$", "i").exec(method)) {
-      return await editMessageText(parameters["chat_id"], parameters["message_id"], parameters["text"], parse_mode: (typeof(parameters["parse_mode"] ?? "") == "string") ? parameters["parse_mode"] : "html", entities: (typeof(parameters["entities"] ?? []) == "array") ? parameters["entities"] : [], disable_web_page_preview: (typeof(parameters["disable_web_page_preview"] ?? false) == "boolean") ? parameters["disable_web_page_preview"] : false, replyMarkup: (typeof(parameters["reply_markup"] ?? {}) == "object") ? parameters["reply_markup"] : {}, clientId: clientId);
+      return await editMessageText(parameters["chat_id"], parameters["message_id"], parameters["text"], parse_mode: (parameters["parse_mode"] ?? "" is String) ? parameters["parse_mode"] : "html", entities: (parameters["entities"] ?? [] is List) ? parameters["entities"] : [], disable_web_page_preview: (parameters["disable_web_page_preview"] ?? false is bool) ? parameters["disable_web_page_preview"] : false, replyMarkup: (parameters["reply_markup"] ?? {} is Map) ? parameters["reply_markup"] : {}, clientId: clientId);
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
       return await invoke("joinChat",
@@ -1119,7 +1181,7 @@ class Tdlib {
           );
           json["id"] = chat_id;
           json["title"] = getchat["title"];
-          if (typeof(getSupergroup["username"]) == "string") {
+          if (getSupergroup["username"] is String) {
             json["username"] = getSupergroup["username"];
           }
           if (getSupergroup["status"] is Map) {
@@ -1209,7 +1271,7 @@ class Tdlib {
           );
           json["id"] = chat_id;
           json["title"] = getchat["title"];
-          if (typeof(getBasicGroup["status"]) == "object") {
+          if (getBasicGroup["status"] is Map) {
             json["status"] = getBasicGroup["status"]["@type"].toString().toLowerCase().replaceAll(RegExp("chatMemberStatus", caseSensitive: false), "");
           }
           json["type"] = "group";
@@ -1229,7 +1291,7 @@ class Tdlib {
             "unread_mention_count": getchat["unread_mention_count"] ?? 0,
           };
           if (is_detail) {
-            if (typeof(getchat["last_message"]) == "object") {
+            if (getchat["last_message"] is Map) {
               var last_message = await jsonMessage(
                 getchat["last_message"],
                 from_data: json,
@@ -1539,7 +1601,7 @@ class Tdlib {
         json["api_message_id"] = getMessageId(update["id"], true);
         update.forEach((key, value) {
           try {
-            if (typeof(value) == "boolean") {
+            if (value is bool) {
               json[key] = value;
             }
           } catch (e) {}
@@ -1551,9 +1613,9 @@ class Tdlib {
           }
         }
 
-        if (typeof(update["forward_info"]) == "object") {
+        if (update["forward_info"] is Map) {
           var forward_info = update["forward_info"];
-          if (typeof(forward_info["origin"]) == "object") {
+          if (forward_info["origin"] is Map) {
             if (forward_info["origin"]["@type"] == "messageForwardOriginChannel") {
               Map forward_json = {"id": forward_info["origin"]["chat_id"], "first_name": "", "title": "", "type": "", "detail": {}, "last_message": {}};
               try {
