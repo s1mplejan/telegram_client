@@ -187,3 +187,5 @@
 ## 0.3.24
 - delete some method
   
+## 0.3.25
+- improve speed and add some method and new parameters

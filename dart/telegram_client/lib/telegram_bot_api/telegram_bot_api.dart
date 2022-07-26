@@ -46,7 +46,22 @@ class TelegramBotApi {
     "type": "bot",
     "logger": false,
     "api": "https://api.telegram.org/",
-    "allowed_updates": ["message", "edited_message", "channel_post", "edited_channel_post", "inline_query", "chosen_inline_result", "callback_query", "shipping_query", "pre_checkout_query", "poll", "poll_answer", "my_chat_member", "chat_member", "chat_join_request"],
+    "allowed_updates": [
+      "message",
+      "edited_message",
+      "channel_post",
+      "edited_channel_post",
+      "inline_query",
+      "chosen_inline_result",
+      "callback_query",
+      "shipping_query",
+      "pre_checkout_query",
+      "poll",
+      "poll_answer",
+      "my_chat_member",
+      "chat_member",
+      "chat_join_request"
+    ],
   };
 
   EventEmitter emitter = EventEmitter();
@@ -170,7 +185,9 @@ class TelegramBotApi {
   }
 
   /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient({required String tokenBot, required Map<String, dynamic> clientOption}) async {
+  Future<void> initIsolateNewClient(
+      {required String tokenBot,
+      required Map<String, dynamic> clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     client_option.addAll(clientOption);
     await initIsolate(tokenBot: tokenBot, clientOption: client_option);
@@ -180,7 +197,9 @@ class TelegramBotApi {
   bool exit(String? tokenBot) {
     for (var i = 0; i < state_data.length; i++) {
       var loop_data = state_data[i];
-      if (loop_data is Map && loop_data["isolate"] is Isolate && loop_data["token_bot"] == tokenBot) {
+      if (loop_data is Map &&
+          loop_data["isolate"] is Isolate &&
+          loop_data["token_bot"] == tokenBot) {
         Isolate isolate = loop_data["isolate"] as Isolate;
         isolate.kill();
         try {
@@ -203,13 +222,15 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(String method, {Map? parameters, bool is_form = false, String? tokenBot}) async {
+  dynamic request(String method,
+      {Map? parameters, bool is_form = false, String? tokenBot}) async {
     parameters ??= {};
     tokenBot ??= token_bot;
     var option = {
       "method": "post",
     };
-    var url = "${client_option["api"].toString()}${client_option["type"].toString()}${tokenBot.toString()}/${method.toString()}";
+    var url =
+        "${client_option["api"].toString()}${client_option["type"].toString()}${tokenBot.toString()}/${method.toString()}";
     if (is_form) {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
@@ -249,8 +270,10 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
-          getFile["result"]["file_url"] = "$url$token_bot/${getFile["result"]["file_path"]}";
+          var url =
+              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
+          getFile["result"]["file_url"] =
+              "$url$token_bot/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -271,9 +294,11 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  Future<dynamic> requestForm(method, {var parameters, String? tokenBot}) async {
+  Future<dynamic> requestForm(method,
+      {var parameters, String? tokenBot}) async {
     tokenBot ??= token_bot;
-    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot);
+    return await request(method,
+        parameters: parameters, is_form: true, tokenBot: tokenBot);
   }
 
   /// example:
@@ -283,7 +308,9 @@ class TelegramBotApi {
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
+      var filename = path
+          .toString()
+          .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {
@@ -304,7 +331,8 @@ class UpdateApi {
   late Map client_option;
 
   /// Update td for make update support raw, raw api, raw api light
-  UpdateApi(this.update, {required String tokenBot, required Map clientOption}) {
+  UpdateApi(this.update,
+      {required String tokenBot, required Map clientOption}) {
     token_bot = tokenBot;
     client_option = clientOption;
   }

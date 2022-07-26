@@ -136,7 +136,6 @@ class Tdlib {
         "new_verbosity_level": client_option['new_verbosity_level'],
       });
       client_id = client_create();
-      start();
     }
   }
 
@@ -147,31 +146,6 @@ class Tdlib {
     } else {
       return (message_id * 1048576).toInt();
     }
-  }
-
-  /// if you don't like set authtdlib you can call this method by default this automatically start
-  void start({int? clientId}) {
-    clientId ??= client_id;
-    on("update", (UpdateTd update) async {
-      try {
-        Map updateOrigin = update.raw;
-        if (update.raw["@type"] == "updateAuthorizationState") {
-          if (update.raw["authorization_state"] is Map) {
-            if (client_id == update.client_id) {
-              await initClient(
-                update,
-                clientId: update.client_id,
-                tdlibParameters: update.client_option,
-              );
-            }
-          }
-        }
-
-        if (updateOrigin["@type"] == "updateConnectionState" && updateOrigin["state"]["@type"] == "connectionStateReady") {}
-      } catch (e) {
-        print(e);
-      }
-    });
   }
 
   /// add this for multithread on flutter apps
@@ -218,7 +192,7 @@ class Tdlib {
   }
 
   // exit
-  bool exit(int clientId, {bool isClose = false}) {
+  bool exitClient(int clientId, {bool isClose = false}) {
     for (var i = 0; i < state_data.length; i++) {
       var loop_data = state_data[i];
       if (loop_data is Map && loop_data["isolate"] is Isolate && loop_data["client_id"] == clientId) {
@@ -313,29 +287,30 @@ class Tdlib {
   }
 
   /// add this for handle update api
-  void on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) {
+  Listener on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) {
     if (!getBoolean(type_update)) {
       throw {};
     }
-    if (type_update.toString().toLowerCase() == "update") {
-      emitter.on("update", null, (Event ev, context) async {
-        try {
-          if (ev.eventData is List) {
-            List jsonUpdate = (ev.eventData as List);
-            return callback(UpdateTd(
-              update: jsonUpdate[0],
-              clientId: jsonUpdate[1],
-              clientOption: jsonUpdate[2],
-            ));
-          }
-        } catch (e) {
-          print(e);
-          if (onError != null) {
-            return onError(e);
-          }
+    return emitter.on("update", null, (Event ev, context) async {
+      if (emitter.count > 5) {
+        print(emitter.count);
+        exit(1);
+      }
+      try {
+        if (ev.eventData is List) {
+          List jsonUpdate = (ev.eventData as List);
+          return callback(UpdateTd(
+            update: jsonUpdate[0],
+            clientId: jsonUpdate[1],
+            clientOption: jsonUpdate[2],
+          ));
         }
-      });
-    }
+      } catch (e) {
+        if (onError != null) {
+          return onError(e);
+        }
+      }
+    });
   }
 
   bool existClientId(int clientId) {
@@ -349,7 +324,7 @@ class Tdlib {
   }
 
   /// set up authorizationStateWaitTdlibParameters new client without more code
-  Future<void> initClient(UpdateTd update, {Map? tdlibParameters, int? clientId, bool isVoid = false}) async {
+  Future<void> initClient(UpdateTd update, {Map? tdlibParameters, int? clientId, bool isVoid = true}) async {
     if (update.raw["authorization_state"] is Map) {
       var authStateType = update.raw["authorization_state"]["@type"];
       if (authStateType == "authorizationStateWaitTdlibParameters") {
@@ -592,11 +567,13 @@ class Tdlib {
   ///   }
   /// });
   /// ```
-  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientId, bool isVoid = false}) async {
+  Future<dynamic> invoke(String method, {Map<String, dynamic>? parameters, int? clientId, bool isVoid = false, Duration? delayDuration, int? countRequestLoop}) async {
     clientId ??= client_id;
+    countRequestLoop ??= count_request_loop;
     if (clientId == 0) {
       clientId = client_id;
     }
+
     parameters ??= {};
     String random = getRandom(15);
     if (parameters is Map) {
@@ -617,9 +594,9 @@ class Tdlib {
     if (isVoid) {
       return;
     }
-    var result = {};
+    late Map result = {};
     late int count = 0;
-    on("update", (UpdateTd update) async {
+    var listener = on("update", (UpdateTd update) async {
       try {
         if (update.client_id == clientId) {
           Map updateOrigin = update.raw;
@@ -634,23 +611,28 @@ class Tdlib {
     });
 
     while (true) {
-      await Future.delayed(Duration(microseconds: 1));
+      
+      await Future.delayed(delayDuration ?? Duration(milliseconds: 500));
       if (result["@type"] is String) {
+        emitter.off(listener);
         if (result["@type"] == "error") {
           result["invoke_request"] = requestMethod;
           throw result;
         }
         return result;
       }
-      if (count >= count_request_loop) {
-        result = {
-          "@type": "error",
-          "message": "time out limit",
-          "invoke_request": requestMethod,
-        };
-        throw result;
+      if (countRequestLoop > 0) {
+        if (count > countRequestLoop) {
+          emitter.off(listener);
+          result = {
+            "@type": "error",
+            "message": "time out limit",
+            "invoke_request": requestMethod,
+          };
+          throw result;
+        }
+        count++;
       }
-      count++;
     }
   }
 
@@ -681,9 +663,7 @@ class Tdlib {
       "client_id": clientId,
       ...parameters,
     };
-
     var result = client_execute(clientId, requestMethod);
-
     if (result["@type"] == "error") {
       result["invoke_request"] = requestMethod;
       throw result;
@@ -899,7 +879,7 @@ class Tdlib {
         return result_request;
       }
       var result = {};
-      on("update", (UpdateTd update) async {
+      var listen = on("update", (UpdateTd update) async {
         try {
           Map updateOrigin = update.raw;
           if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
@@ -924,6 +904,7 @@ class Tdlib {
       while (true) {
         await Future.delayed(Duration(milliseconds: 1));
         if (result["@type"] is String) {
+          emitter.off(listen);
           if (result["@type"] == "error") {
             throw result;
           }
