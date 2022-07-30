@@ -27,6 +27,10 @@ Telegram client dart library to make application telegram based flutter and user
 
 <img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_1.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_2.png" width="350"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_3.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/azkadevbot_4.png" width="350px">
 
+2. Free Run User Bot
+
+https://user-images.githubusercontent.com/82513502/178153444-5f1a9074-8f43-48c1-bb12-ab1493d17143.mp4
+
 ---
 
 ### Docs
@@ -63,7 +67,10 @@ Telegram client dart library to make application telegram based flutter and user
 
 # Dart
 
-## Install Library
+## Use library
+
+1. Install Library
+
 ```bash
 dart pub add telegram_client
 ```
@@ -72,8 +79,42 @@ dart pub add telegram_client
 flutter pub add telegram_client
 ```
 
+2. Build [Tdlib](https://github.com/td/tdlib)
+3. Add library on project
+  if you make app telegram based this library, you must add native compiled library
+  
+  - Android
+  Edit project/android/app/build.gradle
+  ```bash
+  main {
+    jniLibs.srcDirs = ['src/jniLibs']
+  }
+  ```
+  ex:
+  ```bash
+  android { 
+    ...
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            jniLibs.srcDirs = ['src/jniLibs']
+        }
+    }
+    ...
+  }
+  ```
+  add compiled library specified platform
+  add project/android/app/src/jniLibs/{ABI_DEVICE}/libtdjson.so
+  example:
+  ```bash
+  project/android/app/src/jniLibs/arm64-v8a/libtdjson.so
+  ```
+
+for other devices, I don't know because I only have android and linux
+
+
 - [Doc + Example](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/doc)
-- [Youtube](https://youtube.com/c/hexaminate)
+- [Youtube-Tutorial](https://www.youtube.com/channel/UC928-F8HenjZD1zNdMY42vA)
 - [Telegram Group Support](https://t.me/developer_group_chat)
   
 ## Feature

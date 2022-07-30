@@ -28,7 +28,7 @@ import 'dart:math';
 import 'dart:isolate';
 import 'dart:convert' as convert;
 import 'package:universal_io/io.dart';
-import 'package:ffi/ffi.dart' as pkgffi;
+import 'package:ffi/ffi.dart' as pkgffi; 
 import 'package:hexaminate/hexaminate.dart';
 
 /// Cheatset
@@ -66,21 +66,16 @@ class Tdlib {
     "database_key": "",
     "start": true,
   };
-  late int client_id = 0;
-  bool is_stop = false;
-  bool is_android = Platform.isAndroid;
+  late int client_id = 0; 
+  late bool is_android = Platform.isAndroid;
   EventEmitter emitter = EventEmitter();
   late int count_request_loop = 0;
   late Duration delay_update = Duration(milliseconds: 1);
-  late double timeOutUpdate;
-  bool starting = false;
-  Completer? stopping;
-  bool running = false;
-  bool get isRunning => running;
+  late double timeOutUpdate;  
   late List state_data = [];
   late ffi.DynamicLibrary TdlibPathFile = ffi.DynamicLibrary.process();
 
-  /// Cheatset
+  // / Cheatset
   ///
   /// ```dart
   /// Tdlib tg = Tdlib("libtdjson.so", {
@@ -99,18 +94,18 @@ class Tdlib {
   ///   'new_verbosity_level': 0,
   ///   'application_version': 'v1',
   ///   'device_model': 'Telegram Client HexaMinate',
-  ///   'system_version': Platform.operatingSystemVersion,
-  ///   "database_key": "",
-  ///   "start": true,
-  /// });
-  /// ````
-  ///
-  /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
+  // /   'system_version': Platform.operatingSystemVersion,
+  // /   "database_key": "",
+  // /   "start": true,
+  // / });
+  // / ````
+  // /
+  // / More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
   Tdlib(
     this.pathTdl, {
     Map? clientOption,
     int? clientId,
-    this.count_request_loop = 10000000,
+    this.count_request_loop = 1000,
     Duration? delayUpdate,
     this.timeOutUpdate = 1.0,
   }) {
@@ -131,7 +126,7 @@ class Tdlib {
     if (client_option['new_verbosity_level'] is int == false) {
       client_option['new_verbosity_level'] = 0;
     }
-    if (client_option["start"] is bool && client_option["start"]) {
+    if (client_option["start"] == true) {
       invokeSync("setLogVerbosityLevel", parameters: {
         "new_verbosity_level": client_option['new_verbosity_level'],
       });
@@ -215,32 +210,6 @@ class Tdlib {
   /// add this for multithread new client on flutter apps
   Future<void> initIsolateNewClient({required int clientId, required Map clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
-    // if (clientOption["database_directory"] is String && (clientOption["database_directory"] as String).isNotEmpty) {
-    //   if (client_option["database_directory"] == clientOption["database_directory"]) {
-    //     throw {
-    //       "message": "initIsolateNewClient database_directory harus beda!",
-    //     };
-    //   } else {
-    //     client_option["database_directory"] = clientOption["database_directory"];
-    //   }
-    // } else {
-    //   throw {
-    //     "message": "initIsolateNewClient database_directory harus isi!",
-    //   };
-    // }
-    // if (clientOption["files_directory"] is String && (clientOption["files_directory"] as String).isNotEmpty) {
-    //   if (client_option["files_directory"] == clientOption["files_directory"]) {
-    //     throw {
-    //       "message": "initIsolateNewClient files_directory harus beda!",
-    //     };
-    //   } else {
-    //     client_option["files_directory"] = clientOption["files_directory"];
-    //   }
-    // } else {
-    //   throw {
-    //     "message": "initIsolateNewClient files_directory harus isi!",
-    //   };
-    // }
     client_option.addAll(clientOption);
     await initIsolate(clientId: clientId, clientOption: client_option);
   }
@@ -581,12 +550,25 @@ class Tdlib {
     } else {
       parameters["@extra"] = random;
     }
+    if (RegExp(r"^(sendMessage|getChatMember)$", caseSensitive: false).hasMatch(method)) {
+      if (parameters["chat_id"] is int) {
+        client_send(
+          clientId,
+          {"@type": "getChat", "chat_id": parameters["chat_id"]},
+        );
+      }
+      if (parameters["user_id"] is int) {
+        client_send(
+          clientId,
+          {"@type": "getUser", "user_id": parameters["user_id"]},
+        );
+      }
+    }
     var requestMethod = {
       "@type": method,
       "client_id": clientId,
       ...parameters,
     };
-    await Future.delayed(Duration(milliseconds: 1));
     client_send(
       clientId,
       requestMethod,
@@ -611,7 +593,6 @@ class Tdlib {
     });
 
     while (true) {
-      
       await Future.delayed(delayDuration ?? Duration(milliseconds: 500));
       if (result["@type"] is String) {
         emitter.off(listener);
@@ -2300,7 +2281,7 @@ class Tdlib {
   }
 
   /// if you build flutter apps recommended to call this for call api
-  Future<Map> appRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, int? clientId}) async {
+  Future<Map> appRequest(String method, {Map<String, dynamic>? parameters, bool is_sync = false, bool is_raw = false, bool is_log = false, int? clientId, Duration? delayDuration, int? countRequestLoop}) async {
     clientId ??= client_id;
     var result = {};
     try {
@@ -2317,6 +2298,8 @@ class Tdlib {
             method,
             parameters: parameters,
             clientId: clientId,
+            delayDuration: delayDuration,
+            countRequestLoop: countRequestLoop,
           );
         } else {
           result = await request(

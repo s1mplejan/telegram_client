@@ -37,9 +37,9 @@ import 'dart:isolate';
 /// ````
 ///
 class TelegramBotApi {
-  final String token_bot;
+  late String token_bot;
 
-  final Map client_option = {
+  late Map client_option = {
     "botPath": "/bot/",
     "userPath": "/user/",
     "port": 8080,
@@ -223,14 +223,19 @@ class TelegramBotApi {
   /// });
   /// ```
   dynamic request(String method,
-      {Map? parameters, bool is_form = false, String? tokenBot}) async {
+      {Map? parameters,
+      bool is_form = false,
+      String? tokenBot,
+      String? urlApi,
+      String? clientType}) async {
+    clientType ??= client_option["type"];
+    urlApi ??= client_option["api"];
     parameters ??= {};
     tokenBot ??= token_bot;
     var option = {
       "method": "post",
     };
-    var url =
-        "${client_option["api"].toString()}${client_option["type"].toString()}${tokenBot.toString()}/${method.toString()}";
+    var url = "$urlApi$clientType${tokenBot.toString()}/${method.toString()}";
     if (is_form) {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
@@ -270,8 +275,7 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url =
-              "${option["api"].toString().toLowerCase()}file/${option["type"].toString().toLowerCase()}";
+          var url = "$urlApi/file/$clientType${tokenBot.toString()}";
           getFile["result"]["file_url"] =
               "$url$token_bot/${getFile["result"]["file_path"]}";
           return getFile;

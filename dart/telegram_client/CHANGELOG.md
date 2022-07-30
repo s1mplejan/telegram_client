@@ -189,3 +189,12 @@
   
 ## 0.3.25
 - improve speed and add some method and new parameters
+  
+## 0.3.26
+- add delay for improve speed
+  
+## 0.3.27
+- add parameters tg bot api
+
+## 0.3.28
+- update readme example
