@@ -28,7 +28,7 @@ import 'dart:math';
 import 'dart:isolate';
 import 'dart:convert' as convert;
 import 'package:universal_io/io.dart';
-import 'package:ffi/ffi.dart' as pkgffi; 
+import 'package:ffi/ffi.dart' as pkgffi;
 import 'package:hexaminate/hexaminate.dart';
 
 /// Cheatset
@@ -66,12 +66,14 @@ class Tdlib {
     "database_key": "",
     "start": true,
   };
-  late int client_id = 0; 
+  late int client_id = 0;
   late bool is_android = Platform.isAndroid;
-  EventEmitter emitter = EventEmitter();
+  late EventEmitter event_emitter = EventEmitter();
   late int count_request_loop = 0;
   late Duration delay_update = Duration(milliseconds: 1);
-  late double timeOutUpdate;  
+  late Duration delay_invoke = Duration(milliseconds: 500);
+
+  late double timeOutUpdate;
   late List state_data = [];
   late ffi.DynamicLibrary TdlibPathFile = ffi.DynamicLibrary.process();
 
@@ -101,14 +103,13 @@ class Tdlib {
   // / ````
   // /
   // / More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(
-    this.pathTdl, {
-    Map? clientOption,
-    int? clientId,
-    this.count_request_loop = 1000,
-    Duration? delayUpdate,
-    this.timeOutUpdate = 1.0,
-  }) {
+  Tdlib(this.pathTdl, {Map? clientOption, int? clientId, this.count_request_loop = 1000, Duration? delayUpdate, this.timeOutUpdate = 1.0, EventEmitter? eventEmitter, Duration? delayInvoke}) {
+    if (delayInvoke != null) {
+      delay_invoke = delayInvoke;
+    }
+    if (eventEmitter != null) {
+      event_emitter = eventEmitter;
+    }
     if (delayUpdate != null) {
       delay_update = delayUpdate;
     }
@@ -153,7 +154,7 @@ class Tdlib {
     }
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) async {
-      emitter.emit("update", null, message);
+      event_emitter.emit("update", null, message);
     });
 
     Isolate isolate = await Isolate.spawn(
@@ -257,14 +258,7 @@ class Tdlib {
 
   /// add this for handle update api
   Listener on(String type_update, Function(UpdateTd update) callback, {void Function(Object data)? onError}) {
-    if (!getBoolean(type_update)) {
-      throw {};
-    }
-    return emitter.on("update", null, (Event ev, context) async {
-      if (emitter.count > 5) {
-        print(emitter.count);
-        exit(1);
-      }
+    return event_emitter.on("update", null, (Event ev, context) async {
       try {
         if (ev.eventData is List) {
           List jsonUpdate = (ev.eventData as List);
@@ -578,7 +572,7 @@ class Tdlib {
     }
     late Map result = {};
     late int count = 0;
-    var listener = on("update", (UpdateTd update) async {
+    Listener listener = on("update", (UpdateTd update) async {
       try {
         if (update.client_id == clientId) {
           Map updateOrigin = update.raw;
@@ -593,9 +587,9 @@ class Tdlib {
     });
 
     while (true) {
-      await Future.delayed(delayDuration ?? Duration(milliseconds: 500));
+      await Future.delayed(delayDuration ?? delay_invoke);
       if (result["@type"] is String) {
-        emitter.off(listener);
+        event_emitter.off(listener);
         if (result["@type"] == "error") {
           result["invoke_request"] = requestMethod;
           throw result;
@@ -604,7 +598,7 @@ class Tdlib {
       }
       if (countRequestLoop > 0) {
         if (count > countRequestLoop) {
-          emitter.off(listener);
+          event_emitter.off(listener);
           result = {
             "@type": "error",
             "message": "time out limit",
@@ -885,7 +879,7 @@ class Tdlib {
       while (true) {
         await Future.delayed(Duration(milliseconds: 1));
         if (result["@type"] is String) {
-          emitter.off(listen);
+          event_emitter.off(listen);
           if (result["@type"] == "error") {
             throw result;
           }
@@ -893,6 +887,14 @@ class Tdlib {
           return {"ok": true, "result": result};
         }
       }
+    }
+    if (Regex(r"^addChatMember$", "i").exec(method)) {
+      return await invoke(
+        "addChatMember",
+        parameters: {"chat_id": parameters["chat_id"], "user_id": parameters["user_id"]},
+        clientId: clientId,
+        isVoid: isVoid,
+      );
     }
     if (Regex(r"^editMessageText$", "i").exec(method)) {
       return await editMessageText(parameters["chat_id"], parameters["message_id"], parameters["text"], parse_mode: (parameters["parse_mode"] ?? "" is String) ? parameters["parse_mode"] : "html", entities: (parameters["entities"] ?? [] is List) ? parameters["entities"] : [], disable_web_page_preview: (parameters["disable_web_page_preview"] ?? false is bool) ? parameters["disable_web_page_preview"] : false, replyMarkup: (parameters["reply_markup"] ?? {} is Map) ? parameters["reply_markup"] : {}, clientId: clientId);

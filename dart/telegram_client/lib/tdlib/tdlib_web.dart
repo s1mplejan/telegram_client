@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches
-
 // ignore: slash_for_doc_comments
 /**
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -21,8 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF  CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 **/
-
-part of telegram_client;
 
 class Tdlib {
   Tdlib();

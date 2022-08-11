@@ -118,10 +118,13 @@ class TelegramBotApi {
       Map params = parameters;
       var form = MultipartRequest("post", Uri.parse(url));
       params.forEach((key, value) async {
-        if (typeData(value) == "object") {
-          if (typeData(value["is_post_file"]) == "boolean" &&
-              value["is_post_file"]) {
+        if (value is Map) {
+          if (value["is_post_file"] == true) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
+            form.files.add(files);
+          } else if (value["is_post_buffer"] == true) {
+            var files = MultipartFile.fromBytes(key, value["buffer"],
+                filename: value["name"], contentType: value["content_type"]);
             form.files.add(files);
           } else {
             form.fields[key] = convert.json.encode(value);
@@ -203,6 +206,15 @@ class TelegramBotApi {
       jsonData["is_post_file"] = false;
       jsonData["file_path"] = path;
     }
+    return jsonData;
+  }
+
+  buffer(List<int> data, {String? name}) {
+    Map jsonData = {
+      "is_post_buffer": true,
+    };
+    jsonData["buffer"] = data;
+    jsonData["name"] = name;
     return jsonData;
   }
 }

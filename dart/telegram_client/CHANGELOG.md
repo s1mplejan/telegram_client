@@ -198,3 +198,15 @@
 
 ## 0.3.28
 - update readme example
+  
+## 0.3.29
+- add parameters delayInvoke and eventEmitter
+
+## 0.3.30
+- add support send file buffer telegram bot api
+
+## 0.3.31
+- fix send buffer file telegram bot api web
+
+## 0.3.32
+- fix getfile

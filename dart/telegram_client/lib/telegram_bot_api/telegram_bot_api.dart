@@ -244,6 +244,10 @@ class TelegramBotApi {
           if (value["is_post_file"] == true) {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
+          } else if (value["is_post_buffer"] == true) {
+            var files = MultipartFile.fromBytes(key, value["buffer"],
+                filename: value["name"], contentType: value["content_type"]);
+            form.files.add(files);
           } else {
             form.fields[key] = convert.json.encode(value);
           }
@@ -275,9 +279,9 @@ class TelegramBotApi {
       if (response.statusCode == 200) {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
-          var url = "$urlApi/file/$clientType${tokenBot.toString()}";
+          var url = "${urlApi}file/$clientType${tokenBot.toString()}";
           getFile["result"]["file_url"] =
-              "$url$token_bot/${getFile["result"]["file_path"]}";
+              "$url/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -324,6 +328,15 @@ class TelegramBotApi {
       jsonData["is_post_file"] = false;
       jsonData["file_path"] = path;
     }
+    return jsonData;
+  }
+
+  buffer(List<int> data, {String? name}) {
+    Map jsonData = {
+      "is_post_buffer": true,
+    };
+    jsonData["buffer"] = data;
+    jsonData["name"] = name;
     return jsonData;
   }
 }
