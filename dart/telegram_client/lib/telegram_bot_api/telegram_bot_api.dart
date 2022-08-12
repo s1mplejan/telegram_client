@@ -206,7 +206,15 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(String method, {Map? parameters, bool is_form = false, String? tokenBot, String? urlApi, String? clientType, void Function(int bytesCount, int totalBytes)? onUploadProgress}) async {
+  dynamic request(
+    String method, {
+    Map? parameters,
+    bool is_form = false,
+    String? tokenBot,
+    String? urlApi,
+    String? clientType,
+    void Function(int bytesCount, int totalBytes)? onUploadProgress,
+  }) async {
     clientType ??= client_option["type"];
     urlApi ??= client_option["api"];
     parameters ??= {};
@@ -258,7 +266,7 @@ class TelegramBotApi {
             throw error;
           },
           handleDone: (sink) {
-            sink.close(); 
+            sink.close();
           },
         ),
       );
@@ -275,7 +283,7 @@ class TelegramBotApi {
         return body;
       } else {
         throw body;
-      } 
+      }
     } else {
       option["body"] = convert.json.encode(parameters);
       var response = await post(
@@ -312,9 +320,17 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  Future<dynamic> requestForm(method, {var parameters, String? tokenBot}) async {
+  Future<dynamic> requestForm(
+    String method, {
+    Map? parameters,
+    bool is_form = false,
+    String? tokenBot,
+    String? urlApi,
+    String? clientType,
+    void Function(int bytesCount, int totalBytes)? onUploadProgress,
+  }) async {
     tokenBot ??= token_bot;
-    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot);
+    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot, urlApi: urlApi,clientType: clientType, onUploadProgress: onUploadProgress);
   }
 
   /// example:
