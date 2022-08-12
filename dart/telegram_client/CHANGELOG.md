@@ -213,3 +213,9 @@
   
 ## 0.3.33
 - addChatMember method
+
+## 0.3.34
+- add upload proggres telegram bot api
+
+## 0.3.35
+- add download with proggres telegram bot api

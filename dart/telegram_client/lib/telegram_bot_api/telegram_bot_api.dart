@@ -49,7 +49,22 @@ class TelegramBotApi {
     "type": "bot",
     "logger": false,
     "api": "https://api.telegram.org/",
-    "allowed_updates": ["message", "edited_message", "channel_post", "edited_channel_post", "inline_query", "chosen_inline_result", "callback_query", "shipping_query", "pre_checkout_query", "poll", "poll_answer", "my_chat_member", "chat_member", "chat_join_request"],
+    "allowed_updates": [
+      "message",
+      "edited_message",
+      "channel_post",
+      "edited_channel_post",
+      "inline_query",
+      "chosen_inline_result",
+      "callback_query",
+      "shipping_query",
+      "pre_checkout_query",
+      "poll",
+      "poll_answer",
+      "my_chat_member",
+      "chat_member",
+      "chat_join_request"
+    ],
   };
 
   EventEmitter emitter = EventEmitter();
@@ -173,7 +188,9 @@ class TelegramBotApi {
   }
 
   /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient({required String tokenBot, required Map<String, dynamic> clientOption}) async {
+  Future<void> initIsolateNewClient(
+      {required String tokenBot,
+      required Map<String, dynamic> clientOption}) async {
     await Future.delayed(Duration(seconds: 2));
     client_option.addAll(clientOption);
     await initIsolate(tokenBot: tokenBot, clientOption: client_option);
@@ -183,7 +200,9 @@ class TelegramBotApi {
   bool exit(String? tokenBot) {
     for (var i = 0; i < state_data.length; i++) {
       var loop_data = state_data[i];
-      if (loop_data is Map && loop_data["isolate"] is Isolate && loop_data["token_bot"] == tokenBot) {
+      if (loop_data is Map &&
+          loop_data["isolate"] is Isolate &&
+          loop_data["token_bot"] == tokenBot) {
         Isolate isolate = loop_data["isolate"] as Isolate;
         isolate.kill();
         try {
@@ -234,7 +253,8 @@ class TelegramBotApi {
             var files = await MultipartFile.fromPath(key, value["file_path"]);
             form.files.add(files);
           } else if (value["is_post_buffer"] == true) {
-            var files = MultipartFile.fromBytes(key, value["buffer"], filename: value["name"], contentType: value["content_type"]);
+            var files = MultipartFile.fromBytes(key, value["buffer"],
+                filename: value["name"], contentType: value["content_type"]);
             form.files.add(files);
           } else {
             form.fields[key] = convert.json.encode(value);
@@ -299,7 +319,8 @@ class TelegramBotApi {
         if (method.toString().toLowerCase() == "getfile") {
           var getFile = convert.json.decode(response.body);
           var url = "${urlApi}file/$clientType${tokenBot.toString()}";
-          getFile["result"]["file_url"] = "$url/${getFile["result"]["file_path"]}";
+          getFile["result"]["file_url"] =
+              "$url/${getFile["result"]["file_path"]}";
           return getFile;
         } else {
           return convert.json.decode(response.body);
@@ -330,7 +351,51 @@ class TelegramBotApi {
     void Function(int bytesCount, int totalBytes)? onUploadProgress,
   }) async {
     tokenBot ??= token_bot;
-    return await request(method, parameters: parameters, is_form: true, tokenBot: tokenBot, urlApi: urlApi,clientType: clientType, onUploadProgress: onUploadProgress);
+    return await request(method,
+        parameters: parameters,
+        is_form: true,
+        tokenBot: tokenBot,
+        urlApi: urlApi,
+        clientType: clientType,
+        onUploadProgress: onUploadProgress);
+  }
+
+  /// donload file with proggres
+  Future<String> fileDownload(
+    String url, {
+    required String path,
+    void Function(int bytes, int totalBytes)? onDownloadProgress,
+  }) async {
+    final httpClient = HttpClient();
+    final request = await httpClient.getUrl(Uri.parse(url));
+    request.headers
+        .add(HttpHeaders.contentTypeHeader, "application/octet-stream");
+    var httpResponse = await request.close();
+    int byteCount = 0;
+    int totalBytes = httpResponse.contentLength;
+    File file = File(path);
+    var raf = file.openSync(mode: FileMode.write);
+    Completer completer = Completer<String>();
+    httpResponse.listen(
+      (data) {
+        byteCount += data.length;
+        raf.writeFromSync(data);
+        if (onDownloadProgress != null) {
+          onDownloadProgress(byteCount, totalBytes);
+        }
+      },
+      onDone: () {
+        raf.closeSync();
+        completer.complete(file.path);
+      },
+      onError: (e) {
+        raf.closeSync();
+        file.deleteSync();
+        completer.completeError(e);
+      },
+      cancelOnError: true,
+    );
+    return await completer.future;
   }
 
   /// example:
@@ -340,7 +405,9 @@ class TelegramBotApi {
   dynamic file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
-      var filename = path.toString().replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
+      var filename = path
+          .toString()
+          .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
       if (typeData(option) == "object") {
@@ -370,7 +437,8 @@ class UpdateApi {
   late Map client_option;
 
   /// Update td for make update support raw, raw api, raw api light
-  UpdateApi(this.update, {required String tokenBot, required Map clientOption}) {
+  UpdateApi(this.update,
+      {required String tokenBot, required Map clientOption}) {
     token_bot = tokenBot;
     client_option = clientOption;
   }
