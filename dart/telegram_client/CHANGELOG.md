@@ -210,3 +210,6 @@
 
 ## 0.3.32
 - fix getfile
+  
+## 0.3.33
+- addChatMember method
