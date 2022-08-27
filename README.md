@@ -34,7 +34,7 @@ https://user-images.githubusercontent.com/82513502/178153444-5f1a9074-8f43-48c1-
 
 3. [GalaxeusBot](https://t.me/galaxeusbot)
    Bot Terbaik yang di buat dari orang indonesia complex feature and support payment hexaminate + support clone bot and userbot
-   
+
 <img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/galaxeusbot_1.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/galaxeusbot_2.png" width="350">
 
 ---
@@ -68,7 +68,17 @@ https://user-images.githubusercontent.com/82513502/178153444-5f1a9074-8f43-48c1-
     - ❌️ support telegram-bot-api local server
     - ❌️ support telegram database library ( Tdlib )
     
-    
+### To Do
+- [X] Add Humanize Api Tdlib
+- [X] Cross platform
+- [ ] Example Full Version
+- [ ] Mtproto support
+- [X] Multi Client
+- [ ] Support voice call
+- [X] Tdlib support
+- [X] Telegram Bot Api Support
+- [ ] Tutorial Video
+
 🔜️ Support Other language code
 
 # Dart
