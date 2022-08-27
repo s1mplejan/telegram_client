@@ -219,3 +219,6 @@
 
 ## 0.3.35
 - add download with proggres telegram bot api
+
+## 0.3.36
+- add extra parameters
