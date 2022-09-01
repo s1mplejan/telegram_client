@@ -27,7 +27,7 @@ class TelegramBotApiServer {
     String? maxconnections,
     String? proxy,
   }) {
-    late Map data = {
+    Map data = {
       "--local": local,
       "--api-id": apiid,
       "--api-hash": apihash,
@@ -49,10 +49,9 @@ class TelegramBotApiServer {
       "--proxy": proxy,
     };
     late List<String> arguments = [];
-    String tgOption = "";
     data.forEach((key, value) {
       if (key == "--local") {
-        //  arguments.add("$key");
+        arguments.add("$key");
       } else if (value != null) {
         arguments.add("$key=$value");
       }

@@ -228,3 +228,6 @@
 
 ## 0.3.38
 - add telegram bot server easy use
+
+## 0.3.39
+- fix little score:V
