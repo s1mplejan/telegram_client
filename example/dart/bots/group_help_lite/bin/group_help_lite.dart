@@ -86,33 +86,45 @@ void main(List<String> args) async {
 
       // varible to get information chat
       var chat_id = msg["chat"]["id"];
-      var chat_type = msg["chat"]["type"].toString().replaceAll(RegExp(r"super", caseSensitive: false), "");
+      var chat_type = msg["chat"]["type"]
+          .toString()
+          .replaceAll(RegExp(r"super", caseSensitive: false), "");
       var chat_title = msg["chat"]["title"] ?? "";
       var chat_first_name = msg["chat"]["first_name"] ?? "";
       var chat_last_name = msg["chat"]["last_name"] ?? "";
       var chat_full_name = "$chat_first_name $chat_last_name";
-      var chat_username = (msg["chat"]["username"] is String) ? "@${msg["chat"]["username"]}" : "";
-      var chat_name = (msg["chat"]["title"] is String) ? msg["chat"]["title"] : chat_full_name;
+      var chat_username = (msg["chat"]["username"] is String)
+          ? "@${msg["chat"]["username"]}"
+          : "";
+      var chat_name = (msg["chat"]["title"] is String)
+          ? msg["chat"]["title"]
+          : chat_full_name;
       // varible to get information sender in chat
       var from_id = msg["from"]["id"];
       var from_first_name = msg["from"]["first_name"];
       var from_last_name = msg["from"]["last_name"] ?? "";
       var from_full_name = "$from_first_name $from_first_name";
-      var from_username = (msg["from"]["username"] is String) ? "@${msg["from"]["username"]}" : "";
+      var from_username = (msg["from"]["username"] is String)
+          ? "@${msg["from"]["username"]}"
+          : "";
       var from_language_code = msg["from"]["language_code"] ?? "id";
       var mention_from_markdown = "[$from_full_name](tg://user?id=$user_id)";
-      var mention_from_html = "<a href='tg://user?id=$user_id'>$from_full_name</a>";
+      var mention_from_html =
+          "<a href='tg://user?id=$user_id'>$from_full_name</a>";
       Map get_data_state = {};
 
       if (msg["text"] is Map) {
         if (RegExp("/start", caseSensitive: false).hasMatch(msg["text"])) {
-          return await tg.request("sendMessage", parameters:{
+          return await tg.request("sendMessage", parameters: {
             "chat_id": chat_id,
             "text": "Hello world",
             "reply_markup": {
               "inline_keyboard": [
                 [
-                  {"text": "Telegram Client", "url": "https://github.com/azkadev/telegram_client"}
+                  {
+                    "text": "Telegram Client",
+                    "url": "https://github.com/azkadev/telegram_client"
+                  }
                 ]
               ]
             }
@@ -122,16 +134,21 @@ void main(List<String> args) async {
 
       try {
         var get_data = getValue(chat_type.toLowerCase(), defaultValue: []);
-        if (get_data is Map && get_data.isNotEmpty && get_data["state"] is Map) {
+        if (get_data is Map &&
+            get_data.isNotEmpty &&
+            get_data["state"] is Map) {
           get_data_state = get_data["state"];
         }
       } catch (e) {}
 
-      if (get_data_state.isNotEmpty && get_data_state["chat_id"] == chat_id && get_data_state["user_id"] == user_id) {
-        if (get_data_state["settings"] is String && (get_data_state["settings"] as String).isNotEmpty) {
+      if (get_data_state.isNotEmpty &&
+          get_data_state["chat_id"] == chat_id &&
+          get_data_state["user_id"] == user_id) {
+        if (get_data_state["settings"] is String &&
+            (get_data_state["settings"] as String).isNotEmpty) {
           if (get_data_state["message_id"] is int) {
             try {
-              await tg.request("deleteMessage", parameters:{
+              await tg.request("deleteMessage", parameters: {
                 "chat_id": chat_id,
                 "message_id": get_data_state["message_id"],
               });
@@ -139,10 +156,10 @@ void main(List<String> args) async {
           }
           try {} catch (e) {}
         }
- 
       }
 
-      return await tg.request("sendMessage", parameters:{"chat_id": chat_id, "text": json.encode(update)});
+      return await tg.request("sendMessage",
+          parameters: {"chat_id": chat_id, "text": json.encode(update)});
     }
   });
   await tg.initIsolate();

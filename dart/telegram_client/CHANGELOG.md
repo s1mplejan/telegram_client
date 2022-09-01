@@ -222,3 +222,9 @@
 
 ## 0.3.36
 - add extra parameters
+  
+## 0.3.37
+- add example in readme.md
+
+## 0.3.38
+- add telegram bot server easy use

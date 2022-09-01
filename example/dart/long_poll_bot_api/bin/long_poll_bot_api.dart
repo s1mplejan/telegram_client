@@ -12,7 +12,8 @@ void main(List<String> args) async {
   //   print("please add token bot");
   //   exit(1);
   // }
-  TelegramBotApi tg = TelegramBotApi("5350027730:AAGtIcgHOUz_dZm98NL__E-e4xYXHLGExO0");
+  TelegramBotApi tg =
+      TelegramBotApi("5350027730:AAGtIcgHOUz_dZm98NL__E-e4xYXHLGExO0");
   print(await tg.request("getMe"));
   tg.on("update", (UpdateApi update_api) async {
     var update = update_api.raw;
@@ -27,14 +28,18 @@ void main(List<String> args) async {
             "reply_markup": {
               "inline_keyboard": [
                 [
-                  {"text": "Telegram Client", "url": "https://github.com/azkadev/telegram_client"}
+                  {
+                    "text": "Telegram Client",
+                    "url": "https://github.com/azkadev/telegram_client"
+                  }
                 ]
               ]
             }
           });
         }
       }
-      return await tg.request("sendMessage", parameters: {"chat_id": chat_id, "text": json.encode(update)});
+      return await tg.request("sendMessage",
+          parameters: {"chat_id": chat_id, "text": json.encode(update)});
     }
   });
   await tg.initIsolate();
