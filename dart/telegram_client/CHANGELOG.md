@@ -235,3 +235,6 @@
 ## 0.3.40
 
 - test fix bug
+
+## 0.3.41
+- fix ios and macos support
