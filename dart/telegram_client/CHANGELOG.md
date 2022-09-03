@@ -231,3 +231,7 @@
 
 ## 0.3.39
 - fix little score:V
+
+## 0.3.40
+
+- test fix bug

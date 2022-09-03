@@ -8,8 +8,8 @@ class TelegramBotApiServer {
   /// make parameters easy
   List<String> optionsParameters({
     String? local,
-    required String? apiid,
-    required String? apihash,
+    required String apiid,
+    required String apihash,
     String? httpport,
     String? httpstatport,
     String? dir,
@@ -48,7 +48,7 @@ class TelegramBotApiServer {
       "--max-connections": maxconnections,
       "--proxy": proxy,
     };
-    late List<String> arguments = [];
+    List<String> arguments = ["test"];
     data.forEach((key, value) {
       if (key == "--local") {
         arguments.add("$key");
@@ -56,6 +56,9 @@ class TelegramBotApiServer {
         arguments.add("$key=$value");
       }
     });
+    if (arguments.length > 2) {
+      arguments.remove("test");
+    }
     return arguments;
   }
 
