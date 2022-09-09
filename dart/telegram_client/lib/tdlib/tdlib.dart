@@ -71,7 +71,7 @@ class Tdlib {
   late EventEmitter event_emitter = EventEmitter();
   late int count_request_loop = 0;
   late Duration delay_update = Duration(milliseconds: 1);
-  late Duration delay_invoke = Duration(milliseconds: 500);
+  late Duration delay_invoke = Duration(milliseconds: 1);
 
   late double timeOutUpdate;
   late List state_data = [];
@@ -106,7 +106,7 @@ class Tdlib {
   Tdlib(this.pathTdl,
       {Map? clientOption,
       int? clientId,
-      this.count_request_loop = 1000,
+      this.count_request_loop = 50000,
       Duration? delayUpdate,
       this.timeOutUpdate = 1.0,
       EventEmitter? eventEmitter,

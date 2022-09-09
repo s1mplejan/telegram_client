@@ -238,3 +238,6 @@
 
 ## 0.3.41
 - fix ios and macos support
+
+## 0.3.42
+- improve speed configuration default
