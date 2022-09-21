@@ -241,3 +241,33 @@
 
 ## 0.3.42
 - improve speed configuration default
+
+## 0.3.43
+- improve speed
+  
+## 0.3.44
+- make humanize edit message
+
+## 0.3.45
+- fix bug edit message
+
+## 0.3.46
+- fix bug edit
+  
+## 0.3.47
+- fix reply markup typo
+
+## 0.3.48
+- fix edit message
+  
+## 0.3.49
+- fix edit message
+
+## 0.3.50
+- change some code for test speed
+  
+## 0.3.51
+- improve tesr speed
+
+## 0.3.52
+- add tdlib methods enum for make easy

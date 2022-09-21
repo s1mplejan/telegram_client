@@ -70,6 +70,7 @@ class Tdlib {
   late bool is_android = Platform.isAndroid;
   late EventEmitter event_emitter = EventEmitter();
   late int count_request_loop = 0;
+  late String event_invoke = "invoke";
   late Duration delay_update = Duration(milliseconds: 1);
   late Duration delay_invoke = Duration(milliseconds: 1);
 
@@ -103,14 +104,17 @@ class Tdlib {
   // / ````
   // /
   // / More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(this.pathTdl,
-      {Map? clientOption,
-      int? clientId,
-      this.count_request_loop = 50000,
-      Duration? delayUpdate,
-      this.timeOutUpdate = 1.0,
-      EventEmitter? eventEmitter,
-      Duration? delayInvoke}) {
+  Tdlib(
+    this.pathTdl, {
+    Map? clientOption,
+    int? clientId,
+    this.count_request_loop = 50000,
+    this.event_invoke = "invoke",
+    Duration? delayUpdate,
+    this.timeOutUpdate = 1.0,
+    EventEmitter? eventEmitter,
+    Duration? delayInvoke,
+  }) {
     if (delayInvoke != null) {
       delay_invoke = delayInvoke;
     }
@@ -165,7 +169,15 @@ class Tdlib {
     }
     ReceivePort receivePort = ReceivePort();
     receivePort.listen((message) async {
-      event_emitter.emit("update", null, message);
+      try {
+        if (message[0] is Map && message[0]["@extra"] is String) {
+          event_emitter.emit(event_invoke, null, message);
+        } else {
+          event_emitter.emit("update", null, message);
+        }
+      } catch (e) {
+        event_emitter.emit("update", null, message);
+      }
     });
 
     Isolate isolate = await Isolate.spawn(
@@ -317,7 +329,7 @@ class Tdlib {
   /// add this for handle update api
   Listener on(String type_update, Function(UpdateTd update) callback,
       {void Function(Object data)? onError}) {
-    return event_emitter.on("update", null, (Event ev, context) async {
+    return event_emitter.on(type_update, null, (Event ev, context) async {
       try {
         if (ev.eventData is List) {
           List jsonUpdate = (ev.eventData as List);
@@ -460,7 +472,7 @@ class Tdlib {
           jsonResult["message_id"] = parameters["message_id"];
         }
         if (parameters.containsKey("reply_markup")) {
-          jsonResult["reply_markup"] = reply_markup(parameters["reply_markup"]);
+          jsonResult["reply_markup"] = replyMarkup(parameters["reply_markup"]);
         }
         if (Regex(r"^(sendMessage|editMessageText)$", "i")
             .exec(parameters["@type"])) {
@@ -534,7 +546,8 @@ class Tdlib {
             Map loop_data = parameters["results"][i];
 
             if (loop_data["type"] is String) {
-              loop_data["@type"] = loop_data["type"];
+              loop_data["@type"] =
+                  "inputInlineQueryResult${loop_data["type"].toString().replaceAll(RegExp(r"inputInlineQueryResult", caseSensitive: false), "")}";
               loop_data.remove("type");
             }
             if (loop_data["id"] is String == false) {
@@ -544,7 +557,7 @@ class Tdlib {
 
             if (loop_data["reply_markup"] is Map) {
               loop_data["reply_markup"] =
-                  (reply_markup(loop_data["reply_markup"]));
+                  (replyMarkup(loop_data["reply_markup"]));
             }
             array_results.add(loop_data);
           }
@@ -660,52 +673,59 @@ class Tdlib {
       "client_id": clientId,
       ...parameters,
     };
-    client_send(
-      clientId,
-      requestMethod,
-    );
+
     if (isVoid) {
+      client_send(
+        clientId,
+        requestMethod,
+      );
       return;
     }
     late Map result = {};
     late int count = 0;
-    Listener listener = on("update", (UpdateTd update) async {
-      try {
-        if (update.client_id == clientId) {
-          Map updateOrigin = update.raw;
-          if (updateOrigin["@extra"] == random) {
-            updateOrigin.remove("@extra");
-            result = updateOrigin;
+    int countLoop = countRequestLoop;
+    return await Future.microtask(() async {
+      Listener listener = on(event_invoke, (UpdateTd update) async {
+        try {
+          if (update.client_id == clientId) {
+            Map updateOrigin = update.raw;
+            if (updateOrigin["@extra"] == random) {
+              updateOrigin.remove("@extra");
+              result = updateOrigin;
+            }
           }
+        } catch (e) {
+          result["@type"] = "error";
         }
-      } catch (e) {
-        result["@type"] = "error";
+      });
+      client_send(
+        clientId,
+        requestMethod,
+      );
+      while (true) {
+        await Future.delayed(delayDuration ?? delay_invoke);
+        if (result["@type"] is String) {
+          event_emitter.off(listener);
+          if (result["@type"] == "error") {
+            result["invoke_request"] = requestMethod;
+            throw result;
+          }
+          return result;
+        }
+        if (countLoop > 0) {
+          if (count > countLoop) {
+            event_emitter.off(listener);
+            result = {
+              "@type": "error",
+              "message": "time out limit",
+              "invoke_request": requestMethod,
+            };
+            throw result;
+          }
+          count++;
+        }
       }
     });
-
-    while (true) {
-      await Future.delayed(delayDuration ?? delay_invoke);
-      if (result["@type"] is String) {
-        event_emitter.off(listener);
-        if (result["@type"] == "error") {
-          result["invoke_request"] = requestMethod;
-          throw result;
-        }
-        return result;
-      }
-      if (countRequestLoop > 0) {
-        if (count > countRequestLoop) {
-          event_emitter.off(listener);
-          result = {
-            "@type": "error",
-            "message": "time out limit",
-            "invoke_request": requestMethod,
-          };
-          throw result;
-        }
-        count++;
-      }
-    }
   }
 
   /// call api latest [Tdlib-Methods](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_function.html)
@@ -841,7 +861,7 @@ class Tdlib {
 
   /// convert reply markup from bot api to tdlib
   /// only support bot
-  reply_markup(keyboard) {
+  replyMarkup(keyboard) {
     try {
       if (keyboard["inline_keyboard"] is List &&
           keyboard["inline_keyboard"].length > 0) {
@@ -978,7 +998,7 @@ class Tdlib {
       }
     }
     String regexMethodSend =
-        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessageText)$";
+        r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
     if (Regex(regexMethodSend, "i").exec(method)) {
       Map result_request = {"ok": false};
       result_request = await invoke(
@@ -1005,39 +1025,41 @@ class Tdlib {
         return result_request;
       }
       var result = {};
-      var listen = on("update", (UpdateTd update) async {
-        try {
-          Map updateOrigin = update.raw;
-          if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
-            if (updateOrigin["old_message_id"] == result_request["id"]) {
-              var json_message = await jsonMessage(
-                updateOrigin["message"],
-                clientId: clientId,
-              );
-              if (json_message["ok"]) {
-                json_message["result"]["@type"] = "updateNewMessage";
-                result = json_message["result"];
-              } else {
-                json_message["result"]["@type"] = "error";
-                result = json_message["result"];
+      return await Future.microtask(() async {
+        var listen = on(event_invoke, (UpdateTd update) async {
+          try {
+            Map updateOrigin = update.raw;
+            if (updateOrigin["@type"] == "updateMessageSendSucceeded") {
+              if (updateOrigin["old_message_id"] == result_request["id"]) {
+                var json_message = await jsonMessage(
+                  updateOrigin["message"],
+                  clientId: clientId,
+                );
+                if (json_message["ok"]) {
+                  json_message["result"]["@type"] = "updateNewMessage";
+                  result = json_message["result"];
+                } else {
+                  json_message["result"]["@type"] = "error";
+                  result = json_message["result"];
+                }
               }
             }
+          } catch (e) {
+            rethrow;
           }
-        } catch (e) {
-          rethrow;
+        });
+        while (true) {
+          await Future.delayed(Duration(milliseconds: 1));
+          if (result["@type"] is String) {
+            event_emitter.off(listen);
+            if (result["@type"] == "error") {
+              throw result;
+            }
+            result.remove("@type");
+            return {"ok": true, "result": result};
+          }
         }
       });
-      while (true) {
-        await Future.delayed(Duration(milliseconds: 1));
-        if (result["@type"] is String) {
-          event_emitter.off(listen);
-          if (result["@type"] == "error") {
-            throw result;
-          }
-          result.remove("@type");
-          return {"ok": true, "result": result};
-        }
-      }
     }
     if (Regex(r"^addChatMember$", "i").exec(method)) {
       return await invoke(
@@ -1053,7 +1075,10 @@ class Tdlib {
     }
     if (Regex(r"^editMessageText$", "i").exec(method)) {
       return await editMessageText(
-          parameters["chat_id"], parameters["message_id"], parameters["text"],
+          chat_id: parameters["chat_id"],
+          message_id: parameters["message_id"],
+          text: parameters["text"],
+          inline_message_id: parameters["inline_message_id"],
           parse_mode: (parameters["parse_mode"] ?? "" is String)
               ? parameters["parse_mode"]
               : "html",
@@ -1064,9 +1089,7 @@ class Tdlib {
               (parameters["disable_web_page_preview"] ?? false is bool)
                   ? parameters["disable_web_page_preview"]
                   : false,
-          replyMarkup: (parameters["reply_markup"] ?? {} is Map)
-              ? parameters["reply_markup"]
-              : {},
+          reply_markup: parameters["reply_markup"],
           clientId: clientId);
     }
     if (Regex(r"^joinChat$", "i").exec(method)) {
@@ -1215,37 +1238,55 @@ class Tdlib {
   ///
   /// }
   /// ```
-  editMessageText(
+  editMessageText({
     dynamic chat_id,
     dynamic message_id,
-    String text, {
-    String parse_mode = "html",
+    dynamic inline_message_id,
+    required String text,
+    String? parse_mode = "html",
     List? entities,
-    bool disable_web_page_preview = false,
-    Map? replyMarkup,
+    bool? disable_web_page_preview = false,
+    Map? reply_markup,
     required int? clientId,
     String? extra,
   }) async {
     clientId ??= client_id;
     entities ??= [];
     var pesan = parseMode(text, parse_mode, entities);
-    var get_message = await invoke(
-      "editMessageText",
-      parameters: {
-        "chat_id": chat_id,
-        "message_id": message_id,
-        "reply_markup": reply_markup(replyMarkup),
-        "input_message_content": {
-          '@type': "inputMessageText",
-          "text": pesan,
-          "disable_web_page_preview": disable_web_page_preview,
-          "clear_draft": false
-        }
-      },
-      clientId: clientId,
-      extra: extra,
-    );
-    return get_message;
+    if (inline_message_id is String && inline_message_id.isNotEmpty) {
+      return await invoke(
+        "editInlineMessageText",
+        parameters: {
+          "inline_message_id": inline_message_id,
+          "reply_markup": replyMarkup(reply_markup),
+          "input_message_content": {
+            '@type': "inputMessageText",
+            "text": pesan,
+            "disable_web_page_preview": disable_web_page_preview,
+            "clear_draft": false,
+          }
+        },
+        clientId: clientId,
+        extra: extra,
+      );
+    } else {
+      return await invoke(
+        "editMessageText",
+        parameters: {
+          "chat_id": chat_id,
+          "message_id": message_id,
+          "reply_markup": replyMarkup(reply_markup),
+          "input_message_content": {
+            '@type': "inputMessageText",
+            "text": pesan,
+            "disable_web_page_preview": disable_web_page_preview,
+            "clear_draft": false,
+          }
+        },
+        clientId: clientId,
+        extra: extra,
+      );
+    }
   }
 
   /// getChatMember
