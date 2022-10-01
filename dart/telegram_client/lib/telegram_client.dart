@@ -7,3 +7,4 @@ export 'telegram_bot_api/telegram_bot_api.dart'
 
 part 'tl/tdlib_methods.dart';
 part 'tl/tdlib_parameters.dart';
+part 'util/util.dart';

@@ -271,3 +271,9 @@
 
 ## 0.3.52
 - add tdlib methods enum for make easy
+
+## 0.3.53
+- add tdlib parameters methods
+
+## 0.3.54
+- add tl util
