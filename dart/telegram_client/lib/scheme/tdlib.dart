@@ -142,8 +142,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "authenticationCodeInfo",
         "phone_number": phone_number,
-        "type": type!.toJson(),
-        "next_type": next_type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
+        "next_type": (next_type != null) ? next_type.toJson() : null,
         "timeout": timeout,
       });
     } catch (e) {
@@ -240,7 +240,7 @@ class TdlibFunction {
         "@type": "textEntity",
         "offset": offset,
         "length": length,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -258,7 +258,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "textEntities",
-        "entities": entities!.toJson(),
+        "entities": (entities != null) ? entities.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -278,7 +278,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "formattedText",
         "text": text,
-        "entities": entities!.toJson(),
+        "entities": (entities != null) ? entities.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -298,7 +298,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "termsOfService",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "min_user_age": min_user_age,
         "show_popup": show_popup,
       });
@@ -373,7 +373,7 @@ class TdlibFunction {
         "@type": "authorizationStateWaitEmailCode",
         "allow_apple_id": allow_apple_id,
         "allow_google_id": allow_google_id,
-        "code_info": code_info!.toJson(),
+        "code_info": (code_info != null) ? code_info.toJson() : null,
         "next_phone_number_authorization_date": next_phone_number_authorization_date,
       });
     } catch (e) {
@@ -392,7 +392,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "authorizationStateWaitCode",
-        "code_info": code_info!.toJson(),
+        "code_info": (code_info != null) ? code_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -428,7 +428,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "authorizationStateWaitRegistration",
-        "terms_of_service": terms_of_service!.toJson(),
+        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -538,7 +538,7 @@ class TdlibFunction {
         "password_hint": password_hint,
         "has_recovery_email_address": has_recovery_email_address,
         "has_passport_data": has_passport_data,
-        "recovery_email_address_code_info": recovery_email_address_code_info!.toJson(),
+        "recovery_email_address_code_info": (recovery_email_address_code_info != null) ? recovery_email_address_code_info.toJson() : null,
         "login_email_address_pattern": login_email_address_pattern,
         "pending_reset_date": pending_reset_date,
       });
@@ -661,8 +661,8 @@ class TdlibFunction {
         "id": id,
         "size": size,
         "expected_size": expected_size,
-        "local": local!.toJson(),
-        "remote": remote!.toJson(),
+        "local": (local != null) ? local.toJson() : null,
+        "remote": (remote != null) ? remote.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -761,7 +761,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "photoSize",
         "type": type,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "width": width,
         "height": height,
         "progressive_sizes": progressive_sizes,
@@ -786,7 +786,7 @@ class TdlibFunction {
         "@type": "minithumbnail",
         "width": width,
         "height": height,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -912,10 +912,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "thumbnail",
-        "format": format!.toJson(),
+        "format": (format != null) ? format.toJson() : null,
         "width": width,
         "height": height,
-        "file": file!.toJson(),
+        "file": (file != null) ? file.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -996,7 +996,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "maskPosition",
-        "point": point!.toJson(),
+        "point": (point != null) ? point.toJson() : null,
         "x_shift": x_shift,
         "y_shift": y_shift,
         "scale": scale,
@@ -1107,7 +1107,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "closedVectorPath",
-        "commands": commands!.toJson(),
+        "commands": (commands != null) ? commands.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1171,7 +1171,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "pollTypeQuiz",
         "correct_option_id": correct_option_id,
-        "explanation": explanation!.toJson(),
+        "explanation": (explanation != null) ? explanation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1203,9 +1203,9 @@ class TdlibFunction {
         "file_name": file_name,
         "mime_type": mime_type,
         "has_stickers": has_stickers,
-        "minithumbnail": minithumbnail!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
-        "animation": animation!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "animation": (animation != null) ? animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1236,10 +1236,10 @@ class TdlibFunction {
         "performer": performer,
         "file_name": file_name,
         "mime_type": mime_type,
-        "album_cover_minithumbnail": album_cover_minithumbnail!.toJson(),
-        "album_cover_thumbnail": album_cover_thumbnail!.toJson(),
-        "external_album_covers": external_album_covers!.toJson(),
-        "audio": audio!.toJson(),
+        "album_cover_minithumbnail": (album_cover_minithumbnail != null) ? album_cover_minithumbnail.toJson() : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
+        "external_album_covers": (external_album_covers != null) ? external_album_covers.toJson() : null,
+        "audio": (audio != null) ? audio.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1263,9 +1263,9 @@ class TdlibFunction {
         "@type": "document",
         "file_name": file_name,
         "mime_type": mime_type,
-        "minithumbnail": minithumbnail!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
-        "document": document!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "document": (document != null) ? document.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1286,8 +1286,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "photo",
         "has_stickers": has_stickers,
-        "minithumbnail": minithumbnail!.toJson(),
-        "sizes": sizes!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "sizes": (sizes != null) ? sizes.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1321,15 +1321,15 @@ class TdlibFunction {
         "width": width,
         "height": height,
         "emoji": emoji,
-        "format": format!.toJson(),
-        "type": type!.toJson(),
-        "mask_position": mask_position!.toJson(),
+        "format": (format != null) ? format.toJson() : null,
+        "type": (type != null) ? type.toJson() : null,
+        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
         "custom_emoji_id": custom_emoji_id,
-        "outline": outline!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "outline": (outline != null) ? outline.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "is_premium": is_premium,
-        "premium_animation": premium_animation!.toJson(),
-        "sticker": sticker!.toJson(),
+        "premium_animation": (premium_animation != null) ? premium_animation.toJson() : null,
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1363,9 +1363,9 @@ class TdlibFunction {
         "mime_type": mime_type,
         "has_stickers": has_stickers,
         "supports_streaming": supports_streaming,
-        "minithumbnail": minithumbnail!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
-        "video": video!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "video": (video != null) ? video.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1389,9 +1389,9 @@ class TdlibFunction {
         "@type": "videoNote",
         "duration": duration,
         "length": length,
-        "minithumbnail": minithumbnail!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
-        "video": video!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "video": (video != null) ? video.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1414,10 +1414,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "voiceNote",
         "duration": duration,
-        "waveform": waveform!.toJson(),
+        "waveform": (waveform != null) ? waveform.toJson() : null,
         "mime_type": mime_type,
-        "speech_recognition_result": speech_recognition_result!.toJson(),
-        "voice": voice!.toJson(),
+        "speech_recognition_result": (speech_recognition_result != null) ? speech_recognition_result.toJson() : null,
+        "voice": (voice != null) ? voice.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1439,11 +1439,11 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "animatedEmoji",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
         "sticker_width": sticker_width,
         "sticker_height": sticker_height,
         "fitzpatrick_type": fitzpatrick_type,
-        "sound": sound!.toJson(),
+        "sound": (sound != null) ? sound.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1514,7 +1514,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "venue",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "title": title,
         "address": address,
         "provider": provider,
@@ -1546,10 +1546,10 @@ class TdlibFunction {
         "id": id,
         "short_name": short_name,
         "title": title,
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "description": description,
-        "photo": photo!.toJson(),
-        "animation": animation!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "animation": (animation != null) ? animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1578,11 +1578,11 @@ class TdlibFunction {
         "@type": "poll",
         "id": id,
         "question": question,
-        "options": options!.toJson(),
+        "options": (options != null) ? options.toJson() : null,
         "total_voter_count": total_voter_count,
         "recent_voter_user_ids": recent_voter_user_ids,
         "is_anonymous": is_anonymous,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "open_period": open_period,
         "close_date": close_date,
         "is_closed": is_closed,
@@ -1608,9 +1608,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "profilePhoto",
         "id": id,
-        "small": small!.toJson(),
-        "big": big!.toJson(),
-        "minithumbnail": minithumbnail!.toJson(),
+        "small": (small != null) ? small.toJson() : null,
+        "big": (big != null) ? big.toJson() : null,
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -1632,9 +1632,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatPhotoInfo",
-        "small": small!.toJson(),
-        "big": big!.toJson(),
-        "minithumbnail": minithumbnail!.toJson(),
+        "small": (small != null) ? small.toJson() : null,
+        "big": (big != null) ? big.toJson() : null,
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -1748,7 +1748,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "botCommands",
         "bot_user_id": bot_user_id,
-        "commands": commands!.toJson(),
+        "commands": (commands != null) ? commands.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1787,7 +1787,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatLocation",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "address": address,
       });
     } catch (e) {
@@ -1809,7 +1809,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "animatedChatPhoto",
         "length": length,
-        "file": file!.toJson(),
+        "file": (file != null) ? file.toJson() : null,
         "main_frame_timestamp": main_frame_timestamp,
       });
     } catch (e) {
@@ -1835,10 +1835,10 @@ class TdlibFunction {
         "@type": "chatPhoto",
         "id": id,
         "added_date": added_date,
-        "minithumbnail": minithumbnail!.toJson(),
-        "sizes": sizes!.toJson(),
-        "animation": animation!.toJson(),
-        "small_animation": small_animation!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "sizes": (sizes != null) ? sizes.toJson() : null,
+        "animation": (animation != null) ? animation.toJson() : null,
+        "small_animation": (small_animation != null) ? small_animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1858,7 +1858,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatPhotos",
         "total_count": total_count,
-        "photos": photos!.toJson(),
+        "photos": (photos != null) ? photos.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1894,7 +1894,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputChatPhotoStatic",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -1913,7 +1913,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputChatPhotoAnimation",
-        "animation": animation!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
         "main_frame_timestamp": main_frame_timestamp,
       });
     } catch (e) {
@@ -2012,7 +2012,7 @@ class TdlibFunction {
         "discount_percentage": discount_percentage,
         "month_count": month_count,
         "store_product_id": store_product_id,
-        "payment_link": payment_link!.toJson(),
+        "payment_link": (payment_link != null) ? payment_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2048,7 +2048,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "emojiStatuses",
-        "emoji_statuses": emoji_statuses!.toJson(),
+        "emoji_statuses": (emoji_statuses != null) ? emoji_statuses.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2090,9 +2090,9 @@ class TdlibFunction {
         "last_name": last_name,
         "username": username,
         "phone_number": phone_number,
-        "status": status!.toJson(),
-        "profile_photo": profile_photo!.toJson(),
-        "emoji_status": emoji_status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
+        "profile_photo": (profile_photo != null) ? profile_photo.toJson() : null,
+        "emoji_status": (emoji_status != null) ? emoji_status.toJson() : null,
         "is_contact": is_contact,
         "is_mutual_contact": is_mutual_contact,
         "is_verified": is_verified,
@@ -2102,7 +2102,7 @@ class TdlibFunction {
         "is_scam": is_scam,
         "is_fake": is_fake,
         "have_access": have_access,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "language_code": language_code,
         "added_to_attachment_menu": added_to_attachment_menu,
       });
@@ -2131,12 +2131,12 @@ class TdlibFunction {
         "@type": "botInfo",
         "share_text": share_text,
         "description": description,
-        "photo": photo!.toJson(),
-        "animation": animation!.toJson(),
-        "menu_button": menu_button!.toJson(),
-        "commands": commands!.toJson(),
-        "default_group_administrator_rights": default_group_administrator_rights!.toJson(),
-        "default_channel_administrator_rights": default_channel_administrator_rights!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "animation": (animation != null) ? animation.toJson() : null,
+        "menu_button": (menu_button != null) ? menu_button.toJson() : null,
+        "commands": (commands != null) ? commands.toJson() : null,
+        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
+        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2165,7 +2165,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "userFullInfo",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "is_blocked": is_blocked,
         "can_be_called": can_be_called,
         "supports_video_calls": supports_video_calls,
@@ -2173,10 +2173,10 @@ class TdlibFunction {
         "has_private_forwards": has_private_forwards,
         "has_restricted_voice_and_video_note_messages": has_restricted_voice_and_video_note_messages,
         "need_phone_number_privacy_exception": need_phone_number_privacy_exception,
-        "bio": bio!.toJson(),
-        "premium_gift_options": premium_gift_options!.toJson(),
+        "bio": (bio != null) ? bio.toJson() : null,
+        "premium_gift_options": (premium_gift_options != null) ? premium_gift_options.toJson() : null,
         "group_in_common_count": group_in_common_count,
-        "bot_info": bot_info!.toJson(),
+        "bot_info": (bot_info != null) ? bot_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2236,7 +2236,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatAdministrators",
-        "administrators": administrators!.toJson(),
+        "administrators": (administrators != null) ? administrators.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2280,7 +2280,7 @@ class TdlibFunction {
         "@type": "chatMemberStatusAdministrator",
         "custom_title": custom_title,
         "can_be_edited": can_be_edited,
-        "rights": rights!.toJson(),
+        "rights": (rights != null) ? rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2317,7 +2317,7 @@ class TdlibFunction {
         "@type": "chatMemberStatusRestricted",
         "is_member": is_member,
         "restricted_until_date": restricted_until_date,
-        "permissions": permissions!.toJson(),
+        "permissions": (permissions != null) ? permissions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2371,10 +2371,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatMember",
-        "member_id": member_id!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
         "inviter_user_id": inviter_user_id,
         "joined_chat_date": joined_chat_date,
-        "status": status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2394,7 +2394,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatMembers",
         "total_count": total_count,
-        "members": members!.toJson(),
+        "members": (members != null) ? members.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2699,7 +2699,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatInviteLinks",
         "total_count": total_count,
-        "invite_links": invite_links!.toJson(),
+        "invite_links": (invite_links != null) ? invite_links.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2739,7 +2739,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatInviteLinkCounts",
-        "invite_link_counts": invite_link_counts!.toJson(),
+        "invite_link_counts": (invite_link_counts != null) ? invite_link_counts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2781,7 +2781,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatInviteLinkMembers",
         "total_count": total_count,
-        "members": members!.toJson(),
+        "members": (members != null) ? members.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2810,9 +2810,9 @@ class TdlibFunction {
         "@type": "chatInviteLinkInfo",
         "chat_id": chat_id,
         "accessible_for": accessible_for,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "title": title,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "description": description,
         "member_count": member_count,
         "member_user_ids": member_user_ids,
@@ -2859,7 +2859,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatJoinRequests",
         "total_count": total_count,
-        "requests": requests!.toJson(),
+        "requests": (requests != null) ? requests.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2903,7 +2903,7 @@ class TdlibFunction {
         "@type": "basicGroup",
         "id": id,
         "member_count": member_count,
-        "status": status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
         "is_active": is_active,
         "upgraded_to_supergroup_id": upgraded_to_supergroup_id,
       });
@@ -2928,12 +2928,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "basicGroupFullInfo",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "description": description,
         "creator_user_id": creator_user_id,
-        "members": members!.toJson(),
-        "invite_link": invite_link!.toJson(),
-        "bot_commands": bot_commands!.toJson(),
+        "members": (members != null) ? members.toJson() : null,
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
+        "bot_commands": (bot_commands != null) ? bot_commands.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2970,7 +2970,7 @@ class TdlibFunction {
         "id": id,
         "username": username,
         "date": date,
-        "status": status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
         "member_count": member_count,
         "has_linked_chat": has_linked_chat,
         "has_location": has_location,
@@ -3021,7 +3021,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "supergroupFullInfo",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "description": description,
         "member_count": member_count,
         "administrator_count": administrator_count,
@@ -3037,9 +3037,9 @@ class TdlibFunction {
         "can_get_statistics": can_get_statistics,
         "is_all_history_available": is_all_history_available,
         "sticker_set_id": sticker_set_id,
-        "location": location!.toJson(),
-        "invite_link": invite_link!.toJson(),
-        "bot_commands": bot_commands!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
+        "bot_commands": (bot_commands != null) ? bot_commands.toJson() : null,
         "upgraded_from_basic_group_id": upgraded_from_basic_group_id,
         "upgraded_from_max_message_id": upgraded_from_max_message_id,
       });
@@ -3111,9 +3111,9 @@ class TdlibFunction {
         "@type": "secretChat",
         "id": id,
         "user_id": user_id,
-        "state": state!.toJson(),
+        "state": (state != null) ? state.toJson() : null,
         "is_outbound": is_outbound,
-        "key_hash": key_hash!.toJson(),
+        "key_hash": (key_hash != null) ? key_hash.toJson() : null,
         "layer": layer,
       });
     } catch (e) {
@@ -3170,7 +3170,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageSenders",
         "total_count": total_count,
-        "senders": senders!.toJson(),
+        "senders": (senders != null) ? senders.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3189,7 +3189,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatMessageSender",
-        "sender": sender!.toJson(),
+        "sender": (sender != null) ? sender.toJson() : null,
         "needs_premium": needs_premium,
       });
     } catch (e) {
@@ -3208,7 +3208,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatMessageSenders",
-        "senders": senders!.toJson(),
+        "senders": (senders != null) ? senders.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3362,7 +3362,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageForwardInfo",
-        "origin": origin!.toJson(),
+        "origin": (origin != null) ? origin.toJson() : null,
         "date": date,
         "public_service_announcement_type": public_service_announcement_type,
         "from_chat_id": from_chat_id,
@@ -3389,7 +3389,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageReplyInfo",
         "reply_count": reply_count,
-        "recent_replier_ids": recent_replier_ids!.toJson(),
+        "recent_replier_ids": (recent_replier_ids != null) ? recent_replier_ids.toJson() : null,
         "last_read_inbox_message_id": last_read_inbox_message_id,
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "last_message_id": last_message_id,
@@ -3413,10 +3413,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageReaction",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "total_count": total_count,
         "is_chosen": is_chosen,
-        "recent_sender_ids": recent_sender_ids!.toJson(),
+        "recent_sender_ids": (recent_sender_ids != null) ? recent_sender_ids.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3439,8 +3439,8 @@ class TdlibFunction {
         "@type": "messageInteractionInfo",
         "view_count": view_count,
         "forward_count": forward_count,
-        "reply_info": reply_info!.toJson(),
-        "reactions": reactions!.toJson(),
+        "reply_info": (reply_info != null) ? reply_info.toJson() : null,
+        "reactions": (reactions != null) ? reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3460,8 +3460,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "unreadReaction",
-        "type": type!.toJson(),
-        "sender_id": sender_id!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "is_big": is_big,
       });
     } catch (e) {
@@ -3558,10 +3558,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "message",
         "id": id,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "chat_id": chat_id,
-        "sending_state": sending_state!.toJson(),
-        "scheduling_state": scheduling_state!.toJson(),
+        "sending_state": (sending_state != null) ? sending_state.toJson() : null,
+        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
         "is_outgoing": is_outgoing,
         "is_pinned": is_pinned,
         "can_be_edited": can_be_edited,
@@ -3580,9 +3580,9 @@ class TdlibFunction {
         "contains_unread_mention": contains_unread_mention,
         "date": date,
         "edit_date": edit_date,
-        "forward_info": forward_info!.toJson(),
-        "interaction_info": interaction_info!.toJson(),
-        "unread_reactions": unread_reactions!.toJson(),
+        "forward_info": (forward_info != null) ? forward_info.toJson() : null,
+        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
+        "unread_reactions": (unread_reactions != null) ? unread_reactions.toJson() : null,
         "reply_in_chat_id": reply_in_chat_id,
         "reply_to_message_id": reply_to_message_id,
         "message_thread_id": message_thread_id,
@@ -3592,8 +3592,8 @@ class TdlibFunction {
         "author_signature": author_signature,
         "media_album_id": media_album_id,
         "restriction_reason": restriction_reason,
-        "content": content!.toJson(),
-        "reply_markup": reply_markup!.toJson(),
+        "content": (content != null) ? content.toJson() : null,
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3613,7 +3613,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messages",
         "total_count": total_count,
-        "messages": messages!.toJson(),
+        "messages": (messages != null) ? messages.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3634,7 +3634,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "foundMessages",
         "total_count": total_count,
-        "messages": messages!.toJson(),
+        "messages": (messages != null) ? messages.toJson() : null,
         "next_offset": next_offset,
       });
     } catch (e) {
@@ -3677,7 +3677,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messagePositions",
         "total_count": total_count,
-        "positions": positions!.toJson(),
+        "positions": (positions != null) ? positions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3697,7 +3697,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageCalendarDay",
         "total_count": total_count,
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3717,7 +3717,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageCalendar",
         "total_count": total_count,
-        "days": days!.toJson(),
+        "days": (days != null) ? days.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3743,9 +3743,9 @@ class TdlibFunction {
         "message_id": message_id,
         "is_recommended": is_recommended,
         "sponsor_chat_id": sponsor_chat_id,
-        "sponsor_chat_info": sponsor_chat_info!.toJson(),
-        "link": link!.toJson(),
-        "content": content!.toJson(),
+        "sponsor_chat_info": (sponsor_chat_info != null) ? sponsor_chat_info.toJson() : null,
+        "link": (link != null) ? link.toJson() : null,
+        "content": (content != null) ? content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3768,7 +3768,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "fileDownload",
         "file_id": file_id,
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "add_date": add_date,
         "complete_date": complete_date,
         "is_paused": is_paused,
@@ -3813,8 +3813,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "foundFileDownloads",
-        "total_counts": total_counts!.toJson(),
-        "files": files!.toJson(),
+        "total_counts": (total_counts != null) ? total_counts.toJson() : null,
+        "files": (files != null) ? files.toJson() : null,
         "next_offset": next_offset,
       });
     } catch (e) {
@@ -3944,7 +3944,7 @@ class TdlibFunction {
         "@type": "draftMessage",
         "reply_to_message_id": reply_to_message_id,
         "date": date,
-        "input_message_text": input_message_text!.toJson(),
+        "input_message_text": (input_message_text != null) ? input_message_text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4103,7 +4103,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "recommendedChatFilter",
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "description": description,
       });
     } catch (e) {
@@ -4122,7 +4122,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "recommendedChatFilters",
-        "chat_filters": chat_filters!.toJson(),
+        "chat_filters": (chat_filters != null) ? chat_filters.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4188,7 +4188,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatLists",
-        "chat_lists": chat_lists!.toJson(),
+        "chat_lists": (chat_lists != null) ? chat_lists.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4244,10 +4244,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatPosition",
-        "list": list!.toJson(),
+        "list": (list != null) ? list.toJson() : null,
         "order": order,
         "is_pinned": is_pinned,
-        "source": source!.toJson(),
+        "source": (source != null) ? source.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4280,7 +4280,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatAvailableReactionsSome",
-        "reactions": reactions!.toJson(),
+        "reactions": (reactions != null) ? reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4302,7 +4302,7 @@ class TdlibFunction {
         "@type": "videoChat",
         "group_call_id": group_call_id,
         "has_participants": has_participants,
-        "default_participant_id": default_participant_id!.toJson(),
+        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4351,13 +4351,13 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chat",
         "id": id,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "title": title,
-        "photo": photo!.toJson(),
-        "permissions": permissions!.toJson(),
-        "last_message": last_message!.toJson(),
-        "positions": positions!.toJson(),
-        "message_sender_id": message_sender_id!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "permissions": (permissions != null) ? permissions.toJson() : null,
+        "last_message": (last_message != null) ? last_message.toJson() : null,
+        "positions": (positions != null) ? positions.toJson() : null,
+        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
         "has_protected_content": has_protected_content,
         "is_marked_as_unread": is_marked_as_unread,
         "is_blocked": is_blocked,
@@ -4371,15 +4371,15 @@ class TdlibFunction {
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "unread_mention_count": unread_mention_count,
         "unread_reaction_count": unread_reaction_count,
-        "notification_settings": notification_settings!.toJson(),
-        "available_reactions": available_reactions!.toJson(),
+        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
         "message_ttl": message_ttl,
         "theme_name": theme_name,
-        "action_bar": action_bar!.toJson(),
-        "video_chat": video_chat!.toJson(),
-        "pending_join_requests": pending_join_requests!.toJson(),
+        "action_bar": (action_bar != null) ? action_bar.toJson() : null,
+        "video_chat": (video_chat != null) ? video_chat.toJson() : null,
+        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
         "reply_markup_message_id": reply_markup_message_id,
-        "draft_message": draft_message!.toJson(),
+        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
         "client_data": client_data,
       });
     } catch (e) {
@@ -4439,8 +4439,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatsNearby",
-        "users_nearby": users_nearby!.toJson(),
-        "supergroups_nearby": supergroups_nearby!.toJson(),
+        "users_nearby": (users_nearby != null) ? users_nearby.toJson() : null,
+        "supergroups_nearby": (supergroups_nearby != null) ? supergroups_nearby.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4693,7 +4693,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "keyboardButton",
         "text": text,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4769,7 +4769,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inlineKeyboardButtonTypeCallback",
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4787,7 +4787,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inlineKeyboardButtonTypeCallbackWithPassword",
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4875,7 +4875,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineKeyboardButton",
         "text": text,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4935,7 +4935,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "replyMarkupShowKeyboard",
-        "rows": rows!.toJson(),
+        "rows": (rows != null) ? rows.toJson() : null,
         "resize_keyboard": resize_keyboard,
         "one_time": one_time,
         "is_personal": is_personal,
@@ -4957,7 +4957,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "replyMarkupInlineKeyboard",
-        "rows": rows!.toJson(),
+        "rows": (rows != null) ? rows.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5046,10 +5046,10 @@ class TdlibFunction {
         "@type": "messageThreadInfo",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "reply_info": reply_info!.toJson(),
+        "reply_info": (reply_info != null) ? reply_info.toJson() : null,
         "unread_message_count": unread_message_count,
-        "messages": messages!.toJson(),
-        "draft_message": draft_message!.toJson(),
+        "messages": (messages != null) ? messages.toJson() : null,
+        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5085,7 +5085,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextBold",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5103,7 +5103,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextItalic",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5121,7 +5121,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextUnderline",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5139,7 +5139,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextStrikethrough",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5157,7 +5157,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextFixed",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5177,7 +5177,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextUrl",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "url": url,
         "is_cached": is_cached,
       });
@@ -5198,7 +5198,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextEmailAddress",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "email_address": email_address,
       });
     } catch (e) {
@@ -5217,7 +5217,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextSubscript",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5235,7 +5235,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextSuperscript",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5253,7 +5253,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextMarked",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5272,7 +5272,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextPhoneNumber",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "phone_number": phone_number,
       });
     } catch (e) {
@@ -5293,7 +5293,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextIcon",
-        "document": document!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
         "width": width,
         "height": height,
       });
@@ -5315,7 +5315,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextReference",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "anchor_name": anchor_name,
         "url": url,
       });
@@ -5355,7 +5355,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTextAnchorLink",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "anchor_name": anchor_name,
         "url": url,
       });
@@ -5375,7 +5375,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "richTexts",
-        "texts": texts!.toJson(),
+        "texts": (texts != null) ? texts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5394,8 +5394,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockCaption",
-        "text": text!.toJson(),
-        "credit": credit!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
+        "credit": (credit != null) ? credit.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5415,7 +5415,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "pageBlockListItem",
         "label": label,
-        "page_blocks": page_blocks!.toJson(),
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5528,12 +5528,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockTableCell",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "is_header": is_header,
         "colspan": colspan,
         "rowspan": rowspan,
-        "align": align!.toJson(),
-        "valign": valign!.toJson(),
+        "align": (align != null) ? align.toJson() : null,
+        "valign": (valign != null) ? valign.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5559,7 +5559,7 @@ class TdlibFunction {
         "url": url,
         "title": title,
         "description": description,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "author": author,
         "publish_date": publish_date,
       });
@@ -5579,7 +5579,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockTitle",
-        "title": title!.toJson(),
+        "title": (title != null) ? title.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5597,7 +5597,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockSubtitle",
-        "subtitle": subtitle!.toJson(),
+        "subtitle": (subtitle != null) ? subtitle.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5616,7 +5616,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockAuthorDate",
-        "author": author!.toJson(),
+        "author": (author != null) ? author.toJson() : null,
         "publish_date": publish_date,
       });
     } catch (e) {
@@ -5635,7 +5635,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockHeader",
-        "header": header!.toJson(),
+        "header": (header != null) ? header.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5653,7 +5653,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockSubheader",
-        "subheader": subheader!.toJson(),
+        "subheader": (subheader != null) ? subheader.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5671,7 +5671,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockKicker",
-        "kicker": kicker!.toJson(),
+        "kicker": (kicker != null) ? kicker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5689,7 +5689,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockParagraph",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5708,7 +5708,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockPreformatted",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "language": language,
       });
     } catch (e) {
@@ -5727,7 +5727,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockFooter",
-        "footer": footer!.toJson(),
+        "footer": (footer != null) ? footer.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5778,7 +5778,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockList",
-        "items": items!.toJson(),
+        "items": (items != null) ? items.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5797,8 +5797,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockBlockQuote",
-        "text": text!.toJson(),
-        "credit": credit!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
+        "credit": (credit != null) ? credit.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5817,8 +5817,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockPullQuote",
-        "text": text!.toJson(),
-        "credit": credit!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
+        "credit": (credit != null) ? credit.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5838,8 +5838,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockAnimation",
-        "animation": animation!.toJson(),
-        "caption": caption!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "need_autoplay": need_autoplay,
       });
     } catch (e) {
@@ -5859,8 +5859,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockAudio",
-        "audio": audio!.toJson(),
-        "caption": caption!.toJson(),
+        "audio": (audio != null) ? audio.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5880,8 +5880,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockPhoto",
-        "photo": photo!.toJson(),
-        "caption": caption!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "url": url,
       });
     } catch (e) {
@@ -5903,8 +5903,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockVideo",
-        "video": video!.toJson(),
-        "caption": caption!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "need_autoplay": need_autoplay,
         "is_looped": is_looped,
       });
@@ -5925,8 +5925,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockVoiceNote",
-        "voice_note": voice_note!.toJson(),
-        "caption": caption!.toJson(),
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5944,7 +5944,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockCover",
-        "cover": cover!.toJson(),
+        "cover": (cover != null) ? cover.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5971,10 +5971,10 @@ class TdlibFunction {
         "@type": "pageBlockEmbedded",
         "url": url,
         "html": html,
-        "poster_photo": poster_photo!.toJson(),
+        "poster_photo": (poster_photo != null) ? poster_photo.toJson() : null,
         "width": width,
         "height": height,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
         "is_full_width": is_full_width,
         "allow_scrolling": allow_scrolling,
       });
@@ -6001,10 +6001,10 @@ class TdlibFunction {
         "@type": "pageBlockEmbeddedPost",
         "url": url,
         "author": author,
-        "author_photo": author_photo!.toJson(),
+        "author_photo": (author_photo != null) ? author_photo.toJson() : null,
         "date": date,
-        "page_blocks": page_blocks!.toJson(),
-        "caption": caption!.toJson(),
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6023,8 +6023,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockCollage",
-        "page_blocks": page_blocks!.toJson(),
-        "caption": caption!.toJson(),
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6043,8 +6043,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockSlideshow",
-        "page_blocks": page_blocks!.toJson(),
-        "caption": caption!.toJson(),
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6065,7 +6065,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "pageBlockChatLink",
         "title": title,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "username": username,
       });
     } catch (e) {
@@ -6087,8 +6087,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockTable",
-        "caption": caption!.toJson(),
-        "cells": cells!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
+        "cells": (cells != null) ? cells.toJson() : null,
         "is_bordered": is_bordered,
         "is_striped": is_striped,
       });
@@ -6110,8 +6110,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockDetails",
-        "header": header!.toJson(),
-        "page_blocks": page_blocks!.toJson(),
+        "header": (header != null) ? header.toJson() : null,
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
         "is_open": is_open,
       });
     } catch (e) {
@@ -6131,8 +6131,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockRelatedArticles",
-        "header": header!.toJson(),
-        "articles": articles!.toJson(),
+        "header": (header != null) ? header.toJson() : null,
+        "articles": (articles != null) ? articles.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6154,11 +6154,11 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pageBlockMap",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "zoom": zoom,
         "width": width,
         "height": height,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6181,12 +6181,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "webPageInstantView",
-        "page_blocks": page_blocks!.toJson(),
+        "page_blocks": (page_blocks != null) ? page_blocks.toJson() : null,
         "view_count": view_count,
         "version": version,
         "is_rtl": is_rtl,
         "is_full": is_full,
-        "feedback_link": feedback_link!.toJson(),
+        "feedback_link": (feedback_link != null) ? feedback_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6229,21 +6229,21 @@ class TdlibFunction {
         "type": type,
         "site_name": site_name,
         "title": title,
-        "description": description!.toJson(),
-        "photo": photo!.toJson(),
+        "description": (description != null) ? description.toJson() : null,
+        "photo": (photo != null) ? photo.toJson() : null,
         "embed_url": embed_url,
         "embed_type": embed_type,
         "embed_width": embed_width,
         "embed_height": embed_height,
         "duration": duration,
         "author": author,
-        "animation": animation!.toJson(),
-        "audio": audio!.toJson(),
-        "document": document!.toJson(),
-        "sticker": sticker!.toJson(),
-        "video": video!.toJson(),
-        "video_note": video_note!.toJson(),
-        "voice_note": voice_note!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
+        "audio": (audio != null) ? audio.toJson() : null,
+        "document": (document != null) ? document.toJson() : null,
+        "sticker": (sticker != null) ? sticker.toJson() : null,
+        "video": (video != null) ? video.toJson() : null,
+        "video_note": (video_note != null) ? video_note.toJson() : null,
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
         "instant_view_version": instant_view_version,
       });
     } catch (e) {
@@ -6288,7 +6288,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "countries",
-        "countries": countries!.toJson(),
+        "countries": (countries != null) ? countries.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6308,7 +6308,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "phoneNumberInfo",
-        "country": country!.toJson(),
+        "country": (country != null) ? country.toJson() : null,
         "country_calling_code": country_calling_code,
         "formatted_phone_number": formatted_phone_number,
       });
@@ -6350,7 +6350,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "bankCardInfo",
         "title": title,
-        "actions": actions!.toJson(),
+        "actions": (actions != null) ? actions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6459,7 +6459,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "invoice",
         "currency": currency,
-        "price_parts": price_parts!.toJson(),
+        "price_parts": (price_parts != null) ? price_parts.toJson() : null,
         "max_tip_amount": max_tip_amount,
         "suggested_tip_amounts": suggested_tip_amounts,
         "recurring_payment_terms_of_service_url": recurring_payment_terms_of_service_url,
@@ -6494,7 +6494,7 @@ class TdlibFunction {
         "name": name,
         "phone_number": phone_number,
         "email_address": email_address,
-        "shipping_address": shipping_address!.toJson(),
+        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6516,7 +6516,7 @@ class TdlibFunction {
         "@type": "shippingOption",
         "id": id,
         "title": title,
-        "price_parts": price_parts!.toJson(),
+        "price_parts": (price_parts != null) ? price_parts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6721,18 +6721,18 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "paymentForm",
         "id": id,
-        "invoice": invoice!.toJson(),
+        "invoice": (invoice != null) ? invoice.toJson() : null,
         "seller_bot_user_id": seller_bot_user_id,
         "payment_provider_user_id": payment_provider_user_id,
-        "payment_provider": payment_provider!.toJson(),
-        "additional_payment_options": additional_payment_options!.toJson(),
-        "saved_order_info": saved_order_info!.toJson(),
-        "saved_credentials": saved_credentials!.toJson(),
+        "payment_provider": (payment_provider != null) ? payment_provider.toJson() : null,
+        "additional_payment_options": (additional_payment_options != null) ? additional_payment_options.toJson() : null,
+        "saved_order_info": (saved_order_info != null) ? saved_order_info.toJson() : null,
+        "saved_credentials": (saved_credentials != null) ? saved_credentials.toJson() : null,
         "can_save_credentials": can_save_credentials,
         "need_password": need_password,
         "product_title": product_title,
-        "product_description": product_description!.toJson(),
-        "product_photo": product_photo!.toJson(),
+        "product_description": (product_description != null) ? product_description.toJson() : null,
+        "product_photo": (product_photo != null) ? product_photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6752,7 +6752,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "validatedOrderInfo",
         "order_info_id": order_info_id,
-        "shipping_options": shipping_options!.toJson(),
+        "shipping_options": (shipping_options != null) ? shipping_options.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6801,14 +6801,14 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "paymentReceipt",
         "title": title,
-        "description": description!.toJson(),
-        "photo": photo!.toJson(),
+        "description": (description != null) ? description.toJson() : null,
+        "photo": (photo != null) ? photo.toJson() : null,
         "date": date,
         "seller_bot_user_id": seller_bot_user_id,
         "payment_provider_user_id": payment_provider_user_id,
-        "invoice": invoice!.toJson(),
-        "order_info": order_info!.toJson(),
-        "shipping_option": shipping_option!.toJson(),
+        "invoice": (invoice != null) ? invoice.toJson() : null,
+        "order_info": (order_info != null) ? order_info.toJson() : null,
+        "shipping_option": (shipping_option != null) ? shipping_option.toJson() : null,
         "credentials_title": credentials_title,
         "tip_amount": tip_amount,
       });
@@ -6873,8 +6873,8 @@ class TdlibFunction {
         "width": width,
         "height": height,
         "duration": duration,
-        "minithumbnail": minithumbnail!.toJson(),
-        "caption": caption!.toJson(),
+        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6893,8 +6893,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageExtendedMediaPhoto",
-        "photo": photo!.toJson(),
-        "caption": caption!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6913,8 +6913,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageExtendedMediaVideo",
-        "video": video!.toJson(),
-        "caption": caption!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6932,7 +6932,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageExtendedMediaUnsupported",
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6951,7 +6951,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "datedFile",
-        "file": file!.toJson(),
+        "file": (file != null) ? file.toJson() : null,
         "date": date,
       });
     } catch (e) {
@@ -7202,7 +7202,7 @@ class TdlibFunction {
         "native_first_name": native_first_name,
         "native_middle_name": native_middle_name,
         "native_last_name": native_last_name,
-        "birthdate": birthdate!.toJson(),
+        "birthdate": (birthdate != null) ? birthdate.toJson() : null,
         "gender": gender,
         "country_code": country_code,
         "residence_country_code": residence_country_code,
@@ -7229,11 +7229,11 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "identityDocument",
         "number": number,
-        "expiry_date": expiry_date!.toJson(),
-        "front_side": front_side!.toJson(),
-        "reverse_side": reverse_side!.toJson(),
-        "selfie": selfie!.toJson(),
-        "translation": translation!.toJson(),
+        "expiry_date": (expiry_date != null) ? expiry_date.toJson() : null,
+        "front_side": (front_side != null) ? front_side.toJson() : null,
+        "reverse_side": (reverse_side != null) ? reverse_side.toJson() : null,
+        "selfie": (selfie != null) ? selfie.toJson() : null,
+        "translation": (translation != null) ? translation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7257,11 +7257,11 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputIdentityDocument",
         "number": number,
-        "expiry_date": expiry_date!.toJson(),
-        "front_side": front_side!.toJson(),
-        "reverse_side": reverse_side!.toJson(),
-        "selfie": selfie!.toJson(),
-        "translation": translation!.toJson(),
+        "expiry_date": (expiry_date != null) ? expiry_date.toJson() : null,
+        "front_side": (front_side != null) ? front_side.toJson() : null,
+        "reverse_side": (reverse_side != null) ? reverse_side.toJson() : null,
+        "selfie": (selfie != null) ? selfie.toJson() : null,
+        "translation": (translation != null) ? translation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7280,8 +7280,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "personalDocument",
-        "files": files!.toJson(),
-        "translation": translation!.toJson(),
+        "files": (files != null) ? files.toJson() : null,
+        "translation": (translation != null) ? translation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7300,8 +7300,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPersonalDocument",
-        "files": files!.toJson(),
-        "translation": translation!.toJson(),
+        "files": (files != null) ? files.toJson() : null,
+        "translation": (translation != null) ? translation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7319,7 +7319,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementPersonalDetails",
-        "personal_details": personal_details!.toJson(),
+        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7337,7 +7337,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementPassport",
-        "passport": passport!.toJson(),
+        "passport": (passport != null) ? passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7355,7 +7355,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementDriverLicense",
-        "driver_license": driver_license!.toJson(),
+        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7373,7 +7373,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementIdentityCard",
-        "identity_card": identity_card!.toJson(),
+        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7391,7 +7391,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementInternalPassport",
-        "internal_passport": internal_passport!.toJson(),
+        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7409,7 +7409,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementAddress",
-        "address": address!.toJson(),
+        "address": (address != null) ? address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7427,7 +7427,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementUtilityBill",
-        "utility_bill": utility_bill!.toJson(),
+        "utility_bill": (utility_bill != null) ? utility_bill.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7445,7 +7445,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementBankStatement",
-        "bank_statement": bank_statement!.toJson(),
+        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7463,7 +7463,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementRentalAgreement",
-        "rental_agreement": rental_agreement!.toJson(),
+        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7481,7 +7481,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementPassportRegistration",
-        "passport_registration": passport_registration!.toJson(),
+        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7499,7 +7499,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementTemporaryRegistration",
-        "temporary_registration": temporary_registration!.toJson(),
+        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7553,7 +7553,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementPersonalDetails",
-        "personal_details": personal_details!.toJson(),
+        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7571,7 +7571,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementPassport",
-        "passport": passport!.toJson(),
+        "passport": (passport != null) ? passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7589,7 +7589,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementDriverLicense",
-        "driver_license": driver_license!.toJson(),
+        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7607,7 +7607,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementIdentityCard",
-        "identity_card": identity_card!.toJson(),
+        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7625,7 +7625,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementInternalPassport",
-        "internal_passport": internal_passport!.toJson(),
+        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7643,7 +7643,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementAddress",
-        "address": address!.toJson(),
+        "address": (address != null) ? address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7661,7 +7661,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementUtilityBill",
-        "utility_bill": utility_bill!.toJson(),
+        "utility_bill": (utility_bill != null) ? utility_bill.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7679,7 +7679,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementBankStatement",
-        "bank_statement": bank_statement!.toJson(),
+        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7697,7 +7697,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementRentalAgreement",
-        "rental_agreement": rental_agreement!.toJson(),
+        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7715,7 +7715,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementPassportRegistration",
-        "passport_registration": passport_registration!.toJson(),
+        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7733,7 +7733,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementTemporaryRegistration",
-        "temporary_registration": temporary_registration!.toJson(),
+        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7787,7 +7787,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElements",
-        "elements": elements!.toJson(),
+        "elements": (elements != null) ? elements.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7951,9 +7951,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementError",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "message": message,
-        "source": source!.toJson(),
+        "source": (source != null) ? source.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7974,7 +7974,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportSuitableElement",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "is_selfie_required": is_selfie_required,
         "is_translation_required": is_translation_required,
         "is_native_name_required": is_native_name_required,
@@ -7995,7 +7995,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportRequiredElement",
-        "suitable_elements": suitable_elements!.toJson(),
+        "suitable_elements": (suitable_elements != null) ? suitable_elements.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8016,7 +8016,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "passportAuthorizationForm",
         "id": id,
-        "required_elements": required_elements!.toJson(),
+        "required_elements": (required_elements != null) ? required_elements.toJson() : null,
         "privacy_policy_url": privacy_policy_url,
       });
     } catch (e) {
@@ -8036,8 +8036,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementsWithErrors",
-        "elements": elements!.toJson(),
-        "errors": errors!.toJson(),
+        "elements": (elements != null) ? elements.toJson() : null,
+        "errors": (errors != null) ? errors.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8057,9 +8057,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "encryptedCredentials",
-        "data": data!.toJson(),
-        "hash": hash!.toJson(),
-        "secret": secret!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
+        "hash": (hash != null) ? hash.toJson() : null,
+        "secret": (secret != null) ? secret.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8085,13 +8085,13 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "encryptedPassportElement",
-        "type": type!.toJson(),
-        "data": data!.toJson(),
-        "front_side": front_side!.toJson(),
-        "reverse_side": reverse_side!.toJson(),
-        "selfie": selfie!.toJson(),
-        "translation": translation!.toJson(),
-        "files": files!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
+        "data": (data != null) ? data.toJson() : null,
+        "front_side": (front_side != null) ? front_side.toJson() : null,
+        "reverse_side": (reverse_side != null) ? reverse_side.toJson() : null,
+        "selfie": (selfie != null) ? selfie.toJson() : null,
+        "translation": (translation != null) ? translation.toJson() : null,
+        "files": (files != null) ? files.toJson() : null,
         "value": value,
         "hash": hash,
       });
@@ -8111,7 +8111,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceUnspecified",
-        "element_hash": element_hash!.toJson(),
+        "element_hash": (element_hash != null) ? element_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8131,7 +8131,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceDataField",
         "field_name": field_name,
-        "data_hash": data_hash!.toJson(),
+        "data_hash": (data_hash != null) ? data_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8149,7 +8149,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceFrontSide",
-        "file_hash": file_hash!.toJson(),
+        "file_hash": (file_hash != null) ? file_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8167,7 +8167,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceReverseSide",
-        "file_hash": file_hash!.toJson(),
+        "file_hash": (file_hash != null) ? file_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8185,7 +8185,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceSelfie",
-        "file_hash": file_hash!.toJson(),
+        "file_hash": (file_hash != null) ? file_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8203,7 +8203,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceTranslationFile",
-        "file_hash": file_hash!.toJson(),
+        "file_hash": (file_hash != null) ? file_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8221,7 +8221,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceTranslationFiles",
-        "file_hashes": file_hashes!.toJson(),
+        "file_hashes": (file_hashes != null) ? file_hashes.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8239,7 +8239,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceFile",
-        "file_hash": file_hash!.toJson(),
+        "file_hash": (file_hash != null) ? file_hash.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8257,7 +8257,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementErrorSourceFiles",
-        "file_hashes": file_hashes!.toJson(),
+        "file_hashes": (file_hashes != null) ? file_hashes.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8277,9 +8277,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementError",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "message": message,
-        "source": source!.toJson(),
+        "source": (source != null) ? source.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8298,8 +8298,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageText",
-        "text": text!.toJson(),
-        "web_page": web_page!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
+        "web_page": (web_page != null) ? web_page.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8319,8 +8319,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageAnimation",
-        "animation": animation!.toJson(),
-        "caption": caption!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "is_secret": is_secret,
       });
     } catch (e) {
@@ -8340,8 +8340,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageAudio",
-        "audio": audio!.toJson(),
-        "caption": caption!.toJson(),
+        "audio": (audio != null) ? audio.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8360,8 +8360,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageDocument",
-        "document": document!.toJson(),
-        "caption": caption!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8381,8 +8381,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messagePhoto",
-        "photo": photo!.toJson(),
-        "caption": caption!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "is_secret": is_secret,
       });
     } catch (e) {
@@ -8417,7 +8417,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageSticker",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
         "is_premium": is_premium,
       });
     } catch (e) {
@@ -8438,8 +8438,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageVideo",
-        "video": video!.toJson(),
-        "caption": caption!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "is_secret": is_secret,
       });
     } catch (e) {
@@ -8475,7 +8475,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageVideoNote",
-        "video_note": video_note!.toJson(),
+        "video_note": (video_note != null) ? video_note.toJson() : null,
         "is_viewed": is_viewed,
         "is_secret": is_secret,
       });
@@ -8497,8 +8497,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageVoiceNote",
-        "voice_note": voice_note!.toJson(),
-        "caption": caption!.toJson(),
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
         "is_listened": is_listened,
       });
     } catch (e) {
@@ -8521,7 +8521,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageLocation",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "live_period": live_period,
         "expires_in": expires_in,
         "heading": heading,
@@ -8543,7 +8543,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageVenue",
-        "venue": venue!.toJson(),
+        "venue": (venue != null) ? venue.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8561,7 +8561,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageContact",
-        "contact": contact!.toJson(),
+        "contact": (contact != null) ? contact.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8580,7 +8580,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageAnimatedEmoji",
-        "animated_emoji": animated_emoji!.toJson(),
+        "animated_emoji": (animated_emoji != null) ? animated_emoji.toJson() : null,
         "emoji": emoji,
       });
     } catch (e) {
@@ -8603,8 +8603,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageDice",
-        "initial_state": initial_state!.toJson(),
-        "final_state": final_state!.toJson(),
+        "initial_state": (initial_state != null) ? initial_state.toJson() : null,
+        "final_state": (final_state != null) ? final_state.toJson() : null,
         "emoji": emoji,
         "value": value,
         "success_animation_frame_number": success_animation_frame_number,
@@ -8625,7 +8625,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageGame",
-        "game": game!.toJson(),
+        "game": (game != null) ? game.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8643,7 +8643,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messagePoll",
-        "poll": poll!.toJson(),
+        "poll": (poll != null) ? poll.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8671,15 +8671,15 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageInvoice",
         "title": title,
-        "description": description!.toJson(),
-        "photo": photo!.toJson(),
+        "description": (description != null) ? description.toJson() : null,
+        "photo": (photo != null) ? photo.toJson() : null,
         "currency": currency,
         "total_amount": total_amount,
         "start_parameter": start_parameter,
         "is_test": is_test,
         "need_shipping_address": need_shipping_address,
         "receipt_message_id": receipt_message_id,
-        "extended_media": extended_media!.toJson(),
+        "extended_media": (extended_media != null) ? extended_media.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8700,7 +8700,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageCall",
         "is_video": is_video,
-        "discard_reason": discard_reason!.toJson(),
+        "discard_reason": (discard_reason != null) ? discard_reason.toJson() : null,
         "duration": duration,
       });
     } catch (e) {
@@ -8851,7 +8851,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageChatChangePhoto",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9139,9 +9139,9 @@ class TdlibFunction {
         "total_amount": total_amount,
         "is_recurring": is_recurring,
         "is_first_recurring": is_first_recurring,
-        "invoice_payload": invoice_payload!.toJson(),
+        "invoice_payload": (invoice_payload != null) ? invoice_payload.toJson() : null,
         "shipping_option_id": shipping_option_id,
-        "order_info": order_info!.toJson(),
+        "order_info": (order_info != null) ? order_info.toJson() : null,
         "telegram_payment_charge_id": telegram_payment_charge_id,
         "provider_payment_charge_id": provider_payment_charge_id,
       });
@@ -9167,7 +9167,7 @@ class TdlibFunction {
         "currency": currency,
         "amount": amount,
         "month_count": month_count,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9256,7 +9256,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messagePassportDataSent",
-        "types": types!.toJson(),
+        "types": (types != null) ? types.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9275,8 +9275,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messagePassportDataReceived",
-        "elements": elements!.toJson(),
-        "credentials": credentials!.toJson(),
+        "elements": (elements != null) ? elements.toJson() : null,
+        "credentials": (credentials != null) ? credentials.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9296,8 +9296,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageProximityAlertTriggered",
-        "traveler_id": traveler_id!.toJson(),
-        "watcher_id": watcher_id!.toJson(),
+        "traveler_id": (traveler_id != null) ? traveler_id.toJson() : null,
+        "watcher_id": (watcher_id != null) ? watcher_id.toJson() : null,
         "distance": distance,
       });
     } catch (e) {
@@ -9648,7 +9648,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputThumbnail",
-        "thumbnail": thumbnail!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "width": width,
         "height": height,
       });
@@ -9709,7 +9709,7 @@ class TdlibFunction {
         "from_background": from_background,
         "protect_content": protect_content,
         "update_order_of_installed_sticker_sets": update_order_of_installed_sticker_sets,
-        "scheduling_state": scheduling_state!.toJson(),
+        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9731,7 +9731,7 @@ class TdlibFunction {
         "@type": "messageCopyOptions",
         "send_copy": send_copy,
         "replace_caption": replace_caption,
-        "new_caption": new_caption!.toJson(),
+        "new_caption": (new_caption != null) ? new_caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9751,7 +9751,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageText",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "disable_web_page_preview": disable_web_page_preview,
         "clear_draft": clear_draft,
       });
@@ -9777,13 +9777,13 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageAnimation",
-        "animation": animation!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "added_sticker_file_ids": added_sticker_file_ids,
         "duration": duration,
         "width": width,
         "height": height,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9806,12 +9806,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageAudio",
-        "audio": audio!.toJson(),
-        "album_cover_thumbnail": album_cover_thumbnail!.toJson(),
+        "audio": (audio != null) ? audio.toJson() : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
         "duration": duration,
         "title": title,
         "performer": performer,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9832,10 +9832,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageDocument",
-        "document": document!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "disable_content_type_detection": disable_content_type_detection,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9859,12 +9859,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessagePhoto",
-        "photo": photo!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "added_sticker_file_ids": added_sticker_file_ids,
         "width": width,
         "height": height,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
         "ttl": ttl,
       });
     } catch (e) {
@@ -9887,8 +9887,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageSticker",
-        "sticker": sticker!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "width": width,
         "height": height,
         "emoji": emoji,
@@ -9917,14 +9917,14 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageVideo",
-        "video": video!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "added_sticker_file_ids": added_sticker_file_ids,
         "duration": duration,
         "width": width,
         "height": height,
         "supports_streaming": supports_streaming,
-        "caption": caption!.toJson(),
+        "caption": (caption != null) ? caption.toJson() : null,
         "ttl": ttl,
       });
     } catch (e) {
@@ -9946,8 +9946,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageVideoNote",
-        "video_note": video_note!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "video_note": (video_note != null) ? video_note.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "duration": duration,
         "length": length,
       });
@@ -9970,10 +9970,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageVoiceNote",
-        "voice_note": voice_note!.toJson(),
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
         "duration": duration,
-        "waveform": waveform!.toJson(),
-        "caption": caption!.toJson(),
+        "waveform": (waveform != null) ? waveform.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9994,7 +9994,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageLocation",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "live_period": live_period,
         "heading": heading,
         "proximity_alert_radius": proximity_alert_radius,
@@ -10015,7 +10015,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageVenue",
-        "venue": venue!.toJson(),
+        "venue": (venue != null) ? venue.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10033,7 +10033,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageContact",
-        "contact": contact!.toJson(),
+        "contact": (contact != null) ? contact.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10102,18 +10102,18 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputMessageInvoice",
-        "invoice": invoice!.toJson(),
+        "invoice": (invoice != null) ? invoice.toJson() : null,
         "title": title,
         "description": description,
         "photo_url": photo_url,
         "photo_size": photo_size,
         "photo_width": photo_width,
         "photo_height": photo_height,
-        "payload": payload!.toJson(),
+        "payload": (payload != null) ? payload.toJson() : null,
         "provider_token": provider_token,
         "provider_data": provider_data,
         "start_parameter": start_parameter,
-        "extended_media_content": extended_media_content!.toJson(),
+        "extended_media_content": (extended_media_content != null) ? extended_media_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10140,7 +10140,7 @@ class TdlibFunction {
         "question": question,
         "options": options,
         "is_anonymous": is_anonymous,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "open_period": open_period,
         "close_date": close_date,
         "is_closed": is_closed,
@@ -10167,7 +10167,7 @@ class TdlibFunction {
         "from_chat_id": from_chat_id,
         "message_id": message_id,
         "in_game_share": in_game_share,
-        "copy_options": copy_options!.toJson(),
+        "copy_options": (copy_options != null) ? copy_options.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10779,7 +10779,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "stickers",
-        "stickers": stickers!.toJson(),
+        "stickers": (stickers != null) ? stickers.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10830,16 +10830,16 @@ class TdlibFunction {
         "id": id,
         "title": title,
         "name": name,
-        "thumbnail": thumbnail!.toJson(),
-        "thumbnail_outline": thumbnail_outline!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "thumbnail_outline": (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": sticker_format!.toJson(),
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
-        "stickers": stickers!.toJson(),
-        "emojis": emojis!.toJson(),
+        "stickers": (stickers != null) ? stickers.toJson() : null,
+        "emojis": (emojis != null) ? emojis.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10872,16 +10872,16 @@ class TdlibFunction {
         "id": id,
         "title": title,
         "name": name,
-        "thumbnail": thumbnail!.toJson(),
-        "thumbnail_outline": thumbnail_outline!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
+        "thumbnail_outline": (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": sticker_format!.toJson(),
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
         "size": size,
-        "covers": covers!.toJson(),
+        "covers": (covers != null) ? covers.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10901,7 +10901,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "stickerSets",
         "total_count": total_count,
-        "sets": sets!.toJson(),
+        "sets": (sets != null) ? sets.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10922,7 +10922,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "trendingStickerSets",
         "total_count": total_count,
-        "sets": sets!.toJson(),
+        "sets": (sets != null) ? sets.toJson() : null,
         "is_premium": is_premium,
       });
     } catch (e) {
@@ -11043,7 +11043,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "callServerTypeTelegramReflector",
-        "peer_tag": peer_tag!.toJson(),
+        "peer_tag": (peer_tag != null) ? peer_tag.toJson() : null,
         "is_tcp": is_tcp,
       });
     } catch (e) {
@@ -11094,7 +11094,7 @@ class TdlibFunction {
         "ip_address": ip_address,
         "ipv6_address": ipv6_address,
         "port": port,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11188,10 +11188,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "callStateReady",
-        "protocol": protocol!.toJson(),
-        "servers": servers!.toJson(),
+        "protocol": (protocol != null) ? protocol.toJson() : null,
+        "servers": (servers != null) ? servers.toJson() : null,
         "config": config,
-        "encryption_key": encryption_key!.toJson(),
+        "encryption_key": (encryption_key != null) ? encryption_key.toJson() : null,
         "emojis": emojis,
         "allow_p2p": allow_p2p,
       });
@@ -11229,7 +11229,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "callStateDiscarded",
-        "reason": reason!.toJson(),
+        "reason": (reason != null) ? reason.toJson() : null,
         "need_rating": need_rating,
         "need_debug_information": need_debug_information,
         "need_log": need_log,
@@ -11250,7 +11250,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "callStateError",
-        "error": error!.toJson(),
+        "error": (error != null) ? error.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11335,7 +11335,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallStreams",
-        "streams": streams!.toJson(),
+        "streams": (streams != null) ? streams.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11374,7 +11374,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallRecentSpeaker",
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "is_speaking": is_speaking,
       });
     } catch (e) {
@@ -11425,7 +11425,7 @@ class TdlibFunction {
         "participant_count": participant_count,
         "has_hidden_listeners": has_hidden_listeners,
         "loaded_all_participants": loaded_all_participants,
-        "recent_speakers": recent_speakers!.toJson(),
+        "recent_speakers": (recent_speakers != null) ? recent_speakers.toJson() : null,
         "is_my_video_enabled": is_my_video_enabled,
         "is_my_video_paused": is_my_video_paused,
         "can_enable_video": can_enable_video,
@@ -11473,7 +11473,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallParticipantVideoInfo",
-        "source_groups": source_groups!.toJson(),
+        "source_groups": (source_groups != null) ? source_groups.toJson() : null,
         "endpoint_id": endpoint_id,
         "is_paused": is_paused,
       });
@@ -11510,11 +11510,11 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallParticipant",
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "screen_sharing_audio_source_id": screen_sharing_audio_source_id,
-        "video_info": video_info!.toJson(),
-        "screen_sharing_video_info": screen_sharing_video_info!.toJson(),
+        "video_info": (video_info != null) ? video_info.toJson() : null,
+        "screen_sharing_video_info": (screen_sharing_video_info != null) ? screen_sharing_video_info.toJson() : null,
         "bio": bio,
         "is_current_user": is_current_user,
         "is_speaking": is_speaking,
@@ -11688,7 +11688,7 @@ class TdlibFunction {
         "user_id": user_id,
         "is_outgoing": is_outgoing,
         "is_video": is_video,
-        "state": state!.toJson(),
+        "state": (state != null) ? state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11733,8 +11733,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addedReaction",
-        "type": type!.toJson(),
-        "sender_id": sender_id!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11755,7 +11755,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "addedReactions",
         "total_count": total_count,
-        "reactions": reactions!.toJson(),
+        "reactions": (reactions != null) ? reactions.toJson() : null,
         "next_offset": next_offset,
       });
     } catch (e) {
@@ -11775,7 +11775,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "availableReaction",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "needs_premium": needs_premium,
       });
     } catch (e) {
@@ -11797,9 +11797,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "availableReactions",
-        "top_reactions": top_reactions!.toJson(),
-        "recent_reactions": recent_reactions!.toJson(),
-        "popular_reactions": popular_reactions!.toJson(),
+        "top_reactions": (top_reactions != null) ? top_reactions.toJson() : null,
+        "recent_reactions": (recent_reactions != null) ? recent_reactions.toJson() : null,
+        "popular_reactions": (popular_reactions != null) ? popular_reactions.toJson() : null,
         "allow_custom_emoji": allow_custom_emoji,
       });
     } catch (e) {
@@ -11830,13 +11830,13 @@ class TdlibFunction {
         "emoji": emoji,
         "title": title,
         "is_active": is_active,
-        "static_icon": static_icon!.toJson(),
-        "appear_animation": appear_animation!.toJson(),
-        "select_animation": select_animation!.toJson(),
-        "activate_animation": activate_animation!.toJson(),
-        "effect_animation": effect_animation!.toJson(),
-        "around_animation": around_animation!.toJson(),
-        "center_animation": center_animation!.toJson(),
+        "static_icon": (static_icon != null) ? static_icon.toJson() : null,
+        "appear_animation": (appear_animation != null) ? appear_animation.toJson() : null,
+        "select_animation": (select_animation != null) ? select_animation.toJson() : null,
+        "activate_animation": (activate_animation != null) ? activate_animation.toJson() : null,
+        "effect_animation": (effect_animation != null) ? effect_animation.toJson() : null,
+        "around_animation": (around_animation != null) ? around_animation.toJson() : null,
+        "center_animation": (center_animation != null) ? center_animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11854,7 +11854,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "animations",
-        "animations": animations!.toJson(),
+        "animations": (animations != null) ? animations.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11872,7 +11872,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "diceStickersRegular",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11894,11 +11894,11 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "diceStickersSlotMachine",
-        "background": background!.toJson(),
-        "lever": lever!.toJson(),
-        "left_reel": left_reel!.toJson(),
-        "center_reel": center_reel!.toJson(),
-        "right_reel": right_reel!.toJson(),
+        "background": (background != null) ? background.toJson() : null,
+        "lever": (lever != null) ? lever.toJson() : null,
+        "left_reel": (left_reel != null) ? left_reel.toJson() : null,
+        "center_reel": (center_reel != null) ? center_reel.toJson() : null,
+        "right_reel": (right_reel != null) ? right_reel.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -11972,7 +11972,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "speechRecognitionResultError",
-        "error": error!.toJson(),
+        "error": (error != null) ? error.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12033,14 +12033,14 @@ class TdlibFunction {
         "supports_channel_chats": supports_channel_chats,
         "supports_settings": supports_settings,
         "name": name,
-        "name_color": name_color!.toJson(),
-        "default_icon": default_icon!.toJson(),
-        "ios_static_icon": ios_static_icon!.toJson(),
-        "ios_animated_icon": ios_animated_icon!.toJson(),
-        "android_icon": android_icon!.toJson(),
-        "macos_icon": macos_icon!.toJson(),
-        "icon_color": icon_color!.toJson(),
-        "web_app_placeholder": web_app_placeholder!.toJson(),
+        "name_color": (name_color != null) ? name_color.toJson() : null,
+        "default_icon": (default_icon != null) ? default_icon.toJson() : null,
+        "ios_static_icon": (ios_static_icon != null) ? ios_static_icon.toJson() : null,
+        "ios_animated_icon": (ios_animated_icon != null) ? ios_animated_icon.toJson() : null,
+        "android_icon": (android_icon != null) ? android_icon.toJson() : null,
+        "macos_icon": (macos_icon != null) ? macos_icon.toJson() : null,
+        "icon_color": (icon_color != null) ? icon_color.toJson() : null,
+        "web_app_placeholder": (web_app_placeholder != null) ? web_app_placeholder.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12113,8 +12113,8 @@ class TdlibFunction {
         "video_duration": video_duration,
         "video_width": video_width,
         "video_height": video_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12149,8 +12149,8 @@ class TdlibFunction {
         "thumbnail_url": thumbnail_url,
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12179,8 +12179,8 @@ class TdlibFunction {
         "performer": performer,
         "audio_url": audio_url,
         "audio_duration": audio_duration,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12205,12 +12205,12 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputInlineQueryResultContact",
         "id": id,
-        "contact": contact!.toJson(),
+        "contact": (contact != null) ? contact.toJson() : null,
         "thumbnail_url": thumbnail_url,
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12245,8 +12245,8 @@ class TdlibFunction {
         "thumbnail_url": thumbnail_url,
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12268,7 +12268,7 @@ class TdlibFunction {
         "@type": "inputInlineQueryResultGame",
         "id": id,
         "game_short_name": game_short_name,
-        "reply_markup": reply_markup!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12295,14 +12295,14 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputInlineQueryResultLocation",
         "id": id,
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "live_period": live_period,
         "title": title,
         "thumbnail_url": thumbnail_url,
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12335,8 +12335,8 @@ class TdlibFunction {
         "photo_url": photo_url,
         "photo_width": photo_width,
         "photo_height": photo_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12365,8 +12365,8 @@ class TdlibFunction {
         "sticker_url": sticker_url,
         "sticker_width": sticker_width,
         "sticker_height": sticker_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12391,12 +12391,12 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputInlineQueryResultVenue",
         "id": id,
-        "venue": venue!.toJson(),
+        "venue": (venue != null) ? venue.toJson() : null,
         "thumbnail_url": thumbnail_url,
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12433,8 +12433,8 @@ class TdlibFunction {
         "video_width": video_width,
         "video_height": video_height,
         "video_duration": video_duration,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12461,8 +12461,8 @@ class TdlibFunction {
         "title": title,
         "voice_note_url": voice_note_url,
         "voice_note_duration": voice_note_duration,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12490,7 +12490,7 @@ class TdlibFunction {
         "hide_url": hide_url,
         "title": title,
         "description": description,
-        "thumbnail": thumbnail!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12511,8 +12511,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultContact",
         "id": id,
-        "contact": contact!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "contact": (contact != null) ? contact.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12534,9 +12534,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultLocation",
         "id": id,
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "title": title,
-        "thumbnail": thumbnail!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12557,8 +12557,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultVenue",
         "id": id,
-        "venue": venue!.toJson(),
-        "thumbnail": thumbnail!.toJson(),
+        "venue": (venue != null) ? venue.toJson() : null,
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12578,7 +12578,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultGame",
         "id": id,
-        "game": game!.toJson(),
+        "game": (game != null) ? game.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12599,7 +12599,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultAnimation",
         "id": id,
-        "animation": animation!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
         "title": title,
       });
     } catch (e) {
@@ -12620,7 +12620,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultAudio",
         "id": id,
-        "audio": audio!.toJson(),
+        "audio": (audio != null) ? audio.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12642,7 +12642,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultDocument",
         "id": id,
-        "document": document!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
         "title": title,
         "description": description,
       });
@@ -12666,7 +12666,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultPhoto",
         "id": id,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "title": title,
         "description": description,
       });
@@ -12688,7 +12688,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultSticker",
         "id": id,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12710,7 +12710,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultVideo",
         "id": id,
-        "video": video!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
         "title": title,
         "description": description,
       });
@@ -12733,7 +12733,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inlineQueryResultVoiceNote",
         "id": id,
-        "voice_note": voice_note!.toJson(),
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
         "title": title,
       });
     } catch (e) {
@@ -12758,7 +12758,7 @@ class TdlibFunction {
         "@type": "inlineQueryResults",
         "inline_query_id": inline_query_id,
         "next_offset": next_offset,
-        "results": results!.toJson(),
+        "results": (results != null) ? results.toJson() : null,
         "switch_pm_text": switch_pm_text,
         "switch_pm_parameter": switch_pm_parameter,
       });
@@ -12778,7 +12778,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "callbackQueryPayloadData",
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12798,7 +12798,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "callbackQueryPayloadDataWithPassword",
         "password": password,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12896,7 +12896,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "gameHighScores",
-        "scores": scores!.toJson(),
+        "scores": (scores != null) ? scores.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12915,8 +12915,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMessageEdited",
-        "old_message": old_message!.toJson(),
-        "new_message": new_message!.toJson(),
+        "old_message": (old_message != null) ? old_message.toJson() : null,
+        "new_message": (new_message != null) ? new_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12934,7 +12934,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMessageDeleted",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12952,7 +12952,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMessagePinned",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12970,7 +12970,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMessageUnpinned",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12988,7 +12988,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventPollStopped",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13021,7 +13021,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMemberJoinedByInviteLink",
-        "invite_link": invite_link!.toJson(),
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13041,7 +13041,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatEventMemberJoinedByRequest",
         "approver_user_id": approver_user_id,
-        "invite_link": invite_link!.toJson(),
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13061,7 +13061,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatEventMemberInvited",
         "user_id": user_id,
-        "status": status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13097,8 +13097,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatEventMemberPromoted",
         "user_id": user_id,
-        "old_status": old_status!.toJson(),
-        "new_status": new_status!.toJson(),
+        "old_status": (old_status != null) ? old_status.toJson() : null,
+        "new_status": (new_status != null) ? new_status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13118,9 +13118,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventMemberRestricted",
-        "member_id": member_id!.toJson(),
-        "old_status": old_status!.toJson(),
-        "new_status": new_status!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
+        "old_status": (old_status != null) ? old_status.toJson() : null,
+        "new_status": (new_status != null) ? new_status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13139,8 +13139,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventAvailableReactionsChanged",
-        "old_available_reactions": old_available_reactions!.toJson(),
-        "new_available_reactions": new_available_reactions!.toJson(),
+        "old_available_reactions": (old_available_reactions != null) ? old_available_reactions.toJson() : null,
+        "new_available_reactions": (new_available_reactions != null) ? new_available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13199,8 +13199,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventLocationChanged",
-        "old_location": old_location!.toJson(),
-        "new_location": new_location!.toJson(),
+        "old_location": (old_location != null) ? old_location.toJson() : null,
+        "new_location": (new_location != null) ? new_location.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13239,8 +13239,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventPermissionsChanged",
-        "old_permissions": old_permissions!.toJson(),
-        "new_permissions": new_permissions!.toJson(),
+        "old_permissions": (old_permissions != null) ? old_permissions.toJson() : null,
+        "new_permissions": (new_permissions != null) ? new_permissions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13259,8 +13259,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventPhotoChanged",
-        "old_photo": old_photo!.toJson(),
-        "new_photo": new_photo!.toJson(),
+        "old_photo": (old_photo != null) ? old_photo.toJson() : null,
+        "new_photo": (new_photo != null) ? new_photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13431,8 +13431,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventInviteLinkEdited",
-        "old_invite_link": old_invite_link!.toJson(),
-        "new_invite_link": new_invite_link!.toJson(),
+        "old_invite_link": (old_invite_link != null) ? old_invite_link.toJson() : null,
+        "new_invite_link": (new_invite_link != null) ? new_invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13450,7 +13450,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventInviteLinkRevoked",
-        "invite_link": invite_link!.toJson(),
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13468,7 +13468,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventInviteLinkDeleted",
-        "invite_link": invite_link!.toJson(),
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13541,7 +13541,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventVideoChatParticipantIsMutedToggled",
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
       });
     } catch (e) {
@@ -13561,7 +13561,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventVideoChatParticipantVolumeLevelChanged",
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "volume_level": volume_level,
       });
     } catch (e) {
@@ -13585,8 +13585,8 @@ class TdlibFunction {
         "@type": "chatEvent",
         "id": id,
         "date": date,
-        "member_id": member_id!.toJson(),
-        "action": action!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
+        "action": (action != null) ? action.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13604,7 +13604,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEvents",
-        "events": events!.toJson(),
+        "events": (events != null) ? events.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13725,7 +13725,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "languagePackString",
         "key": key,
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13743,7 +13743,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "languagePackStrings",
-        "strings": strings!.toJson(),
+        "strings": (strings != null) ? strings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13803,7 +13803,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "localizationTargetInfo",
-        "language_packs": language_packs!.toJson(),
+        "language_packs": (language_packs != null) ? language_packs.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14168,7 +14168,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumLimit",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "default_value": default_value,
         "premium_value": premium_value,
       });
@@ -14190,9 +14190,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumFeatures",
-        "features": features!.toJson(),
-        "limits": limits!.toJson(),
-        "payment_link": payment_link!.toJson(),
+        "features": (features != null) ? features.toJson() : null,
+        "limits": (limits != null) ? limits.toJson() : null,
+        "payment_link": (payment_link != null) ? payment_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14210,7 +14210,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumSourceLimitExceeded",
-        "limit_type": limit_type!.toJson(),
+        "limit_type": (limit_type != null) ? limit_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14228,7 +14228,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumSourceFeature",
-        "feature": feature!.toJson(),
+        "feature": (feature != null) ? feature.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14280,8 +14280,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumFeaturePromotionAnimation",
-        "feature": feature!.toJson(),
-        "animation": animation!.toJson(),
+        "feature": (feature != null) ? feature.toJson() : null,
+        "animation": (animation != null) ? animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14301,9 +14301,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "premiumState",
-        "state": state!.toJson(),
-        "payment_options": payment_options!.toJson(),
-        "animations": animations!.toJson(),
+        "state": (state != null) ? state.toJson() : null,
+        "payment_options": (payment_options != null) ? payment_options.toJson() : null,
+        "animations": (animations != null) ? animations.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14670,7 +14670,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "backgroundTypePattern",
-        "fill": fill!.toJson(),
+        "fill": (fill != null) ? fill.toJson() : null,
         "intensity": intensity,
         "is_inverted": is_inverted,
         "is_moving": is_moving,
@@ -14691,7 +14691,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "backgroundTypeFill",
-        "fill": fill!.toJson(),
+        "fill": (fill != null) ? fill.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14718,8 +14718,8 @@ class TdlibFunction {
         "is_default": is_default,
         "is_dark": is_dark,
         "name": name,
-        "document": document!.toJson(),
-        "type": type!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14737,7 +14737,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "backgrounds",
-        "backgrounds": backgrounds!.toJson(),
+        "backgrounds": (backgrounds != null) ? backgrounds.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14755,7 +14755,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputBackgroundLocal",
-        "background": background!.toJson(),
+        "background": (background != null) ? background.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14796,8 +14796,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "themeSettings",
         "accent_color": accent_color,
-        "background": background!.toJson(),
-        "outgoing_message_fill": outgoing_message_fill!.toJson(),
+        "background": (background != null) ? background.toJson() : null,
+        "outgoing_message_fill": (outgoing_message_fill != null) ? outgoing_message_fill.toJson() : null,
         "animate_outgoing_message_fill": animate_outgoing_message_fill,
         "outgoing_message_accent_color": outgoing_message_accent_color,
       });
@@ -14820,8 +14820,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatTheme",
         "name": name,
-        "light_settings": light_settings!.toJson(),
-        "dark_settings": dark_settings!.toJson(),
+        "light_settings": (light_settings != null) ? light_settings.toJson() : null,
+        "dark_settings": (dark_settings != null) ? dark_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15165,7 +15165,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentAnimation",
-        "animation": animation!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
         "caption": caption,
         "is_pinned": is_pinned,
       });
@@ -15186,7 +15186,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentAudio",
-        "audio": audio!.toJson(),
+        "audio": (audio != null) ? audio.toJson() : null,
         "is_pinned": is_pinned,
       });
     } catch (e) {
@@ -15241,7 +15241,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentDocument",
-        "document": document!.toJson(),
+        "document": (document != null) ? document.toJson() : null,
         "is_pinned": is_pinned,
       });
     } catch (e) {
@@ -15345,7 +15345,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentPhoto",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
         "caption": caption,
         "is_secret": is_secret,
         "is_pinned": is_pinned,
@@ -15405,7 +15405,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentSticker",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
         "emoji": emoji,
         "is_pinned": is_pinned,
       });
@@ -15448,7 +15448,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentVideo",
-        "video": video!.toJson(),
+        "video": (video != null) ? video.toJson() : null,
         "caption": caption,
         "is_secret": is_secret,
         "is_pinned": is_pinned,
@@ -15470,7 +15470,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentVideoNote",
-        "video_note": video_note!.toJson(),
+        "video_note": (video_note != null) ? video_note.toJson() : null,
         "is_pinned": is_pinned,
       });
     } catch (e) {
@@ -15490,7 +15490,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "pushMessageContentVoiceNote",
-        "voice_note": voice_note!.toJson(),
+        "voice_note": (voice_note != null) ? voice_note.toJson() : null,
         "is_pinned": is_pinned,
       });
     } catch (e) {
@@ -15712,7 +15712,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "notificationTypeNewMessage",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "show_preview": show_preview,
       });
     } catch (e) {
@@ -15769,10 +15769,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "notificationTypeNewPushMessage",
         "message_id": message_id,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "sender_name": sender_name,
         "is_outgoing": is_outgoing,
-        "content": content!.toJson(),
+        "content": (content != null) ? content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15860,7 +15860,7 @@ class TdlibFunction {
         "date": date,
         "title": title,
         "data": data,
-        "sound": sound!.toJson(),
+        "sound": (sound != null) ? sound.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15878,7 +15878,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "notificationSounds",
-        "notification_sounds": notification_sounds!.toJson(),
+        "notification_sounds": (notification_sounds != null) ? notification_sounds.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15902,7 +15902,7 @@ class TdlibFunction {
         "id": id,
         "date": date,
         "is_silent": is_silent,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15925,10 +15925,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "notificationGroup",
         "id": id,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "chat_id": chat_id,
         "total_count": total_count,
-        "notifications": notifications!.toJson(),
+        "notifications": (notifications != null) ? notifications.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16017,7 +16017,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "jsonObjectMember",
         "key": key,
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16104,7 +16104,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "jsonValueArray",
-        "values": values!.toJson(),
+        "values": (values != null) ? values.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16122,7 +16122,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "jsonValueObject",
-        "members": members!.toJson(),
+        "members": (members != null) ? members.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16272,7 +16272,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "userPrivacySettingRules",
-        "rules": rules!.toJson(),
+        "rules": (rules != null) ? rules.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16720,7 +16720,7 @@ class TdlibFunction {
         "is_password_pending": is_password_pending,
         "can_accept_secret_chats": can_accept_secret_chats,
         "can_accept_calls": can_accept_calls,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "api_id": api_id,
         "application_name": application_name,
         "application_version": application_version,
@@ -16751,7 +16751,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "sessions",
-        "sessions": sessions!.toJson(),
+        "sessions": (sessions != null) ? sessions.toJson() : null,
         "inactive_session_ttl_days": inactive_session_ttl_days,
       });
     } catch (e) {
@@ -16804,7 +16804,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "connectedWebsites",
-        "websites": websites!.toJson(),
+        "websites": (websites != null) ? websites.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17011,7 +17011,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "targetChatInternalLink",
-        "link": link!.toJson(),
+        "link": (link != null) ? link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17046,7 +17046,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "internalLinkTypeAttachmentMenuBot",
-        "target_chat": target_chat!.toJson(),
+        "target_chat": (target_chat != null) ? target_chat.toJson() : null,
         "bot_username": bot_username,
         "url": url,
       });
@@ -17128,7 +17128,7 @@ class TdlibFunction {
         "@type": "internalLinkTypeBotStartInGroup",
         "bot_username": bot_username,
         "start_parameter": start_parameter,
-        "administrator_rights": administrator_rights!.toJson(),
+        "administrator_rights": (administrator_rights != null) ? administrator_rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17148,7 +17148,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "internalLinkTypeBotAddToChannel",
         "bot_username": bot_username,
-        "administrator_rights": administrator_rights!.toJson(),
+        "administrator_rights": (administrator_rights != null) ? administrator_rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17324,7 +17324,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "internalLinkTypeMessageDraft",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "contains_link": contains_link,
       });
     } catch (e) {
@@ -17426,7 +17426,7 @@ class TdlibFunction {
         "@type": "internalLinkTypeProxy",
         "server": server,
         "port": port,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17658,7 +17658,7 @@ class TdlibFunction {
         "@type": "messageLinkInfo",
         "is_public": is_public,
         "chat_id": chat_id,
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "media_timestamp": media_timestamp,
         "for_album": for_album,
         "for_comment": for_comment,
@@ -17679,7 +17679,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "filePart",
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17954,7 +17954,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "storageStatisticsByFileType",
-        "file_type": file_type!.toJson(),
+        "file_type": (file_type != null) ? file_type.toJson() : null,
         "size": size,
         "count": count,
       });
@@ -17980,7 +17980,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "size": size,
         "count": count,
-        "by_file_type": by_file_type!.toJson(),
+        "by_file_type": (by_file_type != null) ? by_file_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18002,7 +18002,7 @@ class TdlibFunction {
         "@type": "storageStatistics",
         "size": size,
         "count": count,
-        "by_chat": by_chat!.toJson(),
+        "by_chat": (by_chat != null) ? by_chat.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18142,8 +18142,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "networkStatisticsEntryFile",
-        "file_type": file_type!.toJson(),
-        "network_type": network_type!.toJson(),
+        "file_type": (file_type != null) ? file_type.toJson() : null,
+        "network_type": (network_type != null) ? network_type.toJson() : null,
         "sent_bytes": sent_bytes,
         "received_bytes": received_bytes,
       });
@@ -18166,7 +18166,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "networkStatisticsEntryCall",
-        "network_type": network_type!.toJson(),
+        "network_type": (network_type != null) ? network_type.toJson() : null,
         "sent_bytes": sent_bytes,
         "received_bytes": received_bytes,
         "duration": duration,
@@ -18189,7 +18189,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "networkStatistics",
         "since_date": since_date,
-        "entries": entries!.toJson(),
+        "entries": (entries != null) ? entries.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18241,9 +18241,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "autoDownloadSettingsPresets",
-        "low": low!.toJson(),
-        "medium": medium!.toJson(),
-        "high": high!.toJson(),
+        "low": (low != null) ? low.toJson() : null,
+        "medium": (medium != null) ? medium.toJson() : null,
+        "high": (high != null) ? high.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18477,7 +18477,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "tMeUrlTypeChatInvite",
-        "info": info!.toJson(),
+        "info": (info != null) ? info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18515,7 +18515,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "tMeUrl",
         "url": url,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18533,7 +18533,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "tMeUrls",
-        "urls": urls!.toJson(),
+        "urls": (urls != null) ? urls.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18720,7 +18720,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "deepLinkInfo",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
         "need_update_application": need_update_application,
       });
     } catch (e) {
@@ -18842,7 +18842,7 @@ class TdlibFunction {
         "port": port,
         "last_used_date": last_used_date,
         "is_enabled": is_enabled,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18860,7 +18860,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "proxies",
-        "proxies": proxies!.toJson(),
+        "proxies": (proxies != null) ? proxies.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18881,10 +18881,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputSticker",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
         "emojis": emojis,
-        "format": format!.toJson(),
-        "mask_position": mask_position!.toJson(),
+        "format": (format != null) ? format.toJson() : null,
+        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19103,22 +19103,22 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatStatisticsSupergroup",
-        "period": period!.toJson(),
-        "member_count": member_count!.toJson(),
-        "message_count": message_count!.toJson(),
-        "viewer_count": viewer_count!.toJson(),
-        "sender_count": sender_count!.toJson(),
-        "member_count_graph": member_count_graph!.toJson(),
-        "join_graph": join_graph!.toJson(),
-        "join_by_source_graph": join_by_source_graph!.toJson(),
-        "language_graph": language_graph!.toJson(),
-        "message_content_graph": message_content_graph!.toJson(),
-        "action_graph": action_graph!.toJson(),
-        "day_graph": day_graph!.toJson(),
-        "week_graph": week_graph!.toJson(),
-        "top_senders": top_senders!.toJson(),
-        "top_administrators": top_administrators!.toJson(),
-        "top_inviters": top_inviters!.toJson(),
+        "period": (period != null) ? period.toJson() : null,
+        "member_count": (member_count != null) ? member_count.toJson() : null,
+        "message_count": (message_count != null) ? message_count.toJson() : null,
+        "viewer_count": (viewer_count != null) ? viewer_count.toJson() : null,
+        "sender_count": (sender_count != null) ? sender_count.toJson() : null,
+        "member_count_graph": (member_count_graph != null) ? member_count_graph.toJson() : null,
+        "join_graph": (join_graph != null) ? join_graph.toJson() : null,
+        "join_by_source_graph": (join_by_source_graph != null) ? join_by_source_graph.toJson() : null,
+        "language_graph": (language_graph != null) ? language_graph.toJson() : null,
+        "message_content_graph": (message_content_graph != null) ? message_content_graph.toJson() : null,
+        "action_graph": (action_graph != null) ? action_graph.toJson() : null,
+        "day_graph": (day_graph != null) ? day_graph.toJson() : null,
+        "week_graph": (week_graph != null) ? week_graph.toJson() : null,
+        "top_senders": (top_senders != null) ? top_senders.toJson() : null,
+        "top_administrators": (top_administrators != null) ? top_administrators.toJson() : null,
+        "top_inviters": (top_inviters != null) ? top_inviters.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19150,21 +19150,21 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatStatisticsChannel",
-        "period": period!.toJson(),
-        "member_count": member_count!.toJson(),
-        "mean_view_count": mean_view_count!.toJson(),
-        "mean_share_count": mean_share_count!.toJson(),
+        "period": (period != null) ? period.toJson() : null,
+        "member_count": (member_count != null) ? member_count.toJson() : null,
+        "mean_view_count": (mean_view_count != null) ? mean_view_count.toJson() : null,
+        "mean_share_count": (mean_share_count != null) ? mean_share_count.toJson() : null,
         "enabled_notifications_percentage": enabled_notifications_percentage,
-        "member_count_graph": member_count_graph!.toJson(),
-        "join_graph": join_graph!.toJson(),
-        "mute_graph": mute_graph!.toJson(),
-        "view_count_by_hour_graph": view_count_by_hour_graph!.toJson(),
-        "view_count_by_source_graph": view_count_by_source_graph!.toJson(),
-        "join_by_source_graph": join_by_source_graph!.toJson(),
-        "language_graph": language_graph!.toJson(),
-        "message_interaction_graph": message_interaction_graph!.toJson(),
-        "instant_view_interaction_graph": instant_view_interaction_graph!.toJson(),
-        "recent_message_interactions": recent_message_interactions!.toJson(),
+        "member_count_graph": (member_count_graph != null) ? member_count_graph.toJson() : null,
+        "join_graph": (join_graph != null) ? join_graph.toJson() : null,
+        "mute_graph": (mute_graph != null) ? mute_graph.toJson() : null,
+        "view_count_by_hour_graph": (view_count_by_hour_graph != null) ? view_count_by_hour_graph.toJson() : null,
+        "view_count_by_source_graph": (view_count_by_source_graph != null) ? view_count_by_source_graph.toJson() : null,
+        "join_by_source_graph": (join_by_source_graph != null) ? join_by_source_graph.toJson() : null,
+        "language_graph": (language_graph != null) ? language_graph.toJson() : null,
+        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
+        "instant_view_interaction_graph": (instant_view_interaction_graph != null) ? instant_view_interaction_graph.toJson() : null,
+        "recent_message_interactions": (recent_message_interactions != null) ? recent_message_interactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19182,7 +19182,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageStatistics",
-        "message_interaction_graph": message_interaction_graph!.toJson(),
+        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19220,7 +19220,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "vectorPathCommandLine",
-        "end_point": end_point!.toJson(),
+        "end_point": (end_point != null) ? end_point.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19240,9 +19240,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "vectorPathCommandCubicBezierCurve",
-        "start_control_point": start_control_point!.toJson(),
-        "end_control_point": end_control_point!.toJson(),
-        "end_point": end_point!.toJson(),
+        "start_control_point": (start_control_point != null) ? start_control_point.toJson() : null,
+        "end_control_point": (end_control_point != null) ? end_control_point.toJson() : null,
+        "end_point": (end_point != null) ? end_point.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19376,7 +19376,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateAuthorizationState",
-        "authorization_state": authorization_state!.toJson(),
+        "authorization_state": (authorization_state != null) ? authorization_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19394,7 +19394,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateNewMessage",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19433,7 +19433,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateMessageSendSucceeded",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "old_message_id": old_message_id,
       });
     } catch (e) {
@@ -19455,7 +19455,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateMessageSendFailed",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "old_message_id": old_message_id,
         "error_code": error_code,
         "error_message": error_message,
@@ -19480,7 +19480,7 @@ class TdlibFunction {
         "@type": "updateMessageContent",
         "chat_id": chat_id,
         "message_id": message_id,
-        "new_content": new_content!.toJson(),
+        "new_content": (new_content != null) ? new_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19504,7 +19504,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "edit_date": edit_date,
-        "reply_markup": reply_markup!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19548,7 +19548,7 @@ class TdlibFunction {
         "@type": "updateMessageInteractionInfo",
         "chat_id": chat_id,
         "message_id": message_id,
-        "interaction_info": interaction_info!.toJson(),
+        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19613,7 +19613,7 @@ class TdlibFunction {
         "@type": "updateMessageUnreadReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "unread_reactions": unread_reactions!.toJson(),
+        "unread_reactions": (unread_reactions != null) ? unread_reactions.toJson() : null,
         "unread_reaction_count": unread_reaction_count,
       });
     } catch (e) {
@@ -19652,7 +19652,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateNewChat",
-        "chat": chat!.toJson(),
+        "chat": (chat != null) ? chat.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19692,7 +19692,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatPhoto",
         "chat_id": chat_id,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19712,7 +19712,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatPermissions",
         "chat_id": chat_id,
-        "permissions": permissions!.toJson(),
+        "permissions": (permissions != null) ? permissions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19733,8 +19733,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatLastMessage",
         "chat_id": chat_id,
-        "last_message": last_message!.toJson(),
-        "positions": positions!.toJson(),
+        "last_message": (last_message != null) ? last_message.toJson() : null,
+        "positions": (positions != null) ? positions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19754,7 +19754,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatPosition",
         "chat_id": chat_id,
-        "position": position!.toJson(),
+        "position": (position != null) ? position.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19816,7 +19816,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatActionBar",
         "chat_id": chat_id,
-        "action_bar": action_bar!.toJson(),
+        "action_bar": (action_bar != null) ? action_bar.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19836,7 +19836,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatAvailableReactions",
         "chat_id": chat_id,
-        "available_reactions": available_reactions!.toJson(),
+        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19857,8 +19857,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatDraftMessage",
         "chat_id": chat_id,
-        "draft_message": draft_message!.toJson(),
-        "positions": positions!.toJson(),
+        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "positions": (positions != null) ? positions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19878,7 +19878,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatMessageSender",
         "chat_id": chat_id,
-        "message_sender_id": message_sender_id!.toJson(),
+        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19918,7 +19918,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatNotificationSettings",
         "chat_id": chat_id,
-        "notification_settings": notification_settings!.toJson(),
+        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19938,7 +19938,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatPendingJoinRequests",
         "chat_id": chat_id,
-        "pending_join_requests": pending_join_requests!.toJson(),
+        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20038,7 +20038,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatVideoChat",
         "chat_id": chat_id,
-        "video_chat": video_chat!.toJson(),
+        "video_chat": (video_chat != null) ? video_chat.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20157,7 +20157,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateChatFilters",
-        "chat_filters": chat_filters!.toJson(),
+        "chat_filters": (chat_filters != null) ? chat_filters.toJson() : null,
         "main_chat_list_position": main_chat_list_position,
       });
     } catch (e) {
@@ -20197,8 +20197,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateScopeNotificationSettings",
-        "scope": scope!.toJson(),
-        "notification_settings": notification_settings!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
+        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20218,7 +20218,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNotification",
         "notification_group_id": notification_group_id,
-        "notification": notification!.toJson(),
+        "notification": (notification != null) ? notification.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20244,12 +20244,12 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNotificationGroup",
         "notification_group_id": notification_group_id,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "chat_id": chat_id,
         "notification_settings_chat_id": notification_settings_chat_id,
         "notification_sound_id": notification_sound_id,
         "total_count": total_count,
-        "added_notifications": added_notifications!.toJson(),
+        "added_notifications": (added_notifications != null) ? added_notifications.toJson() : null,
         "removed_notification_ids": removed_notification_ids,
       });
     } catch (e) {
@@ -20268,7 +20268,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateActiveNotifications",
-        "groups": groups!.toJson(),
+        "groups": (groups != null) ? groups.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20335,8 +20335,8 @@ class TdlibFunction {
         "@type": "updateChatAction",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "sender_id": sender_id!.toJson(),
-        "action": action!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
+        "action": (action != null) ? action.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20356,7 +20356,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateUserStatus",
         "user_id": user_id,
-        "status": status!.toJson(),
+        "status": (status != null) ? status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20374,7 +20374,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateUser",
-        "user": user!.toJson(),
+        "user": (user != null) ? user.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20392,7 +20392,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateBasicGroup",
-        "basic_group": basic_group!.toJson(),
+        "basic_group": (basic_group != null) ? basic_group.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20410,7 +20410,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateSupergroup",
-        "supergroup": supergroup!.toJson(),
+        "supergroup": (supergroup != null) ? supergroup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20428,7 +20428,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateSecretChat",
-        "secret_chat": secret_chat!.toJson(),
+        "secret_chat": (secret_chat != null) ? secret_chat.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20448,7 +20448,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateUserFullInfo",
         "user_id": user_id,
-        "user_full_info": user_full_info!.toJson(),
+        "user_full_info": (user_full_info != null) ? user_full_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20468,7 +20468,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateBasicGroupFullInfo",
         "basic_group_id": basic_group_id,
-        "basic_group_full_info": basic_group_full_info!.toJson(),
+        "basic_group_full_info": (basic_group_full_info != null) ? basic_group_full_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20488,7 +20488,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateSupergroupFullInfo",
         "supergroup_id": supergroup_id,
-        "supergroup_full_info": supergroup_full_info!.toJson(),
+        "supergroup_full_info": (supergroup_full_info != null) ? supergroup_full_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20508,7 +20508,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateServiceNotification",
         "type": type,
-        "content": content!.toJson(),
+        "content": (content != null) ? content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20526,7 +20526,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateFile",
-        "file": file!.toJson(),
+        "file": (file != null) ? file.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20609,8 +20609,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateFileAddedToDownloads",
-        "file_download": file_download!.toJson(),
-        "counts": counts!.toJson(),
+        "file_download": (file_download != null) ? file_download.toJson() : null,
+        "counts": (counts != null) ? counts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20634,7 +20634,7 @@ class TdlibFunction {
         "file_id": file_id,
         "complete_date": complete_date,
         "is_paused": is_paused,
-        "counts": counts!.toJson(),
+        "counts": (counts != null) ? counts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20654,7 +20654,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateFileRemovedFromDownloads",
         "file_id": file_id,
-        "counts": counts!.toJson(),
+        "counts": (counts != null) ? counts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20672,7 +20672,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateCall",
-        "call": call!.toJson(),
+        "call": (call != null) ? call.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20690,7 +20690,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateGroupCall",
-        "group_call": group_call!.toJson(),
+        "group_call": (group_call != null) ? group_call.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20710,7 +20710,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateGroupCallParticipant",
         "group_call_id": group_call_id,
-        "participant": participant!.toJson(),
+        "participant": (participant != null) ? participant.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20730,7 +20730,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNewCallSignalingData",
         "call_id": call_id,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20749,8 +20749,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateUserPrivacySettingRules",
-        "setting": setting!.toJson(),
-        "rules": rules!.toJson(),
+        "setting": (setting != null) ? setting.toJson() : null,
+        "rules": (rules != null) ? rules.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20770,7 +20770,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateUnreadMessageCount",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "unread_count": unread_count,
         "unread_unmuted_count": unread_unmuted_count,
       });
@@ -20795,7 +20795,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateUnreadChatCount",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "total_count": total_count,
         "unread_count": unread_count,
         "unread_unmuted_count": unread_unmuted_count,
@@ -20820,7 +20820,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateOption",
         "name": name,
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20838,7 +20838,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateStickerSet",
-        "sticker_set": sticker_set!.toJson(),
+        "sticker_set": (sticker_set != null) ? sticker_set.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20857,7 +20857,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateInstalledStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "sticker_set_ids": sticker_set_ids,
       });
     } catch (e) {
@@ -20877,8 +20877,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateTrendingStickerSets",
-        "sticker_type": sticker_type!.toJson(),
-        "sticker_sets": sticker_sets!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
+        "sticker_sets": (sticker_sets != null) ? sticker_sets.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20972,7 +20972,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateSelectedBackground",
         "for_dark_theme": for_dark_theme,
-        "background": background!.toJson(),
+        "background": (background != null) ? background.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20990,7 +20990,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateChatThemes",
-        "chat_themes": chat_themes!.toJson(),
+        "chat_themes": (chat_themes != null) ? chat_themes.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21012,7 +21012,7 @@ class TdlibFunction {
         "@type": "updateLanguagePackStrings",
         "localization_target": localization_target,
         "language_pack_id": language_pack_id,
-        "strings": strings!.toJson(),
+        "strings": (strings != null) ? strings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21030,7 +21030,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateConnectionState",
-        "state": state!.toJson(),
+        "state": (state != null) ? state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21050,7 +21050,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateTermsOfService",
         "terms_of_service_id": terms_of_service_id,
-        "terms_of_service": terms_of_service!.toJson(),
+        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21068,7 +21068,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateUsersNearby",
-        "users_nearby": users_nearby!.toJson(),
+        "users_nearby": (users_nearby != null) ? users_nearby.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21086,7 +21086,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateAttachmentMenuBots",
-        "bots": bots!.toJson(),
+        "bots": (bots != null) ? bots.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21140,7 +21140,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateDefaultReactionType",
-        "reaction_type": reaction_type!.toJson(),
+        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21180,7 +21180,7 @@ class TdlibFunction {
         "@type": "updateAnimatedEmojiMessageClicked",
         "chat_id": chat_id,
         "message_id": message_id,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21219,8 +21219,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateSuggestedActions",
-        "added_actions": added_actions!.toJson(),
-        "removed_actions": removed_actions!.toJson(),
+        "added_actions": (added_actions != null) ? added_actions.toJson() : null,
+        "removed_actions": (removed_actions != null) ? removed_actions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21245,8 +21245,8 @@ class TdlibFunction {
         "@type": "updateNewInlineQuery",
         "id": id,
         "sender_user_id": sender_user_id,
-        "user_location": user_location!.toJson(),
-        "chat_type": chat_type!.toJson(),
+        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "chat_type": (chat_type != null) ? chat_type.toJson() : null,
         "query": query,
         "offset": offset,
       });
@@ -21271,7 +21271,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNewChosenInlineResult",
         "sender_user_id": sender_user_id,
-        "user_location": user_location!.toJson(),
+        "user_location": (user_location != null) ? user_location.toJson() : null,
         "query": query,
         "result_id": result_id,
         "inline_message_id": inline_message_id,
@@ -21302,7 +21302,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "chat_instance": chat_instance,
-        "payload": payload!.toJson(),
+        "payload": (payload != null) ? payload.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21328,7 +21328,7 @@ class TdlibFunction {
         "sender_user_id": sender_user_id,
         "inline_message_id": inline_message_id,
         "chat_instance": chat_instance,
-        "payload": payload!.toJson(),
+        "payload": (payload != null) ? payload.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21352,7 +21352,7 @@ class TdlibFunction {
         "id": id,
         "sender_user_id": sender_user_id,
         "invoice_payload": invoice_payload,
-        "shipping_address": shipping_address!.toJson(),
+        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21380,9 +21380,9 @@ class TdlibFunction {
         "sender_user_id": sender_user_id,
         "currency": currency,
         "total_amount": total_amount,
-        "invoice_payload": invoice_payload!.toJson(),
+        "invoice_payload": (invoice_payload != null) ? invoice_payload.toJson() : null,
         "shipping_option_id": shipping_option_id,
-        "order_info": order_info!.toJson(),
+        "order_info": (order_info != null) ? order_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21440,7 +21440,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updatePoll",
-        "poll": poll!.toJson(),
+        "poll": (poll != null) ? poll.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21488,9 +21488,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "actor_user_id": actor_user_id,
         "date": date,
-        "invite_link": invite_link!.toJson(),
-        "old_chat_member": old_chat_member!.toJson(),
-        "new_chat_member": new_chat_member!.toJson(),
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
+        "old_chat_member": (old_chat_member != null) ? old_chat_member.toJson() : null,
+        "new_chat_member": (new_chat_member != null) ? new_chat_member.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21511,8 +21511,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNewChatJoinRequest",
         "chat_id": chat_id,
-        "request": request!.toJson(),
-        "invite_link": invite_link!.toJson(),
+        "request": (request != null) ? request.toJson() : null,
+        "invite_link": (invite_link != null) ? invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21530,7 +21530,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updates",
-        "updates": updates!.toJson(),
+        "updates": (updates != null) ? updates.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21638,7 +21638,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "userSupportInfo",
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
         "author": author,
         "date": date,
       });
@@ -21694,7 +21694,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testBytes",
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21730,7 +21730,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testVectorIntObject",
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21766,7 +21766,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testVectorStringObject",
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21817,7 +21817,7 @@ class TdlibFunction {
         "use_test_dc": use_test_dc,
         "database_directory": database_directory,
         "files_directory": files_directory,
-        "database_encryption_key": database_encryption_key!.toJson(),
+        "database_encryption_key": (database_encryption_key != null) ? database_encryption_key.toJson() : null,
         "use_file_database": use_file_database,
         "use_chat_info_database": use_chat_info_database,
         "use_message_database": use_message_database,
@@ -21849,7 +21849,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setAuthenticationPhoneNumber",
         "phone_number": phone_number,
-        "settings": settings!.toJson(),
+        "settings": (settings != null) ? settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21900,7 +21900,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "checkAuthenticationEmailCode",
-        "code": code!.toJson(),
+        "code": (code != null) ? code.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -22143,7 +22143,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDatabaseEncryptionKey",
-        "new_encryption_key": new_encryption_key!.toJson(),
+        "new_encryption_key": (new_encryption_key != null) ? new_encryption_key.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -22235,7 +22235,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "checkLoginEmailAddressCode",
-        "code": code!.toJson(),
+        "code": (code != null) ? code.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -22783,7 +22783,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getRemoteFile",
         "remote_file_id": remote_file_id,
-        "file_type": file_type!.toJson(),
+        "file_type": (file_type != null) ? file_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -22802,7 +22802,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "loadChats",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -22822,7 +22822,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getChats",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -22917,7 +22917,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "searchChatsNearby",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -22936,7 +22936,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getTopChats",
-        "category": category!.toJson(),
+        "category": (category != null) ? category.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -22956,7 +22956,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "removeTopChat",
-        "category": category!.toJson(),
+        "category": (category != null) ? category.toJson() : null,
         "chat_id": chat_id,
       });
     } catch (e) {
@@ -23064,7 +23064,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getCreatedPublicChats",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23082,7 +23082,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "checkCreatedPublicChatsLimit",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23253,11 +23253,11 @@ class TdlibFunction {
         "@type": "searchChatMessages",
         "chat_id": chat_id,
         "query": query,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "from_message_id": from_message_id,
         "offset": offset,
         "limit": limit,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "message_thread_id": message_thread_id,
       });
     } catch (e) {
@@ -23284,13 +23284,13 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "searchMessages",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "query": query,
         "offset_date": offset_date,
         "offset_chat_id": offset_chat_id,
         "offset_message_id": offset_message_id,
         "limit": limit,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "min_date": min_date,
         "max_date": max_date,
       });
@@ -23318,7 +23318,7 @@ class TdlibFunction {
         "query": query,
         "offset": offset,
         "limit": limit,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23455,7 +23455,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getChatSparseMessagePositions",
         "chat_id": chat_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "from_message_id": from_message_id,
         "limit": limit,
       });
@@ -23478,7 +23478,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getChatMessageCalendar",
         "chat_id": chat_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "from_message_id": from_message_id,
       });
     } catch (e) {
@@ -23500,7 +23500,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getChatMessageCount",
         "chat_id": chat_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "return_local": return_local,
       });
     } catch (e) {
@@ -23524,7 +23524,7 @@ class TdlibFunction {
         "@type": "getChatMessagePosition",
         "chat_id": chat_id,
         "message_id": message_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "message_thread_id": message_thread_id,
       });
     } catch (e) {
@@ -23793,7 +23793,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatMessageSender",
         "chat_id": chat_id,
-        "message_sender_id": message_sender_id!.toJson(),
+        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23819,9 +23819,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
         "reply_to_message_id": reply_to_message_id,
-        "options": options!.toJson(),
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "options": (options != null) ? options.toJson() : null,
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23847,8 +23847,8 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
         "reply_to_message_id": reply_to_message_id,
-        "options": options!.toJson(),
-        "input_message_contents": input_message_contents!.toJson(),
+        "options": (options != null) ? options.toJson() : null,
+        "input_message_contents": (input_message_contents != null) ? input_message_contents.toJson() : null,
         "only_preview": only_preview,
       });
     } catch (e) {
@@ -23898,7 +23898,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
         "reply_to_message_id": reply_to_message_id,
-        "options": options!.toJson(),
+        "options": (options != null) ? options.toJson() : null,
         "query_id": query_id,
         "result_id": result_id,
         "hide_via_bot": hide_via_bot,
@@ -23928,7 +23928,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "from_chat_id": from_chat_id,
         "message_ids": message_ids,
-        "options": options!.toJson(),
+        "options": (options != null) ? options.toJson() : null,
         "send_copy": send_copy,
         "remove_caption": remove_caption,
         "only_preview": only_preview,
@@ -23992,10 +23992,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "addLocalMessage",
         "chat_id": chat_id,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "reply_to_message_id": reply_to_message_id,
         "disable_notification": disable_notification,
-        "input_message_content": input_message_content!.toJson(),
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24037,7 +24037,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "deleteChatMessagesBySender",
         "chat_id": chat_id,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24084,8 +24084,8 @@ class TdlibFunction {
         "@type": "editMessageText",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24110,8 +24110,8 @@ class TdlibFunction {
         "@type": "editMessageLiveLocation",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "location": location!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "location": (location != null) ? location.toJson() : null,
         "heading": heading,
         "proximity_alert_radius": proximity_alert_radius,
       });
@@ -24136,8 +24136,8 @@ class TdlibFunction {
         "@type": "editMessageMedia",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24160,8 +24160,8 @@ class TdlibFunction {
         "@type": "editMessageCaption",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "caption": caption!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24183,7 +24183,7 @@ class TdlibFunction {
         "@type": "editMessageReplyMarkup",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24204,8 +24204,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editInlineMessageText",
         "inline_message_id": inline_message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24228,8 +24228,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editInlineMessageLiveLocation",
         "inline_message_id": inline_message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "location": location!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "location": (location != null) ? location.toJson() : null,
         "heading": heading,
         "proximity_alert_radius": proximity_alert_radius,
       });
@@ -24252,8 +24252,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editInlineMessageMedia",
         "inline_message_id": inline_message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "input_message_content": input_message_content!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24274,8 +24274,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editInlineMessageCaption",
         "inline_message_id": inline_message_id,
-        "reply_markup": reply_markup!.toJson(),
-        "caption": caption!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
+        "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24295,7 +24295,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editInlineMessageReplyMarkup",
         "inline_message_id": inline_message_id,
-        "reply_markup": reply_markup!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24317,7 +24317,7 @@ class TdlibFunction {
         "@type": "editMessageSchedulingState",
         "chat_id": chat_id,
         "message_id": message_id,
-        "scheduling_state": scheduling_state!.toJson(),
+        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24411,7 +24411,7 @@ class TdlibFunction {
         "@type": "addMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": reaction_type!.toJson(),
+        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
         "is_big": is_big,
         "update_recent_reactions": update_recent_reactions,
       });
@@ -24435,7 +24435,7 @@ class TdlibFunction {
         "@type": "removeMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": reaction_type!.toJson(),
+        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24459,7 +24459,7 @@ class TdlibFunction {
         "@type": "getMessageAddedReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": reaction_type!.toJson(),
+        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
         "offset": offset,
         "limit": limit,
       });
@@ -24479,7 +24479,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultReactionType",
-        "reaction_type": reaction_type!.toJson(),
+        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24517,7 +24517,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "parseTextEntities",
         "text": text,
-        "parse_mode": parse_mode!.toJson(),
+        "parse_mode": (parse_mode != null) ? parse_mode.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24535,7 +24535,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "parseMarkdown",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24553,7 +24553,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getMarkdownText",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24667,7 +24667,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getJsonString",
-        "json_value": json_value!.toJson(),
+        "json_value": (json_value != null) ? json_value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24685,7 +24685,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getThemeParametersJsonString",
-        "theme": theme!.toJson(),
+        "theme": (theme != null) ? theme.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24755,7 +24755,7 @@ class TdlibFunction {
         "@type": "stopPoll",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reply_markup": reply_markup!.toJson(),
+        "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24773,7 +24773,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "hideSuggestedAction",
-        "action": action!.toJson(),
+        "action": (action != null) ? action.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24843,7 +24843,7 @@ class TdlibFunction {
         "@type": "getInlineQueryResults",
         "bot_user_id": bot_user_id,
         "chat_id": chat_id,
-        "user_location": user_location!.toJson(),
+        "user_location": (user_location != null) ? user_location.toJson() : null,
         "query": query,
         "offset": offset,
       });
@@ -24871,7 +24871,7 @@ class TdlibFunction {
         "@type": "answerInlineQuery",
         "inline_query_id": inline_query_id,
         "is_personal": is_personal,
-        "results": results!.toJson(),
+        "results": (results != null) ? results.toJson() : null,
         "cache_time": cache_time,
         "next_offset": next_offset,
         "switch_pm_text": switch_pm_text,
@@ -24898,7 +24898,7 @@ class TdlibFunction {
         "@type": "getWebAppUrl",
         "bot_user_id": bot_user_id,
         "url": url,
-        "theme": theme!.toJson(),
+        "theme": (theme != null) ? theme.toJson() : null,
         "application_name": application_name,
       });
     } catch (e) {
@@ -24947,7 +24947,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "bot_user_id": bot_user_id,
         "url": url,
-        "theme": theme!.toJson(),
+        "theme": (theme != null) ? theme.toJson() : null,
         "application_name": application_name,
         "reply_to_message_id": reply_to_message_id,
       });
@@ -24987,7 +24987,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "answerWebAppQuery",
         "web_app_query_id": web_app_query_id,
-        "result": result!.toJson(),
+        "result": (result != null) ? result.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25009,7 +25009,7 @@ class TdlibFunction {
         "@type": "getCallbackQueryAnswer",
         "chat_id": chat_id,
         "message_id": message_id,
-        "payload": payload!.toJson(),
+        "payload": (payload != null) ? payload.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25056,7 +25056,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "answerShippingQuery",
         "shipping_query_id": shipping_query_id,
-        "shipping_options": shipping_options!.toJson(),
+        "shipping_options": (shipping_options != null) ? shipping_options.toJson() : null,
         "error_message": error_message,
       });
     } catch (e) {
@@ -25215,7 +25215,7 @@ class TdlibFunction {
         "@type": "sendChatAction",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "action": action!.toJson(),
+        "action": (action != null) ? action.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25530,7 +25530,7 @@ class TdlibFunction {
         "title": title,
         "is_channel": is_channel,
         "description": description,
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "for_import": for_import,
       });
     } catch (e) {
@@ -25605,7 +25605,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "addChatToList",
         "chat_id": chat_id,
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25641,7 +25641,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "createChatFilter",
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25661,7 +25661,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "editChatFilter",
         "chat_filter_id": chat_filter_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25732,7 +25732,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getChatFilterDefaultIconName",
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25772,7 +25772,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatPhoto",
         "chat_id": chat_id,
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25812,7 +25812,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatPermissions",
         "chat_id": chat_id,
-        "permissions": permissions!.toJson(),
+        "permissions": (permissions != null) ? permissions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25854,7 +25854,7 @@ class TdlibFunction {
         "@type": "setChatDraftMessage",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "draft_message": draft_message!.toJson(),
+        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25874,7 +25874,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatNotificationSettings",
         "chat_id": chat_id,
-        "notification_settings": notification_settings!.toJson(),
+        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25954,7 +25954,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatAvailableReactions",
         "chat_id": chat_id,
-        "available_reactions": available_reactions!.toJson(),
+        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26034,7 +26034,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatLocation",
         "chat_id": chat_id,
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26215,8 +26215,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatMemberStatus",
         "chat_id": chat_id,
-        "member_id": member_id!.toJson(),
-        "status": status!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
+        "status": (status != null) ? status.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26238,7 +26238,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "banChatMember",
         "chat_id": chat_id,
-        "member_id": member_id!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
         "banned_until_date": banned_until_date,
         "revoke_messages": revoke_messages,
       });
@@ -26297,7 +26297,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getChatMember",
         "chat_id": chat_id,
-        "member_id": member_id!.toJson(),
+        "member_id": (member_id != null) ? member_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26321,7 +26321,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "query": query,
         "limit": limit,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26408,7 +26408,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addSavedNotificationSound",
-        "sound": sound!.toJson(),
+        "sound": (sound != null) ? sound.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26445,7 +26445,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getChatNotificationSettingsExceptions",
-        "scope": scope!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
         "compare_sound": compare_sound,
       });
     } catch (e) {
@@ -26464,7 +26464,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getScopeNotificationSettings",
-        "scope": scope!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26483,8 +26483,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setScopeNotificationSettings",
-        "scope": scope!.toJson(),
-        "notification_settings": notification_settings!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
+        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26519,7 +26519,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "toggleChatIsPinned",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "chat_id": chat_id,
         "is_pinned": is_pinned,
       });
@@ -26540,7 +26540,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setPinnedChats",
-        "chat_list": chat_list!.toJson(),
+        "chat_list": (chat_list != null) ? chat_list.toJson() : null,
         "chat_ids": chat_ids,
       });
     } catch (e) {
@@ -26745,8 +26745,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "preliminaryUploadFile",
-        "file": file!.toJson(),
-        "file_type": file_type!.toJson(),
+        "file": (file != null) ? file.toJson() : null,
+        "file_type": (file_type != null) ? file_type.toJson() : null,
         "priority": priority,
       });
     } catch (e) {
@@ -26787,7 +26787,7 @@ class TdlibFunction {
         "@type": "writeGeneratedFilePart",
         "generation_id": generation_id,
         "offset": offset,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26829,7 +26829,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "finishFileGeneration",
         "generation_id": generation_id,
-        "error": error!.toJson(),
+        "error": (error != null) ? error.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27056,8 +27056,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "importMessages",
         "chat_id": chat_id,
-        "message_file": message_file!.toJson(),
-        "attached_files": attached_files!.toJson(),
+        "message_file": (message_file != null) ? message_file.toJson() : null,
+        "attached_files": (attached_files != null) ? attached_files.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27218,7 +27218,7 @@ class TdlibFunction {
         "@type": "getChatInviteLinkMembers",
         "chat_id": chat_id,
         "invite_link": invite_link,
-        "offset_member": offset_member!.toJson(),
+        "offset_member": (offset_member != null) ? offset_member.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -27340,7 +27340,7 @@ class TdlibFunction {
         "chat_id": chat_id,
         "invite_link": invite_link,
         "query": query,
-        "offset_request": offset_request!.toJson(),
+        "offset_request": (offset_request != null) ? offset_request.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -27406,7 +27406,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "createCall",
         "user_id": user_id,
-        "protocol": protocol!.toJson(),
+        "protocol": (protocol != null) ? protocol.toJson() : null,
         "is_video": is_video,
       });
     } catch (e) {
@@ -27427,7 +27427,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "acceptCall",
         "call_id": call_id,
-        "protocol": protocol!.toJson(),
+        "protocol": (protocol != null) ? protocol.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27447,7 +27447,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "sendCallSignalingData",
         "call_id": call_id,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27497,7 +27497,7 @@ class TdlibFunction {
         "call_id": call_id,
         "rating": rating,
         "comment": comment,
-        "problems": problems!.toJson(),
+        "problems": (problems != null) ? problems.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27537,7 +27537,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "sendCallLog",
         "call_id": call_id,
-        "log_file": log_file!.toJson(),
+        "log_file": (log_file != null) ? log_file.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27575,7 +27575,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setVideoChatDefaultParticipant",
         "chat_id": chat_id,
-        "default_participant_id": default_participant_id!.toJson(),
+        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27716,7 +27716,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "joinGroupCall",
         "group_call_id": group_call_id,
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "payload": payload,
         "is_muted": is_muted,
@@ -28004,7 +28004,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsMuted",
         "group_call_id": group_call_id,
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
       });
     } catch (e) {
@@ -28026,7 +28026,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setGroupCallParticipantVolumeLevel",
         "group_call_id": group_call_id,
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "volume_level": volume_level,
       });
     } catch (e) {
@@ -28048,7 +28048,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsHandRaised",
         "group_call_id": group_call_id,
-        "participant_id": participant_id!.toJson(),
+        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
         "is_hand_raised": is_hand_raised,
       });
     } catch (e) {
@@ -28149,7 +28149,7 @@ class TdlibFunction {
         "time_offset": time_offset,
         "scale": scale,
         "channel_id": channel_id,
-        "video_quality": video_quality!.toJson(),
+        "video_quality": (video_quality != null) ? video_quality.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28168,7 +28168,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "toggleMessageSenderIsBlocked",
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "is_blocked": is_blocked,
       });
     } catch (e) {
@@ -28232,7 +28232,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addContact",
-        "contact": contact!.toJson(),
+        "contact": (contact != null) ? contact.toJson() : null,
         "share_phone_number": share_phone_number,
       });
     } catch (e) {
@@ -28251,7 +28251,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "importContacts",
-        "contacts": contacts!.toJson(),
+        "contacts": (contacts != null) ? contacts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28337,7 +28337,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "changeImportedContacts",
-        "contacts": contacts!.toJson(),
+        "contacts": (contacts != null) ? contacts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28431,7 +28431,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getStickers",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "query": query,
         "limit": limit,
         "chat_id": chat_id,
@@ -28490,7 +28490,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getInstalledStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28510,7 +28510,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getArchivedStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "offset_sticker_set_id": offset_sticker_set_id,
         "limit": limit,
       });
@@ -28532,7 +28532,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getTrendingStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "offset": offset,
         "limit": limit,
       });
@@ -28608,7 +28608,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "searchInstalledStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "query": query,
         "limit": limit,
       });
@@ -28687,7 +28687,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "reorderInstalledStickerSets",
-        "sticker_type": sticker_type!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "sticker_set_ids": sticker_set_ids,
       });
     } catch (e) {
@@ -28726,7 +28726,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "addRecentSticker",
         "is_attached": is_attached,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28746,7 +28746,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "removeRecentSticker",
         "is_attached": is_attached,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28797,7 +28797,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addFavoriteSticker",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28815,7 +28815,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "removeFavoriteSticker",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28833,7 +28833,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getStickerEmojis",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28942,7 +28942,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addSavedAnimation",
-        "animation": animation!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -28960,7 +28960,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "removeSavedAnimation",
-        "animation": animation!.toJson(),
+        "animation": (animation != null) ? animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29031,7 +29031,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getWebPagePreview",
-        "text": text!.toJson(),
+        "text": (text != null) ? text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29069,7 +29069,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setProfilePhoto",
-        "photo": photo!.toJson(),
+        "photo": (photo != null) ? photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29162,7 +29162,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setEmojiStatus",
-        "emoji_status": emoji_status!.toJson(),
+        "emoji_status": (emoji_status != null) ? emoji_status.toJson() : null,
         "duration": duration,
       });
     } catch (e) {
@@ -29181,7 +29181,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setLocation",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29201,7 +29201,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "changePhoneNumber",
         "phone_number": phone_number,
-        "settings": settings!.toJson(),
+        "settings": (settings != null) ? settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29254,9 +29254,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setCommands",
-        "scope": scope!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
         "language_code": language_code,
-        "commands": commands!.toJson(),
+        "commands": (commands != null) ? commands.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29275,7 +29275,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "deleteCommands",
-        "scope": scope!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
         "language_code": language_code,
       });
     } catch (e) {
@@ -29295,7 +29295,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getCommands",
-        "scope": scope!.toJson(),
+        "scope": (scope != null) ? scope.toJson() : null,
         "language_code": language_code,
       });
     } catch (e) {
@@ -29316,7 +29316,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setMenuButton",
         "user_id": user_id,
-        "menu_button": menu_button!.toJson(),
+        "menu_button": (menu_button != null) ? menu_button.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29352,7 +29352,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultGroupAdministratorRights",
-        "default_group_administrator_rights": default_group_administrator_rights!.toJson(),
+        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29370,7 +29370,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultChannelAdministratorRights",
-        "default_channel_administrator_rights": default_channel_administrator_rights!.toJson(),
+        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29704,7 +29704,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getSupergroupMembers",
         "supergroup_id": supergroup_id,
-        "filter": filter!.toJson(),
+        "filter": (filter != null) ? filter.toJson() : null,
         "offset": offset,
         "limit": limit,
       });
@@ -29751,7 +29751,7 @@ class TdlibFunction {
         "query": query,
         "from_event_id": from_event_id,
         "limit": limit,
-        "filters": filters!.toJson(),
+        "filters": (filters != null) ? filters.toJson() : null,
         "user_ids": user_ids,
       });
     } catch (e) {
@@ -29771,8 +29771,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPaymentForm",
-        "input_invoice": input_invoice!.toJson(),
-        "theme": theme!.toJson(),
+        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "theme": (theme != null) ? theme.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29792,8 +29792,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "validateOrderInfo",
-        "input_invoice": input_invoice!.toJson(),
-        "order_info": order_info!.toJson(),
+        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "order_info": (order_info != null) ? order_info.toJson() : null,
         "allow_save": allow_save,
       });
     } catch (e) {
@@ -29817,11 +29817,11 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "sendPaymentForm",
-        "input_invoice": input_invoice!.toJson(),
+        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
         "payment_form_id": payment_form_id,
         "order_info_id": order_info_id,
         "shipping_option_id": shipping_option_id,
-        "credentials": credentials!.toJson(),
+        "credentials": (credentials != null) ? credentials.toJson() : null,
         "tip_amount": tip_amount,
       });
     } catch (e) {
@@ -29905,7 +29905,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "createInvoiceLink",
-        "invoice": invoice!.toJson(),
+        "invoice": (invoice != null) ? invoice.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29958,7 +29958,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "getBackgroundUrl",
         "name": name,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29996,8 +29996,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setBackground",
-        "background": background!.toJson(),
-        "type": type!.toJson(),
+        "background": (background != null) ? background.toJson() : null,
+        "type": (type != null) ? type.toJson() : null,
         "for_dark_theme": for_dark_theme,
       });
     } catch (e) {
@@ -30142,8 +30142,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setCustomLanguagePack",
-        "info": info!.toJson(),
-        "strings": strings!.toJson(),
+        "info": (info != null) ? info.toJson() : null,
+        "strings": (strings != null) ? strings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30161,7 +30161,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "editCustomLanguagePackInfo",
-        "info": info!.toJson(),
+        "info": (info != null) ? info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30181,7 +30181,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setCustomLanguagePackString",
         "language_pack_id": language_pack_id,
-        "new_string": new_string!.toJson(),
+        "new_string": (new_string != null) ? new_string.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30218,7 +30218,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "registerDevice",
-        "device_token": device_token!.toJson(),
+        "device_token": (device_token != null) ? device_token.toJson() : null,
         "other_user_ids": other_user_ids,
       });
     } catch (e) {
@@ -30292,8 +30292,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setUserPrivacySettingRules",
-        "setting": setting!.toJson(),
-        "rules": rules!.toJson(),
+        "setting": (setting != null) ? setting.toJson() : null,
+        "rules": (rules != null) ? rules.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30311,7 +30311,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getUserPrivacySettingRules",
-        "setting": setting!.toJson(),
+        "setting": (setting != null) ? setting.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30349,7 +30349,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setOption",
         "name": name,
-        "value": value!.toJson(),
+        "value": (value != null) ? value.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30367,7 +30367,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setAccountTtl",
-        "ttl": ttl!.toJson(),
+        "ttl": (ttl != null) ? ttl.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30443,7 +30443,7 @@ class TdlibFunction {
         "@type": "reportChat",
         "chat_id": chat_id,
         "message_ids": message_ids,
-        "reason": reason!.toJson(),
+        "reason": (reason != null) ? reason.toJson() : null,
         "text": text,
       });
     } catch (e) {
@@ -30467,7 +30467,7 @@ class TdlibFunction {
         "@type": "reportChatPhoto",
         "chat_id": chat_id,
         "file_id": file_id,
-        "reason": reason!.toJson(),
+        "reason": (reason != null) ? reason.toJson() : null,
         "text": text,
       });
     } catch (e) {
@@ -30490,7 +30490,7 @@ class TdlibFunction {
         "@type": "reportMessageReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "sender_id": sender_id!.toJson(),
+        "sender_id": (sender_id != null) ? sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30632,7 +30632,7 @@ class TdlibFunction {
         "ttl": ttl,
         "count": count,
         "immunity_delay": immunity_delay,
-        "file_types": file_types!.toJson(),
+        "file_types": (file_types != null) ? file_types.toJson() : null,
         "chat_ids": chat_ids,
         "exclude_chat_ids": exclude_chat_ids,
         "return_deleted_file_statistics": return_deleted_file_statistics,
@@ -30654,7 +30654,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setNetworkType",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30690,7 +30690,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "addNetworkStatistics",
-        "entry": entry!.toJson(),
+        "entry": (entry != null) ? entry.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30739,8 +30739,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setAutoDownloadSettings",
-        "settings": settings!.toJson(),
-        "type": type!.toJson(),
+        "settings": (settings != null) ? settings.toJson() : null,
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30777,7 +30777,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPassportElement",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "password": password,
       });
     } catch (e) {
@@ -30815,7 +30815,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setPassportElement",
-        "element": element!.toJson(),
+        "element": (element != null) ? element.toJson() : null,
         "password": password,
       });
     } catch (e) {
@@ -30834,7 +30834,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "deletePassportElement",
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30854,7 +30854,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setPassportElementErrors",
         "user_id": user_id,
-        "errors": errors!.toJson(),
+        "errors": (errors != null) ? errors.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -30892,7 +30892,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "sendPhoneNumberVerificationCode",
         "phone_number": phone_number,
-        "settings": settings!.toJson(),
+        "settings": (settings != null) ? settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31040,7 +31040,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "sendPassportAuthorizationForm",
         "autorization_form_id": autorization_form_id,
-        "types": types!.toJson(),
+        "types": (types != null) ? types.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31062,7 +31062,7 @@ class TdlibFunction {
         "@type": "sendPhoneNumberConfirmationCode",
         "hash": hash,
         "phone_number": phone_number,
-        "settings": settings!.toJson(),
+        "settings": (settings != null) ? settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31135,7 +31135,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "uploadStickerFile",
         "user_id": user_id,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31197,8 +31197,8 @@ class TdlibFunction {
         "user_id": user_id,
         "title": title,
         "name": name,
-        "sticker_type": sticker_type!.toJson(),
-        "stickers": stickers!.toJson(),
+        "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
+        "stickers": (stickers != null) ? stickers.toJson() : null,
         "source": source,
       });
     } catch (e) {
@@ -31221,7 +31221,7 @@ class TdlibFunction {
         "@type": "addStickerToSet",
         "user_id": user_id,
         "name": name,
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31243,7 +31243,7 @@ class TdlibFunction {
         "@type": "setStickerSetThumbnail",
         "user_id": user_id,
         "name": name,
-        "thumbnail": thumbnail!.toJson(),
+        "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31262,7 +31262,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setStickerPositionInSet",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
         "position": position,
       });
     } catch (e) {
@@ -31281,7 +31281,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "removeStickerFromSet",
-        "sticker": sticker!.toJson(),
+        "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31304,7 +31304,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getMapThumbnailFile",
-        "location": location!.toJson(),
+        "location": (location != null) ? location.toJson() : null,
         "zoom": zoom,
         "width": width,
         "height": height,
@@ -31327,7 +31327,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPremiumLimit",
-        "limit_type": limit_type!.toJson(),
+        "limit_type": (limit_type != null) ? limit_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31345,7 +31345,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPremiumFeatures",
-        "source": source!.toJson(),
+        "source": (source != null) ? source.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31378,7 +31378,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "viewPremiumFeature",
-        "feature": feature!.toJson(),
+        "feature": (feature != null) ? feature.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31426,7 +31426,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "canPurchasePremium",
-        "purpose": purpose!.toJson(),
+        "purpose": (purpose != null) ? purpose.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31445,8 +31445,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "assignAppStoreTransaction",
-        "receipt": receipt!.toJson(),
-        "purpose": purpose!.toJson(),
+        "receipt": (receipt != null) ? receipt.toJson() : null,
+        "purpose": (purpose != null) ? purpose.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31470,7 +31470,7 @@ class TdlibFunction {
         "package_name": package_name,
         "store_product_id": store_product_id,
         "purchase_token": purchase_token,
-        "purpose": purpose!.toJson(),
+        "purpose": (purpose != null) ? purpose.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31684,7 +31684,7 @@ class TdlibFunction {
         "@type": "saveApplicationLogEvent",
         "type": type,
         "chat_id": chat_id,
-        "data": data!.toJson(),
+        "data": (data != null) ? data.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31708,7 +31708,7 @@ class TdlibFunction {
         "server": server,
         "port": port,
         "enable": enable,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31734,7 +31734,7 @@ class TdlibFunction {
         "server": server,
         "port": port,
         "enable": enable,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -31854,7 +31854,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setLogStream",
-        "log_stream": log_stream!.toJson(),
+        "log_stream": (log_stream != null) ? log_stream.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32013,7 +32013,7 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setUserSupportInfo",
         "user_id": user_id,
-        "message": message!.toJson(),
+        "message": (message != null) ? message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32064,7 +32064,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testCallBytes",
-        "x": x!.toJson(),
+        "x": (x != null) ? x.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32100,7 +32100,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testCallVectorIntObject",
-        "x": x!.toJson(),
+        "x": (x != null) ? x.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32136,7 +32136,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testCallVectorStringObject",
-        "x": x!.toJson(),
+        "x": (x != null) ? x.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32193,7 +32193,7 @@ class TdlibFunction {
         "@type": "testProxy",
         "server": server,
         "port": port,
-        "type": type!.toJson(),
+        "type": (type != null) ? type.toJson() : null,
         "dc_id": dc_id,
         "timeout": timeout,
       });
@@ -32243,7 +32243,7 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "testReturnError",
-        "error": error!.toJson(),
+        "error": (error != null) ? error.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -32261,5 +32261,4 @@ class TdlibFunction {
   Map toJson() {
     return rawData;
   }
-   
 }

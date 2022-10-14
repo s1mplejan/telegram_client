@@ -4,7 +4,7 @@ version: 0.3.58
 homepage: https://github.com/azkadev/telegram_client/wiki
 repository: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client
 issue_tracker: https://github.com/azkadev/telegram_client/issues
-publish_to: none
+# publish_to: none
 environment:
   sdk: ">=2.14.4 <3.0.0"
 
@@ -13,8 +13,7 @@ dev_dependencies:
 
 dependencies:
   ffi: ">=1.1.2 <=2.0.1"
-  galaxeus_lib:
-    path: /home/hexaminate/Documents/HEXAMINATE/app/galaxeus/packages/dart/galaxeus_lib
+  galaxeus_lib: ^0.0.17
   hexaminate: ^0.1.4
   http: ^0.13.4
   universal_io: ^2.0.4

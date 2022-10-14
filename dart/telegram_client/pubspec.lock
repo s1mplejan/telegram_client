@@ -88,9 +88,9 @@ packages:
   galaxeus_lib:
     dependency: "direct main"
     description:
-      path: "/home/hexaminate/Documents/HEXAMINATE/app/galaxeus/packages/dart/galaxeus_lib"
-      relative: false
-    source: path
+      name: galaxeus_lib
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.17"
   hexaminate:
     dependency: "direct main"
