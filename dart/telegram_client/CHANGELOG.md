@@ -1,3 +1,6 @@
+## 0.3.58
+- update galaxeus_lib
+
 ## 0.3.57
 - add event_update 
 

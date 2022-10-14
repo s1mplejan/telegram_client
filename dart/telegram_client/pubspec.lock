@@ -91,7 +91,7 @@ packages:
       name: galaxeus_lib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.16"
+    version: "0.0.17"
   hexaminate:
     dependency: "direct main"
     description:
