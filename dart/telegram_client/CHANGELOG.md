@@ -1,3 +1,9 @@
+## 0.3.60
+- fix score
+
+## 0.3.59
+- full api method write in dart now you can call api more easy without add json manual
+
 ## 0.3.58
 - update galaxeus_lib
 

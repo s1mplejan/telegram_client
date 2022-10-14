@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 part of telegram_client;
 
 class TdlibFunction {
@@ -374,7 +376,8 @@ class TdlibFunction {
         "allow_apple_id": allow_apple_id,
         "allow_google_id": allow_google_id,
         "code_info": (code_info != null) ? code_info.toJson() : null,
-        "next_phone_number_authorization_date": next_phone_number_authorization_date,
+        "next_phone_number_authorization_date":
+            next_phone_number_authorization_date,
       });
     } catch (e) {
       return TdlibFunction({
@@ -428,7 +431,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "authorizationStateWaitRegistration",
-        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
+        "terms_of_service":
+            (terms_of_service != null) ? terms_of_service.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -538,7 +542,10 @@ class TdlibFunction {
         "password_hint": password_hint,
         "has_recovery_email_address": has_recovery_email_address,
         "has_passport_data": has_passport_data,
-        "recovery_email_address_code_info": (recovery_email_address_code_info != null) ? recovery_email_address_code_info.toJson() : null,
+        "recovery_email_address_code_info":
+            (recovery_email_address_code_info != null)
+                ? recovery_email_address_code_info.toJson()
+                : null,
         "login_email_address_pattern": login_email_address_pattern,
         "pending_reset_date": pending_reset_date,
       });
@@ -1203,7 +1210,8 @@ class TdlibFunction {
         "file_name": file_name,
         "mime_type": mime_type,
         "has_stickers": has_stickers,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "animation": (animation != null) ? animation.toJson() : null,
       });
@@ -1236,9 +1244,15 @@ class TdlibFunction {
         "performer": performer,
         "file_name": file_name,
         "mime_type": mime_type,
-        "album_cover_minithumbnail": (album_cover_minithumbnail != null) ? album_cover_minithumbnail.toJson() : null,
-        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
-        "external_album_covers": (external_album_covers != null) ? external_album_covers.toJson() : null,
+        "album_cover_minithumbnail": (album_cover_minithumbnail != null)
+            ? album_cover_minithumbnail.toJson()
+            : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null)
+            ? album_cover_thumbnail.toJson()
+            : null,
+        "external_album_covers": (external_album_covers != null)
+            ? external_album_covers.toJson()
+            : null,
         "audio": (audio != null) ? audio.toJson() : null,
       });
     } catch (e) {
@@ -1263,7 +1277,8 @@ class TdlibFunction {
         "@type": "document",
         "file_name": file_name,
         "mime_type": mime_type,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "document": (document != null) ? document.toJson() : null,
       });
@@ -1286,7 +1301,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "photo",
         "has_stickers": has_stickers,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "sizes": (sizes != null) ? sizes.toJson() : null,
       });
     } catch (e) {
@@ -1323,12 +1339,14 @@ class TdlibFunction {
         "emoji": emoji,
         "format": (format != null) ? format.toJson() : null,
         "type": (type != null) ? type.toJson() : null,
-        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
+        "mask_position":
+            (mask_position != null) ? mask_position.toJson() : null,
         "custom_emoji_id": custom_emoji_id,
         "outline": (outline != null) ? outline.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "is_premium": is_premium,
-        "premium_animation": (premium_animation != null) ? premium_animation.toJson() : null,
+        "premium_animation":
+            (premium_animation != null) ? premium_animation.toJson() : null,
         "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
@@ -1363,7 +1381,8 @@ class TdlibFunction {
         "mime_type": mime_type,
         "has_stickers": has_stickers,
         "supports_streaming": supports_streaming,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "video": (video != null) ? video.toJson() : null,
       });
@@ -1389,7 +1408,8 @@ class TdlibFunction {
         "@type": "videoNote",
         "duration": duration,
         "length": length,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "video": (video != null) ? video.toJson() : null,
       });
@@ -1416,7 +1436,9 @@ class TdlibFunction {
         "duration": duration,
         "waveform": (waveform != null) ? waveform.toJson() : null,
         "mime_type": mime_type,
-        "speech_recognition_result": (speech_recognition_result != null) ? speech_recognition_result.toJson() : null,
+        "speech_recognition_result": (speech_recognition_result != null)
+            ? speech_recognition_result.toJson()
+            : null,
         "voice": (voice != null) ? voice.toJson() : null,
       });
     } catch (e) {
@@ -1610,7 +1632,8 @@ class TdlibFunction {
         "id": id,
         "small": (small != null) ? small.toJson() : null,
         "big": (big != null) ? big.toJson() : null,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -1634,7 +1657,8 @@ class TdlibFunction {
         "@type": "chatPhotoInfo",
         "small": (small != null) ? small.toJson() : null,
         "big": (big != null) ? big.toJson() : null,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -1835,10 +1859,12 @@ class TdlibFunction {
         "@type": "chatPhoto",
         "id": id,
         "added_date": added_date,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "sizes": (sizes != null) ? sizes.toJson() : null,
         "animation": (animation != null) ? animation.toJson() : null,
-        "small_animation": (small_animation != null) ? small_animation.toJson() : null,
+        "small_animation":
+            (small_animation != null) ? small_animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2048,7 +2074,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "emojiStatuses",
-        "emoji_statuses": (emoji_statuses != null) ? emoji_statuses.toJson() : null,
+        "emoji_statuses":
+            (emoji_statuses != null) ? emoji_statuses.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2091,7 +2118,8 @@ class TdlibFunction {
         "username": username,
         "phone_number": phone_number,
         "status": (status != null) ? status.toJson() : null,
-        "profile_photo": (profile_photo != null) ? profile_photo.toJson() : null,
+        "profile_photo":
+            (profile_photo != null) ? profile_photo.toJson() : null,
         "emoji_status": (emoji_status != null) ? emoji_status.toJson() : null,
         "is_contact": is_contact,
         "is_mutual_contact": is_mutual_contact,
@@ -2135,8 +2163,14 @@ class TdlibFunction {
         "animation": (animation != null) ? animation.toJson() : null,
         "menu_button": (menu_button != null) ? menu_button.toJson() : null,
         "commands": (commands != null) ? commands.toJson() : null,
-        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
-        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
+        "default_group_administrator_rights":
+            (default_group_administrator_rights != null)
+                ? default_group_administrator_rights.toJson()
+                : null,
+        "default_channel_administrator_rights":
+            (default_channel_administrator_rights != null)
+                ? default_channel_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2171,10 +2205,14 @@ class TdlibFunction {
         "supports_video_calls": supports_video_calls,
         "has_private_calls": has_private_calls,
         "has_private_forwards": has_private_forwards,
-        "has_restricted_voice_and_video_note_messages": has_restricted_voice_and_video_note_messages,
-        "need_phone_number_privacy_exception": need_phone_number_privacy_exception,
+        "has_restricted_voice_and_video_note_messages":
+            has_restricted_voice_and_video_note_messages,
+        "need_phone_number_privacy_exception":
+            need_phone_number_privacy_exception,
         "bio": (bio != null) ? bio.toJson() : null,
-        "premium_gift_options": (premium_gift_options != null) ? premium_gift_options.toJson() : null,
+        "premium_gift_options": (premium_gift_options != null)
+            ? premium_gift_options.toJson()
+            : null,
         "group_in_common_count": group_in_common_count,
         "bot_info": (bot_info != null) ? bot_info.toJson() : null,
       });
@@ -2236,7 +2274,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatAdministrators",
-        "administrators": (administrators != null) ? administrators.toJson() : null,
+        "administrators":
+            (administrators != null) ? administrators.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2739,7 +2778,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatInviteLinkCounts",
-        "invite_link_counts": (invite_link_counts != null) ? invite_link_counts.toJson() : null,
+        "invite_link_counts":
+            (invite_link_counts != null) ? invite_link_counts.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3389,7 +3429,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageReplyInfo",
         "reply_count": reply_count,
-        "recent_replier_ids": (recent_replier_ids != null) ? recent_replier_ids.toJson() : null,
+        "recent_replier_ids":
+            (recent_replier_ids != null) ? recent_replier_ids.toJson() : null,
         "last_read_inbox_message_id": last_read_inbox_message_id,
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "last_message_id": last_message_id,
@@ -3416,7 +3457,8 @@ class TdlibFunction {
         "type": (type != null) ? type.toJson() : null,
         "total_count": total_count,
         "is_chosen": is_chosen,
-        "recent_sender_ids": (recent_sender_ids != null) ? recent_sender_ids.toJson() : null,
+        "recent_sender_ids":
+            (recent_sender_ids != null) ? recent_sender_ids.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3560,8 +3602,10 @@ class TdlibFunction {
         "id": id,
         "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "chat_id": chat_id,
-        "sending_state": (sending_state != null) ? sending_state.toJson() : null,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "sending_state":
+            (sending_state != null) ? sending_state.toJson() : null,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
         "is_outgoing": is_outgoing,
         "is_pinned": is_pinned,
         "can_be_edited": can_be_edited,
@@ -3581,8 +3625,10 @@ class TdlibFunction {
         "date": date,
         "edit_date": edit_date,
         "forward_info": (forward_info != null) ? forward_info.toJson() : null,
-        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
-        "unread_reactions": (unread_reactions != null) ? unread_reactions.toJson() : null,
+        "interaction_info":
+            (interaction_info != null) ? interaction_info.toJson() : null,
+        "unread_reactions":
+            (unread_reactions != null) ? unread_reactions.toJson() : null,
         "reply_in_chat_id": reply_in_chat_id,
         "reply_to_message_id": reply_to_message_id,
         "message_thread_id": message_thread_id,
@@ -3743,7 +3789,8 @@ class TdlibFunction {
         "message_id": message_id,
         "is_recommended": is_recommended,
         "sponsor_chat_id": sponsor_chat_id,
-        "sponsor_chat_info": (sponsor_chat_info != null) ? sponsor_chat_info.toJson() : null,
+        "sponsor_chat_info":
+            (sponsor_chat_info != null) ? sponsor_chat_info.toJson() : null,
         "link": (link != null) ? link.toJson() : null,
         "content": (content != null) ? content.toJson() : null,
       });
@@ -3893,9 +3940,12 @@ class TdlibFunction {
         "sound_id": sound_id,
         "use_default_show_preview": use_default_show_preview,
         "show_preview": show_preview,
-        "use_default_disable_pinned_message_notifications": use_default_disable_pinned_message_notifications,
-        "disable_pinned_message_notifications": disable_pinned_message_notifications,
-        "use_default_disable_mention_notifications": use_default_disable_mention_notifications,
+        "use_default_disable_pinned_message_notifications":
+            use_default_disable_pinned_message_notifications,
+        "disable_pinned_message_notifications":
+            disable_pinned_message_notifications,
+        "use_default_disable_mention_notifications":
+            use_default_disable_mention_notifications,
         "disable_mention_notifications": disable_mention_notifications,
       });
     } catch (e) {
@@ -3921,7 +3971,8 @@ class TdlibFunction {
         "mute_for": mute_for,
         "sound_id": sound_id,
         "show_preview": show_preview,
-        "disable_pinned_message_notifications": disable_pinned_message_notifications,
+        "disable_pinned_message_notifications":
+            disable_pinned_message_notifications,
         "disable_mention_notifications": disable_mention_notifications,
       });
     } catch (e) {
@@ -3944,7 +3995,8 @@ class TdlibFunction {
         "@type": "draftMessage",
         "reply_to_message_id": reply_to_message_id,
         "date": date,
-        "input_message_text": (input_message_text != null) ? input_message_text.toJson() : null,
+        "input_message_text":
+            (input_message_text != null) ? input_message_text.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4302,7 +4354,9 @@ class TdlibFunction {
         "@type": "videoChat",
         "group_call_id": group_call_id,
         "has_participants": has_participants,
-        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
+        "default_participant_id": (default_participant_id != null)
+            ? default_participant_id.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4357,7 +4411,8 @@ class TdlibFunction {
         "permissions": (permissions != null) ? permissions.toJson() : null,
         "last_message": (last_message != null) ? last_message.toJson() : null,
         "positions": (positions != null) ? positions.toJson() : null,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
         "has_protected_content": has_protected_content,
         "is_marked_as_unread": is_marked_as_unread,
         "is_blocked": is_blocked,
@@ -4371,15 +4426,21 @@ class TdlibFunction {
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "unread_mention_count": unread_mention_count,
         "unread_reaction_count": unread_reaction_count,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
         "message_ttl": message_ttl,
         "theme_name": theme_name,
         "action_bar": (action_bar != null) ? action_bar.toJson() : null,
         "video_chat": (video_chat != null) ? video_chat.toJson() : null,
-        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
+        "pending_join_requests": (pending_join_requests != null)
+            ? pending_join_requests.toJson()
+            : null,
         "reply_markup_message_id": reply_markup_message_id,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
         "client_data": client_data,
       });
     } catch (e) {
@@ -4440,7 +4501,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatsNearby",
         "users_nearby": (users_nearby != null) ? users_nearby.toJson() : null,
-        "supergroups_nearby": (supergroups_nearby != null) ? supergroups_nearby.toJson() : null,
+        "supergroups_nearby":
+            (supergroups_nearby != null) ? supergroups_nearby.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5049,7 +5111,8 @@ class TdlibFunction {
         "reply_info": (reply_info != null) ? reply_info.toJson() : null,
         "unread_message_count": unread_message_count,
         "messages": (messages != null) ? messages.toJson() : null,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6186,7 +6249,8 @@ class TdlibFunction {
         "version": version,
         "is_rtl": is_rtl,
         "is_full": is_full,
-        "feedback_link": (feedback_link != null) ? feedback_link.toJson() : null,
+        "feedback_link":
+            (feedback_link != null) ? feedback_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6462,7 +6526,8 @@ class TdlibFunction {
         "price_parts": (price_parts != null) ? price_parts.toJson() : null,
         "max_tip_amount": max_tip_amount,
         "suggested_tip_amounts": suggested_tip_amounts,
-        "recurring_payment_terms_of_service_url": recurring_payment_terms_of_service_url,
+        "recurring_payment_terms_of_service_url":
+            recurring_payment_terms_of_service_url,
         "is_test": is_test,
         "need_name": need_name,
         "need_phone_number": need_phone_number,
@@ -6494,7 +6559,8 @@ class TdlibFunction {
         "name": name,
         "phone_number": phone_number,
         "email_address": email_address,
-        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
+        "shipping_address":
+            (shipping_address != null) ? shipping_address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6724,15 +6790,22 @@ class TdlibFunction {
         "invoice": (invoice != null) ? invoice.toJson() : null,
         "seller_bot_user_id": seller_bot_user_id,
         "payment_provider_user_id": payment_provider_user_id,
-        "payment_provider": (payment_provider != null) ? payment_provider.toJson() : null,
-        "additional_payment_options": (additional_payment_options != null) ? additional_payment_options.toJson() : null,
-        "saved_order_info": (saved_order_info != null) ? saved_order_info.toJson() : null,
-        "saved_credentials": (saved_credentials != null) ? saved_credentials.toJson() : null,
+        "payment_provider":
+            (payment_provider != null) ? payment_provider.toJson() : null,
+        "additional_payment_options": (additional_payment_options != null)
+            ? additional_payment_options.toJson()
+            : null,
+        "saved_order_info":
+            (saved_order_info != null) ? saved_order_info.toJson() : null,
+        "saved_credentials":
+            (saved_credentials != null) ? saved_credentials.toJson() : null,
         "can_save_credentials": can_save_credentials,
         "need_password": need_password,
         "product_title": product_title,
-        "product_description": (product_description != null) ? product_description.toJson() : null,
-        "product_photo": (product_photo != null) ? product_photo.toJson() : null,
+        "product_description":
+            (product_description != null) ? product_description.toJson() : null,
+        "product_photo":
+            (product_photo != null) ? product_photo.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6752,7 +6825,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "validatedOrderInfo",
         "order_info_id": order_info_id,
-        "shipping_options": (shipping_options != null) ? shipping_options.toJson() : null,
+        "shipping_options":
+            (shipping_options != null) ? shipping_options.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -6808,7 +6882,8 @@ class TdlibFunction {
         "payment_provider_user_id": payment_provider_user_id,
         "invoice": (invoice != null) ? invoice.toJson() : null,
         "order_info": (order_info != null) ? order_info.toJson() : null,
-        "shipping_option": (shipping_option != null) ? shipping_option.toJson() : null,
+        "shipping_option":
+            (shipping_option != null) ? shipping_option.toJson() : null,
         "credentials_title": credentials_title,
         "tip_amount": tip_amount,
       });
@@ -6873,7 +6948,8 @@ class TdlibFunction {
         "width": width,
         "height": height,
         "duration": duration,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "caption": (caption != null) ? caption.toJson() : null,
       });
     } catch (e) {
@@ -7319,7 +7395,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementPersonalDetails",
-        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
+        "personal_details":
+            (personal_details != null) ? personal_details.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7355,7 +7432,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementDriverLicense",
-        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
+        "driver_license":
+            (driver_license != null) ? driver_license.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7373,7 +7451,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementIdentityCard",
-        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
+        "identity_card":
+            (identity_card != null) ? identity_card.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7391,7 +7470,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementInternalPassport",
-        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
+        "internal_passport":
+            (internal_passport != null) ? internal_passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7445,7 +7525,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementBankStatement",
-        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
+        "bank_statement":
+            (bank_statement != null) ? bank_statement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7463,7 +7544,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementRentalAgreement",
-        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
+        "rental_agreement":
+            (rental_agreement != null) ? rental_agreement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7481,7 +7563,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementPassportRegistration",
-        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
+        "passport_registration": (passport_registration != null)
+            ? passport_registration.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7499,7 +7583,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportElementTemporaryRegistration",
-        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
+        "temporary_registration": (temporary_registration != null)
+            ? temporary_registration.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7553,7 +7639,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementPersonalDetails",
-        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
+        "personal_details":
+            (personal_details != null) ? personal_details.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7589,7 +7676,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementDriverLicense",
-        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
+        "driver_license":
+            (driver_license != null) ? driver_license.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7607,7 +7695,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementIdentityCard",
-        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
+        "identity_card":
+            (identity_card != null) ? identity_card.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7625,7 +7714,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementInternalPassport",
-        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
+        "internal_passport":
+            (internal_passport != null) ? internal_passport.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7679,7 +7769,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementBankStatement",
-        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
+        "bank_statement":
+            (bank_statement != null) ? bank_statement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7697,7 +7788,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementRentalAgreement",
-        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
+        "rental_agreement":
+            (rental_agreement != null) ? rental_agreement.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7715,7 +7807,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementPassportRegistration",
-        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
+        "passport_registration": (passport_registration != null)
+            ? passport_registration.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7733,7 +7827,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "inputPassportElementTemporaryRegistration",
-        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
+        "temporary_registration": (temporary_registration != null)
+            ? temporary_registration.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7995,7 +8091,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "passportRequiredElement",
-        "suitable_elements": (suitable_elements != null) ? suitable_elements.toJson() : null,
+        "suitable_elements":
+            (suitable_elements != null) ? suitable_elements.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8016,7 +8113,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "passportAuthorizationForm",
         "id": id,
-        "required_elements": (required_elements != null) ? required_elements.toJson() : null,
+        "required_elements":
+            (required_elements != null) ? required_elements.toJson() : null,
         "privacy_policy_url": privacy_policy_url,
       });
     } catch (e) {
@@ -8209,7 +8307,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "error",
         "error": "${e}",
-        "message": "error method inputPassportElementErrorSourceTranslationFile",
+        "message":
+            "error method inputPassportElementErrorSourceTranslationFile",
       });
     }
   }
@@ -8227,7 +8326,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "error",
         "error": "${e}",
-        "message": "error method inputPassportElementErrorSourceTranslationFiles",
+        "message":
+            "error method inputPassportElementErrorSourceTranslationFiles",
       });
     }
   }
@@ -8580,7 +8680,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageAnimatedEmoji",
-        "animated_emoji": (animated_emoji != null) ? animated_emoji.toJson() : null,
+        "animated_emoji":
+            (animated_emoji != null) ? animated_emoji.toJson() : null,
         "emoji": emoji,
       });
     } catch (e) {
@@ -8603,7 +8704,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageDice",
-        "initial_state": (initial_state != null) ? initial_state.toJson() : null,
+        "initial_state":
+            (initial_state != null) ? initial_state.toJson() : null,
         "final_state": (final_state != null) ? final_state.toJson() : null,
         "emoji": emoji,
         "value": value,
@@ -8679,7 +8781,8 @@ class TdlibFunction {
         "is_test": is_test,
         "need_shipping_address": need_shipping_address,
         "receipt_message_id": receipt_message_id,
-        "extended_media": (extended_media != null) ? extended_media.toJson() : null,
+        "extended_media":
+            (extended_media != null) ? extended_media.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8700,7 +8803,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "messageCall",
         "is_video": is_video,
-        "discard_reason": (discard_reason != null) ? discard_reason.toJson() : null,
+        "discard_reason":
+            (discard_reason != null) ? discard_reason.toJson() : null,
         "duration": duration,
       });
     } catch (e) {
@@ -9139,7 +9243,8 @@ class TdlibFunction {
         "total_amount": total_amount,
         "is_recurring": is_recurring,
         "is_first_recurring": is_first_recurring,
-        "invoice_payload": (invoice_payload != null) ? invoice_payload.toJson() : null,
+        "invoice_payload":
+            (invoice_payload != null) ? invoice_payload.toJson() : null,
         "shipping_option_id": shipping_option_id,
         "order_info": (order_info != null) ? order_info.toJson() : null,
         "telegram_payment_charge_id": telegram_payment_charge_id,
@@ -9708,8 +9813,10 @@ class TdlibFunction {
         "disable_notification": disable_notification,
         "from_background": from_background,
         "protect_content": protect_content,
-        "update_order_of_installed_sticker_sets": update_order_of_installed_sticker_sets,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "update_order_of_installed_sticker_sets":
+            update_order_of_installed_sticker_sets,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -9807,7 +9914,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "inputMessageAudio",
         "audio": (audio != null) ? audio.toJson() : null,
-        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null)
+            ? album_cover_thumbnail.toJson()
+            : null,
         "duration": duration,
         "title": title,
         "performer": performer,
@@ -10113,7 +10222,9 @@ class TdlibFunction {
         "provider_token": provider_token,
         "provider_data": provider_data,
         "start_parameter": start_parameter,
-        "extended_media_content": (extended_media_content != null) ? extended_media_content.toJson() : null,
+        "extended_media_content": (extended_media_content != null)
+            ? extended_media_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -10831,11 +10942,13 @@ class TdlibFunction {
         "title": title,
         "name": name,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
-        "thumbnail_outline": (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
+        "thumbnail_outline":
+            (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_format":
+            (sticker_format != null) ? sticker_format.toJson() : null,
         "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
         "stickers": (stickers != null) ? stickers.toJson() : null,
@@ -10873,11 +10986,13 @@ class TdlibFunction {
         "title": title,
         "name": name,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
-        "thumbnail_outline": (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
+        "thumbnail_outline":
+            (thumbnail_outline != null) ? thumbnail_outline.toJson() : null,
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_format":
+            (sticker_format != null) ? sticker_format.toJson() : null,
         "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
         "size": size,
@@ -11191,7 +11306,8 @@ class TdlibFunction {
         "protocol": (protocol != null) ? protocol.toJson() : null,
         "servers": (servers != null) ? servers.toJson() : null,
         "config": config,
-        "encryption_key": (encryption_key != null) ? encryption_key.toJson() : null,
+        "encryption_key":
+            (encryption_key != null) ? encryption_key.toJson() : null,
         "emojis": emojis,
         "allow_p2p": allow_p2p,
       });
@@ -11374,7 +11490,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallRecentSpeaker",
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_speaking": is_speaking,
       });
     } catch (e) {
@@ -11425,7 +11542,8 @@ class TdlibFunction {
         "participant_count": participant_count,
         "has_hidden_listeners": has_hidden_listeners,
         "loaded_all_participants": loaded_all_participants,
-        "recent_speakers": (recent_speakers != null) ? recent_speakers.toJson() : null,
+        "recent_speakers":
+            (recent_speakers != null) ? recent_speakers.toJson() : null,
         "is_my_video_enabled": is_my_video_enabled,
         "is_my_video_paused": is_my_video_paused,
         "can_enable_video": can_enable_video,
@@ -11473,7 +11591,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallParticipantVideoInfo",
-        "source_groups": (source_groups != null) ? source_groups.toJson() : null,
+        "source_groups":
+            (source_groups != null) ? source_groups.toJson() : null,
         "endpoint_id": endpoint_id,
         "is_paused": is_paused,
       });
@@ -11510,11 +11629,14 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "groupCallParticipant",
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "screen_sharing_audio_source_id": screen_sharing_audio_source_id,
         "video_info": (video_info != null) ? video_info.toJson() : null,
-        "screen_sharing_video_info": (screen_sharing_video_info != null) ? screen_sharing_video_info.toJson() : null,
+        "screen_sharing_video_info": (screen_sharing_video_info != null)
+            ? screen_sharing_video_info.toJson()
+            : null,
         "bio": bio,
         "is_current_user": is_current_user,
         "is_speaking": is_speaking,
@@ -11797,9 +11919,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "availableReactions",
-        "top_reactions": (top_reactions != null) ? top_reactions.toJson() : null,
-        "recent_reactions": (recent_reactions != null) ? recent_reactions.toJson() : null,
-        "popular_reactions": (popular_reactions != null) ? popular_reactions.toJson() : null,
+        "top_reactions":
+            (top_reactions != null) ? top_reactions.toJson() : null,
+        "recent_reactions":
+            (recent_reactions != null) ? recent_reactions.toJson() : null,
+        "popular_reactions":
+            (popular_reactions != null) ? popular_reactions.toJson() : null,
         "allow_custom_emoji": allow_custom_emoji,
       });
     } catch (e) {
@@ -11831,12 +11956,18 @@ class TdlibFunction {
         "title": title,
         "is_active": is_active,
         "static_icon": (static_icon != null) ? static_icon.toJson() : null,
-        "appear_animation": (appear_animation != null) ? appear_animation.toJson() : null,
-        "select_animation": (select_animation != null) ? select_animation.toJson() : null,
-        "activate_animation": (activate_animation != null) ? activate_animation.toJson() : null,
-        "effect_animation": (effect_animation != null) ? effect_animation.toJson() : null,
-        "around_animation": (around_animation != null) ? around_animation.toJson() : null,
-        "center_animation": (center_animation != null) ? center_animation.toJson() : null,
+        "appear_animation":
+            (appear_animation != null) ? appear_animation.toJson() : null,
+        "select_animation":
+            (select_animation != null) ? select_animation.toJson() : null,
+        "activate_animation":
+            (activate_animation != null) ? activate_animation.toJson() : null,
+        "effect_animation":
+            (effect_animation != null) ? effect_animation.toJson() : null,
+        "around_animation":
+            (around_animation != null) ? around_animation.toJson() : null,
+        "center_animation":
+            (center_animation != null) ? center_animation.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12035,12 +12166,15 @@ class TdlibFunction {
         "name": name,
         "name_color": (name_color != null) ? name_color.toJson() : null,
         "default_icon": (default_icon != null) ? default_icon.toJson() : null,
-        "ios_static_icon": (ios_static_icon != null) ? ios_static_icon.toJson() : null,
-        "ios_animated_icon": (ios_animated_icon != null) ? ios_animated_icon.toJson() : null,
+        "ios_static_icon":
+            (ios_static_icon != null) ? ios_static_icon.toJson() : null,
+        "ios_animated_icon":
+            (ios_animated_icon != null) ? ios_animated_icon.toJson() : null,
         "android_icon": (android_icon != null) ? android_icon.toJson() : null,
         "macos_icon": (macos_icon != null) ? macos_icon.toJson() : null,
         "icon_color": (icon_color != null) ? icon_color.toJson() : null,
-        "web_app_placeholder": (web_app_placeholder != null) ? web_app_placeholder.toJson() : null,
+        "web_app_placeholder":
+            (web_app_placeholder != null) ? web_app_placeholder.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12114,7 +12248,9 @@ class TdlibFunction {
         "video_width": video_width,
         "video_height": video_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12150,7 +12286,9 @@ class TdlibFunction {
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12180,7 +12318,9 @@ class TdlibFunction {
         "audio_url": audio_url,
         "audio_duration": audio_duration,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12210,7 +12350,9 @@ class TdlibFunction {
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12246,7 +12388,9 @@ class TdlibFunction {
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12302,7 +12446,9 @@ class TdlibFunction {
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12336,7 +12482,9 @@ class TdlibFunction {
         "photo_width": photo_width,
         "photo_height": photo_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12366,7 +12514,9 @@ class TdlibFunction {
         "sticker_width": sticker_width,
         "sticker_height": sticker_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12396,7 +12546,9 @@ class TdlibFunction {
         "thumbnail_width": thumbnail_width,
         "thumbnail_height": thumbnail_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12434,7 +12586,9 @@ class TdlibFunction {
         "video_height": video_height,
         "video_duration": video_duration,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -12462,7 +12616,9 @@ class TdlibFunction {
         "voice_note_url": voice_note_url,
         "voice_note_duration": voice_note_duration,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13139,8 +13295,12 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventAvailableReactionsChanged",
-        "old_available_reactions": (old_available_reactions != null) ? old_available_reactions.toJson() : null,
-        "new_available_reactions": (new_available_reactions != null) ? new_available_reactions.toJson() : null,
+        "old_available_reactions": (old_available_reactions != null)
+            ? old_available_reactions.toJson()
+            : null,
+        "new_available_reactions": (new_available_reactions != null)
+            ? new_available_reactions.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13239,8 +13399,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventPermissionsChanged",
-        "old_permissions": (old_permissions != null) ? old_permissions.toJson() : null,
-        "new_permissions": (new_permissions != null) ? new_permissions.toJson() : null,
+        "old_permissions":
+            (old_permissions != null) ? old_permissions.toJson() : null,
+        "new_permissions":
+            (new_permissions != null) ? new_permissions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13431,8 +13593,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventInviteLinkEdited",
-        "old_invite_link": (old_invite_link != null) ? old_invite_link.toJson() : null,
-        "new_invite_link": (new_invite_link != null) ? new_invite_link.toJson() : null,
+        "old_invite_link":
+            (old_invite_link != null) ? old_invite_link.toJson() : null,
+        "new_invite_link":
+            (new_invite_link != null) ? new_invite_link.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -13541,7 +13705,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventVideoChatParticipantIsMutedToggled",
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
       });
     } catch (e) {
@@ -13561,14 +13726,16 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "chatEventVideoChatParticipantVolumeLevelChanged",
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "volume_level": volume_level,
       });
     } catch (e) {
       return TdlibFunction({
         "@type": "error",
         "error": "${e}",
-        "message": "error method chatEventVideoChatParticipantVolumeLevelChanged",
+        "message":
+            "error method chatEventVideoChatParticipantVolumeLevelChanged",
       });
     }
   }
@@ -13803,7 +13970,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "localizationTargetInfo",
-        "language_packs": (language_packs != null) ? language_packs.toJson() : null,
+        "language_packs":
+            (language_packs != null) ? language_packs.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14302,7 +14470,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "premiumState",
         "state": (state != null) ? state.toJson() : null,
-        "payment_options": (payment_options != null) ? payment_options.toJson() : null,
+        "payment_options":
+            (payment_options != null) ? payment_options.toJson() : null,
         "animations": (animations != null) ? animations.toJson() : null,
       });
     } catch (e) {
@@ -14797,7 +14966,9 @@ class TdlibFunction {
         "@type": "themeSettings",
         "accent_color": accent_color,
         "background": (background != null) ? background.toJson() : null,
-        "outgoing_message_fill": (outgoing_message_fill != null) ? outgoing_message_fill.toJson() : null,
+        "outgoing_message_fill": (outgoing_message_fill != null)
+            ? outgoing_message_fill.toJson()
+            : null,
         "animate_outgoing_message_fill": animate_outgoing_message_fill,
         "outgoing_message_accent_color": outgoing_message_accent_color,
       });
@@ -14820,8 +14991,10 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "chatTheme",
         "name": name,
-        "light_settings": (light_settings != null) ? light_settings.toJson() : null,
-        "dark_settings": (dark_settings != null) ? dark_settings.toJson() : null,
+        "light_settings":
+            (light_settings != null) ? light_settings.toJson() : null,
+        "dark_settings":
+            (dark_settings != null) ? dark_settings.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -14986,7 +15159,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "error",
         "error": "${e}",
-        "message": "error method checkChatUsernameResultPublicGroupsUnavailable",
+        "message":
+            "error method checkChatUsernameResultPublicGroupsUnavailable",
       });
     }
   }
@@ -15878,7 +16052,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "notificationSounds",
-        "notification_sounds": (notification_sounds != null) ? notification_sounds.toJson() : null,
+        "notification_sounds":
+            (notification_sounds != null) ? notification_sounds.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -15928,7 +16103,8 @@ class TdlibFunction {
         "type": (type != null) ? type.toJson() : null,
         "chat_id": chat_id,
         "total_count": total_count,
-        "notifications": (notifications != null) ? notifications.toJson() : null,
+        "notifications":
+            (notifications != null) ? notifications.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -16413,7 +16589,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "error",
         "error": "${e}",
-        "message": "error method userPrivacySettingAllowPrivateVoiceAndVideoNoteMessages",
+        "message":
+            "error method userPrivacySettingAllowPrivateVoiceAndVideoNoteMessages",
       });
     }
   }
@@ -17128,7 +17305,9 @@ class TdlibFunction {
         "@type": "internalLinkTypeBotStartInGroup",
         "bot_username": bot_username,
         "start_parameter": start_parameter,
-        "administrator_rights": (administrator_rights != null) ? administrator_rights.toJson() : null,
+        "administrator_rights": (administrator_rights != null)
+            ? administrator_rights.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -17148,7 +17327,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "internalLinkTypeBotAddToChannel",
         "bot_username": bot_username,
-        "administrator_rights": (administrator_rights != null) ? administrator_rights.toJson() : null,
+        "administrator_rights": (administrator_rights != null)
+            ? administrator_rights.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -18884,7 +19065,8 @@ class TdlibFunction {
         "sticker": (sticker != null) ? sticker.toJson() : null,
         "emojis": emojis,
         "format": (format != null) ? format.toJson() : null,
-        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
+        "mask_position":
+            (mask_position != null) ? mask_position.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19105,19 +19287,27 @@ class TdlibFunction {
         "@type": "chatStatisticsSupergroup",
         "period": (period != null) ? period.toJson() : null,
         "member_count": (member_count != null) ? member_count.toJson() : null,
-        "message_count": (message_count != null) ? message_count.toJson() : null,
+        "message_count":
+            (message_count != null) ? message_count.toJson() : null,
         "viewer_count": (viewer_count != null) ? viewer_count.toJson() : null,
         "sender_count": (sender_count != null) ? sender_count.toJson() : null,
-        "member_count_graph": (member_count_graph != null) ? member_count_graph.toJson() : null,
+        "member_count_graph":
+            (member_count_graph != null) ? member_count_graph.toJson() : null,
         "join_graph": (join_graph != null) ? join_graph.toJson() : null,
-        "join_by_source_graph": (join_by_source_graph != null) ? join_by_source_graph.toJson() : null,
-        "language_graph": (language_graph != null) ? language_graph.toJson() : null,
-        "message_content_graph": (message_content_graph != null) ? message_content_graph.toJson() : null,
+        "join_by_source_graph": (join_by_source_graph != null)
+            ? join_by_source_graph.toJson()
+            : null,
+        "language_graph":
+            (language_graph != null) ? language_graph.toJson() : null,
+        "message_content_graph": (message_content_graph != null)
+            ? message_content_graph.toJson()
+            : null,
         "action_graph": (action_graph != null) ? action_graph.toJson() : null,
         "day_graph": (day_graph != null) ? day_graph.toJson() : null,
         "week_graph": (week_graph != null) ? week_graph.toJson() : null,
         "top_senders": (top_senders != null) ? top_senders.toJson() : null,
-        "top_administrators": (top_administrators != null) ? top_administrators.toJson() : null,
+        "top_administrators":
+            (top_administrators != null) ? top_administrators.toJson() : null,
         "top_inviters": (top_inviters != null) ? top_inviters.toJson() : null,
       });
     } catch (e) {
@@ -19152,19 +19342,36 @@ class TdlibFunction {
         "@type": "chatStatisticsChannel",
         "period": (period != null) ? period.toJson() : null,
         "member_count": (member_count != null) ? member_count.toJson() : null,
-        "mean_view_count": (mean_view_count != null) ? mean_view_count.toJson() : null,
-        "mean_share_count": (mean_share_count != null) ? mean_share_count.toJson() : null,
+        "mean_view_count":
+            (mean_view_count != null) ? mean_view_count.toJson() : null,
+        "mean_share_count":
+            (mean_share_count != null) ? mean_share_count.toJson() : null,
         "enabled_notifications_percentage": enabled_notifications_percentage,
-        "member_count_graph": (member_count_graph != null) ? member_count_graph.toJson() : null,
+        "member_count_graph":
+            (member_count_graph != null) ? member_count_graph.toJson() : null,
         "join_graph": (join_graph != null) ? join_graph.toJson() : null,
         "mute_graph": (mute_graph != null) ? mute_graph.toJson() : null,
-        "view_count_by_hour_graph": (view_count_by_hour_graph != null) ? view_count_by_hour_graph.toJson() : null,
-        "view_count_by_source_graph": (view_count_by_source_graph != null) ? view_count_by_source_graph.toJson() : null,
-        "join_by_source_graph": (join_by_source_graph != null) ? join_by_source_graph.toJson() : null,
-        "language_graph": (language_graph != null) ? language_graph.toJson() : null,
-        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
-        "instant_view_interaction_graph": (instant_view_interaction_graph != null) ? instant_view_interaction_graph.toJson() : null,
-        "recent_message_interactions": (recent_message_interactions != null) ? recent_message_interactions.toJson() : null,
+        "view_count_by_hour_graph": (view_count_by_hour_graph != null)
+            ? view_count_by_hour_graph.toJson()
+            : null,
+        "view_count_by_source_graph": (view_count_by_source_graph != null)
+            ? view_count_by_source_graph.toJson()
+            : null,
+        "join_by_source_graph": (join_by_source_graph != null)
+            ? join_by_source_graph.toJson()
+            : null,
+        "language_graph":
+            (language_graph != null) ? language_graph.toJson() : null,
+        "message_interaction_graph": (message_interaction_graph != null)
+            ? message_interaction_graph.toJson()
+            : null,
+        "instant_view_interaction_graph":
+            (instant_view_interaction_graph != null)
+                ? instant_view_interaction_graph.toJson()
+                : null,
+        "recent_message_interactions": (recent_message_interactions != null)
+            ? recent_message_interactions.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19182,7 +19389,9 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "messageStatistics",
-        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
+        "message_interaction_graph": (message_interaction_graph != null)
+            ? message_interaction_graph.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19240,8 +19449,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "vectorPathCommandCubicBezierCurve",
-        "start_control_point": (start_control_point != null) ? start_control_point.toJson() : null,
-        "end_control_point": (end_control_point != null) ? end_control_point.toJson() : null,
+        "start_control_point":
+            (start_control_point != null) ? start_control_point.toJson() : null,
+        "end_control_point":
+            (end_control_point != null) ? end_control_point.toJson() : null,
         "end_point": (end_point != null) ? end_point.toJson() : null,
       });
     } catch (e) {
@@ -19376,7 +19587,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateAuthorizationState",
-        "authorization_state": (authorization_state != null) ? authorization_state.toJson() : null,
+        "authorization_state":
+            (authorization_state != null) ? authorization_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19548,7 +19760,8 @@ class TdlibFunction {
         "@type": "updateMessageInteractionInfo",
         "chat_id": chat_id,
         "message_id": message_id,
-        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
+        "interaction_info":
+            (interaction_info != null) ? interaction_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19613,7 +19826,8 @@ class TdlibFunction {
         "@type": "updateMessageUnreadReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "unread_reactions": (unread_reactions != null) ? unread_reactions.toJson() : null,
+        "unread_reactions":
+            (unread_reactions != null) ? unread_reactions.toJson() : null,
         "unread_reaction_count": unread_reaction_count,
       });
     } catch (e) {
@@ -19836,7 +20050,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatAvailableReactions",
         "chat_id": chat_id,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19857,7 +20072,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatDraftMessage",
         "chat_id": chat_id,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
         "positions": (positions != null) ? positions.toJson() : null,
       });
     } catch (e) {
@@ -19878,7 +20094,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatMessageSender",
         "chat_id": chat_id,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19918,7 +20135,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatNotificationSettings",
         "chat_id": chat_id,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -19938,7 +20157,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateChatPendingJoinRequests",
         "chat_id": chat_id,
-        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
+        "pending_join_requests": (pending_join_requests != null)
+            ? pending_join_requests.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20198,7 +20419,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateScopeNotificationSettings",
         "scope": (scope != null) ? scope.toJson() : null,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20249,7 +20472,8 @@ class TdlibFunction {
         "notification_settings_chat_id": notification_settings_chat_id,
         "notification_sound_id": notification_sound_id,
         "total_count": total_count,
-        "added_notifications": (added_notifications != null) ? added_notifications.toJson() : null,
+        "added_notifications":
+            (added_notifications != null) ? added_notifications.toJson() : null,
         "removed_notification_ids": removed_notification_ids,
       });
     } catch (e) {
@@ -20448,7 +20672,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateUserFullInfo",
         "user_id": user_id,
-        "user_full_info": (user_full_info != null) ? user_full_info.toJson() : null,
+        "user_full_info":
+            (user_full_info != null) ? user_full_info.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20468,7 +20693,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateBasicGroupFullInfo",
         "basic_group_id": basic_group_id,
-        "basic_group_full_info": (basic_group_full_info != null) ? basic_group_full_info.toJson() : null,
+        "basic_group_full_info": (basic_group_full_info != null)
+            ? basic_group_full_info.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20488,7 +20715,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateSupergroupFullInfo",
         "supergroup_id": supergroup_id,
-        "supergroup_full_info": (supergroup_full_info != null) ? supergroup_full_info.toJson() : null,
+        "supergroup_full_info": (supergroup_full_info != null)
+            ? supergroup_full_info.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -20609,7 +20838,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateFileAddedToDownloads",
-        "file_download": (file_download != null) ? file_download.toJson() : null,
+        "file_download":
+            (file_download != null) ? file_download.toJson() : null,
         "counts": (counts != null) ? counts.toJson() : null,
       });
     } catch (e) {
@@ -21050,7 +21280,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateTermsOfService",
         "terms_of_service_id": terms_of_service_id,
-        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
+        "terms_of_service":
+            (terms_of_service != null) ? terms_of_service.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21140,7 +21371,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateDefaultReactionType",
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21219,8 +21451,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "updateSuggestedActions",
-        "added_actions": (added_actions != null) ? added_actions.toJson() : null,
-        "removed_actions": (removed_actions != null) ? removed_actions.toJson() : null,
+        "added_actions":
+            (added_actions != null) ? added_actions.toJson() : null,
+        "removed_actions":
+            (removed_actions != null) ? removed_actions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21245,7 +21479,8 @@ class TdlibFunction {
         "@type": "updateNewInlineQuery",
         "id": id,
         "sender_user_id": sender_user_id,
-        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "user_location":
+            (user_location != null) ? user_location.toJson() : null,
         "chat_type": (chat_type != null) ? chat_type.toJson() : null,
         "query": query,
         "offset": offset,
@@ -21271,7 +21506,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "updateNewChosenInlineResult",
         "sender_user_id": sender_user_id,
-        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "user_location":
+            (user_location != null) ? user_location.toJson() : null,
         "query": query,
         "result_id": result_id,
         "inline_message_id": inline_message_id,
@@ -21352,7 +21588,8 @@ class TdlibFunction {
         "id": id,
         "sender_user_id": sender_user_id,
         "invoice_payload": invoice_payload,
-        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
+        "shipping_address":
+            (shipping_address != null) ? shipping_address.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21380,7 +21617,8 @@ class TdlibFunction {
         "sender_user_id": sender_user_id,
         "currency": currency,
         "total_amount": total_amount,
-        "invoice_payload": (invoice_payload != null) ? invoice_payload.toJson() : null,
+        "invoice_payload":
+            (invoice_payload != null) ? invoice_payload.toJson() : null,
         "shipping_option_id": shipping_option_id,
         "order_info": (order_info != null) ? order_info.toJson() : null,
       });
@@ -21489,8 +21727,10 @@ class TdlibFunction {
         "actor_user_id": actor_user_id,
         "date": date,
         "invite_link": (invite_link != null) ? invite_link.toJson() : null,
-        "old_chat_member": (old_chat_member != null) ? old_chat_member.toJson() : null,
-        "new_chat_member": (new_chat_member != null) ? new_chat_member.toJson() : null,
+        "old_chat_member":
+            (old_chat_member != null) ? old_chat_member.toJson() : null,
+        "new_chat_member":
+            (new_chat_member != null) ? new_chat_member.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -21817,7 +22057,9 @@ class TdlibFunction {
         "use_test_dc": use_test_dc,
         "database_directory": database_directory,
         "files_directory": files_directory,
-        "database_encryption_key": (database_encryption_key != null) ? database_encryption_key.toJson() : null,
+        "database_encryption_key": (database_encryption_key != null)
+            ? database_encryption_key.toJson()
+            : null,
         "use_file_database": use_file_database,
         "use_chat_info_database": use_chat_info_database,
         "use_message_database": use_message_database,
@@ -22143,7 +22385,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDatabaseEncryptionKey",
-        "new_encryption_key": (new_encryption_key != null) ? new_encryption_key.toJson() : null,
+        "new_encryption_key":
+            (new_encryption_key != null) ? new_encryption_key.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23793,7 +24036,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatMessageSender",
         "chat_id": chat_id,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23821,7 +24065,9 @@ class TdlibFunction {
         "reply_to_message_id": reply_to_message_id,
         "options": (options != null) ? options.toJson() : null,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -23848,7 +24094,9 @@ class TdlibFunction {
         "message_thread_id": message_thread_id,
         "reply_to_message_id": reply_to_message_id,
         "options": (options != null) ? options.toJson() : null,
-        "input_message_contents": (input_message_contents != null) ? input_message_contents.toJson() : null,
+        "input_message_contents": (input_message_contents != null)
+            ? input_message_contents.toJson()
+            : null,
         "only_preview": only_preview,
       });
     } catch (e) {
@@ -23995,7 +24243,9 @@ class TdlibFunction {
         "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "reply_to_message_id": reply_to_message_id,
         "disable_notification": disable_notification,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24085,7 +24335,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24137,7 +24389,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24205,7 +24459,9 @@ class TdlibFunction {
         "@type": "editInlineMessageText",
         "inline_message_id": inline_message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24253,7 +24509,9 @@ class TdlibFunction {
         "@type": "editInlineMessageMedia",
         "inline_message_id": inline_message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24317,7 +24575,8 @@ class TdlibFunction {
         "@type": "editMessageSchedulingState",
         "chat_id": chat_id,
         "message_id": message_id,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24411,7 +24670,8 @@ class TdlibFunction {
         "@type": "addMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
         "is_big": is_big,
         "update_recent_reactions": update_recent_reactions,
       });
@@ -24435,7 +24695,8 @@ class TdlibFunction {
         "@type": "removeMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24459,7 +24720,8 @@ class TdlibFunction {
         "@type": "getMessageAddedReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
         "offset": offset,
         "limit": limit,
       });
@@ -24479,7 +24741,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultReactionType",
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -24843,7 +25106,8 @@ class TdlibFunction {
         "@type": "getInlineQueryResults",
         "bot_user_id": bot_user_id,
         "chat_id": chat_id,
-        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "user_location":
+            (user_location != null) ? user_location.toJson() : null,
         "query": query,
         "offset": offset,
       });
@@ -25056,7 +25320,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "answerShippingQuery",
         "shipping_query_id": shipping_query_id,
-        "shipping_options": (shipping_options != null) ? shipping_options.toJson() : null,
+        "shipping_options":
+            (shipping_options != null) ? shipping_options.toJson() : null,
         "error_message": error_message,
       });
     } catch (e) {
@@ -25854,7 +26119,8 @@ class TdlibFunction {
         "@type": "setChatDraftMessage",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25874,7 +26140,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatNotificationSettings",
         "chat_id": chat_id,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -25954,7 +26222,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatAvailableReactions",
         "chat_id": chat_id,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -26484,7 +26753,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setScopeNotificationSettings",
         "scope": (scope != null) ? scope.toJson() : null,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27057,7 +27328,8 @@ class TdlibFunction {
         "@type": "importMessages",
         "chat_id": chat_id,
         "message_file": (message_file != null) ? message_file.toJson() : null,
-        "attached_files": (attached_files != null) ? attached_files.toJson() : null,
+        "attached_files":
+            (attached_files != null) ? attached_files.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27218,7 +27490,8 @@ class TdlibFunction {
         "@type": "getChatInviteLinkMembers",
         "chat_id": chat_id,
         "invite_link": invite_link,
-        "offset_member": (offset_member != null) ? offset_member.toJson() : null,
+        "offset_member":
+            (offset_member != null) ? offset_member.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -27340,7 +27613,8 @@ class TdlibFunction {
         "chat_id": chat_id,
         "invite_link": invite_link,
         "query": query,
-        "offset_request": (offset_request != null) ? offset_request.toJson() : null,
+        "offset_request":
+            (offset_request != null) ? offset_request.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -27575,7 +27849,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setVideoChatDefaultParticipant",
         "chat_id": chat_id,
-        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
+        "default_participant_id": (default_participant_id != null)
+            ? default_participant_id.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -27716,7 +27992,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "joinGroupCall",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "payload": payload,
         "is_muted": is_muted,
@@ -28004,7 +28281,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsMuted",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
       });
     } catch (e) {
@@ -28026,7 +28304,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setGroupCallParticipantVolumeLevel",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "volume_level": volume_level,
       });
     } catch (e) {
@@ -28048,7 +28327,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsHandRaised",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_hand_raised": is_hand_raised,
       });
     } catch (e) {
@@ -28149,7 +28429,8 @@ class TdlibFunction {
         "time_offset": time_offset,
         "scale": scale,
         "channel_id": channel_id,
-        "video_quality": (video_quality != null) ? video_quality.toJson() : null,
+        "video_quality":
+            (video_quality != null) ? video_quality.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29352,7 +29633,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultGroupAdministratorRights",
-        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
+        "default_group_administrator_rights":
+            (default_group_administrator_rights != null)
+                ? default_group_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29370,7 +29654,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultChannelAdministratorRights",
-        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
+        "default_channel_administrator_rights":
+            (default_channel_administrator_rights != null)
+                ? default_channel_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -29771,7 +30058,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPaymentForm",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "theme": (theme != null) ? theme.toJson() : null,
       });
     } catch (e) {
@@ -29792,7 +30080,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "validateOrderInfo",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "order_info": (order_info != null) ? order_info.toJson() : null,
         "allow_save": allow_save,
       });
@@ -29817,7 +30106,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "sendPaymentForm",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "payment_form_id": payment_form_id,
         "order_info_id": order_info_id,
         "shipping_option_id": shipping_option_id,
