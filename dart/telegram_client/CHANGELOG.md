@@ -1,3 +1,9 @@
+## 0.3.57
+- add event_update 
+
+## 0.3.56
+- update tdlib 1.8.7
+
 ## 0.0.0
 
 - Initial version.
