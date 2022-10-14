@@ -21,13 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 **/
 
-import 'dart:async';
-import 'dart:convert' as convert;
-import 'package:http/http.dart';
-import 'package:hexaminate/hexaminate.dart';
-import 'dart:isolate';
-
-import 'package:universal_io/io.dart';
+part of telegram_client;
 
 /// Telegram Bot Api library:
 /// example:
@@ -122,100 +116,6 @@ class TelegramBotApi {
     }
   }
 
-  /// add this for multithread on flutter apps
-  Future<void> initIsolate({String? tokenBot, Map? clientOption}) async {
-    await Future.delayed(Duration(seconds: 2));
-    tokenBot ??= token_bot;
-    clientOption ??= client_option;
-    ReceivePort receivePort = ReceivePort();
-    receivePort.listen((message) {
-      emitter.emit("update", null, message);
-    });
-    Isolate isolate = await Isolate.spawn((List args) async {
-      final SendPort sendPortToMain = args[0];
-      final Map option = args[1];
-      final String token = args[2];
-      TelegramBotApi tg = TelegramBotApi(token, clientOption: option);
-      var offset = 0;
-      List allowed_updates = [];
-      int milliseconds = 1;
-      if (option["allowed_updates"] is List) {
-        allowed_updates = option["allowed_updates"];
-      }
-      if (option["delay_duration"] is int) {
-        milliseconds = option["delay_duration"];
-      }
-      while (true) {
-        await Future.delayed(Duration(milliseconds: milliseconds));
-        Map parameters = {
-          "offset": offset,
-        };
-        try {
-          parameters.addAll({"allowed_updates": allowed_updates});
-        } catch (e) {}
-        var getUpdates = await tg.request(
-          "getUpdates",
-          parameters: parameters,
-          tokenBot: token,
-        );
-        if (getUpdates is Map && getUpdates["ok"] is bool && getUpdates["ok"]) {
-          List updates = [];
-          try {
-            updates = getUpdates["result"];
-          } catch (e) {}
-          if (updates.isNotEmpty) {
-            for (var i = 0; i < updates.length; i++) {
-              var loop_data = updates[i];
-              try {
-                offset = (loop_data["update_id"] + 1);
-              } catch (e) {}
-              sendPortToMain.send([loop_data, token, option]);
-            }
-          }
-        }
-      }
-    }, [
-      receivePort.sendPort,
-      clientOption,
-      tokenBot,
-    ], onExit: receivePort.sendPort, onError: receivePort.sendPort);
-
-    state_data.add({
-      "token_bot": tokenBot,
-      "isolate": isolate,
-      "receive_port": receivePort,
-    });
-  }
-
-  /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient(
-      {required String tokenBot,
-      required Map<String, dynamic> clientOption}) async {
-    await Future.delayed(Duration(seconds: 2));
-    client_option.addAll(clientOption);
-    await initIsolate(tokenBot: tokenBot, clientOption: client_option);
-  }
-
-  // exit
-  bool exit(String? tokenBot) {
-    for (var i = 0; i < state_data.length; i++) {
-      var loop_data = state_data[i];
-      if (loop_data is Map &&
-          loop_data["isolate"] is Isolate &&
-          loop_data["token_bot"] == tokenBot) {
-        Isolate isolate = loop_data["isolate"] as Isolate;
-        isolate.kill();
-        try {
-          ReceivePort receive_port = loop_data["receive_port"] as ReceivePort;
-          receive_port.close();
-        } catch (e) {}
-        state_data.removeAt(i);
-        return true;
-      }
-    }
-    return false;
-  }
-
   /// call api latest [bot api](https://core.telegram.org/bots/api#available-methods)
   /// example:
   /// ```dart
@@ -225,7 +125,7 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  dynamic request(
+  Future<Map> request(
     String method, {
     Map? parameters,
     bool is_form = false,
@@ -341,7 +241,7 @@ class TelegramBotApi {
   ///   "parse_mode": "html"
   /// });
   /// ```
-  Future<dynamic> requestForm(
+  Future<Map> requestForm(
     String method, {
     Map? parameters,
     bool is_form = false,
@@ -402,7 +302,7 @@ class TelegramBotApi {
   /// ```dart
   /// tg.file("./doc.json"),
   /// ```
-  dynamic file(path, [var option]) {
+  Map file(path, [var option]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
       var filename = path
@@ -420,7 +320,7 @@ class TelegramBotApi {
     return jsonData;
   }
 
-  buffer(List<int> data, {String? name}) {
+  Map buffer(List<int> data, {String? name}) {
     Map jsonData = {
       "is_post_buffer": true,
     };
