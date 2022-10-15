@@ -27,7 +27,7 @@ import 'dart:ffi' as ffi;
 import 'dart:math';
 import 'dart:isolate';
 import 'dart:convert' as convert;
-import 'package:telegram_client/telegram_client.dart';
+import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
 import 'package:universal_io/io.dart';
 import 'package:ffi/ffi.dart' as pkgffi;
 
@@ -419,6 +419,148 @@ class Tdlib {
     }
   }
 
+  /// get all client id
+  List<int> getAllClientIds() {
+    return state_data
+        .map((e) {
+          if (e["client_id"] is int) {
+            return e["client_id"] as int;
+          }
+        })
+        .toList()
+        .cast<int>();
+  }
+
+  /// getMeClient
+  Future<Map> getMeClient({required int clientId}) async {
+    return await getMe(clientId: clientId);
+  }
+
+  /// getMe all client
+  Future<List<Map>> getMeClients() async {
+    List<int> get_all_client_ids = getAllClientIds();
+    List<Map> array = [];
+    for (var i = 0; i < get_all_client_ids.length; i++) {
+      int clientId = get_all_client_ids[i];
+      try {
+        Map get_me_result = await getMeClient(clientId: clientId);
+        if (get_me_result["ok"] == true && get_me_result["result"] is Map) {
+          array.add(get_me_result["result"] as Map);
+        }
+      } catch (e) {}
+    }
+    return array;
+  }
+
+  /// invoke request all client
+  Future<List<Map>> invokeAllClients(
+    String method, {
+    Map<String, dynamic>? parameters,
+    bool isVoid = false,
+    Duration? delayDuration,
+    Duration? invokeTimeOut,
+    String? extra,
+  }) async {
+    List<int> get_all_client_ids = getAllClientIds();
+    List<Map> array = [];
+    for (var i = 0; i < get_all_client_ids.length; i++) {
+      int clientId = get_all_client_ids[i];
+      try {
+        var result = await invoke(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+          isVoid: isVoid,
+          delayDuration: delayDuration,
+          invokeTimeOut: invokeTimeOut,
+          extra: extra,
+        );
+        array.add({
+          "@type": "invoke",
+          "@client_id": client_id,
+          "data": result,
+        });
+      } catch (e) {
+        array.add({
+          "@type": "error",
+          "@client_id": client_id,
+          "message": "${e}",
+        });
+      }
+    }
+    return array;
+  }
+
+  /// invokeSync  request all client
+  List<Map> invokeSyncAllClients(
+    String method, {
+    Map<String, dynamic>? parameters,
+    bool isVoid = false,
+    Duration? delayDuration,
+    Duration? invokeTimeOut,
+    String? extra,
+  }) {
+    List<int> get_all_client_ids = getAllClientIds();
+    List<Map> array = [];
+    for (var i = 0; i < get_all_client_ids.length; i++) {
+      int clientId = get_all_client_ids[i];
+      try {
+        var result = invokeSync(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+        );
+        array.add({
+          "@type": "invoke",
+          "@client_id": client_id,
+          "data": result,
+        });
+      } catch (e) {
+        array.add({
+          "@type": "error",
+          "@client_id": client_id,
+          "message": "${e}",
+        });
+      }
+    }
+    return array;
+  }
+
+  /// invoke request all client
+  Future<List<Map>> requestAllClients(
+    String method, {
+    Map<String, dynamic>? parameters,
+    bool isVoid = false,
+    String? extra,
+  }) async {
+    List<int> get_all_client_ids = getAllClientIds();
+    List<Map> array = [];
+    for (var i = 0; i < get_all_client_ids.length; i++) {
+      int clientId = get_all_client_ids[i];
+      try {
+        var result = await request(
+          method,
+          parameters: parameters,
+          clientId: clientId,
+          isVoid: isVoid,
+          extra: extra,
+        );
+        array.add({
+          "@type": "invoke",
+          "@client_id": client_id,
+          "data": result,
+        });
+      } catch (e) {
+        array.add({
+          "@type": "error",
+          "@client_id": client_id,
+          "message": "${e}",
+        });
+      }
+    }
+    return array;
+  }
+
   /// getRandom uuid for parameters @extra
   String getRandom(int length, {String? text}) {
     var ch = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -773,7 +915,7 @@ class Tdlib {
   }
 
   Future<Map> callApi({
-    required TdlibFunction tdlibFunction,
+    required tdlib_scheme.TdlibFunction tdlibFunction,
     int? clientId,
     bool isVoid = false,
     Duration? delayDuration,
@@ -793,6 +935,17 @@ class Tdlib {
     } catch (e) {
       return await Future.error(e);
     }
+  }
+
+  Map callApiSync({
+    required tdlib_scheme.TdlibFunction tdlibFunction,
+    int? clientId,
+  }) {
+    return invokeSync(
+      tdlibFunction.toJson()["@type"],
+      parameters: tdlibFunction.toJson().cast<String, dynamic>(),
+      clientId: clientId,
+    );
   }
 
   /// call api getMe with return human api

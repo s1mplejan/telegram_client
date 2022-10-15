@@ -1,3 +1,14 @@
+## 0.3.63
+- fix pub score
+
+## 0.3.62
+- update full scheme tdlib 1.8.7
+
+## 0.3.61
+- update example
+- update readme
+- add invoke all client request all client get all client
+
 ## 0.3.60
 - fix score
 
