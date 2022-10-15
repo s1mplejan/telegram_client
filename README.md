@@ -190,11 +190,10 @@ for other devices, I don't know because I only have android and linux
 - [Tdlib](#tdlib)
 - [Telegram Bot Api](#telegrambotapi)
 - [Mtproto](#mtproto)
-
+- [Tdlib-Official](https://core.telegram.org/tdlib/docs/classtd_1_1_tl_object.html)
 ## Tdlib
 gunakan ini untuk membuat userbot / bot / application based tdlib,
 quickstart:
-
 more update example check on [this](https://github.com/azkadev/telegram_client/tree/main/example/dart/tdlib)
 - single
 ```dart
