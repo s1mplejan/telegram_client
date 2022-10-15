@@ -37,6 +37,52 @@ https://user-images.githubusercontent.com/82513502/178153444-5f1a9074-8f43-48c1-
 
 <img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/galaxeusbot_1.png" width="350px"><img src="https://github.com/azkadev/telegram_client/raw/main/assets/example/bot/galaxeusbot_2.png" width="350">
 
+4. [Specta-Bot-Telegram]()
+   Open source bot telegram sekaligus ecosystem dari specta
+
+   <p align="center">
+    <a href="https://github.com/azkadev">
+        <img src="https://telegra.ph/file/e90bdeab8390b8c0d9df2.png" alt="Specta"
+            width="312"
+            height="312">
+    </a>
+    <br>
+    <a href="https://youtube.com/c/galaxeus">
+        <img
+            src="https://raw.githubusercontent.com/azkadev/azkadev/main/assets/images/powered_galaxeus.png"
+            alt="galaxeus"
+            width="350"
+            height="80"
+        >
+    </a>
+    <br>
+    <b>Pluggable Telegram Bot</b>
+    <br>
+</p>
+
+5. [Specta-User-Telegram]()
+   Open source User telegram sekaligus ecosystem dari specta
+
+   <p align="center">
+    <a href="https://github.com/azkadev">
+        <img src="https://telegra.ph/file/e90bdeab8390b8c0d9df2.png" alt="Specta"
+            width="312"
+            height="312">
+    </a>
+    <br>
+    <a href="https://youtube.com/c/galaxeus">
+        <img
+            src="https://raw.githubusercontent.com/azkadev/azkadev/main/assets/images/powered_galaxeus.png"
+            alt="galaxeus"
+            width="350"
+            height="80"
+        >
+    </a>
+    <br>
+    <b>Pluggable Telegram User</b>
+    <br>
+</p>
+
 ---
 
 ### Docs
@@ -148,6 +194,8 @@ for other devices, I don't know because I only have android and linux
 ## Tdlib
 gunakan ini untuk membuat userbot / bot / application based tdlib,
 quickstart:
+
+more update example check on [this](https://github.com/azkadev/telegram_client/tree/main/example/dart/tdlib)
 - single
 ```dart
 import 'dart:io';
