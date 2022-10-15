@@ -2,19 +2,22 @@
 
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:tdlib/tdlib.dart' as tdlib;
+import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
 import 'package:telegram_client/tdlib/tdlib.dart';
 import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> arguments) async {
   print("started telegram client");
-  int api_id = int.parse(Platform.environment["tg_api_id"] ?? "0"); /// get api_id in https://my.telegram.org/auth
-  String api_hash = Platform.environment["tg_api_hash"] ?? "0"; ///  get api_hash in https://my.telegram.org/auth
+  int api_id = int.parse(Platform.environment["tg_api_id"] ?? "0");
+
+  /// get api_id in https://my.telegram.org/auth
+  String api_hash = Platform.environment["tg_api_hash"] ?? "0";
+
+  ///  get api_hash in https://my.telegram.org/auth
 
   /// compile first https://tdlib.github.io/td/build.html?language=dart
   String path_tdlib = "/home/hexaminate/Documents/HEXAMINATE/app/specta/specta_userbot_telegram/libtdjson.so";
-  
+
   Directory tg_dir = Directory.current;
 
   Tdlib tg = Tdlib(
@@ -63,7 +66,7 @@ void main(List<String> arguments) async {
 
           /// use call api if you can't see official docs
           await tg.callApi(
-            tdlibFunction: TdlibFunction.setAuthenticationPhoneNumber(
+            tdlibFunction: tdlib_scheme.TdlibFunction.setAuthenticationPhoneNumber(
               phone_number: phone_number,
             ),
             clientId: update.client_id, // add this if your project more one client
@@ -90,7 +93,7 @@ void main(List<String> arguments) async {
           // );
 
           await tg.callApi(
-            tdlibFunction: TdlibFunction.checkAuthenticationCode(
+            tdlibFunction: tdlib_scheme.TdlibFunction.checkAuthenticationCode(
               code: code,
             ),
             clientId: update.client_id, // add this if your project more one client
@@ -108,7 +111,7 @@ void main(List<String> arguments) async {
           // );
 
           await tg.callApi(
-            tdlibFunction: TdlibFunction.checkAuthenticationPassword(
+            tdlibFunction: tdlib_scheme.TdlibFunction.checkAuthenticationPassword(
               password: password,
             ),
             clientId: update.client_id, // add this if your project more one client
@@ -124,20 +127,19 @@ void main(List<String> arguments) async {
 
     if (update.raw["@type"] == "updateNewMessage") {
       if (update.raw["message"] is Map) {
-        Map message = update.raw["message"];
-        int chat_id = message["chat_id"];
-        if (message["content"] is Map) { 
-          if (message["content"]["@type"] == "messageText") {
-            if (message["content"]["text"] is Map && message["content"]["text"]["text"] is String) {
-              String text = (message["content"]["text"]["text"] as String);
-              if (RegExp(r"^/alive$", caseSensitive: false).hasMatch(text)) {
-                // / use request if you wan't call api more easy and pretty like telegram bot api
-                return await tg.request(
-                  "sendMessage",
-                  parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
-                  clientId: update.client_id,
-                );
-              }
+        /// tdlib scheme is not full real because i generate file origin to dart with my script but you can still use
+        tdlib_scheme.Message message = tdlib_scheme.Message(update.raw["message"]);
+        int chat_id = message.chat_id ?? 0; 
+        if (message.content.toJson()["@type"] == "messageText") { 
+          if (update.raw["message"]["content"]["text"] is Map && update.raw["message"]["content"]["text"]["text"] is String) {
+            String text = (update.raw["message"]["content"]["text"]["text"] as String);
+            if (RegExp(r"^/alive$", caseSensitive: false).hasMatch(text)) {
+              // / use request if you wan't call api more easy and pretty like telegram bot api
+              return await tg.request(
+                "sendMessage",
+                parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
+                clientId: update.client_id,
+              );
             }
           }
         }
