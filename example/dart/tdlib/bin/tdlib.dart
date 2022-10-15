@@ -129,12 +129,26 @@ void main(List<String> arguments) async {
       if (update.raw["message"] is Map) {
         /// tdlib scheme is not full real because i generate file origin to dart with my script but you can still use
         tdlib_scheme.Message message = tdlib_scheme.Message(update.raw["message"]);
-        int chat_id = message.chat_id ?? 0; 
-        if (message.content.toJson()["@type"] == "messageText") { 
+        int chat_id = message.chat_id ?? 0;
+        if (message.content.special_type == "messageText") {
           if (update.raw["message"]["content"]["text"] is Map && update.raw["message"]["content"]["text"]["text"] is String) {
             String text = (update.raw["message"]["content"]["text"]["text"] as String);
             if (RegExp(r"^/alive$", caseSensitive: false).hasMatch(text)) {
               // / use request if you wan't call api more easy and pretty like telegram bot api
+              await tg.callApi(
+                tdlibFunction: tdlib_scheme.TdlibFunction.sendMessage(
+                  chat_id: chat_id,
+                  options: tdlib_scheme.MessageSendOptions.create(
+                    from_background: true
+                  ),
+                  input_message_content: tdlib_scheme.InputMessageContent.create(
+                    text: tdlib_scheme.FormattedText.create(
+                      text: "Native Tdlib Scheme"
+                    )
+                  ),
+                ),
+              );
+
               return await tg.request(
                 "sendMessage",
                 parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
