@@ -9,11 +9,14 @@ import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> arguments) async {
   print("started telegram client");
-  int api_id = int.parse(Platform.environment["tg_api_id"] ?? "0");
-  String api_hash = Platform.environment["tg_api_hash"] ?? "0";
+  int api_id = int.parse(Platform.environment["tg_api_id"] ?? "0"); /// get api_id in https://my.telegram.org/auth
+  String api_hash = Platform.environment["tg_api_hash"] ?? "0"; ///  get api_hash in https://my.telegram.org/auth
+
+  /// compile first https://tdlib.github.io/td/build.html?language=dart
   String path_tdlib = "/home/hexaminate/Documents/HEXAMINATE/app/specta/specta_userbot_telegram/libtdjson.so";
   
-  Directory tg_dir = Directory.current ;
+  Directory tg_dir = Directory.current;
+
   Tdlib tg = Tdlib(
     path_tdlib,
     clientOption: {
