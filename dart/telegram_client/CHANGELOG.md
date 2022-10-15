@@ -1,3 +1,6 @@
+## 0.3.64
+- fix tdlib scheme bugs
+ 
 ## 0.3.63
 - fix pub score
 
