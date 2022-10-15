@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:tdlib/tdlib.dart' as tdlib;
@@ -7,17 +8,24 @@ import 'package:telegram_client/tdlib/tdlib.dart';
 import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> arguments) async {
-  int api_id = 0;
-  String api_hash = "";
-  String path_tdlib = "libtdjson.so";
-  Directory tg_dir = Directory.current;
+  print("started telegram client");
+  int api_id = int.parse(Platform.environment["tg_api_id"] ?? "0");
+  String api_hash = Platform.environment["tg_api_hash"] ?? "0";
+  String path_tdlib = "/home/hexaminate/Documents/HEXAMINATE/app/specta/specta_userbot_telegram/libtdjson.so";
+  
+  Directory tg_dir = Directory.current ;
   Tdlib tg = Tdlib(
     path_tdlib,
-    clientOption: TdlibFunction.setTdlibParameters(api_id: api_id, api_hash: api_hash, database_directory: tg_dir.path, files_directory: tg_dir.path).toJson(),
+    clientOption: {
+      "api_id": api_id,
+      "api_hash": api_hash,
+      "database_directory": tg_dir.path,
+      "files_directory": tg_dir.path,
+    },
   );
 
   tg.on(tg.event_update, (UpdateTd update) async {
-
+    // print(json.encode(update.raw));
 
     /// authorization update
     if (update.raw["@type"] == "updateAuthorizationState") {
@@ -111,9 +119,29 @@ void main(List<String> arguments) async {
       }
     }
 
-    
-
+    if (update.raw["@type"] == "updateNewMessage") {
+      if (update.raw["message"] is Map) {
+        Map message = update.raw["message"];
+        int chat_id = message["chat_id"];
+        if (message["content"] is Map) { 
+          if (message["content"]["@type"] == "messageText") {
+            if (message["content"]["text"] is Map && message["content"]["text"]["text"] is String) {
+              String text = (message["content"]["text"]["text"] as String);
+              if (RegExp(r"^/alive$", caseSensitive: false).hasMatch(text)) {
+                // / use request if you wan't call api more easy and pretty like telegram bot api
+                return await tg.request(
+                  "sendMessage",
+                  parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
+                  clientId: update.client_id,
+                );
+              }
+            }
+          }
+        }
+      }
+    }
   });
 
   await tg.initIsolate();
+  print("succes init isolate");
 }

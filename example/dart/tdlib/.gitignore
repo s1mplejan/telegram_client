@@ -4,3 +4,8 @@
 
 # Conventional directory for build output.
 build/
+
+*.binlog
+*sqlite
+*sqlite-shm
+*sqlite-wal
