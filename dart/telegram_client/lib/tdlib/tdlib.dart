@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check, void_checks
+// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check, void_checks, unnecessary_brace_in_string_interps
 
 // ignore: slash_for_doc_comments
 /**
@@ -63,7 +63,7 @@ class Tdlib {
     'system_language_code': 'en',
     'new_verbosity_level': 0,
     'application_version': 'v1',
-    'device_model': 'Telegram Client HexaMinate',
+    'device_model': 'Telegram Client HexaMinate @azkadev Galaxeus',
     'system_version': Platform.operatingSystemVersion,
     "database_key": "",
     "start": true,
@@ -77,7 +77,7 @@ class Tdlib {
   late Duration delay_update = Duration(milliseconds: 1);
   late Duration delay_invoke = Duration(milliseconds: 1);
   late double timeOutUpdate;
-  late List state_data = [];
+  late List<TdlibClient> clients = [];
   late ffi.DynamicLibrary TdlibPathFile = ffi.DynamicLibrary.process();
   late bool is_auto_get_chat = false;
 
@@ -219,11 +219,11 @@ class Tdlib {
     ).catchError((onError) {
       print("eror");
     });
-    state_data.add({
-      "client_id": clientId,
-      "isolate": isolate,
-      "receive_port": receivePort,
-    });
+    clients.add(TdlibClient(
+      client_id: clientId,
+      isolate: isolate,
+      receive_port: receivePort,
+    ));
   }
 
   // exit
@@ -232,11 +232,11 @@ class Tdlib {
     bool isClose = false,
     String? extra,
   }) {
-    for (var i = 0; i < state_data.length; i++) {
-      var loop_data = state_data[i];
+    for (var i = 0; i < clients.length; i++) {
+      var loop_data = clients[i];
       if (loop_data is Map &&
-          loop_data["isolate"] is Isolate &&
-          loop_data["client_id"] == clientId) {
+          loop_data.isolate is Isolate &&
+          loop_data.client_id == clientId) {
         if (isClose) {
           invoke(
             "close",
@@ -244,13 +244,8 @@ class Tdlib {
             extra: extra,
           ).catchError((onError) {});
         }
-        Isolate isolate = loop_data["isolate"] as Isolate;
-        isolate.kill();
-        try {
-          ReceivePort receive_port = loop_data["receive_port"] as ReceivePort;
-          receive_port.close();
-        } catch (e) {}
-        state_data.removeAt(i);
+        loop_data.close();
+        clients.removeAt(i);
         return true;
       }
     }
@@ -356,11 +351,11 @@ class Tdlib {
   }
 
   bool existClientId(int clientId) {
-    for (var i = 0; i < state_data.length; i++) {
-      var loop_data = state_data[i];
+    for (var i = 0; i < clients.length; i++) {
+      var loop_data = clients[i];
       if (loop_data is Map &&
-          loop_data["isolate"] is Isolate &&
-          loop_data["client_id"] == clientId) {
+          loop_data.isolate is Isolate &&
+          loop_data.client_id == clientId) {
         return true;
       }
     }
@@ -421,10 +416,10 @@ class Tdlib {
 
   /// get all client id
   List<int> getAllClientIds() {
-    return state_data
+    return clients
         .map((e) {
-          if (e["client_id"] is int) {
-            return e["client_id"] as int;
+          if (e.client_id is int) {
+            return e.client_id;
           }
         })
         .toList()
@@ -2893,7 +2888,7 @@ class Tdlib {
   ///   }
   /// }
   /// ```
-  getUser(
+  Future<Map> getUser(
     dynamic user_id, {
     required int? clientId,
     String? extra,
@@ -3134,5 +3129,28 @@ class UpdateTd {
   /// return type update
   String get type {
     return update["@type"];
+  }
+}
+
+/// add state data
+class TdlibClient {
+  late int client_id;
+  late Isolate isolate;
+  late ReceivePort receive_port;
+  late DateTime join_date = DateTime.now();
+
+  /// state add data
+  TdlibClient({
+    required this.client_id,
+    required this.isolate,
+    required this.receive_port,
+  });
+
+  /// close
+  void close() {
+    isolate.kill();
+    try {
+      receive_port.close();
+    } catch (e) {}
   }
 }

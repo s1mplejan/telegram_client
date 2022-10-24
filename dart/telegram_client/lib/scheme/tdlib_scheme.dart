@@ -2039,7 +2039,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatMessageSender",
         "chat_id": chat_id,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2067,7 +2068,9 @@ class TdlibFunction {
         "reply_to_message_id": reply_to_message_id,
         "options": (options != null) ? options.toJson() : null,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2245,7 +2248,9 @@ class TdlibFunction {
         "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "reply_to_message_id": reply_to_message_id,
         "disable_notification": disable_notification,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2335,7 +2340,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2387,7 +2394,9 @@ class TdlibFunction {
         "chat_id": chat_id,
         "message_id": message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2455,7 +2464,9 @@ class TdlibFunction {
         "@type": "editInlineMessageText",
         "inline_message_id": inline_message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2503,7 +2514,9 @@ class TdlibFunction {
         "@type": "editInlineMessageMedia",
         "inline_message_id": inline_message_id,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2567,7 +2580,8 @@ class TdlibFunction {
         "@type": "editMessageSchedulingState",
         "chat_id": chat_id,
         "message_id": message_id,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2661,7 +2675,8 @@ class TdlibFunction {
         "@type": "addMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
         "is_big": is_big,
         "update_recent_reactions": update_recent_reactions,
       });
@@ -2685,7 +2700,8 @@ class TdlibFunction {
         "@type": "removeMessageReaction",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -2709,7 +2725,8 @@ class TdlibFunction {
         "@type": "getMessageAddedReactions",
         "chat_id": chat_id,
         "message_id": message_id,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
         "offset": offset,
         "limit": limit,
       });
@@ -2729,7 +2746,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultReactionType",
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -3093,7 +3111,8 @@ class TdlibFunction {
         "@type": "getInlineQueryResults",
         "bot_user_id": bot_user_id,
         "chat_id": chat_id,
-        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "user_location":
+            (user_location != null) ? user_location.toJson() : null,
         "query": query,
         "offset": offset,
       });
@@ -4112,7 +4131,8 @@ class TdlibFunction {
         "@type": "setChatDraftMessage",
         "chat_id": chat_id,
         "message_thread_id": message_thread_id,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4132,7 +4152,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatNotificationSettings",
         "chat_id": chat_id,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4212,7 +4234,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setChatAvailableReactions",
         "chat_id": chat_id,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -4742,7 +4765,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setScopeNotificationSettings",
         "scope": (scope != null) ? scope.toJson() : null,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5480,7 +5505,8 @@ class TdlibFunction {
         "@type": "getChatInviteLinkMembers",
         "chat_id": chat_id,
         "invite_link": invite_link,
-        "offset_member": (offset_member != null) ? offset_member.toJson() : null,
+        "offset_member":
+            (offset_member != null) ? offset_member.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -5602,7 +5628,8 @@ class TdlibFunction {
         "chat_id": chat_id,
         "invite_link": invite_link,
         "query": query,
-        "offset_request": (offset_request != null) ? offset_request.toJson() : null,
+        "offset_request":
+            (offset_request != null) ? offset_request.toJson() : null,
         "limit": limit,
       });
     } catch (e) {
@@ -5841,7 +5868,9 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setVideoChatDefaultParticipant",
         "chat_id": chat_id,
-        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
+        "default_participant_id": (default_participant_id != null)
+            ? default_participant_id.toJson()
+            : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -5982,7 +6011,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "joinGroupCall",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "payload": payload,
         "is_muted": is_muted,
@@ -6270,7 +6300,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsMuted",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
       });
     } catch (e) {
@@ -6292,7 +6323,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "setGroupCallParticipantVolumeLevel",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "volume_level": volume_level,
       });
     } catch (e) {
@@ -6314,7 +6346,8 @@ class TdlibFunction {
       return TdlibFunction({
         "@type": "toggleGroupCallParticipantIsHandRaised",
         "group_call_id": group_call_id,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_hand_raised": is_hand_raised,
       });
     } catch (e) {
@@ -6415,7 +6448,8 @@ class TdlibFunction {
         "time_offset": time_offset,
         "scale": scale,
         "channel_id": channel_id,
-        "video_quality": (video_quality != null) ? video_quality.toJson() : null,
+        "video_quality":
+            (video_quality != null) ? video_quality.toJson() : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7630,7 +7664,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultGroupAdministratorRights",
-        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
+        "default_group_administrator_rights":
+            (default_group_administrator_rights != null)
+                ? default_group_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -7648,7 +7685,10 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "setDefaultChannelAdministratorRights",
-        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
+        "default_channel_administrator_rights":
+            (default_channel_administrator_rights != null)
+                ? default_channel_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return TdlibFunction({
@@ -8049,7 +8089,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "getPaymentForm",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "theme": (theme != null) ? theme.toJson() : null,
       });
     } catch (e) {
@@ -8070,7 +8111,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "validateOrderInfo",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "order_info": (order_info != null) ? order_info.toJson() : null,
         "allow_save": allow_save,
       });
@@ -8095,7 +8137,8 @@ class TdlibFunction {
     try {
       return TdlibFunction({
         "@type": "sendPaymentForm",
-        "input_invoice": (input_invoice != null) ? input_invoice.toJson() : null,
+        "input_invoice":
+            (input_invoice != null) ? input_invoice.toJson() : null,
         "payment_form_id": payment_form_id,
         "order_info_id": order_info_id,
         "shipping_option_id": shipping_option_id,
@@ -10837,7 +10880,11 @@ class AuthenticationCodeInfo {
     try {
       return AuthenticationCodeType((rawData["type"] as Map));
     } catch (e) {
-      return AuthenticationCodeType({"@type": "error", "error": "${e}", "message": "error at AuthenticationCodeInfo type"});
+      return AuthenticationCodeType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AuthenticationCodeInfo type"
+      });
     }
   }
 
@@ -10846,7 +10893,11 @@ class AuthenticationCodeInfo {
     try {
       return AuthenticationCodeType((rawData["next_type"] as Map));
     } catch (e) {
-      return AuthenticationCodeType({"@type": "error", "error": "${e}", "message": "error at AuthenticationCodeInfo next_type"});
+      return AuthenticationCodeType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AuthenticationCodeInfo next_type"
+      });
     }
   }
 
@@ -11082,7 +11133,11 @@ class TextEntity {
     try {
       return TextEntityType((rawData["type"] as Map));
     } catch (e) {
-      return TextEntityType({"@type": "error", "error": "${e}", "message": "error at TextEntity type"});
+      return TextEntityType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at TextEntity type"
+      });
     }
   }
 
@@ -11153,7 +11208,11 @@ class TextEntities {
           .cast<TextEntity>();
     } catch (e) {
       return [
-        TextEntity({"@type": "error", "error": "${e}", "message": "error at TextEntities entities"})
+        TextEntity({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at TextEntities entities"
+        })
       ].cast<TextEntity>();
     }
   }
@@ -11236,7 +11295,11 @@ class FormattedText {
           .cast<TextEntity>();
     } catch (e) {
       return [
-        TextEntity({"@type": "error", "error": "${e}", "message": "error at FormattedText entities"})
+        TextEntity({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at FormattedText entities"
+        })
       ].cast<TextEntity>();
     }
   }
@@ -11302,7 +11365,11 @@ class TermsOfService {
     try {
       return FormattedText((rawData["text"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at TermsOfService text"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at TermsOfService text"
+      });
     }
   }
 
@@ -11367,9 +11434,11 @@ class AuthorizationState {
         "allow_apple_id": allow_apple_id,
         "allow_google_id": allow_google_id,
         "code_info": (code_info != null) ? code_info.toJson() : null,
-        "next_phone_number_authorization_date": next_phone_number_authorization_date,
+        "next_phone_number_authorization_date":
+            next_phone_number_authorization_date,
         "link": link,
-        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
+        "terms_of_service":
+            (terms_of_service != null) ? terms_of_service.toJson() : null,
         "password_hint": password_hint,
         "has_recovery_email_address": has_recovery_email_address,
         "recovery_email_address_pattern": recovery_email_address_pattern,
@@ -11415,7 +11484,11 @@ class AuthorizationState {
     try {
       return AuthenticationCodeInfo((rawData["code_info"] as Map));
     } catch (e) {
-      return AuthenticationCodeInfo({"@type": "error", "error": "${e}", "message": "error at AuthorizationState code_info"});
+      return AuthenticationCodeInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AuthorizationState code_info"
+      });
     }
   }
 
@@ -11442,7 +11515,11 @@ class AuthorizationState {
     try {
       return TermsOfService((rawData["terms_of_service"] as Map));
     } catch (e) {
-      return TermsOfService({"@type": "error", "error": "${e}", "message": "error at AuthorizationState terms_of_service"});
+      return TermsOfService({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AuthorizationState terms_of_service"
+      });
     }
   }
 
@@ -11515,7 +11592,10 @@ class PasswordState {
         "password_hint": password_hint,
         "has_recovery_email_address": has_recovery_email_address,
         "has_passport_data": has_passport_data,
-        "recovery_email_address_code_info": (recovery_email_address_code_info != null) ? recovery_email_address_code_info.toJson() : null,
+        "recovery_email_address_code_info":
+            (recovery_email_address_code_info != null)
+                ? recovery_email_address_code_info.toJson()
+                : null,
         "login_email_address_pattern": login_email_address_pattern,
         "pending_reset_date": pending_reset_date,
       });
@@ -11576,9 +11656,14 @@ class PasswordState {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1PasswordState.html).
   EmailAddressAuthenticationCodeInfo get recovery_email_address_code_info {
     try {
-      return EmailAddressAuthenticationCodeInfo((rawData["recovery_email_address_code_info"] as Map));
+      return EmailAddressAuthenticationCodeInfo(
+          (rawData["recovery_email_address_code_info"] as Map));
     } catch (e) {
-      return EmailAddressAuthenticationCodeInfo({"@type": "error", "error": "${e}", "message": "error at PasswordState recovery_email_address_code_info"});
+      return EmailAddressAuthenticationCodeInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PasswordState recovery_email_address_code_info"
+      });
     }
   }
 
@@ -12068,7 +12153,11 @@ class File {
     try {
       return LocalFile((rawData["local"] as Map));
     } catch (e) {
-      return LocalFile({"@type": "error", "error": "${e}", "message": "error at File local"});
+      return LocalFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at File local"
+      });
     }
   }
 
@@ -12077,7 +12166,11 @@ class File {
     try {
       return RemoteFile((rawData["remote"] as Map));
     } catch (e) {
-      return RemoteFile({"@type": "error", "error": "${e}", "message": "error at File remote"});
+      return RemoteFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at File remote"
+      });
     }
   }
 
@@ -12260,7 +12353,11 @@ class PhotoSize {
     try {
       return File((rawData["photo"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at PhotoSize photo"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PhotoSize photo"
+      });
     }
   }
 
@@ -12487,7 +12584,11 @@ class Thumbnail {
     try {
       return ThumbnailFormat((rawData["format"] as Map));
     } catch (e) {
-      return ThumbnailFormat({"@type": "error", "error": "${e}", "message": "error at Thumbnail format"});
+      return ThumbnailFormat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Thumbnail format"
+      });
     }
   }
 
@@ -12514,7 +12615,11 @@ class Thumbnail {
     try {
       return File((rawData["file"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Thumbnail file"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Thumbnail file"
+      });
     }
   }
 
@@ -12631,7 +12736,11 @@ class MaskPosition {
     try {
       return MaskPoint((rawData["point"] as Map));
     } catch (e) {
-      return MaskPoint({"@type": "error", "error": "${e}", "message": "error at MaskPosition point"});
+      return MaskPoint({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MaskPosition point"
+      });
     }
   }
 
@@ -12829,7 +12938,11 @@ class ClosedVectorPath {
           .cast<VectorPathCommand>();
     } catch (e) {
       return [
-        VectorPathCommand({"@type": "error", "error": "${e}", "message": "error at ClosedVectorPath commands"})
+        VectorPathCommand({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ClosedVectorPath commands"
+        })
       ].cast<VectorPathCommand>();
     }
   }
@@ -13018,7 +13131,11 @@ class PollType {
     try {
       return FormattedText((rawData["explanation"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at PollType explanation"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PollType explanation"
+      });
     }
   }
 
@@ -13068,7 +13185,8 @@ class Animation {
         "file_name": file_name,
         "mime_type": mime_type,
         "has_stickers": has_stickers,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "animation": (animation != null) ? animation.toJson() : null,
       });
@@ -13149,7 +13267,11 @@ class Animation {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at Animation minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Animation minithumbnail"
+      });
     }
   }
 
@@ -13158,7 +13280,11 @@ class Animation {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at Animation thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Animation thumbnail"
+      });
     }
   }
 
@@ -13167,7 +13293,11 @@ class Animation {
     try {
       return File((rawData["animation"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Animation animation"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Animation animation"
+      });
     }
   }
 
@@ -13216,8 +13346,12 @@ class Audio {
         "performer": performer,
         "file_name": file_name,
         "mime_type": mime_type,
-        "album_cover_minithumbnail": (album_cover_minithumbnail != null) ? album_cover_minithumbnail.toJson() : null,
-        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
+        "album_cover_minithumbnail": (album_cover_minithumbnail != null)
+            ? album_cover_minithumbnail.toJson()
+            : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null)
+            ? album_cover_thumbnail.toJson()
+            : null,
         "external_album_covers": (external_album_covers != null)
             ? external_album_covers.map((e) {
                 return Thumbnail((e as Map)).toJson();
@@ -13293,7 +13427,11 @@ class Audio {
     try {
       return Minithumbnail((rawData["album_cover_minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at Audio album_cover_minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Audio album_cover_minithumbnail"
+      });
     }
   }
 
@@ -13302,7 +13440,11 @@ class Audio {
     try {
       return Thumbnail((rawData["album_cover_thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at Audio album_cover_thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Audio album_cover_thumbnail"
+      });
     }
   }
 
@@ -13317,7 +13459,11 @@ class Audio {
           .cast<Thumbnail>();
     } catch (e) {
       return [
-        Thumbnail({"@type": "error", "error": "${e}", "message": "error at Audio external_album_covers"})
+        Thumbnail({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Audio external_album_covers"
+        })
       ].cast<Thumbnail>();
     }
   }
@@ -13327,7 +13473,11 @@ class Audio {
     try {
       return File((rawData["audio"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Audio audio"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Audio audio"
+      });
     }
   }
 
@@ -13369,7 +13519,8 @@ class Document {
         "@type": special_type,
         "file_name": file_name,
         "mime_type": mime_type,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "document": (document != null) ? document.toJson() : null,
       });
@@ -13414,7 +13565,11 @@ class Document {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at Document minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Document minithumbnail"
+      });
     }
   }
 
@@ -13423,7 +13578,11 @@ class Document {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at Document thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Document thumbnail"
+      });
     }
   }
 
@@ -13432,7 +13591,11 @@ class Document {
     try {
       return File((rawData["document"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Document document"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Document document"
+      });
     }
   }
 
@@ -13471,7 +13634,8 @@ class Photo {
       return Photo({
         "@type": special_type,
         "has_stickers": has_stickers,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "sizes": (sizes != null)
             ? sizes.map((e) {
                 return PhotoSize((e as Map)).toJson();
@@ -13510,7 +13674,11 @@ class Photo {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at Photo minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Photo minithumbnail"
+      });
     }
   }
 
@@ -13525,7 +13693,11 @@ class Photo {
           .cast<PhotoSize>();
     } catch (e) {
       return [
-        PhotoSize({"@type": "error", "error": "${e}", "message": "error at Photo sizes"})
+        PhotoSize({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Photo sizes"
+        })
       ].cast<PhotoSize>();
     }
   }
@@ -13580,7 +13752,8 @@ class Sticker {
         "emoji": emoji,
         "format": (format != null) ? format.toJson() : null,
         "type": (type != null) ? type.toJson() : null,
-        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
+        "mask_position":
+            (mask_position != null) ? mask_position.toJson() : null,
         "custom_emoji_id": custom_emoji_id,
         "outline": (outline != null)
             ? outline.map((e) {
@@ -13589,7 +13762,8 @@ class Sticker {
             : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "is_premium": is_premium,
-        "premium_animation": (premium_animation != null) ? premium_animation.toJson() : null,
+        "premium_animation":
+            (premium_animation != null) ? premium_animation.toJson() : null,
         "sticker": (sticker != null) ? sticker.toJson() : null,
       });
     } catch (e) {
@@ -13651,7 +13825,11 @@ class Sticker {
     try {
       return StickerFormat((rawData["format"] as Map));
     } catch (e) {
-      return StickerFormat({"@type": "error", "error": "${e}", "message": "error at Sticker format"});
+      return StickerFormat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker format"
+      });
     }
   }
 
@@ -13660,7 +13838,11 @@ class Sticker {
     try {
       return StickerType((rawData["type"] as Map));
     } catch (e) {
-      return StickerType({"@type": "error", "error": "${e}", "message": "error at Sticker type"});
+      return StickerType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker type"
+      });
     }
   }
 
@@ -13669,7 +13851,11 @@ class Sticker {
     try {
       return MaskPosition((rawData["mask_position"] as Map));
     } catch (e) {
-      return MaskPosition({"@type": "error", "error": "${e}", "message": "error at Sticker mask_position"});
+      return MaskPosition({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker mask_position"
+      });
     }
   }
 
@@ -13693,7 +13879,11 @@ class Sticker {
           .cast<ClosedVectorPath>();
     } catch (e) {
       return [
-        ClosedVectorPath({"@type": "error", "error": "${e}", "message": "error at Sticker outline"})
+        ClosedVectorPath({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Sticker outline"
+        })
       ].cast<ClosedVectorPath>();
     }
   }
@@ -13703,7 +13893,11 @@ class Sticker {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at Sticker thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker thumbnail"
+      });
     }
   }
 
@@ -13721,7 +13915,11 @@ class Sticker {
     try {
       return File((rawData["premium_animation"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Sticker premium_animation"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker premium_animation"
+      });
     }
   }
 
@@ -13730,7 +13928,11 @@ class Sticker {
     try {
       return File((rawData["sticker"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Sticker sticker"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Sticker sticker"
+      });
     }
   }
 
@@ -13782,7 +13984,8 @@ class Video {
         "mime_type": mime_type,
         "has_stickers": has_stickers,
         "supports_streaming": supports_streaming,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "video": (video != null) ? video.toJson() : null,
       });
@@ -13872,7 +14075,11 @@ class Video {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at Video minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Video minithumbnail"
+      });
     }
   }
 
@@ -13881,7 +14088,11 @@ class Video {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at Video thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Video thumbnail"
+      });
     }
   }
 
@@ -13890,7 +14101,11 @@ class Video {
     try {
       return File((rawData["video"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Video video"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Video video"
+      });
     }
   }
 
@@ -13932,7 +14147,8 @@ class VideoNote {
         "@type": special_type,
         "duration": duration,
         "length": length,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "thumbnail": (thumbnail != null) ? thumbnail.toJson() : null,
         "video": (video != null) ? video.toJson() : null,
       });
@@ -13977,7 +14193,11 @@ class VideoNote {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at VideoNote minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VideoNote minithumbnail"
+      });
     }
   }
 
@@ -13986,7 +14206,11 @@ class VideoNote {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at VideoNote thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VideoNote thumbnail"
+      });
     }
   }
 
@@ -13995,7 +14219,11 @@ class VideoNote {
     try {
       return File((rawData["video"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at VideoNote video"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VideoNote video"
+      });
     }
   }
 
@@ -14038,7 +14266,9 @@ class VoiceNote {
         "duration": duration,
         "waveform": waveform,
         "mime_type": mime_type,
-        "speech_recognition_result": (speech_recognition_result != null) ? speech_recognition_result.toJson() : null,
+        "speech_recognition_result": (speech_recognition_result != null)
+            ? speech_recognition_result.toJson()
+            : null,
         "voice": (voice != null) ? voice.toJson() : null,
       });
     } catch (e) {
@@ -14089,9 +14319,14 @@ class VoiceNote {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1VoiceNote.html).
   SpeechRecognitionResult get speech_recognition_result {
     try {
-      return SpeechRecognitionResult((rawData["speech_recognition_result"] as Map));
+      return SpeechRecognitionResult(
+          (rawData["speech_recognition_result"] as Map));
     } catch (e) {
-      return SpeechRecognitionResult({"@type": "error", "error": "${e}", "message": "error at VoiceNote speech_recognition_result"});
+      return SpeechRecognitionResult({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VoiceNote speech_recognition_result"
+      });
     }
   }
 
@@ -14100,7 +14335,11 @@ class VoiceNote {
     try {
       return File((rawData["voice"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at VoiceNote voice"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VoiceNote voice"
+      });
     }
   }
 
@@ -14169,7 +14408,11 @@ class AnimatedEmoji {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at AnimatedEmoji sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AnimatedEmoji sticker"
+      });
     }
   }
 
@@ -14205,7 +14448,11 @@ class AnimatedEmoji {
     try {
       return File((rawData["sound"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AnimatedEmoji sound"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AnimatedEmoji sound"
+      });
     }
   }
 
@@ -14464,7 +14711,11 @@ class Venue {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at Venue location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Venue location"
+      });
     }
   }
 
@@ -14609,7 +14860,8 @@ class Game {
     try {
       return FormattedText((rawData["text"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at Game text"});
+      return FormattedText(
+          {"@type": "error", "error": "${e}", "message": "error at Game text"});
     }
   }
 
@@ -14627,7 +14879,11 @@ class Game {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at Game photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Game photo"
+      });
     }
   }
 
@@ -14636,7 +14892,11 @@ class Game {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at Game animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Game animation"
+      });
     }
   }
 
@@ -14743,7 +15003,11 @@ class Poll {
           .cast<PollOption>();
     } catch (e) {
       return [
-        PollOption({"@type": "error", "error": "${e}", "message": "error at Poll options"})
+        PollOption({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Poll options"
+        })
       ].cast<PollOption>();
     }
   }
@@ -14780,7 +15044,8 @@ class Poll {
     try {
       return PollType((rawData["type"] as Map));
     } catch (e) {
-      return PollType({"@type": "error", "error": "${e}", "message": "error at Poll type"});
+      return PollType(
+          {"@type": "error", "error": "${e}", "message": "error at Poll type"});
     }
   }
 
@@ -14850,7 +15115,8 @@ class ProfilePhoto {
         "id": id,
         "small": (small != null) ? small.toJson() : null,
         "big": (big != null) ? big.toJson() : null,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -14885,7 +15151,11 @@ class ProfilePhoto {
     try {
       return File((rawData["small"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at ProfilePhoto small"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ProfilePhoto small"
+      });
     }
   }
 
@@ -14894,7 +15164,11 @@ class ProfilePhoto {
     try {
       return File((rawData["big"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at ProfilePhoto big"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ProfilePhoto big"
+      });
     }
   }
 
@@ -14903,7 +15177,11 @@ class ProfilePhoto {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at ProfilePhoto minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ProfilePhoto minithumbnail"
+      });
     }
   }
 
@@ -14953,7 +15231,8 @@ class ChatPhotoInfo {
         "@type": special_type,
         "small": (small != null) ? small.toJson() : null,
         "big": (big != null) ? big.toJson() : null,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "has_animation": has_animation,
       });
     } catch (e) {
@@ -14979,7 +15258,11 @@ class ChatPhotoInfo {
     try {
       return File((rawData["small"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at ChatPhotoInfo small"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhotoInfo small"
+      });
     }
   }
 
@@ -14988,7 +15271,11 @@ class ChatPhotoInfo {
     try {
       return File((rawData["big"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at ChatPhotoInfo big"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhotoInfo big"
+      });
     }
   }
 
@@ -14997,7 +15284,11 @@ class ChatPhotoInfo {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at ChatPhotoInfo minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhotoInfo minithumbnail"
+      });
     }
   }
 
@@ -15276,7 +15567,11 @@ class BotCommands {
           .cast<BotCommand>();
     } catch (e) {
       return [
-        BotCommand({"@type": "error", "error": "${e}", "message": "error at BotCommands commands"})
+        BotCommand({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at BotCommands commands"
+        })
       ].cast<BotCommand>();
     }
   }
@@ -15412,7 +15707,11 @@ class ChatLocation {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at ChatLocation location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatLocation location"
+      });
     }
   }
 
@@ -15495,7 +15794,11 @@ class AnimatedChatPhoto {
     try {
       return File((rawData["file"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AnimatedChatPhoto file"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AnimatedChatPhoto file"
+      });
     }
   }
 
@@ -15547,14 +15850,16 @@ class ChatPhoto {
         "@type": special_type,
         "id": id,
         "added_date": added_date,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "sizes": (sizes != null)
             ? sizes.map((e) {
                 return PhotoSize((e as Map)).toJson();
               }).toList()
             : null,
         "animation": (animation != null) ? animation.toJson() : null,
-        "small_animation": (small_animation != null) ? small_animation.toJson() : null,
+        "small_animation":
+            (small_animation != null) ? small_animation.toJson() : null,
       });
     } catch (e) {
       return ChatPhoto({
@@ -15597,7 +15902,11 @@ class ChatPhoto {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at ChatPhoto minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhoto minithumbnail"
+      });
     }
   }
 
@@ -15612,7 +15921,11 @@ class ChatPhoto {
           .cast<PhotoSize>();
     } catch (e) {
       return [
-        PhotoSize({"@type": "error", "error": "${e}", "message": "error at ChatPhoto sizes"})
+        PhotoSize({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatPhoto sizes"
+        })
       ].cast<PhotoSize>();
     }
   }
@@ -15622,7 +15935,11 @@ class ChatPhoto {
     try {
       return AnimatedChatPhoto((rawData["animation"] as Map));
     } catch (e) {
-      return AnimatedChatPhoto({"@type": "error", "error": "${e}", "message": "error at ChatPhoto animation"});
+      return AnimatedChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhoto animation"
+      });
     }
   }
 
@@ -15631,7 +15948,11 @@ class ChatPhoto {
     try {
       return AnimatedChatPhoto((rawData["small_animation"] as Map));
     } catch (e) {
-      return AnimatedChatPhoto({"@type": "error", "error": "${e}", "message": "error at ChatPhoto small_animation"});
+      return AnimatedChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPhoto small_animation"
+      });
     }
   }
 
@@ -15713,7 +16034,11 @@ class ChatPhotos {
           .cast<ChatPhoto>();
     } catch (e) {
       return [
-        ChatPhoto({"@type": "error", "error": "${e}", "message": "error at ChatPhotos photos"})
+        ChatPhoto({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatPhotos photos"
+        })
       ].cast<ChatPhoto>();
     }
   }
@@ -15790,7 +16115,11 @@ class InputChatPhoto {
     try {
       return InputFile((rawData["photo"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputChatPhoto photo"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputChatPhoto photo"
+      });
     }
   }
 
@@ -15799,7 +16128,11 @@ class InputChatPhoto {
     try {
       return InputFile((rawData["animation"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputChatPhoto animation"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputChatPhoto animation"
+      });
     }
   }
 
@@ -16233,7 +16566,11 @@ class PremiumPaymentOption {
     try {
       return InternalLinkType((rawData["payment_link"] as Map));
     } catch (e) {
-      return InternalLinkType({"@type": "error", "error": "${e}", "message": "error at PremiumPaymentOption payment_link"});
+      return InternalLinkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumPaymentOption payment_link"
+      });
     }
   }
 
@@ -16365,7 +16702,11 @@ class EmojiStatuses {
           .cast<EmojiStatus>();
     } catch (e) {
       return [
-        EmojiStatus({"@type": "error", "error": "${e}", "message": "error at EmojiStatuses emoji_statuses"})
+        EmojiStatus({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at EmojiStatuses emoji_statuses"
+        })
       ].cast<EmojiStatus>();
     }
   }
@@ -16427,7 +16768,8 @@ class User {
         "username": username,
         "phone_number": phone_number,
         "status": (status != null) ? status.toJson() : null,
-        "profile_photo": (profile_photo != null) ? profile_photo.toJson() : null,
+        "profile_photo":
+            (profile_photo != null) ? profile_photo.toJson() : null,
         "emoji_status": (emoji_status != null) ? emoji_status.toJson() : null,
         "is_contact": is_contact,
         "is_mutual_contact": is_mutual_contact,
@@ -16510,7 +16852,11 @@ class User {
     try {
       return UserStatus((rawData["status"] as Map));
     } catch (e) {
-      return UserStatus({"@type": "error", "error": "${e}", "message": "error at User status"});
+      return UserStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at User status"
+      });
     }
   }
 
@@ -16519,7 +16865,11 @@ class User {
     try {
       return ProfilePhoto((rawData["profile_photo"] as Map));
     } catch (e) {
-      return ProfilePhoto({"@type": "error", "error": "${e}", "message": "error at User profile_photo"});
+      return ProfilePhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at User profile_photo"
+      });
     }
   }
 
@@ -16528,7 +16878,11 @@ class User {
     try {
       return EmojiStatus((rawData["emoji_status"] as Map));
     } catch (e) {
-      return EmojiStatus({"@type": "error", "error": "${e}", "message": "error at User emoji_status"});
+      return EmojiStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at User emoji_status"
+      });
     }
   }
 
@@ -16618,7 +16972,8 @@ class User {
     try {
       return UserType((rawData["type"] as Map));
     } catch (e) {
-      return UserType({"@type": "error", "error": "${e}", "message": "error at User type"});
+      return UserType(
+          {"@type": "error", "error": "${e}", "message": "error at User type"});
     }
   }
 
@@ -16689,8 +17044,14 @@ class BotInfo {
                 return BotCommand((e as Map)).toJson();
               }).toList()
             : null,
-        "default_group_administrator_rights": (default_group_administrator_rights != null) ? default_group_administrator_rights.toJson() : null,
-        "default_channel_administrator_rights": (default_channel_administrator_rights != null) ? default_channel_administrator_rights.toJson() : null,
+        "default_group_administrator_rights":
+            (default_group_administrator_rights != null)
+                ? default_group_administrator_rights.toJson()
+                : null,
+        "default_channel_administrator_rights":
+            (default_channel_administrator_rights != null)
+                ? default_channel_administrator_rights.toJson()
+                : null,
       });
     } catch (e) {
       return BotInfo({
@@ -16733,7 +17094,11 @@ class BotInfo {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at BotInfo photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BotInfo photo"
+      });
     }
   }
 
@@ -16742,7 +17107,11 @@ class BotInfo {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at BotInfo animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BotInfo animation"
+      });
     }
   }
 
@@ -16751,7 +17120,11 @@ class BotInfo {
     try {
       return BotMenuButton((rawData["menu_button"] as Map));
     } catch (e) {
-      return BotMenuButton({"@type": "error", "error": "${e}", "message": "error at BotInfo menu_button"});
+      return BotMenuButton({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BotInfo menu_button"
+      });
     }
   }
 
@@ -16766,7 +17139,11 @@ class BotInfo {
           .cast<BotCommand>();
     } catch (e) {
       return [
-        BotCommand({"@type": "error", "error": "${e}", "message": "error at BotInfo commands"})
+        BotCommand({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at BotInfo commands"
+        })
       ].cast<BotCommand>();
     }
   }
@@ -16774,18 +17151,28 @@ class BotInfo {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1BotInfo.html).
   ChatAdministratorRights get default_group_administrator_rights {
     try {
-      return ChatAdministratorRights((rawData["default_group_administrator_rights"] as Map));
+      return ChatAdministratorRights(
+          (rawData["default_group_administrator_rights"] as Map));
     } catch (e) {
-      return ChatAdministratorRights({"@type": "error", "error": "${e}", "message": "error at BotInfo default_group_administrator_rights"});
+      return ChatAdministratorRights({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BotInfo default_group_administrator_rights"
+      });
     }
   }
 
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1BotInfo.html).
   ChatAdministratorRights get default_channel_administrator_rights {
     try {
-      return ChatAdministratorRights((rawData["default_channel_administrator_rights"] as Map));
+      return ChatAdministratorRights(
+          (rawData["default_channel_administrator_rights"] as Map));
     } catch (e) {
-      return ChatAdministratorRights({"@type": "error", "error": "${e}", "message": "error at BotInfo default_channel_administrator_rights"});
+      return ChatAdministratorRights({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BotInfo default_channel_administrator_rights"
+      });
     }
   }
 
@@ -16838,8 +17225,10 @@ class UserFullInfo {
         "supports_video_calls": supports_video_calls,
         "has_private_calls": has_private_calls,
         "has_private_forwards": has_private_forwards,
-        "has_restricted_voice_and_video_note_messages": has_restricted_voice_and_video_note_messages,
-        "need_phone_number_privacy_exception": need_phone_number_privacy_exception,
+        "has_restricted_voice_and_video_note_messages":
+            has_restricted_voice_and_video_note_messages,
+        "need_phone_number_privacy_exception":
+            need_phone_number_privacy_exception,
         "bio": (bio != null) ? bio.toJson() : null,
         "premium_gift_options": (premium_gift_options != null)
             ? premium_gift_options.map((e) {
@@ -16872,7 +17261,11 @@ class UserFullInfo {
     try {
       return ChatPhoto((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at UserFullInfo photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UserFullInfo photo"
+      });
     }
   }
 
@@ -16944,7 +17337,11 @@ class UserFullInfo {
     try {
       return FormattedText((rawData["bio"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at UserFullInfo bio"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UserFullInfo bio"
+      });
     }
   }
 
@@ -16959,7 +17356,11 @@ class UserFullInfo {
           .cast<PremiumPaymentOption>();
     } catch (e) {
       return [
-        PremiumPaymentOption({"@type": "error", "error": "${e}", "message": "error at UserFullInfo premium_gift_options"})
+        PremiumPaymentOption({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at UserFullInfo premium_gift_options"
+        })
       ].cast<PremiumPaymentOption>();
     }
   }
@@ -16978,7 +17379,11 @@ class UserFullInfo {
     try {
       return BotInfo((rawData["bot_info"] as Map));
     } catch (e) {
-      return BotInfo({"@type": "error", "error": "${e}", "message": "error at UserFullInfo bot_info"});
+      return BotInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UserFullInfo bot_info"
+      });
     }
   }
 
@@ -17204,7 +17609,11 @@ class ChatAdministrators {
           .cast<ChatAdministrator>();
     } catch (e) {
       return [
-        ChatAdministrator({"@type": "error", "error": "${e}", "message": "error at ChatAdministrators administrators"})
+        ChatAdministrator({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatAdministrators administrators"
+        })
       ].cast<ChatAdministrator>();
     }
   }
@@ -17316,7 +17725,11 @@ class ChatMemberStatus {
     try {
       return ChatAdministratorRights((rawData["rights"] as Map));
     } catch (e) {
-      return ChatAdministratorRights({"@type": "error", "error": "${e}", "message": "error at ChatMemberStatus rights"});
+      return ChatAdministratorRights({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatMemberStatus rights"
+      });
     }
   }
 
@@ -17334,7 +17747,11 @@ class ChatMemberStatus {
     try {
       return ChatPermissions((rawData["permissions"] as Map));
     } catch (e) {
-      return ChatPermissions({"@type": "error", "error": "${e}", "message": "error at ChatMemberStatus permissions"});
+      return ChatPermissions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatMemberStatus permissions"
+      });
     }
   }
 
@@ -17410,7 +17827,11 @@ class ChatMember {
     try {
       return MessageSender((rawData["member_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at ChatMember member_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatMember member_id"
+      });
     }
   }
 
@@ -17437,7 +17858,11 @@ class ChatMember {
     try {
       return ChatMemberStatus((rawData["status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at ChatMember status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatMember status"
+      });
     }
   }
 
@@ -17519,7 +17944,11 @@ class ChatMembers {
           .cast<ChatMember>();
     } catch (e) {
       return [
-        ChatMember({"@type": "error", "error": "${e}", "message": "error at ChatMembers members"})
+        ChatMember({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatMembers members"
+        })
       ].cast<ChatMember>();
     }
   }
@@ -17917,7 +18346,11 @@ class ChatInviteLinks {
           .cast<ChatInviteLink>();
     } catch (e) {
       return [
-        ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at ChatInviteLinks invite_links"})
+        ChatInviteLink({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatInviteLinks invite_links"
+        })
       ].cast<ChatInviteLink>();
     }
   }
@@ -18072,7 +18505,11 @@ class ChatInviteLinkCounts {
           .cast<ChatInviteLinkCount>();
     } catch (e) {
       return [
-        ChatInviteLinkCount({"@type": "error", "error": "${e}", "message": "error at ChatInviteLinkCounts invite_link_counts"})
+        ChatInviteLinkCount({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatInviteLinkCounts invite_link_counts"
+        })
       ].cast<ChatInviteLinkCount>();
     }
   }
@@ -18238,7 +18675,11 @@ class ChatInviteLinkMembers {
           .cast<ChatInviteLinkMember>();
     } catch (e) {
       return [
-        ChatInviteLinkMember({"@type": "error", "error": "${e}", "message": "error at ChatInviteLinkMembers members"})
+        ChatInviteLinkMember({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatInviteLinkMembers members"
+        })
       ].cast<ChatInviteLinkMember>();
     }
   }
@@ -18336,7 +18777,11 @@ class ChatInviteLinkInfo {
     try {
       return ChatType((rawData["type"] as Map));
     } catch (e) {
-      return ChatType({"@type": "error", "error": "${e}", "message": "error at ChatInviteLinkInfo type"});
+      return ChatType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatInviteLinkInfo type"
+      });
     }
   }
 
@@ -18354,7 +18799,11 @@ class ChatInviteLinkInfo {
     try {
       return ChatPhotoInfo((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhotoInfo({"@type": "error", "error": "${e}", "message": "error at ChatInviteLinkInfo photo"});
+      return ChatPhotoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatInviteLinkInfo photo"
+      });
     }
   }
 
@@ -18564,7 +19013,11 @@ class ChatJoinRequests {
           .cast<ChatJoinRequest>();
     } catch (e) {
       return [
-        ChatJoinRequest({"@type": "error", "error": "${e}", "message": "error at ChatJoinRequests requests"})
+        ChatJoinRequest({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatJoinRequests requests"
+        })
       ].cast<ChatJoinRequest>();
     }
   }
@@ -18724,7 +19177,11 @@ class BasicGroup {
     try {
       return ChatMemberStatus((rawData["status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at BasicGroup status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BasicGroup status"
+      });
     }
   }
 
@@ -18821,7 +19278,11 @@ class BasicGroupFullInfo {
     try {
       return ChatPhoto((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at BasicGroupFullInfo photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BasicGroupFullInfo photo"
+      });
     }
   }
 
@@ -18854,7 +19315,11 @@ class BasicGroupFullInfo {
           .cast<ChatMember>();
     } catch (e) {
       return [
-        ChatMember({"@type": "error", "error": "${e}", "message": "error at BasicGroupFullInfo members"})
+        ChatMember({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at BasicGroupFullInfo members"
+        })
       ].cast<ChatMember>();
     }
   }
@@ -18864,7 +19329,11 @@ class BasicGroupFullInfo {
     try {
       return ChatInviteLink((rawData["invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at BasicGroupFullInfo invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BasicGroupFullInfo invite_link"
+      });
     }
   }
 
@@ -18879,7 +19348,11 @@ class BasicGroupFullInfo {
           .cast<BotCommands>();
     } catch (e) {
       return [
-        BotCommands({"@type": "error", "error": "${e}", "message": "error at BasicGroupFullInfo bot_commands"})
+        BotCommands({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at BasicGroupFullInfo bot_commands"
+        })
       ].cast<BotCommands>();
     }
   }
@@ -19000,7 +19473,11 @@ class Supergroup {
     try {
       return ChatMemberStatus((rawData["status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at Supergroup status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Supergroup status"
+      });
     }
   }
 
@@ -19222,7 +19699,11 @@ class SupergroupFullInfo {
     try {
       return ChatPhoto((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at SupergroupFullInfo photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SupergroupFullInfo photo"
+      });
     }
   }
 
@@ -19366,7 +19847,11 @@ class SupergroupFullInfo {
     try {
       return ChatLocation((rawData["location"] as Map));
     } catch (e) {
-      return ChatLocation({"@type": "error", "error": "${e}", "message": "error at SupergroupFullInfo location"});
+      return ChatLocation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SupergroupFullInfo location"
+      });
     }
   }
 
@@ -19375,7 +19860,11 @@ class SupergroupFullInfo {
     try {
       return ChatInviteLink((rawData["invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at SupergroupFullInfo invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SupergroupFullInfo invite_link"
+      });
     }
   }
 
@@ -19390,7 +19879,11 @@ class SupergroupFullInfo {
           .cast<BotCommands>();
     } catch (e) {
       return [
-        BotCommands({"@type": "error", "error": "${e}", "message": "error at SupergroupFullInfo bot_commands"})
+        BotCommands({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at SupergroupFullInfo bot_commands"
+        })
       ].cast<BotCommands>();
     }
   }
@@ -19548,7 +20041,11 @@ class SecretChat {
     try {
       return SecretChatState((rawData["state"] as Map));
     } catch (e) {
-      return SecretChatState({"@type": "error", "error": "${e}", "message": "error at SecretChat state"});
+      return SecretChatState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SecretChat state"
+      });
     }
   }
 
@@ -19729,7 +20226,11 @@ class MessageSenders {
           .cast<MessageSender>();
     } catch (e) {
       return [
-        MessageSender({"@type": "error", "error": "${e}", "message": "error at MessageSenders senders"})
+        MessageSender({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageSenders senders"
+        })
       ].cast<MessageSender>();
     }
   }
@@ -19793,7 +20294,11 @@ class ChatMessageSender {
     try {
       return MessageSender((rawData["sender"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at ChatMessageSender sender"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatMessageSender sender"
+      });
     }
   }
 
@@ -19873,7 +20378,11 @@ class ChatMessageSenders {
           .cast<ChatMessageSender>();
     } catch (e) {
       return [
-        ChatMessageSender({"@type": "error", "error": "${e}", "message": "error at ChatMessageSenders senders"})
+        ChatMessageSender({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatMessageSenders senders"
+        })
       ].cast<ChatMessageSender>();
     }
   }
@@ -20131,7 +20640,11 @@ class MessageForwardInfo {
     try {
       return MessageForwardOrigin((rawData["origin"] as Map));
     } catch (e) {
-      return MessageForwardOrigin({"@type": "error", "error": "${e}", "message": "error at MessageForwardInfo origin"});
+      return MessageForwardOrigin({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageForwardInfo origin"
+      });
     }
   }
 
@@ -20255,7 +20768,11 @@ class MessageReplyInfo {
           .cast<MessageSender>();
     } catch (e) {
       return [
-        MessageSender({"@type": "error", "error": "${e}", "message": "error at MessageReplyInfo recent_replier_ids"})
+        MessageSender({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageReplyInfo recent_replier_ids"
+        })
       ].cast<MessageSender>();
     }
   }
@@ -20354,7 +20871,11 @@ class MessageReaction {
     try {
       return ReactionType((rawData["type"] as Map));
     } catch (e) {
-      return ReactionType({"@type": "error", "error": "${e}", "message": "error at MessageReaction type"});
+      return ReactionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageReaction type"
+      });
     }
   }
 
@@ -20387,7 +20908,11 @@ class MessageReaction {
           .cast<MessageSender>();
     } catch (e) {
       return [
-        MessageSender({"@type": "error", "error": "${e}", "message": "error at MessageReaction recent_sender_ids"})
+        MessageSender({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageReaction recent_sender_ids"
+        })
       ].cast<MessageSender>();
     }
   }
@@ -20477,7 +21002,11 @@ class MessageInteractionInfo {
     try {
       return MessageReplyInfo((rawData["reply_info"] as Map));
     } catch (e) {
-      return MessageReplyInfo({"@type": "error", "error": "${e}", "message": "error at MessageInteractionInfo reply_info"});
+      return MessageReplyInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageInteractionInfo reply_info"
+      });
     }
   }
 
@@ -20492,7 +21021,11 @@ class MessageInteractionInfo {
           .cast<MessageReaction>();
     } catch (e) {
       return [
-        MessageReaction({"@type": "error", "error": "${e}", "message": "error at MessageInteractionInfo reactions"})
+        MessageReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageInteractionInfo reactions"
+        })
       ].cast<MessageReaction>();
     }
   }
@@ -20558,7 +21091,11 @@ class UnreadReaction {
     try {
       return ReactionType((rawData["type"] as Map));
     } catch (e) {
-      return ReactionType({"@type": "error", "error": "${e}", "message": "error at UnreadReaction type"});
+      return ReactionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UnreadReaction type"
+      });
     }
   }
 
@@ -20567,7 +21104,11 @@ class UnreadReaction {
     try {
       return MessageSender((rawData["sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at UnreadReaction sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UnreadReaction sender_id"
+      });
     }
   }
 
@@ -20756,8 +21297,10 @@ class Message {
         "id": id,
         "sender_id": (sender_id != null) ? sender_id.toJson() : null,
         "chat_id": chat_id,
-        "sending_state": (sending_state != null) ? sending_state.toJson() : null,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "sending_state":
+            (sending_state != null) ? sending_state.toJson() : null,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
         "is_outgoing": is_outgoing,
         "is_pinned": is_pinned,
         "can_be_edited": can_be_edited,
@@ -20777,7 +21320,8 @@ class Message {
         "date": date,
         "edit_date": edit_date,
         "forward_info": (forward_info != null) ? forward_info.toJson() : null,
-        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
+        "interaction_info":
+            (interaction_info != null) ? interaction_info.toJson() : null,
         "unread_reactions": (unread_reactions != null)
             ? unread_reactions.map((e) {
                 return UnreadReaction((e as Map)).toJson();
@@ -20827,7 +21371,11 @@ class Message {
     try {
       return MessageSender((rawData["sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at Message sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message sender_id"
+      });
     }
   }
 
@@ -20845,7 +21393,11 @@ class Message {
     try {
       return MessageSendingState((rawData["sending_state"] as Map));
     } catch (e) {
-      return MessageSendingState({"@type": "error", "error": "${e}", "message": "error at Message sending_state"});
+      return MessageSendingState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message sending_state"
+      });
     }
   }
 
@@ -20854,7 +21406,11 @@ class Message {
     try {
       return MessageSchedulingState((rawData["scheduling_state"] as Map));
     } catch (e) {
-      return MessageSchedulingState({"@type": "error", "error": "${e}", "message": "error at Message scheduling_state"});
+      return MessageSchedulingState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message scheduling_state"
+      });
     }
   }
 
@@ -21025,7 +21581,11 @@ class Message {
     try {
       return MessageForwardInfo((rawData["forward_info"] as Map));
     } catch (e) {
-      return MessageForwardInfo({"@type": "error", "error": "${e}", "message": "error at Message forward_info"});
+      return MessageForwardInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message forward_info"
+      });
     }
   }
 
@@ -21034,7 +21594,11 @@ class Message {
     try {
       return MessageInteractionInfo((rawData["interaction_info"] as Map));
     } catch (e) {
-      return MessageInteractionInfo({"@type": "error", "error": "${e}", "message": "error at Message interaction_info"});
+      return MessageInteractionInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message interaction_info"
+      });
     }
   }
 
@@ -21049,7 +21613,11 @@ class Message {
           .cast<UnreadReaction>();
     } catch (e) {
       return [
-        UnreadReaction({"@type": "error", "error": "${e}", "message": "error at Message unread_reactions"})
+        UnreadReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Message unread_reactions"
+        })
       ].cast<UnreadReaction>();
     }
   }
@@ -21140,7 +21708,11 @@ class Message {
     try {
       return MessageContent((rawData["content"] as Map));
     } catch (e) {
-      return MessageContent({"@type": "error", "error": "${e}", "message": "error at Message content"});
+      return MessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message content"
+      });
     }
   }
 
@@ -21149,7 +21721,11 @@ class Message {
     try {
       return ReplyMarkup((rawData["reply_markup"] as Map));
     } catch (e) {
-      return ReplyMarkup({"@type": "error", "error": "${e}", "message": "error at Message reply_markup"});
+      return ReplyMarkup({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Message reply_markup"
+      });
     }
   }
 
@@ -21231,7 +21807,11 @@ class Messages {
           .cast<Message>();
     } catch (e) {
       return [
-        Message({"@type": "error", "error": "${e}", "message": "error at Messages messages"})
+        Message({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Messages messages"
+        })
       ].cast<Message>();
     }
   }
@@ -21316,7 +21896,11 @@ class FoundMessages {
           .cast<Message>();
     } catch (e) {
       return [
-        Message({"@type": "error", "error": "${e}", "message": "error at FoundMessages messages"})
+        Message({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at FoundMessages messages"
+        })
       ].cast<Message>();
     }
   }
@@ -21491,7 +22075,11 @@ class MessagePositions {
           .cast<MessagePosition>();
     } catch (e) {
       return [
-        MessagePosition({"@type": "error", "error": "${e}", "message": "error at MessagePositions positions"})
+        MessagePosition({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessagePositions positions"
+        })
       ].cast<MessagePosition>();
     }
   }
@@ -21564,7 +22152,11 @@ class MessageCalendarDay {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at MessageCalendarDay message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageCalendarDay message"
+      });
     }
   }
 
@@ -21646,7 +22238,11 @@ class MessageCalendar {
           .cast<MessageCalendarDay>();
     } catch (e) {
       return [
-        MessageCalendarDay({"@type": "error", "error": "${e}", "message": "error at MessageCalendar days"})
+        MessageCalendarDay({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageCalendar days"
+        })
       ].cast<MessageCalendarDay>();
     }
   }
@@ -21691,7 +22287,8 @@ class SponsoredMessage {
         "message_id": message_id,
         "is_recommended": is_recommended,
         "sponsor_chat_id": sponsor_chat_id,
-        "sponsor_chat_info": (sponsor_chat_info != null) ? sponsor_chat_info.toJson() : null,
+        "sponsor_chat_info":
+            (sponsor_chat_info != null) ? sponsor_chat_info.toJson() : null,
         "link": (link != null) ? link.toJson() : null,
         "content": (content != null) ? content.toJson() : null,
       });
@@ -21745,7 +22342,11 @@ class SponsoredMessage {
     try {
       return ChatInviteLinkInfo((rawData["sponsor_chat_info"] as Map));
     } catch (e) {
-      return ChatInviteLinkInfo({"@type": "error", "error": "${e}", "message": "error at SponsoredMessage sponsor_chat_info"});
+      return ChatInviteLinkInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SponsoredMessage sponsor_chat_info"
+      });
     }
   }
 
@@ -21754,7 +22355,11 @@ class SponsoredMessage {
     try {
       return InternalLinkType((rawData["link"] as Map));
     } catch (e) {
-      return InternalLinkType({"@type": "error", "error": "${e}", "message": "error at SponsoredMessage link"});
+      return InternalLinkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SponsoredMessage link"
+      });
     }
   }
 
@@ -21763,7 +22368,11 @@ class SponsoredMessage {
     try {
       return MessageContent((rawData["content"] as Map));
     } catch (e) {
-      return MessageContent({"@type": "error", "error": "${e}", "message": "error at SponsoredMessage content"});
+      return MessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SponsoredMessage content"
+      });
     }
   }
 
@@ -21841,7 +22450,11 @@ class FileDownload {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at FileDownload message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at FileDownload message"
+      });
     }
   }
 
@@ -22020,7 +22633,11 @@ class FoundFileDownloads {
     try {
       return DownloadedFileCounts((rawData["total_counts"] as Map));
     } catch (e) {
-      return DownloadedFileCounts({"@type": "error", "error": "${e}", "message": "error at FoundFileDownloads total_counts"});
+      return DownloadedFileCounts({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at FoundFileDownloads total_counts"
+      });
     }
   }
 
@@ -22035,7 +22652,11 @@ class FoundFileDownloads {
           .cast<FileDownload>();
     } catch (e) {
       return [
-        FileDownload({"@type": "error", "error": "${e}", "message": "error at FoundFileDownloads files"})
+        FileDownload({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at FoundFileDownloads files"
+        })
       ].cast<FileDownload>();
     }
   }
@@ -22146,9 +22767,12 @@ class ChatNotificationSettings {
         "sound_id": sound_id,
         "use_default_show_preview": use_default_show_preview,
         "show_preview": show_preview,
-        "use_default_disable_pinned_message_notifications": use_default_disable_pinned_message_notifications,
-        "disable_pinned_message_notifications": disable_pinned_message_notifications,
-        "use_default_disable_mention_notifications": use_default_disable_mention_notifications,
+        "use_default_disable_pinned_message_notifications":
+            use_default_disable_pinned_message_notifications,
+        "disable_pinned_message_notifications":
+            disable_pinned_message_notifications,
+        "use_default_disable_mention_notifications":
+            use_default_disable_mention_notifications,
         "disable_mention_notifications": disable_mention_notifications,
       });
     } catch (e) {
@@ -22226,7 +22850,8 @@ class ChatNotificationSettings {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1ChatNotificationSettings.html).
   bool? get use_default_disable_pinned_message_notifications {
     try {
-      return (rawData["use_default_disable_pinned_message_notifications"] as bool);
+      return (rawData["use_default_disable_pinned_message_notifications"]
+          as bool);
     } catch (e) {
       return null;
     }
@@ -22298,7 +22923,8 @@ class ScopeNotificationSettings {
         "mute_for": mute_for,
         "sound_id": sound_id,
         "show_preview": show_preview,
-        "disable_pinned_message_notifications": disable_pinned_message_notifications,
+        "disable_pinned_message_notifications":
+            disable_pinned_message_notifications,
         "disable_mention_notifications": disable_mention_notifications,
       });
     } catch (e) {
@@ -22400,7 +23026,8 @@ class DraftMessage {
         "@type": special_type,
         "reply_to_message_id": reply_to_message_id,
         "date": date,
-        "input_message_text": (input_message_text != null) ? input_message_text.toJson() : null,
+        "input_message_text":
+            (input_message_text != null) ? input_message_text.toJson() : null,
       });
     } catch (e) {
       return DraftMessage({
@@ -22443,7 +23070,11 @@ class DraftMessage {
     try {
       return InputMessageContent((rawData["input_message_text"] as Map));
     } catch (e) {
-      return InputMessageContent({"@type": "error", "error": "${e}", "message": "error at DraftMessage input_message_text"});
+      return InputMessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DraftMessage input_message_text"
+      });
     }
   }
 
@@ -22887,7 +23518,11 @@ class RecommendedChatFilter {
     try {
       return ChatFilter((rawData["filter"] as Map));
     } catch (e) {
-      return ChatFilter({"@type": "error", "error": "${e}", "message": "error at RecommendedChatFilter filter"});
+      return ChatFilter({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at RecommendedChatFilter filter"
+      });
     }
   }
 
@@ -22967,7 +23602,11 @@ class RecommendedChatFilters {
           .cast<RecommendedChatFilter>();
     } catch (e) {
       return [
-        RecommendedChatFilter({"@type": "error", "error": "${e}", "message": "error at RecommendedChatFilters chat_filters"})
+        RecommendedChatFilter({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at RecommendedChatFilters chat_filters"
+        })
       ].cast<RecommendedChatFilter>();
     }
   }
@@ -23100,7 +23739,11 @@ class ChatLists {
           .cast<ChatList>();
     } catch (e) {
       return [
-        ChatList({"@type": "error", "error": "${e}", "message": "error at ChatLists chat_lists"})
+        ChatList({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatLists chat_lists"
+        })
       ].cast<ChatList>();
     }
   }
@@ -23240,7 +23883,11 @@ class ChatPosition {
     try {
       return ChatList((rawData["list"] as Map));
     } catch (e) {
-      return ChatList({"@type": "error", "error": "${e}", "message": "error at ChatPosition list"});
+      return ChatList({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPosition list"
+      });
     }
   }
 
@@ -23267,7 +23914,11 @@ class ChatPosition {
     try {
       return ChatSource((rawData["source"] as Map));
     } catch (e) {
-      return ChatSource({"@type": "error", "error": "${e}", "message": "error at ChatPosition source"});
+      return ChatSource({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatPosition source"
+      });
     }
   }
 
@@ -23338,7 +23989,11 @@ class ChatAvailableReactions {
           .cast<ReactionType>();
     } catch (e) {
       return [
-        ReactionType({"@type": "error", "error": "${e}", "message": "error at ChatAvailableReactions reactions"})
+        ReactionType({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatAvailableReactions reactions"
+        })
       ].cast<ReactionType>();
     }
   }
@@ -23379,7 +24034,9 @@ class VideoChat {
         "@type": special_type,
         "group_call_id": group_call_id,
         "has_participants": has_participants,
-        "default_participant_id": (default_participant_id != null) ? default_participant_id.toJson() : null,
+        "default_participant_id": (default_participant_id != null)
+            ? default_participant_id.toJson()
+            : null,
       });
     } catch (e) {
       return VideoChat({
@@ -23422,7 +24079,11 @@ class VideoChat {
     try {
       return MessageSender((rawData["default_participant_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at VideoChat default_participant_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VideoChat default_participant_id"
+      });
     }
   }
 
@@ -23499,7 +24160,8 @@ class Chat {
                 return ChatPosition((e as Map)).toJson();
               }).toList()
             : null,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
         "has_protected_content": has_protected_content,
         "is_marked_as_unread": is_marked_as_unread,
         "is_blocked": is_blocked,
@@ -23513,15 +24175,21 @@ class Chat {
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "unread_mention_count": unread_mention_count,
         "unread_reaction_count": unread_reaction_count,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
         "message_ttl": message_ttl,
         "theme_name": theme_name,
         "action_bar": (action_bar != null) ? action_bar.toJson() : null,
         "video_chat": (video_chat != null) ? video_chat.toJson() : null,
-        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
+        "pending_join_requests": (pending_join_requests != null)
+            ? pending_join_requests.toJson()
+            : null,
         "reply_markup_message_id": reply_markup_message_id,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
         "client_data": client_data,
       });
     } catch (e) {
@@ -23556,7 +24224,8 @@ class Chat {
     try {
       return ChatType((rawData["type"] as Map));
     } catch (e) {
-      return ChatType({"@type": "error", "error": "${e}", "message": "error at Chat type"});
+      return ChatType(
+          {"@type": "error", "error": "${e}", "message": "error at Chat type"});
     }
   }
 
@@ -23574,7 +24243,11 @@ class Chat {
     try {
       return ChatPhotoInfo((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhotoInfo({"@type": "error", "error": "${e}", "message": "error at Chat photo"});
+      return ChatPhotoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat photo"
+      });
     }
   }
 
@@ -23583,7 +24256,11 @@ class Chat {
     try {
       return ChatPermissions((rawData["permissions"] as Map));
     } catch (e) {
-      return ChatPermissions({"@type": "error", "error": "${e}", "message": "error at Chat permissions"});
+      return ChatPermissions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat permissions"
+      });
     }
   }
 
@@ -23592,7 +24269,11 @@ class Chat {
     try {
       return Message((rawData["last_message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at Chat last_message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat last_message"
+      });
     }
   }
 
@@ -23607,7 +24288,11 @@ class Chat {
           .cast<ChatPosition>();
     } catch (e) {
       return [
-        ChatPosition({"@type": "error", "error": "${e}", "message": "error at Chat positions"})
+        ChatPosition({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Chat positions"
+        })
       ].cast<ChatPosition>();
     }
   }
@@ -23617,7 +24302,11 @@ class Chat {
     try {
       return MessageSender((rawData["message_sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at Chat message_sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat message_sender_id"
+      });
     }
   }
 
@@ -23741,9 +24430,14 @@ class Chat {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1Chat.html).
   ChatNotificationSettings get notification_settings {
     try {
-      return ChatNotificationSettings((rawData["notification_settings"] as Map));
+      return ChatNotificationSettings(
+          (rawData["notification_settings"] as Map));
     } catch (e) {
-      return ChatNotificationSettings({"@type": "error", "error": "${e}", "message": "error at Chat notification_settings"});
+      return ChatNotificationSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat notification_settings"
+      });
     }
   }
 
@@ -23752,7 +24446,11 @@ class Chat {
     try {
       return ChatAvailableReactions((rawData["available_reactions"] as Map));
     } catch (e) {
-      return ChatAvailableReactions({"@type": "error", "error": "${e}", "message": "error at Chat available_reactions"});
+      return ChatAvailableReactions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat available_reactions"
+      });
     }
   }
 
@@ -23779,7 +24477,11 @@ class Chat {
     try {
       return ChatActionBar((rawData["action_bar"] as Map));
     } catch (e) {
-      return ChatActionBar({"@type": "error", "error": "${e}", "message": "error at Chat action_bar"});
+      return ChatActionBar({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat action_bar"
+      });
     }
   }
 
@@ -23788,7 +24490,11 @@ class Chat {
     try {
       return VideoChat((rawData["video_chat"] as Map));
     } catch (e) {
-      return VideoChat({"@type": "error", "error": "${e}", "message": "error at Chat video_chat"});
+      return VideoChat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat video_chat"
+      });
     }
   }
 
@@ -23797,7 +24503,11 @@ class Chat {
     try {
       return ChatJoinRequestsInfo((rawData["pending_join_requests"] as Map));
     } catch (e) {
-      return ChatJoinRequestsInfo({"@type": "error", "error": "${e}", "message": "error at Chat pending_join_requests"});
+      return ChatJoinRequestsInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat pending_join_requests"
+      });
     }
   }
 
@@ -23815,7 +24525,11 @@ class Chat {
     try {
       return DraftMessage((rawData["draft_message"] as Map));
     } catch (e) {
-      return DraftMessage({"@type": "error", "error": "${e}", "message": "error at Chat draft_message"});
+      return DraftMessage({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Chat draft_message"
+      });
     }
   }
 
@@ -24045,7 +24759,11 @@ class ChatsNearby {
           .cast<ChatNearby>();
     } catch (e) {
       return [
-        ChatNearby({"@type": "error", "error": "${e}", "message": "error at ChatsNearby users_nearby"})
+        ChatNearby({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatsNearby users_nearby"
+        })
       ].cast<ChatNearby>();
     }
   }
@@ -24061,7 +24779,11 @@ class ChatsNearby {
           .cast<ChatNearby>();
     } catch (e) {
       return [
-        ChatNearby({"@type": "error", "error": "${e}", "message": "error at ChatsNearby supergroups_nearby"})
+        ChatNearby({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatsNearby supergroups_nearby"
+        })
       ].cast<ChatNearby>();
     }
   }
@@ -24372,7 +25094,11 @@ class KeyboardButton {
     try {
       return KeyboardButtonType((rawData["type"] as Map));
     } catch (e) {
-      return KeyboardButtonType({"@type": "error", "error": "${e}", "message": "error at KeyboardButton type"});
+      return KeyboardButtonType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at KeyboardButton type"
+      });
     }
   }
 
@@ -24571,7 +25297,11 @@ class InlineKeyboardButton {
     try {
       return InlineKeyboardButtonType((rawData["type"] as Map));
     } catch (e) {
-      return InlineKeyboardButtonType({"@type": "error", "error": "${e}", "message": "error at InlineKeyboardButton type"});
+      return InlineKeyboardButtonType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineKeyboardButton type"
+      });
     }
   }
 
@@ -24676,7 +25406,11 @@ class ReplyMarkup {
     } catch (e) {
       return [
         [
-          InlineKeyboardButton({"@type": "error", "error": "${e}", "message": "error at ReplyMarkup rows"})
+          InlineKeyboardButton({
+            "@type": "error",
+            "error": "${e}",
+            "message": "error at ReplyMarkup rows"
+          })
         ]
       ].cast<List<InlineKeyboardButton>>();
     }
@@ -24923,7 +25657,8 @@ class MessageThreadInfo {
                 return Message((e as Map)).toJson();
               }).toList()
             : null,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
       });
     } catch (e) {
       return MessageThreadInfo({
@@ -24966,7 +25701,11 @@ class MessageThreadInfo {
     try {
       return MessageReplyInfo((rawData["reply_info"] as Map));
     } catch (e) {
-      return MessageReplyInfo({"@type": "error", "error": "${e}", "message": "error at MessageThreadInfo reply_info"});
+      return MessageReplyInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageThreadInfo reply_info"
+      });
     }
   }
 
@@ -24990,7 +25729,11 @@ class MessageThreadInfo {
           .cast<Message>();
     } catch (e) {
       return [
-        Message({"@type": "error", "error": "${e}", "message": "error at MessageThreadInfo messages"})
+        Message({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageThreadInfo messages"
+        })
       ].cast<Message>();
     }
   }
@@ -25000,7 +25743,11 @@ class MessageThreadInfo {
     try {
       return DraftMessage((rawData["draft_message"] as Map));
     } catch (e) {
-      return DraftMessage({"@type": "error", "error": "${e}", "message": "error at MessageThreadInfo draft_message"});
+      return DraftMessage({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageThreadInfo draft_message"
+      });
     }
   }
 
@@ -25085,7 +25832,11 @@ class RichText {
     try {
       return RichText((rawData["text"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at RichText text"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at RichText text"
+      });
     }
   }
 
@@ -25130,7 +25881,11 @@ class RichText {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at RichText document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at RichText document"
+      });
     }
   }
 
@@ -25181,7 +25936,11 @@ class RichText {
           .cast<RichText>();
     } catch (e) {
       return [
-        RichText({"@type": "error", "error": "${e}", "message": "error at RichText texts"})
+        RichText({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at RichText texts"
+        })
       ].cast<RichText>();
     }
   }
@@ -25245,7 +26004,11 @@ class PageBlockCaption {
     try {
       return RichText((rawData["text"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlockCaption text"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockCaption text"
+      });
     }
   }
 
@@ -25254,7 +26017,11 @@ class PageBlockCaption {
     try {
       return RichText((rawData["credit"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlockCaption credit"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockCaption credit"
+      });
     }
   }
 
@@ -25336,7 +26103,11 @@ class PageBlockListItem {
           .cast<PageBlock>();
     } catch (e) {
       return [
-        PageBlock({"@type": "error", "error": "${e}", "message": "error at PageBlockListItem page_blocks"})
+        PageBlock({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PageBlockListItem page_blocks"
+        })
       ].cast<PageBlock>();
     }
   }
@@ -25508,7 +26279,11 @@ class PageBlockTableCell {
     try {
       return RichText((rawData["text"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlockTableCell text"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockTableCell text"
+      });
     }
   }
 
@@ -25544,7 +26319,11 @@ class PageBlockTableCell {
     try {
       return PageBlockHorizontalAlignment((rawData["align"] as Map));
     } catch (e) {
-      return PageBlockHorizontalAlignment({"@type": "error", "error": "${e}", "message": "error at PageBlockTableCell align"});
+      return PageBlockHorizontalAlignment({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockTableCell align"
+      });
     }
   }
 
@@ -25553,7 +26332,11 @@ class PageBlockTableCell {
     try {
       return PageBlockVerticalAlignment((rawData["valign"] as Map));
     } catch (e) {
-      return PageBlockVerticalAlignment({"@type": "error", "error": "${e}", "message": "error at PageBlockTableCell valign"});
+      return PageBlockVerticalAlignment({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockTableCell valign"
+      });
     }
   }
 
@@ -25651,7 +26434,11 @@ class PageBlockRelatedArticle {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PageBlockRelatedArticle photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlockRelatedArticle photo"
+      });
     }
   }
 
@@ -25835,7 +26622,11 @@ class PageBlock {
     try {
       return RichText((rawData["subtitle"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock subtitle"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock subtitle"
+      });
     }
   }
 
@@ -25862,7 +26653,11 @@ class PageBlock {
     try {
       return RichText((rawData["header"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock header"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock header"
+      });
     }
   }
 
@@ -25871,7 +26666,11 @@ class PageBlock {
     try {
       return RichText((rawData["subheader"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock subheader"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock subheader"
+      });
     }
   }
 
@@ -25880,7 +26679,11 @@ class PageBlock {
     try {
       return RichText((rawData["kicker"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock kicker"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock kicker"
+      });
     }
   }
 
@@ -25889,7 +26692,11 @@ class PageBlock {
     try {
       return RichText((rawData["text"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock text"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock text"
+      });
     }
   }
 
@@ -25907,7 +26714,11 @@ class PageBlock {
     try {
       return RichText((rawData["footer"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock footer"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock footer"
+      });
     }
   }
 
@@ -25931,7 +26742,11 @@ class PageBlock {
           .cast<PageBlockListItem>();
     } catch (e) {
       return [
-        PageBlockListItem({"@type": "error", "error": "${e}", "message": "error at PageBlock items"})
+        PageBlockListItem({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PageBlock items"
+        })
       ].cast<PageBlockListItem>();
     }
   }
@@ -25941,7 +26756,11 @@ class PageBlock {
     try {
       return RichText((rawData["credit"] as Map));
     } catch (e) {
-      return RichText({"@type": "error", "error": "${e}", "message": "error at PageBlock credit"});
+      return RichText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock credit"
+      });
     }
   }
 
@@ -25950,7 +26769,11 @@ class PageBlock {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at PageBlock animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock animation"
+      });
     }
   }
 
@@ -25959,7 +26782,11 @@ class PageBlock {
     try {
       return PageBlockCaption((rawData["caption"] as Map));
     } catch (e) {
-      return PageBlockCaption({"@type": "error", "error": "${e}", "message": "error at PageBlock caption"});
+      return PageBlockCaption({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock caption"
+      });
     }
   }
 
@@ -25977,7 +26804,11 @@ class PageBlock {
     try {
       return Audio((rawData["audio"] as Map));
     } catch (e) {
-      return Audio({"@type": "error", "error": "${e}", "message": "error at PageBlock audio"});
+      return Audio({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock audio"
+      });
     }
   }
 
@@ -25986,7 +26817,11 @@ class PageBlock {
     try {
       return ChatPhotoInfo((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhotoInfo({"@type": "error", "error": "${e}", "message": "error at PageBlock photo"});
+      return ChatPhotoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock photo"
+      });
     }
   }
 
@@ -26004,7 +26839,11 @@ class PageBlock {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at PageBlock video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock video"
+      });
     }
   }
 
@@ -26022,7 +26861,11 @@ class PageBlock {
     try {
       return VoiceNote((rawData["voice_note"] as Map));
     } catch (e) {
-      return VoiceNote({"@type": "error", "error": "${e}", "message": "error at PageBlock voice_note"});
+      return VoiceNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock voice_note"
+      });
     }
   }
 
@@ -26031,7 +26874,11 @@ class PageBlock {
     try {
       return PageBlock((rawData["cover"] as Map));
     } catch (e) {
-      return PageBlock({"@type": "error", "error": "${e}", "message": "error at PageBlock cover"});
+      return PageBlock({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock cover"
+      });
     }
   }
 
@@ -26049,7 +26896,11 @@ class PageBlock {
     try {
       return Photo((rawData["poster_photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PageBlock poster_photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock poster_photo"
+      });
     }
   }
 
@@ -26094,7 +26945,11 @@ class PageBlock {
     try {
       return Photo((rawData["author_photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PageBlock author_photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock author_photo"
+      });
     }
   }
 
@@ -26118,7 +26973,11 @@ class PageBlock {
           .cast<PageBlock>();
     } catch (e) {
       return [
-        PageBlock({"@type": "error", "error": "${e}", "message": "error at PageBlock page_blocks"})
+        PageBlock({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PageBlock page_blocks"
+        })
       ].cast<PageBlock>();
     }
   }
@@ -26149,7 +27008,11 @@ class PageBlock {
     } catch (e) {
       return [
         [
-          PageBlockTableCell({"@type": "error", "error": "${e}", "message": "error at PageBlock cells"})
+          PageBlockTableCell({
+            "@type": "error",
+            "error": "${e}",
+            "message": "error at PageBlock cells"
+          })
         ]
       ].cast<List<PageBlockTableCell>>();
     }
@@ -26193,7 +27056,11 @@ class PageBlock {
           .cast<PageBlockRelatedArticle>();
     } catch (e) {
       return [
-        PageBlockRelatedArticle({"@type": "error", "error": "${e}", "message": "error at PageBlock articles"})
+        PageBlockRelatedArticle({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PageBlock articles"
+        })
       ].cast<PageBlockRelatedArticle>();
     }
   }
@@ -26203,7 +27070,11 @@ class PageBlock {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at PageBlock location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PageBlock location"
+      });
     }
   }
 
@@ -26262,7 +27133,8 @@ class WebPageInstantView {
         "version": version,
         "is_rtl": is_rtl,
         "is_full": is_full,
-        "feedback_link": (feedback_link != null) ? feedback_link.toJson() : null,
+        "feedback_link":
+            (feedback_link != null) ? feedback_link.toJson() : null,
       });
     } catch (e) {
       return WebPageInstantView({
@@ -26293,7 +27165,11 @@ class WebPageInstantView {
           .cast<PageBlock>();
     } catch (e) {
       return [
-        PageBlock({"@type": "error", "error": "${e}", "message": "error at WebPageInstantView page_blocks"})
+        PageBlock({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at WebPageInstantView page_blocks"
+        })
       ].cast<PageBlock>();
     }
   }
@@ -26339,7 +27215,11 @@ class WebPageInstantView {
     try {
       return InternalLinkType((rawData["feedback_link"] as Map));
     } catch (e) {
-      return InternalLinkType({"@type": "error", "error": "${e}", "message": "error at WebPageInstantView feedback_link"});
+      return InternalLinkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPageInstantView feedback_link"
+      });
     }
   }
 
@@ -26485,7 +27365,11 @@ class WebPage {
     try {
       return FormattedText((rawData["description"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at WebPage description"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage description"
+      });
     }
   }
 
@@ -26494,7 +27378,11 @@ class WebPage {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at WebPage photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage photo"
+      });
     }
   }
 
@@ -26557,7 +27445,11 @@ class WebPage {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at WebPage animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage animation"
+      });
     }
   }
 
@@ -26566,7 +27458,11 @@ class WebPage {
     try {
       return Audio((rawData["audio"] as Map));
     } catch (e) {
-      return Audio({"@type": "error", "error": "${e}", "message": "error at WebPage audio"});
+      return Audio({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage audio"
+      });
     }
   }
 
@@ -26575,7 +27471,11 @@ class WebPage {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at WebPage document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage document"
+      });
     }
   }
 
@@ -26584,7 +27484,11 @@ class WebPage {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at WebPage sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage sticker"
+      });
     }
   }
 
@@ -26593,7 +27497,11 @@ class WebPage {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at WebPage video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage video"
+      });
     }
   }
 
@@ -26602,7 +27510,11 @@ class WebPage {
     try {
       return VideoNote((rawData["video_note"] as Map));
     } catch (e) {
-      return VideoNote({"@type": "error", "error": "${e}", "message": "error at WebPage video_note"});
+      return VideoNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage video_note"
+      });
     }
   }
 
@@ -26611,7 +27523,11 @@ class WebPage {
     try {
       return VoiceNote((rawData["voice_note"] as Map));
     } catch (e) {
-      return VoiceNote({"@type": "error", "error": "${e}", "message": "error at WebPage voice_note"});
+      return VoiceNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at WebPage voice_note"
+      });
     }
   }
 
@@ -26796,7 +27712,11 @@ class Countries {
           .cast<CountryInfo>();
     } catch (e) {
       return [
-        CountryInfo({"@type": "error", "error": "${e}", "message": "error at Countries countries"})
+        CountryInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Countries countries"
+        })
       ].cast<CountryInfo>();
     }
   }
@@ -26862,7 +27782,11 @@ class PhoneNumberInfo {
     try {
       return CountryInfo((rawData["country"] as Map));
     } catch (e) {
-      return CountryInfo({"@type": "error", "error": "${e}", "message": "error at PhoneNumberInfo country"});
+      return CountryInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PhoneNumberInfo country"
+      });
     }
   }
 
@@ -27034,7 +27958,11 @@ class BankCardInfo {
           .cast<BankCardActionOpenUrl>();
     } catch (e) {
       return [
-        BankCardActionOpenUrl({"@type": "error", "error": "${e}", "message": "error at BankCardInfo actions"})
+        BankCardActionOpenUrl({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at BankCardInfo actions"
+        })
       ].cast<BankCardActionOpenUrl>();
     }
   }
@@ -27406,7 +28334,8 @@ class Invoice {
             : null,
         "max_tip_amount": max_tip_amount,
         "suggested_tip_amounts": suggested_tip_amounts,
-        "recurring_payment_terms_of_service_url": recurring_payment_terms_of_service_url,
+        "recurring_payment_terms_of_service_url":
+            recurring_payment_terms_of_service_url,
         "is_test": is_test,
         "need_name": need_name,
         "need_phone_number": need_phone_number,
@@ -27454,7 +28383,11 @@ class Invoice {
           .cast<LabeledPricePart>();
     } catch (e) {
       return [
-        LabeledPricePart({"@type": "error", "error": "${e}", "message": "error at Invoice price_parts"})
+        LabeledPricePart({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Invoice price_parts"
+        })
       ].cast<LabeledPricePart>();
     }
   }
@@ -27596,7 +28529,8 @@ class OrderInfo {
         "name": name,
         "phone_number": phone_number,
         "email_address": email_address,
-        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
+        "shipping_address":
+            (shipping_address != null) ? shipping_address.toJson() : null,
       });
     } catch (e) {
       return OrderInfo({
@@ -27648,7 +28582,11 @@ class OrderInfo {
     try {
       return Address((rawData["shipping_address"] as Map));
     } catch (e) {
-      return Address({"@type": "error", "error": "${e}", "message": "error at OrderInfo shipping_address"});
+      return Address({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at OrderInfo shipping_address"
+      });
     }
   }
 
@@ -27741,7 +28679,11 @@ class ShippingOption {
           .cast<LabeledPricePart>();
     } catch (e) {
       return [
-        LabeledPricePart({"@type": "error", "error": "${e}", "message": "error at ShippingOption price_parts"})
+        LabeledPricePart({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ShippingOption price_parts"
+        })
       ].cast<LabeledPricePart>();
     }
   }
@@ -28137,13 +29079,15 @@ class PaymentForm {
         "invoice": (invoice != null) ? invoice.toJson() : null,
         "seller_bot_user_id": seller_bot_user_id,
         "payment_provider_user_id": payment_provider_user_id,
-        "payment_provider": (payment_provider != null) ? payment_provider.toJson() : null,
+        "payment_provider":
+            (payment_provider != null) ? payment_provider.toJson() : null,
         "additional_payment_options": (additional_payment_options != null)
             ? additional_payment_options.map((e) {
                 return PaymentOption((e as Map)).toJson();
               }).toList()
             : null,
-        "saved_order_info": (saved_order_info != null) ? saved_order_info.toJson() : null,
+        "saved_order_info":
+            (saved_order_info != null) ? saved_order_info.toJson() : null,
         "saved_credentials": (saved_credentials != null)
             ? saved_credentials.map((e) {
                 return SavedCredentials((e as Map)).toJson();
@@ -28152,8 +29096,10 @@ class PaymentForm {
         "can_save_credentials": can_save_credentials,
         "need_password": need_password,
         "product_title": product_title,
-        "product_description": (product_description != null) ? product_description.toJson() : null,
-        "product_photo": (product_photo != null) ? product_photo.toJson() : null,
+        "product_description":
+            (product_description != null) ? product_description.toJson() : null,
+        "product_photo":
+            (product_photo != null) ? product_photo.toJson() : null,
       });
     } catch (e) {
       return PaymentForm({
@@ -28187,7 +29133,11 @@ class PaymentForm {
     try {
       return Invoice((rawData["invoice"] as Map));
     } catch (e) {
-      return Invoice({"@type": "error", "error": "${e}", "message": "error at PaymentForm invoice"});
+      return Invoice({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentForm invoice"
+      });
     }
   }
 
@@ -28214,7 +29164,11 @@ class PaymentForm {
     try {
       return PaymentProvider((rawData["payment_provider"] as Map));
     } catch (e) {
-      return PaymentProvider({"@type": "error", "error": "${e}", "message": "error at PaymentForm payment_provider"});
+      return PaymentProvider({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentForm payment_provider"
+      });
     }
   }
 
@@ -28229,7 +29183,11 @@ class PaymentForm {
           .cast<PaymentOption>();
     } catch (e) {
       return [
-        PaymentOption({"@type": "error", "error": "${e}", "message": "error at PaymentForm additional_payment_options"})
+        PaymentOption({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PaymentForm additional_payment_options"
+        })
       ].cast<PaymentOption>();
     }
   }
@@ -28239,7 +29197,11 @@ class PaymentForm {
     try {
       return OrderInfo((rawData["saved_order_info"] as Map));
     } catch (e) {
-      return OrderInfo({"@type": "error", "error": "${e}", "message": "error at PaymentForm saved_order_info"});
+      return OrderInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentForm saved_order_info"
+      });
     }
   }
 
@@ -28254,7 +29216,11 @@ class PaymentForm {
           .cast<SavedCredentials>();
     } catch (e) {
       return [
-        SavedCredentials({"@type": "error", "error": "${e}", "message": "error at PaymentForm saved_credentials"})
+        SavedCredentials({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PaymentForm saved_credentials"
+        })
       ].cast<SavedCredentials>();
     }
   }
@@ -28291,7 +29257,11 @@ class PaymentForm {
     try {
       return FormattedText((rawData["product_description"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at PaymentForm product_description"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentForm product_description"
+      });
     }
   }
 
@@ -28300,7 +29270,11 @@ class PaymentForm {
     try {
       return Photo((rawData["product_photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PaymentForm product_photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentForm product_photo"
+      });
     }
   }
 
@@ -28382,7 +29356,11 @@ class ValidatedOrderInfo {
           .cast<ShippingOption>();
     } catch (e) {
       return [
-        ShippingOption({"@type": "error", "error": "${e}", "message": "error at ValidatedOrderInfo shipping_options"})
+        ShippingOption({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ValidatedOrderInfo shipping_options"
+        })
       ].cast<ShippingOption>();
     }
   }
@@ -28509,7 +29487,8 @@ class PaymentReceipt {
         "payment_provider_user_id": payment_provider_user_id,
         "invoice": (invoice != null) ? invoice.toJson() : null,
         "order_info": (order_info != null) ? order_info.toJson() : null,
-        "shipping_option": (shipping_option != null) ? shipping_option.toJson() : null,
+        "shipping_option":
+            (shipping_option != null) ? shipping_option.toJson() : null,
         "credentials_title": credentials_title,
         "tip_amount": tip_amount,
       });
@@ -28545,7 +29524,11 @@ class PaymentReceipt {
     try {
       return FormattedText((rawData["description"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at PaymentReceipt description"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentReceipt description"
+      });
     }
   }
 
@@ -28554,7 +29537,11 @@ class PaymentReceipt {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PaymentReceipt photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentReceipt photo"
+      });
     }
   }
 
@@ -28590,7 +29577,11 @@ class PaymentReceipt {
     try {
       return Invoice((rawData["invoice"] as Map));
     } catch (e) {
-      return Invoice({"@type": "error", "error": "${e}", "message": "error at PaymentReceipt invoice"});
+      return Invoice({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentReceipt invoice"
+      });
     }
   }
 
@@ -28599,7 +29590,11 @@ class PaymentReceipt {
     try {
       return OrderInfo((rawData["order_info"] as Map));
     } catch (e) {
-      return OrderInfo({"@type": "error", "error": "${e}", "message": "error at PaymentReceipt order_info"});
+      return OrderInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentReceipt order_info"
+      });
     }
   }
 
@@ -28608,7 +29603,11 @@ class PaymentReceipt {
     try {
       return ShippingOption((rawData["shipping_option"] as Map));
     } catch (e) {
-      return ShippingOption({"@type": "error", "error": "${e}", "message": "error at PaymentReceipt shipping_option"});
+      return ShippingOption({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PaymentReceipt shipping_option"
+      });
     }
   }
 
@@ -28754,7 +29753,8 @@ class MessageExtendedMedia {
         "width": width,
         "height": height,
         "duration": duration,
-        "minithumbnail": (minithumbnail != null) ? minithumbnail.toJson() : null,
+        "minithumbnail":
+            (minithumbnail != null) ? minithumbnail.toJson() : null,
         "caption": (caption != null) ? caption.toJson() : null,
         "photo": (photo != null) ? photo.toJson() : null,
         "video": (video != null) ? video.toJson() : null,
@@ -28809,7 +29809,11 @@ class MessageExtendedMedia {
     try {
       return Minithumbnail((rawData["minithumbnail"] as Map));
     } catch (e) {
-      return Minithumbnail({"@type": "error", "error": "${e}", "message": "error at MessageExtendedMedia minithumbnail"});
+      return Minithumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageExtendedMedia minithumbnail"
+      });
     }
   }
 
@@ -28818,7 +29822,11 @@ class MessageExtendedMedia {
     try {
       return FormattedText((rawData["caption"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at MessageExtendedMedia caption"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageExtendedMedia caption"
+      });
     }
   }
 
@@ -28827,7 +29835,11 @@ class MessageExtendedMedia {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at MessageExtendedMedia photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageExtendedMedia photo"
+      });
     }
   }
 
@@ -28836,7 +29848,11 @@ class MessageExtendedMedia {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at MessageExtendedMedia video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageExtendedMedia video"
+      });
     }
   }
 
@@ -28899,7 +29915,11 @@ class DatedFile {
     try {
       return File((rawData["file"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at DatedFile file"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DatedFile file"
+      });
     }
   }
 
@@ -29174,7 +30194,11 @@ class PersonalDetails {
     try {
       return Date((rawData["birthdate"] as Map));
     } catch (e) {
-      return Date({"@type": "error", "error": "${e}", "message": "error at PersonalDetails birthdate"});
+      return Date({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PersonalDetails birthdate"
+      });
     }
   }
 
@@ -29285,7 +30309,11 @@ class IdentityDocument {
     try {
       return Date((rawData["expiry_date"] as Map));
     } catch (e) {
-      return Date({"@type": "error", "error": "${e}", "message": "error at IdentityDocument expiry_date"});
+      return Date({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at IdentityDocument expiry_date"
+      });
     }
   }
 
@@ -29294,7 +30322,11 @@ class IdentityDocument {
     try {
       return DatedFile((rawData["front_side"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at IdentityDocument front_side"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at IdentityDocument front_side"
+      });
     }
   }
 
@@ -29303,7 +30335,11 @@ class IdentityDocument {
     try {
       return DatedFile((rawData["reverse_side"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at IdentityDocument reverse_side"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at IdentityDocument reverse_side"
+      });
     }
   }
 
@@ -29312,7 +30348,11 @@ class IdentityDocument {
     try {
       return DatedFile((rawData["selfie"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at IdentityDocument selfie"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at IdentityDocument selfie"
+      });
     }
   }
 
@@ -29327,7 +30367,11 @@ class IdentityDocument {
           .cast<DatedFile>();
     } catch (e) {
       return [
-        DatedFile({"@type": "error", "error": "${e}", "message": "error at IdentityDocument translation"})
+        DatedFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at IdentityDocument translation"
+        })
       ].cast<DatedFile>();
     }
   }
@@ -29412,7 +30456,11 @@ class InputIdentityDocument {
     try {
       return Date((rawData["expiry_date"] as Map));
     } catch (e) {
-      return Date({"@type": "error", "error": "${e}", "message": "error at InputIdentityDocument expiry_date"});
+      return Date({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputIdentityDocument expiry_date"
+      });
     }
   }
 
@@ -29421,7 +30469,11 @@ class InputIdentityDocument {
     try {
       return InputFile((rawData["front_side"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputIdentityDocument front_side"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputIdentityDocument front_side"
+      });
     }
   }
 
@@ -29430,7 +30482,11 @@ class InputIdentityDocument {
     try {
       return InputFile((rawData["reverse_side"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputIdentityDocument reverse_side"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputIdentityDocument reverse_side"
+      });
     }
   }
 
@@ -29439,7 +30495,11 @@ class InputIdentityDocument {
     try {
       return InputFile((rawData["selfie"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputIdentityDocument selfie"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputIdentityDocument selfie"
+      });
     }
   }
 
@@ -29454,7 +30514,11 @@ class InputIdentityDocument {
           .cast<InputFile>();
     } catch (e) {
       return [
-        InputFile({"@type": "error", "error": "${e}", "message": "error at InputIdentityDocument translation"})
+        InputFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at InputIdentityDocument translation"
+        })
       ].cast<InputFile>();
     }
   }
@@ -29532,7 +30596,11 @@ class PersonalDocument {
           .cast<DatedFile>();
     } catch (e) {
       return [
-        DatedFile({"@type": "error", "error": "${e}", "message": "error at PersonalDocument files"})
+        DatedFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PersonalDocument files"
+        })
       ].cast<DatedFile>();
     }
   }
@@ -29548,7 +30616,11 @@ class PersonalDocument {
           .cast<DatedFile>();
     } catch (e) {
       return [
-        DatedFile({"@type": "error", "error": "${e}", "message": "error at PersonalDocument translation"})
+        DatedFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PersonalDocument translation"
+        })
       ].cast<DatedFile>();
     }
   }
@@ -29626,7 +30698,11 @@ class InputPersonalDocument {
           .cast<InputFile>();
     } catch (e) {
       return [
-        InputFile({"@type": "error", "error": "${e}", "message": "error at InputPersonalDocument files"})
+        InputFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at InputPersonalDocument files"
+        })
       ].cast<InputFile>();
     }
   }
@@ -29642,7 +30718,11 @@ class InputPersonalDocument {
           .cast<InputFile>();
     } catch (e) {
       return [
-        InputFile({"@type": "error", "error": "${e}", "message": "error at InputPersonalDocument translation"})
+        InputFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at InputPersonalDocument translation"
+        })
       ].cast<InputFile>();
     }
   }
@@ -29691,17 +30771,27 @@ class PassportElement {
     try {
       return PassportElement({
         "@type": special_type,
-        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
+        "personal_details":
+            (personal_details != null) ? personal_details.toJson() : null,
         "passport": (passport != null) ? passport.toJson() : null,
-        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
-        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
-        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
+        "driver_license":
+            (driver_license != null) ? driver_license.toJson() : null,
+        "identity_card":
+            (identity_card != null) ? identity_card.toJson() : null,
+        "internal_passport":
+            (internal_passport != null) ? internal_passport.toJson() : null,
         "address": (address != null) ? address.toJson() : null,
         "utility_bill": (utility_bill != null) ? utility_bill.toJson() : null,
-        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
-        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
-        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
-        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
+        "bank_statement":
+            (bank_statement != null) ? bank_statement.toJson() : null,
+        "rental_agreement":
+            (rental_agreement != null) ? rental_agreement.toJson() : null,
+        "passport_registration": (passport_registration != null)
+            ? passport_registration.toJson()
+            : null,
+        "temporary_registration": (temporary_registration != null)
+            ? temporary_registration.toJson()
+            : null,
         "phone_number": phone_number,
         "email_address": email_address,
       });
@@ -29728,7 +30818,11 @@ class PassportElement {
     try {
       return PersonalDetails((rawData["personal_details"] as Map));
     } catch (e) {
-      return PersonalDetails({"@type": "error", "error": "${e}", "message": "error at PassportElement personal_details"});
+      return PersonalDetails({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement personal_details"
+      });
     }
   }
 
@@ -29737,7 +30831,11 @@ class PassportElement {
     try {
       return IdentityDocument((rawData["passport"] as Map));
     } catch (e) {
-      return IdentityDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement passport"});
+      return IdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement passport"
+      });
     }
   }
 
@@ -29746,7 +30844,11 @@ class PassportElement {
     try {
       return IdentityDocument((rawData["driver_license"] as Map));
     } catch (e) {
-      return IdentityDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement driver_license"});
+      return IdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement driver_license"
+      });
     }
   }
 
@@ -29755,7 +30857,11 @@ class PassportElement {
     try {
       return IdentityDocument((rawData["identity_card"] as Map));
     } catch (e) {
-      return IdentityDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement identity_card"});
+      return IdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement identity_card"
+      });
     }
   }
 
@@ -29764,7 +30870,11 @@ class PassportElement {
     try {
       return IdentityDocument((rawData["internal_passport"] as Map));
     } catch (e) {
-      return IdentityDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement internal_passport"});
+      return IdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement internal_passport"
+      });
     }
   }
 
@@ -29773,7 +30883,11 @@ class PassportElement {
     try {
       return Address((rawData["address"] as Map));
     } catch (e) {
-      return Address({"@type": "error", "error": "${e}", "message": "error at PassportElement address"});
+      return Address({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement address"
+      });
     }
   }
 
@@ -29782,7 +30896,11 @@ class PassportElement {
     try {
       return PersonalDocument((rawData["utility_bill"] as Map));
     } catch (e) {
-      return PersonalDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement utility_bill"});
+      return PersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement utility_bill"
+      });
     }
   }
 
@@ -29791,7 +30909,11 @@ class PassportElement {
     try {
       return PersonalDocument((rawData["bank_statement"] as Map));
     } catch (e) {
-      return PersonalDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement bank_statement"});
+      return PersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement bank_statement"
+      });
     }
   }
 
@@ -29800,7 +30922,11 @@ class PassportElement {
     try {
       return PersonalDocument((rawData["rental_agreement"] as Map));
     } catch (e) {
-      return PersonalDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement rental_agreement"});
+      return PersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement rental_agreement"
+      });
     }
   }
 
@@ -29809,7 +30935,11 @@ class PassportElement {
     try {
       return PersonalDocument((rawData["passport_registration"] as Map));
     } catch (e) {
-      return PersonalDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement passport_registration"});
+      return PersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement passport_registration"
+      });
     }
   }
 
@@ -29818,7 +30948,11 @@ class PassportElement {
     try {
       return PersonalDocument((rawData["temporary_registration"] as Map));
     } catch (e) {
-      return PersonalDocument({"@type": "error", "error": "${e}", "message": "error at PassportElement temporary_registration"});
+      return PersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElement temporary_registration"
+      });
     }
   }
 
@@ -29884,17 +31018,27 @@ class InputPassportElement {
     try {
       return InputPassportElement({
         "@type": special_type,
-        "personal_details": (personal_details != null) ? personal_details.toJson() : null,
+        "personal_details":
+            (personal_details != null) ? personal_details.toJson() : null,
         "passport": (passport != null) ? passport.toJson() : null,
-        "driver_license": (driver_license != null) ? driver_license.toJson() : null,
-        "identity_card": (identity_card != null) ? identity_card.toJson() : null,
-        "internal_passport": (internal_passport != null) ? internal_passport.toJson() : null,
+        "driver_license":
+            (driver_license != null) ? driver_license.toJson() : null,
+        "identity_card":
+            (identity_card != null) ? identity_card.toJson() : null,
+        "internal_passport":
+            (internal_passport != null) ? internal_passport.toJson() : null,
         "address": (address != null) ? address.toJson() : null,
         "utility_bill": (utility_bill != null) ? utility_bill.toJson() : null,
-        "bank_statement": (bank_statement != null) ? bank_statement.toJson() : null,
-        "rental_agreement": (rental_agreement != null) ? rental_agreement.toJson() : null,
-        "passport_registration": (passport_registration != null) ? passport_registration.toJson() : null,
-        "temporary_registration": (temporary_registration != null) ? temporary_registration.toJson() : null,
+        "bank_statement":
+            (bank_statement != null) ? bank_statement.toJson() : null,
+        "rental_agreement":
+            (rental_agreement != null) ? rental_agreement.toJson() : null,
+        "passport_registration": (passport_registration != null)
+            ? passport_registration.toJson()
+            : null,
+        "temporary_registration": (temporary_registration != null)
+            ? temporary_registration.toJson()
+            : null,
         "phone_number": phone_number,
         "email_address": email_address,
       });
@@ -29921,7 +31065,11 @@ class InputPassportElement {
     try {
       return PersonalDetails((rawData["personal_details"] as Map));
     } catch (e) {
-      return PersonalDetails({"@type": "error", "error": "${e}", "message": "error at InputPassportElement personal_details"});
+      return PersonalDetails({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement personal_details"
+      });
     }
   }
 
@@ -29930,7 +31078,11 @@ class InputPassportElement {
     try {
       return InputIdentityDocument((rawData["passport"] as Map));
     } catch (e) {
-      return InputIdentityDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement passport"});
+      return InputIdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement passport"
+      });
     }
   }
 
@@ -29939,7 +31091,11 @@ class InputPassportElement {
     try {
       return InputIdentityDocument((rawData["driver_license"] as Map));
     } catch (e) {
-      return InputIdentityDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement driver_license"});
+      return InputIdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement driver_license"
+      });
     }
   }
 
@@ -29948,7 +31104,11 @@ class InputPassportElement {
     try {
       return InputIdentityDocument((rawData["identity_card"] as Map));
     } catch (e) {
-      return InputIdentityDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement identity_card"});
+      return InputIdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement identity_card"
+      });
     }
   }
 
@@ -29957,7 +31117,11 @@ class InputPassportElement {
     try {
       return InputIdentityDocument((rawData["internal_passport"] as Map));
     } catch (e) {
-      return InputIdentityDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement internal_passport"});
+      return InputIdentityDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement internal_passport"
+      });
     }
   }
 
@@ -29966,7 +31130,11 @@ class InputPassportElement {
     try {
       return Address((rawData["address"] as Map));
     } catch (e) {
-      return Address({"@type": "error", "error": "${e}", "message": "error at InputPassportElement address"});
+      return Address({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement address"
+      });
     }
   }
 
@@ -29975,7 +31143,11 @@ class InputPassportElement {
     try {
       return InputPersonalDocument((rawData["utility_bill"] as Map));
     } catch (e) {
-      return InputPersonalDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement utility_bill"});
+      return InputPersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement utility_bill"
+      });
     }
   }
 
@@ -29984,7 +31156,11 @@ class InputPassportElement {
     try {
       return InputPersonalDocument((rawData["bank_statement"] as Map));
     } catch (e) {
-      return InputPersonalDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement bank_statement"});
+      return InputPersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement bank_statement"
+      });
     }
   }
 
@@ -29993,7 +31169,11 @@ class InputPassportElement {
     try {
       return InputPersonalDocument((rawData["rental_agreement"] as Map));
     } catch (e) {
-      return InputPersonalDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement rental_agreement"});
+      return InputPersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement rental_agreement"
+      });
     }
   }
 
@@ -30002,7 +31182,11 @@ class InputPassportElement {
     try {
       return InputPersonalDocument((rawData["passport_registration"] as Map));
     } catch (e) {
-      return InputPersonalDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement passport_registration"});
+      return InputPersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement passport_registration"
+      });
     }
   }
 
@@ -30011,7 +31195,11 @@ class InputPassportElement {
     try {
       return InputPersonalDocument((rawData["temporary_registration"] as Map));
     } catch (e) {
-      return InputPersonalDocument({"@type": "error", "error": "${e}", "message": "error at InputPassportElement temporary_registration"});
+      return InputPersonalDocument({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElement temporary_registration"
+      });
     }
   }
 
@@ -30100,7 +31288,11 @@ class PassportElements {
           .cast<PassportElement>();
     } catch (e) {
       return [
-        PassportElement({"@type": "error", "error": "${e}", "message": "error at PassportElements elements"})
+        PassportElement({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PassportElements elements"
+        })
       ].cast<PassportElement>();
     }
   }
@@ -30238,7 +31430,11 @@ class PassportElementError {
     try {
       return PassportElementType((rawData["type"] as Map));
     } catch (e) {
-      return PassportElementType({"@type": "error", "error": "${e}", "message": "error at PassportElementError type"});
+      return PassportElementType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElementError type"
+      });
     }
   }
 
@@ -30256,7 +31452,11 @@ class PassportElementError {
     try {
       return PassportElementErrorSource((rawData["source"] as Map));
     } catch (e) {
-      return PassportElementErrorSource({"@type": "error", "error": "${e}", "message": "error at PassportElementError source"});
+      return PassportElementErrorSource({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportElementError source"
+      });
     }
   }
 
@@ -30323,7 +31523,11 @@ class PassportSuitableElement {
     try {
       return PassportElementType((rawData["type"] as Map));
     } catch (e) {
-      return PassportElementType({"@type": "error", "error": "${e}", "message": "error at PassportSuitableElement type"});
+      return PassportElementType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PassportSuitableElement type"
+      });
     }
   }
 
@@ -30421,7 +31625,11 @@ class PassportRequiredElement {
           .cast<PassportSuitableElement>();
     } catch (e) {
       return [
-        PassportSuitableElement({"@type": "error", "error": "${e}", "message": "error at PassportRequiredElement suitable_elements"})
+        PassportSuitableElement({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PassportRequiredElement suitable_elements"
+        })
       ].cast<PassportSuitableElement>();
     }
   }
@@ -30506,7 +31714,11 @@ class PassportAuthorizationForm {
           .cast<PassportRequiredElement>();
     } catch (e) {
       return [
-        PassportRequiredElement({"@type": "error", "error": "${e}", "message": "error at PassportAuthorizationForm required_elements"})
+        PassportRequiredElement({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PassportAuthorizationForm required_elements"
+        })
       ].cast<PassportRequiredElement>();
     }
   }
@@ -30593,7 +31805,11 @@ class PassportElementsWithErrors {
           .cast<PassportElement>();
     } catch (e) {
       return [
-        PassportElement({"@type": "error", "error": "${e}", "message": "error at PassportElementsWithErrors elements"})
+        PassportElement({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PassportElementsWithErrors elements"
+        })
       ].cast<PassportElement>();
     }
   }
@@ -30609,7 +31825,11 @@ class PassportElementsWithErrors {
           .cast<PassportElementError>();
     } catch (e) {
       return [
-        PassportElementError({"@type": "error", "error": "${e}", "message": "error at PassportElementsWithErrors errors"})
+        PassportElementError({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PassportElementsWithErrors errors"
+        })
       ].cast<PassportElementError>();
     }
   }
@@ -30778,7 +31998,11 @@ class EncryptedPassportElement {
     try {
       return PassportElementType((rawData["type"] as Map));
     } catch (e) {
-      return PassportElementType({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement type"});
+      return PassportElementType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EncryptedPassportElement type"
+      });
     }
   }
 
@@ -30796,7 +32020,11 @@ class EncryptedPassportElement {
     try {
       return DatedFile((rawData["front_side"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement front_side"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EncryptedPassportElement front_side"
+      });
     }
   }
 
@@ -30805,7 +32033,11 @@ class EncryptedPassportElement {
     try {
       return DatedFile((rawData["reverse_side"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement reverse_side"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EncryptedPassportElement reverse_side"
+      });
     }
   }
 
@@ -30814,7 +32046,11 @@ class EncryptedPassportElement {
     try {
       return DatedFile((rawData["selfie"] as Map));
     } catch (e) {
-      return DatedFile({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement selfie"});
+      return DatedFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EncryptedPassportElement selfie"
+      });
     }
   }
 
@@ -30829,7 +32065,11 @@ class EncryptedPassportElement {
           .cast<DatedFile>();
     } catch (e) {
       return [
-        DatedFile({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement translation"})
+        DatedFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at EncryptedPassportElement translation"
+        })
       ].cast<DatedFile>();
     }
   }
@@ -30845,7 +32085,11 @@ class EncryptedPassportElement {
           .cast<DatedFile>();
     } catch (e) {
       return [
-        DatedFile({"@type": "error", "error": "${e}", "message": "error at EncryptedPassportElement files"})
+        DatedFile({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at EncryptedPassportElement files"
+        })
       ].cast<DatedFile>();
     }
   }
@@ -31034,7 +32278,11 @@ class InputPassportElementError {
     try {
       return PassportElementType((rawData["type"] as Map));
     } catch (e) {
-      return PassportElementType({"@type": "error", "error": "${e}", "message": "error at InputPassportElementError type"});
+      return PassportElementType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElementError type"
+      });
     }
   }
 
@@ -31052,7 +32300,11 @@ class InputPassportElementError {
     try {
       return InputPassportElementErrorSource((rawData["source"] as Map));
     } catch (e) {
-      return InputPassportElementErrorSource({"@type": "error", "error": "${e}", "message": "error at InputPassportElementError source"});
+      return InputPassportElementErrorSource({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputPassportElementError source"
+      });
     }
   }
 
@@ -31185,9 +32437,11 @@ class MessageContent {
         "proximity_alert_radius": proximity_alert_radius,
         "venue": (venue != null) ? venue.toJson() : null,
         "contact": (contact != null) ? contact.toJson() : null,
-        "animated_emoji": (animated_emoji != null) ? animated_emoji.toJson() : null,
+        "animated_emoji":
+            (animated_emoji != null) ? animated_emoji.toJson() : null,
         "emoji": emoji,
-        "initial_state": (initial_state != null) ? initial_state.toJson() : null,
+        "initial_state":
+            (initial_state != null) ? initial_state.toJson() : null,
         "final_state": (final_state != null) ? final_state.toJson() : null,
         "value": value,
         "success_animation_frame_number": success_animation_frame_number,
@@ -31201,9 +32455,11 @@ class MessageContent {
         "is_test": is_test,
         "need_shipping_address": need_shipping_address,
         "receipt_message_id": receipt_message_id,
-        "extended_media": (extended_media != null) ? extended_media.toJson() : null,
+        "extended_media":
+            (extended_media != null) ? extended_media.toJson() : null,
         "is_video": is_video,
-        "discard_reason": (discard_reason != null) ? discard_reason.toJson() : null,
+        "discard_reason":
+            (discard_reason != null) ? discard_reason.toJson() : null,
         "duration": duration,
         "group_call_id": group_call_id,
         "start_date": start_date,
@@ -31280,7 +32536,11 @@ class MessageContent {
     try {
       return WebPage((rawData["web_page"] as Map));
     } catch (e) {
-      return WebPage({"@type": "error", "error": "${e}", "message": "error at MessageContent web_page"});
+      return WebPage({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent web_page"
+      });
     }
   }
 
@@ -31289,7 +32549,11 @@ class MessageContent {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at MessageContent animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent animation"
+      });
     }
   }
 
@@ -31298,7 +32562,11 @@ class MessageContent {
     try {
       return FormattedText((rawData["caption"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at MessageContent caption"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent caption"
+      });
     }
   }
 
@@ -31316,7 +32584,11 @@ class MessageContent {
     try {
       return Audio((rawData["audio"] as Map));
     } catch (e) {
-      return Audio({"@type": "error", "error": "${e}", "message": "error at MessageContent audio"});
+      return Audio({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent audio"
+      });
     }
   }
 
@@ -31325,7 +32597,11 @@ class MessageContent {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at MessageContent document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent document"
+      });
     }
   }
 
@@ -31334,7 +32610,11 @@ class MessageContent {
     try {
       return ChatPhoto((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at MessageContent photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent photo"
+      });
     }
   }
 
@@ -31343,7 +32623,11 @@ class MessageContent {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at MessageContent sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent sticker"
+      });
     }
   }
 
@@ -31361,7 +32645,11 @@ class MessageContent {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at MessageContent video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent video"
+      });
     }
   }
 
@@ -31370,7 +32658,11 @@ class MessageContent {
     try {
       return VideoNote((rawData["video_note"] as Map));
     } catch (e) {
-      return VideoNote({"@type": "error", "error": "${e}", "message": "error at MessageContent video_note"});
+      return VideoNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent video_note"
+      });
     }
   }
 
@@ -31388,7 +32680,11 @@ class MessageContent {
     try {
       return VoiceNote((rawData["voice_note"] as Map));
     } catch (e) {
-      return VoiceNote({"@type": "error", "error": "${e}", "message": "error at MessageContent voice_note"});
+      return VoiceNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent voice_note"
+      });
     }
   }
 
@@ -31406,7 +32702,11 @@ class MessageContent {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at MessageContent location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent location"
+      });
     }
   }
 
@@ -31451,7 +32751,11 @@ class MessageContent {
     try {
       return Venue((rawData["venue"] as Map));
     } catch (e) {
-      return Venue({"@type": "error", "error": "${e}", "message": "error at MessageContent venue"});
+      return Venue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent venue"
+      });
     }
   }
 
@@ -31460,7 +32764,11 @@ class MessageContent {
     try {
       return Contact((rawData["contact"] as Map));
     } catch (e) {
-      return Contact({"@type": "error", "error": "${e}", "message": "error at MessageContent contact"});
+      return Contact({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent contact"
+      });
     }
   }
 
@@ -31469,7 +32777,11 @@ class MessageContent {
     try {
       return AnimatedEmoji((rawData["animated_emoji"] as Map));
     } catch (e) {
-      return AnimatedEmoji({"@type": "error", "error": "${e}", "message": "error at MessageContent animated_emoji"});
+      return AnimatedEmoji({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent animated_emoji"
+      });
     }
   }
 
@@ -31487,7 +32799,11 @@ class MessageContent {
     try {
       return DiceStickers((rawData["initial_state"] as Map));
     } catch (e) {
-      return DiceStickers({"@type": "error", "error": "${e}", "message": "error at MessageContent initial_state"});
+      return DiceStickers({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent initial_state"
+      });
     }
   }
 
@@ -31496,7 +32812,11 @@ class MessageContent {
     try {
       return DiceStickers((rawData["final_state"] as Map));
     } catch (e) {
-      return DiceStickers({"@type": "error", "error": "${e}", "message": "error at MessageContent final_state"});
+      return DiceStickers({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent final_state"
+      });
     }
   }
 
@@ -31523,7 +32843,11 @@ class MessageContent {
     try {
       return Game((rawData["game"] as Map));
     } catch (e) {
-      return Game({"@type": "error", "error": "${e}", "message": "error at MessageContent game"});
+      return Game({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent game"
+      });
     }
   }
 
@@ -31532,7 +32856,11 @@ class MessageContent {
     try {
       return Poll((rawData["poll"] as Map));
     } catch (e) {
-      return Poll({"@type": "error", "error": "${e}", "message": "error at MessageContent poll"});
+      return Poll({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent poll"
+      });
     }
   }
 
@@ -31550,7 +32878,11 @@ class MessageContent {
     try {
       return FormattedText((rawData["description"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at MessageContent description"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent description"
+      });
     }
   }
 
@@ -31613,7 +32945,11 @@ class MessageContent {
     try {
       return MessageExtendedMedia((rawData["extended_media"] as Map));
     } catch (e) {
-      return MessageExtendedMedia({"@type": "error", "error": "${e}", "message": "error at MessageContent extended_media"});
+      return MessageExtendedMedia({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent extended_media"
+      });
     }
   }
 
@@ -31631,7 +32967,11 @@ class MessageContent {
     try {
       return CallDiscardReason((rawData["discard_reason"] as Map));
     } catch (e) {
-      return CallDiscardReason({"@type": "error", "error": "${e}", "message": "error at MessageContent discard_reason"});
+      return CallDiscardReason({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent discard_reason"
+      });
     }
   }
 
@@ -31829,7 +33169,11 @@ class MessageContent {
     try {
       return OrderInfo((rawData["order_info"] as Map));
     } catch (e) {
-      return OrderInfo({"@type": "error", "error": "${e}", "message": "error at MessageContent order_info"});
+      return OrderInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent order_info"
+      });
     }
   }
 
@@ -31907,7 +33251,11 @@ class MessageContent {
           .cast<PassportElementType>();
     } catch (e) {
       return [
-        PassportElementType({"@type": "error", "error": "${e}", "message": "error at MessageContent types"})
+        PassportElementType({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageContent types"
+        })
       ].cast<PassportElementType>();
     }
   }
@@ -31923,7 +33271,11 @@ class MessageContent {
           .cast<EncryptedPassportElement>();
     } catch (e) {
       return [
-        EncryptedPassportElement({"@type": "error", "error": "${e}", "message": "error at MessageContent elements"})
+        EncryptedPassportElement({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at MessageContent elements"
+        })
       ].cast<EncryptedPassportElement>();
     }
   }
@@ -31933,7 +33285,11 @@ class MessageContent {
     try {
       return EncryptedCredentials((rawData["credentials"] as Map));
     } catch (e) {
-      return EncryptedCredentials({"@type": "error", "error": "${e}", "message": "error at MessageContent credentials"});
+      return EncryptedCredentials({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent credentials"
+      });
     }
   }
 
@@ -31942,7 +33298,11 @@ class MessageContent {
     try {
       return MessageSender((rawData["traveler_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at MessageContent traveler_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent traveler_id"
+      });
     }
   }
 
@@ -31951,7 +33311,11 @@ class MessageContent {
     try {
       return MessageSender((rawData["watcher_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at MessageContent watcher_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageContent watcher_id"
+      });
     }
   }
 
@@ -32130,7 +33494,11 @@ class InputThumbnail {
     try {
       return InputFile((rawData["thumbnail"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputThumbnail thumbnail"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputThumbnail thumbnail"
+      });
     }
   }
 
@@ -32252,8 +33620,10 @@ class MessageSendOptions {
         "disable_notification": disable_notification,
         "from_background": from_background,
         "protect_content": protect_content,
-        "update_order_of_installed_sticker_sets": update_order_of_installed_sticker_sets,
-        "scheduling_state": (scheduling_state != null) ? scheduling_state.toJson() : null,
+        "update_order_of_installed_sticker_sets":
+            update_order_of_installed_sticker_sets,
+        "scheduling_state":
+            (scheduling_state != null) ? scheduling_state.toJson() : null,
       });
     } catch (e) {
       return MessageSendOptions({
@@ -32314,7 +33684,11 @@ class MessageSendOptions {
     try {
       return MessageSchedulingState((rawData["scheduling_state"] as Map));
     } catch (e) {
-      return MessageSchedulingState({"@type": "error", "error": "${e}", "message": "error at MessageSendOptions scheduling_state"});
+      return MessageSchedulingState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageSendOptions scheduling_state"
+      });
     }
   }
 
@@ -32397,7 +33771,11 @@ class MessageCopyOptions {
     try {
       return FormattedText((rawData["new_caption"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at MessageCopyOptions new_caption"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageCopyOptions new_caption"
+      });
     }
   }
 
@@ -32499,7 +33877,9 @@ class InputMessageContent {
         "height": height,
         "caption": (caption != null) ? caption.toJson() : null,
         "audio": (audio != null) ? audio.toJson() : null,
-        "album_cover_thumbnail": (album_cover_thumbnail != null) ? album_cover_thumbnail.toJson() : null,
+        "album_cover_thumbnail": (album_cover_thumbnail != null)
+            ? album_cover_thumbnail.toJson()
+            : null,
         "title": title,
         "performer": performer,
         "document": (document != null) ? document.toJson() : null,
@@ -32532,7 +33912,9 @@ class InputMessageContent {
         "provider_token": provider_token,
         "provider_data": provider_data,
         "start_parameter": start_parameter,
-        "extended_media_content": (extended_media_content != null) ? extended_media_content.toJson() : null,
+        "extended_media_content": (extended_media_content != null)
+            ? extended_media_content.toJson()
+            : null,
         "question": question,
         "options": options,
         "is_anonymous": is_anonymous,
@@ -32568,7 +33950,11 @@ class InputMessageContent {
     try {
       return FormattedText((rawData["text"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at InputMessageContent text"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent text"
+      });
     }
   }
 
@@ -32595,7 +33981,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["animation"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent animation"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent animation"
+      });
     }
   }
 
@@ -32604,7 +33994,11 @@ class InputMessageContent {
     try {
       return InputThumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return InputThumbnail({"@type": "error", "error": "${e}", "message": "error at InputMessageContent thumbnail"});
+      return InputThumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent thumbnail"
+      });
     }
   }
 
@@ -32649,7 +34043,11 @@ class InputMessageContent {
     try {
       return FormattedText((rawData["caption"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at InputMessageContent caption"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent caption"
+      });
     }
   }
 
@@ -32658,7 +34056,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["audio"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent audio"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent audio"
+      });
     }
   }
 
@@ -32667,7 +34069,11 @@ class InputMessageContent {
     try {
       return InputThumbnail((rawData["album_cover_thumbnail"] as Map));
     } catch (e) {
-      return InputThumbnail({"@type": "error", "error": "${e}", "message": "error at InputMessageContent album_cover_thumbnail"});
+      return InputThumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent album_cover_thumbnail"
+      });
     }
   }
 
@@ -32694,7 +34100,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["document"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent document"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent document"
+      });
     }
   }
 
@@ -32712,7 +34122,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["photo"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent photo"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent photo"
+      });
     }
   }
 
@@ -32730,7 +34144,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["sticker"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent sticker"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent sticker"
+      });
     }
   }
 
@@ -32748,7 +34166,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["video"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent video"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent video"
+      });
     }
   }
 
@@ -32766,7 +34188,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["video_note"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent video_note"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent video_note"
+      });
     }
   }
 
@@ -32784,7 +34210,11 @@ class InputMessageContent {
     try {
       return InputFile((rawData["voice_note"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputMessageContent voice_note"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent voice_note"
+      });
     }
   }
 
@@ -32802,7 +34232,11 @@ class InputMessageContent {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at InputMessageContent location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent location"
+      });
     }
   }
 
@@ -32838,7 +34272,11 @@ class InputMessageContent {
     try {
       return Venue((rawData["venue"] as Map));
     } catch (e) {
-      return Venue({"@type": "error", "error": "${e}", "message": "error at InputMessageContent venue"});
+      return Venue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent venue"
+      });
     }
   }
 
@@ -32847,7 +34285,11 @@ class InputMessageContent {
     try {
       return Contact((rawData["contact"] as Map));
     } catch (e) {
-      return Contact({"@type": "error", "error": "${e}", "message": "error at InputMessageContent contact"});
+      return Contact({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent contact"
+      });
     }
   }
 
@@ -32874,7 +34316,11 @@ class InputMessageContent {
     try {
       return Invoice((rawData["invoice"] as Map));
     } catch (e) {
-      return Invoice({"@type": "error", "error": "${e}", "message": "error at InputMessageContent invoice"});
+      return Invoice({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent invoice"
+      });
     }
   }
 
@@ -32964,7 +34410,11 @@ class InputMessageContent {
     try {
       return InputMessageContent((rawData["extended_media_content"] as Map));
     } catch (e) {
-      return InputMessageContent({"@type": "error", "error": "${e}", "message": "error at InputMessageContent extended_media_content"});
+      return InputMessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent extended_media_content"
+      });
     }
   }
 
@@ -33000,7 +34450,11 @@ class InputMessageContent {
     try {
       return PollType((rawData["type"] as Map));
     } catch (e) {
-      return PollType({"@type": "error", "error": "${e}", "message": "error at InputMessageContent type"});
+      return PollType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent type"
+      });
     }
   }
 
@@ -33063,7 +34517,11 @@ class InputMessageContent {
     try {
       return MessageCopyOptions((rawData["copy_options"] as Map));
     } catch (e) {
-      return MessageCopyOptions({"@type": "error", "error": "${e}", "message": "error at InputMessageContent copy_options"});
+      return MessageCopyOptions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputMessageContent copy_options"
+      });
     }
   }
 
@@ -33328,7 +34786,11 @@ class Stickers {
           .cast<Sticker>();
     } catch (e) {
       return [
-        Sticker({"@type": "error", "error": "${e}", "message": "error at Stickers stickers"})
+        Sticker({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Stickers stickers"
+        })
       ].cast<Sticker>();
     }
   }
@@ -33450,7 +34912,8 @@ class StickerSet {
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_format":
+            (sticker_format != null) ? sticker_format.toJson() : null,
         "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
         "stickers": (stickers != null)
@@ -33514,7 +34977,11 @@ class StickerSet {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at StickerSet thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSet thumbnail"
+      });
     }
   }
 
@@ -33529,7 +34996,11 @@ class StickerSet {
           .cast<ClosedVectorPath>();
     } catch (e) {
       return [
-        ClosedVectorPath({"@type": "error", "error": "${e}", "message": "error at StickerSet thumbnail_outline"})
+        ClosedVectorPath({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSet thumbnail_outline"
+        })
       ].cast<ClosedVectorPath>();
     }
   }
@@ -33566,7 +35037,11 @@ class StickerSet {
     try {
       return StickerFormat((rawData["sticker_format"] as Map));
     } catch (e) {
-      return StickerFormat({"@type": "error", "error": "${e}", "message": "error at StickerSet sticker_format"});
+      return StickerFormat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSet sticker_format"
+      });
     }
   }
 
@@ -33575,7 +35050,11 @@ class StickerSet {
     try {
       return StickerType((rawData["sticker_type"] as Map));
     } catch (e) {
-      return StickerType({"@type": "error", "error": "${e}", "message": "error at StickerSet sticker_type"});
+      return StickerType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSet sticker_type"
+      });
     }
   }
 
@@ -33599,7 +35078,11 @@ class StickerSet {
           .cast<Sticker>();
     } catch (e) {
       return [
-        Sticker({"@type": "error", "error": "${e}", "message": "error at StickerSet stickers"})
+        Sticker({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSet stickers"
+        })
       ].cast<Sticker>();
     }
   }
@@ -33615,7 +35098,11 @@ class StickerSet {
           .cast<Emojis>();
     } catch (e) {
       return [
-        Emojis({"@type": "error", "error": "${e}", "message": "error at StickerSet emojis"})
+        Emojis({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSet emojis"
+        })
       ].cast<Emojis>();
     }
   }
@@ -33676,7 +35163,8 @@ class StickerSetInfo {
         "is_installed": is_installed,
         "is_archived": is_archived,
         "is_official": is_official,
-        "sticker_format": (sticker_format != null) ? sticker_format.toJson() : null,
+        "sticker_format":
+            (sticker_format != null) ? sticker_format.toJson() : null,
         "sticker_type": (sticker_type != null) ? sticker_type.toJson() : null,
         "is_viewed": is_viewed,
         "size": size,
@@ -33736,7 +35224,11 @@ class StickerSetInfo {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at StickerSetInfo thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSetInfo thumbnail"
+      });
     }
   }
 
@@ -33751,7 +35243,11 @@ class StickerSetInfo {
           .cast<ClosedVectorPath>();
     } catch (e) {
       return [
-        ClosedVectorPath({"@type": "error", "error": "${e}", "message": "error at StickerSetInfo thumbnail_outline"})
+        ClosedVectorPath({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSetInfo thumbnail_outline"
+        })
       ].cast<ClosedVectorPath>();
     }
   }
@@ -33788,7 +35284,11 @@ class StickerSetInfo {
     try {
       return StickerFormat((rawData["sticker_format"] as Map));
     } catch (e) {
-      return StickerFormat({"@type": "error", "error": "${e}", "message": "error at StickerSetInfo sticker_format"});
+      return StickerFormat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSetInfo sticker_format"
+      });
     }
   }
 
@@ -33797,7 +35297,11 @@ class StickerSetInfo {
     try {
       return StickerType((rawData["sticker_type"] as Map));
     } catch (e) {
-      return StickerType({"@type": "error", "error": "${e}", "message": "error at StickerSetInfo sticker_type"});
+      return StickerType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StickerSetInfo sticker_type"
+      });
     }
   }
 
@@ -33830,7 +35334,11 @@ class StickerSetInfo {
           .cast<Sticker>();
     } catch (e) {
       return [
-        Sticker({"@type": "error", "error": "${e}", "message": "error at StickerSetInfo covers"})
+        Sticker({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSetInfo covers"
+        })
       ].cast<Sticker>();
     }
   }
@@ -33913,7 +35421,11 @@ class StickerSets {
           .cast<StickerSetInfo>();
     } catch (e) {
       return [
-        StickerSetInfo({"@type": "error", "error": "${e}", "message": "error at StickerSets sets"})
+        StickerSetInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StickerSets sets"
+        })
       ].cast<StickerSetInfo>();
     }
   }
@@ -33998,7 +35510,11 @@ class TrendingStickerSets {
           .cast<StickerSetInfo>();
     } catch (e) {
       return [
-        StickerSetInfo({"@type": "error", "error": "${e}", "message": "error at TrendingStickerSets sets"})
+        StickerSetInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at TrendingStickerSets sets"
+        })
       ].cast<StickerSetInfo>();
     }
   }
@@ -34384,7 +35900,11 @@ class CallServer {
     try {
       return CallServerType((rawData["type"] as Map));
     } catch (e) {
-      return CallServerType({"@type": "error", "error": "${e}", "message": "error at CallServer type"});
+      return CallServerType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at CallServer type"
+      });
     }
   }
 
@@ -34613,7 +36133,11 @@ class CallState {
     try {
       return CallProtocol((rawData["protocol"] as Map));
     } catch (e) {
-      return CallProtocol({"@type": "error", "error": "${e}", "message": "error at CallState protocol"});
+      return CallProtocol({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at CallState protocol"
+      });
     }
   }
 
@@ -34628,7 +36152,11 @@ class CallState {
           .cast<CallServer>();
     } catch (e) {
       return [
-        CallServer({"@type": "error", "error": "${e}", "message": "error at CallState servers"})
+        CallServer({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at CallState servers"
+        })
       ].cast<CallServer>();
     }
   }
@@ -34674,7 +36202,11 @@ class CallState {
     try {
       return CallDiscardReason((rawData["reason"] as Map));
     } catch (e) {
-      return CallDiscardReason({"@type": "error", "error": "${e}", "message": "error at CallState reason"});
+      return CallDiscardReason({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at CallState reason"
+      });
     }
   }
 
@@ -34710,7 +36242,11 @@ class CallState {
     try {
       return Error((rawData["error"] as Map));
     } catch (e) {
-      return Error({"@type": "error", "error": "${e}", "message": "error at CallState error"});
+      return Error({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at CallState error"
+      });
     }
   }
 
@@ -34914,7 +36450,11 @@ class GroupCallStreams {
           .cast<GroupCallStream>();
     } catch (e) {
       return [
-        GroupCallStream({"@type": "error", "error": "${e}", "message": "error at GroupCallStreams streams"})
+        GroupCallStream({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at GroupCallStreams streams"
+        })
       ].cast<GroupCallStream>();
     }
   }
@@ -35024,7 +36564,8 @@ class GroupCallRecentSpeaker {
     try {
       return GroupCallRecentSpeaker({
         "@type": special_type,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_speaking": is_speaking,
       });
     } catch (e) {
@@ -35050,7 +36591,11 @@ class GroupCallRecentSpeaker {
     try {
       return MessageSender((rawData["participant_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at GroupCallRecentSpeaker participant_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at GroupCallRecentSpeaker participant_id"
+      });
     }
   }
 
@@ -35278,7 +36823,11 @@ class GroupCall {
           .cast<GroupCallRecentSpeaker>();
     } catch (e) {
       return [
-        GroupCallRecentSpeaker({"@type": "error", "error": "${e}", "message": "error at GroupCall recent_speakers"})
+        GroupCallRecentSpeaker({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at GroupCall recent_speakers"
+        })
       ].cast<GroupCallRecentSpeaker>();
     }
   }
@@ -35498,7 +37047,11 @@ class GroupCallParticipantVideoInfo {
           .cast<GroupCallVideoSourceGroup>();
     } catch (e) {
       return [
-        GroupCallVideoSourceGroup({"@type": "error", "error": "${e}", "message": "error at GroupCallParticipantVideoInfo source_groups"})
+        GroupCallVideoSourceGroup({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at GroupCallParticipantVideoInfo source_groups"
+        })
       ].cast<GroupCallVideoSourceGroup>();
     }
   }
@@ -35570,11 +37123,14 @@ class GroupCallParticipant {
     try {
       return GroupCallParticipant({
         "@type": special_type,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "audio_source_id": audio_source_id,
         "screen_sharing_audio_source_id": screen_sharing_audio_source_id,
         "video_info": (video_info != null) ? video_info.toJson() : null,
-        "screen_sharing_video_info": (screen_sharing_video_info != null) ? screen_sharing_video_info.toJson() : null,
+        "screen_sharing_video_info": (screen_sharing_video_info != null)
+            ? screen_sharing_video_info.toJson()
+            : null,
         "bio": bio,
         "is_current_user": is_current_user,
         "is_speaking": is_speaking,
@@ -35612,7 +37168,11 @@ class GroupCallParticipant {
     try {
       return MessageSender((rawData["participant_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at GroupCallParticipant participant_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at GroupCallParticipant participant_id"
+      });
     }
   }
 
@@ -35639,16 +37199,25 @@ class GroupCallParticipant {
     try {
       return GroupCallParticipantVideoInfo((rawData["video_info"] as Map));
     } catch (e) {
-      return GroupCallParticipantVideoInfo({"@type": "error", "error": "${e}", "message": "error at GroupCallParticipant video_info"});
+      return GroupCallParticipantVideoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at GroupCallParticipant video_info"
+      });
     }
   }
 
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1GroupCallParticipant.html).
   GroupCallParticipantVideoInfo get screen_sharing_video_info {
     try {
-      return GroupCallParticipantVideoInfo((rawData["screen_sharing_video_info"] as Map));
+      return GroupCallParticipantVideoInfo(
+          (rawData["screen_sharing_video_info"] as Map));
     } catch (e) {
-      return GroupCallParticipantVideoInfo({"@type": "error", "error": "${e}", "message": "error at GroupCallParticipant screen_sharing_video_info"});
+      return GroupCallParticipantVideoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at GroupCallParticipant screen_sharing_video_info"
+      });
     }
   }
 
@@ -35920,7 +37489,11 @@ class Call {
     try {
       return CallState((rawData["state"] as Map));
     } catch (e) {
-      return CallState({"@type": "error", "error": "${e}", "message": "error at Call state"});
+      return CallState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Call state"
+      });
     }
   }
 
@@ -36088,7 +37661,11 @@ class AddedReaction {
     try {
       return ReactionType((rawData["type"] as Map));
     } catch (e) {
-      return ReactionType({"@type": "error", "error": "${e}", "message": "error at AddedReaction type"});
+      return ReactionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AddedReaction type"
+      });
     }
   }
 
@@ -36097,7 +37674,11 @@ class AddedReaction {
     try {
       return MessageSender((rawData["sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at AddedReaction sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AddedReaction sender_id"
+      });
     }
   }
 
@@ -36181,7 +37762,11 @@ class AddedReactions {
           .cast<AddedReaction>();
     } catch (e) {
       return [
-        AddedReaction({"@type": "error", "error": "${e}", "message": "error at AddedReactions reactions"})
+        AddedReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at AddedReactions reactions"
+        })
       ].cast<AddedReaction>();
     }
   }
@@ -36254,7 +37839,11 @@ class AvailableReaction {
     try {
       return ReactionType((rawData["type"] as Map));
     } catch (e) {
-      return ReactionType({"@type": "error", "error": "${e}", "message": "error at AvailableReaction type"});
+      return ReactionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AvailableReaction type"
+      });
     }
   }
 
@@ -36348,7 +37937,11 @@ class AvailableReactions {
           .cast<AvailableReaction>();
     } catch (e) {
       return [
-        AvailableReaction({"@type": "error", "error": "${e}", "message": "error at AvailableReactions top_reactions"})
+        AvailableReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at AvailableReactions top_reactions"
+        })
       ].cast<AvailableReaction>();
     }
   }
@@ -36364,7 +37957,11 @@ class AvailableReactions {
           .cast<AvailableReaction>();
     } catch (e) {
       return [
-        AvailableReaction({"@type": "error", "error": "${e}", "message": "error at AvailableReactions recent_reactions"})
+        AvailableReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at AvailableReactions recent_reactions"
+        })
       ].cast<AvailableReaction>();
     }
   }
@@ -36380,7 +37977,11 @@ class AvailableReactions {
           .cast<AvailableReaction>();
     } catch (e) {
       return [
-        AvailableReaction({"@type": "error", "error": "${e}", "message": "error at AvailableReactions popular_reactions"})
+        AvailableReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at AvailableReactions popular_reactions"
+        })
       ].cast<AvailableReaction>();
     }
   }
@@ -36439,12 +38040,18 @@ class EmojiReaction {
         "title": title,
         "is_active": is_active,
         "static_icon": (static_icon != null) ? static_icon.toJson() : null,
-        "appear_animation": (appear_animation != null) ? appear_animation.toJson() : null,
-        "select_animation": (select_animation != null) ? select_animation.toJson() : null,
-        "activate_animation": (activate_animation != null) ? activate_animation.toJson() : null,
-        "effect_animation": (effect_animation != null) ? effect_animation.toJson() : null,
-        "around_animation": (around_animation != null) ? around_animation.toJson() : null,
-        "center_animation": (center_animation != null) ? center_animation.toJson() : null,
+        "appear_animation":
+            (appear_animation != null) ? appear_animation.toJson() : null,
+        "select_animation":
+            (select_animation != null) ? select_animation.toJson() : null,
+        "activate_animation":
+            (activate_animation != null) ? activate_animation.toJson() : null,
+        "effect_animation":
+            (effect_animation != null) ? effect_animation.toJson() : null,
+        "around_animation":
+            (around_animation != null) ? around_animation.toJson() : null,
+        "center_animation":
+            (center_animation != null) ? center_animation.toJson() : null,
       });
     } catch (e) {
       return EmojiReaction({
@@ -36496,7 +38103,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["static_icon"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction static_icon"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction static_icon"
+      });
     }
   }
 
@@ -36505,7 +38116,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["appear_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction appear_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction appear_animation"
+      });
     }
   }
 
@@ -36514,7 +38129,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["select_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction select_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction select_animation"
+      });
     }
   }
 
@@ -36523,7 +38142,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["activate_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction activate_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction activate_animation"
+      });
     }
   }
 
@@ -36532,7 +38155,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["effect_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction effect_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction effect_animation"
+      });
     }
   }
 
@@ -36541,7 +38168,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["around_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction around_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction around_animation"
+      });
     }
   }
 
@@ -36550,7 +38181,11 @@ class EmojiReaction {
     try {
       return Sticker((rawData["center_animation"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at EmojiReaction center_animation"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at EmojiReaction center_animation"
+      });
     }
   }
 
@@ -36621,7 +38256,11 @@ class Animations {
           .cast<Animation>();
     } catch (e) {
       return [
-        Animation({"@type": "error", "error": "${e}", "message": "error at Animations animations"})
+        Animation({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Animations animations"
+        })
       ].cast<Animation>();
     }
   }
@@ -36693,7 +38332,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers sticker"
+      });
     }
   }
 
@@ -36702,7 +38345,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["background"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers background"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers background"
+      });
     }
   }
 
@@ -36711,7 +38358,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["lever"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers lever"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers lever"
+      });
     }
   }
 
@@ -36720,7 +38371,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["left_reel"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers left_reel"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers left_reel"
+      });
     }
   }
 
@@ -36729,7 +38384,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["center_reel"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers center_reel"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers center_reel"
+      });
     }
   }
 
@@ -36738,7 +38397,11 @@ class DiceStickers {
     try {
       return Sticker((rawData["right_reel"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at DiceStickers right_reel"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DiceStickers right_reel"
+      });
     }
   }
 
@@ -36893,7 +38556,11 @@ class SpeechRecognitionResult {
     try {
       return Error((rawData["error"] as Map));
     } catch (e) {
-      return Error({"@type": "error", "error": "${e}", "message": "error at SpeechRecognitionResult error"});
+      return Error({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at SpeechRecognitionResult error"
+      });
     }
   }
 
@@ -37026,12 +38693,15 @@ class AttachmentMenuBot {
         "name": name,
         "name_color": (name_color != null) ? name_color.toJson() : null,
         "default_icon": (default_icon != null) ? default_icon.toJson() : null,
-        "ios_static_icon": (ios_static_icon != null) ? ios_static_icon.toJson() : null,
-        "ios_animated_icon": (ios_animated_icon != null) ? ios_animated_icon.toJson() : null,
+        "ios_static_icon":
+            (ios_static_icon != null) ? ios_static_icon.toJson() : null,
+        "ios_animated_icon":
+            (ios_animated_icon != null) ? ios_animated_icon.toJson() : null,
         "android_icon": (android_icon != null) ? android_icon.toJson() : null,
         "macos_icon": (macos_icon != null) ? macos_icon.toJson() : null,
         "icon_color": (icon_color != null) ? icon_color.toJson() : null,
-        "web_app_placeholder": (web_app_placeholder != null) ? web_app_placeholder.toJson() : null,
+        "web_app_placeholder":
+            (web_app_placeholder != null) ? web_app_placeholder.toJson() : null,
       });
     } catch (e) {
       return AttachmentMenuBot({
@@ -37128,7 +38798,11 @@ class AttachmentMenuBot {
     try {
       return AttachmentMenuBotColor((rawData["name_color"] as Map));
     } catch (e) {
-      return AttachmentMenuBotColor({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot name_color"});
+      return AttachmentMenuBotColor({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot name_color"
+      });
     }
   }
 
@@ -37137,7 +38811,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["default_icon"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot default_icon"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot default_icon"
+      });
     }
   }
 
@@ -37146,7 +38824,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["ios_static_icon"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot ios_static_icon"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot ios_static_icon"
+      });
     }
   }
 
@@ -37155,7 +38837,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["ios_animated_icon"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot ios_animated_icon"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot ios_animated_icon"
+      });
     }
   }
 
@@ -37164,7 +38850,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["android_icon"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot android_icon"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot android_icon"
+      });
     }
   }
 
@@ -37173,7 +38863,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["macos_icon"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot macos_icon"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot macos_icon"
+      });
     }
   }
 
@@ -37182,7 +38876,11 @@ class AttachmentMenuBot {
     try {
       return AttachmentMenuBotColor((rawData["icon_color"] as Map));
     } catch (e) {
-      return AttachmentMenuBotColor({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot icon_color"});
+      return AttachmentMenuBotColor({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot icon_color"
+      });
     }
   }
 
@@ -37191,7 +38889,11 @@ class AttachmentMenuBot {
     try {
       return File((rawData["web_app_placeholder"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at AttachmentMenuBot web_app_placeholder"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AttachmentMenuBot web_app_placeholder"
+      });
     }
   }
 
@@ -37392,7 +39094,9 @@ class InputInlineQueryResult {
         "video_width": video_width,
         "video_height": video_height,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
-        "input_message_content": (input_message_content != null) ? input_message_content.toJson() : null,
+        "input_message_content": (input_message_content != null)
+            ? input_message_content.toJson()
+            : null,
         "url": url,
         "hide_url": hide_url,
         "description": description,
@@ -37521,7 +39225,11 @@ class InputInlineQueryResult {
     try {
       return ReplyMarkup((rawData["reply_markup"] as Map));
     } catch (e) {
-      return ReplyMarkup({"@type": "error", "error": "${e}", "message": "error at InputInlineQueryResult reply_markup"});
+      return ReplyMarkup({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputInlineQueryResult reply_markup"
+      });
     }
   }
 
@@ -37530,7 +39238,11 @@ class InputInlineQueryResult {
     try {
       return InputMessageContent((rawData["input_message_content"] as Map));
     } catch (e) {
-      return InputMessageContent({"@type": "error", "error": "${e}", "message": "error at InputInlineQueryResult input_message_content"});
+      return InputMessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputInlineQueryResult input_message_content"
+      });
     }
   }
 
@@ -37611,7 +39323,11 @@ class InputInlineQueryResult {
     try {
       return Contact((rawData["contact"] as Map));
     } catch (e) {
-      return Contact({"@type": "error", "error": "${e}", "message": "error at InputInlineQueryResult contact"});
+      return Contact({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputInlineQueryResult contact"
+      });
     }
   }
 
@@ -37647,7 +39363,11 @@ class InputInlineQueryResult {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at InputInlineQueryResult location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputInlineQueryResult location"
+      });
     }
   }
 
@@ -37719,7 +39439,11 @@ class InputInlineQueryResult {
     try {
       return Venue((rawData["venue"] as Map));
     } catch (e) {
-      return Venue({"@type": "error", "error": "${e}", "message": "error at InputInlineQueryResult venue"});
+      return Venue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputInlineQueryResult venue"
+      });
     }
   }
 
@@ -37875,7 +39599,11 @@ class InlineQueryResult {
     try {
       return Thumbnail((rawData["thumbnail"] as Map));
     } catch (e) {
-      return Thumbnail({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult thumbnail"});
+      return Thumbnail({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult thumbnail"
+      });
     }
   }
 
@@ -37884,7 +39612,11 @@ class InlineQueryResult {
     try {
       return Contact((rawData["contact"] as Map));
     } catch (e) {
-      return Contact({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult contact"});
+      return Contact({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult contact"
+      });
     }
   }
 
@@ -37893,7 +39625,11 @@ class InlineQueryResult {
     try {
       return Location((rawData["location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult location"
+      });
     }
   }
 
@@ -37902,7 +39638,11 @@ class InlineQueryResult {
     try {
       return Venue((rawData["venue"] as Map));
     } catch (e) {
-      return Venue({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult venue"});
+      return Venue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult venue"
+      });
     }
   }
 
@@ -37911,7 +39651,11 @@ class InlineQueryResult {
     try {
       return Game((rawData["game"] as Map));
     } catch (e) {
-      return Game({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult game"});
+      return Game({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult game"
+      });
     }
   }
 
@@ -37920,7 +39664,11 @@ class InlineQueryResult {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult animation"
+      });
     }
   }
 
@@ -37929,7 +39677,11 @@ class InlineQueryResult {
     try {
       return Audio((rawData["audio"] as Map));
     } catch (e) {
-      return Audio({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult audio"});
+      return Audio({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult audio"
+      });
     }
   }
 
@@ -37938,7 +39690,11 @@ class InlineQueryResult {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult document"
+      });
     }
   }
 
@@ -37947,7 +39703,11 @@ class InlineQueryResult {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult photo"
+      });
     }
   }
 
@@ -37956,7 +39716,11 @@ class InlineQueryResult {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult sticker"
+      });
     }
   }
 
@@ -37965,7 +39729,11 @@ class InlineQueryResult {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult video"
+      });
     }
   }
 
@@ -37974,7 +39742,11 @@ class InlineQueryResult {
     try {
       return VoiceNote((rawData["voice_note"] as Map));
     } catch (e) {
-      return VoiceNote({"@type": "error", "error": "${e}", "message": "error at InlineQueryResult voice_note"});
+      return VoiceNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InlineQueryResult voice_note"
+      });
     }
   }
 
@@ -38071,7 +39843,11 @@ class InlineQueryResults {
           .cast<InlineQueryResult>();
     } catch (e) {
       return [
-        InlineQueryResult({"@type": "error", "error": "${e}", "message": "error at InlineQueryResults results"})
+        InlineQueryResult({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at InlineQueryResults results"
+        })
       ].cast<InlineQueryResult>();
     }
   }
@@ -38471,7 +40247,11 @@ class GameHighScores {
           .cast<GameHighScore>();
     } catch (e) {
       return [
-        GameHighScore({"@type": "error", "error": "${e}", "message": "error at GameHighScores scores"})
+        GameHighScore({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at GameHighScores scores"
+        })
       ].cast<GameHighScore>();
     }
   }
@@ -38560,8 +40340,12 @@ class ChatEventAction {
         "old_status": (old_status != null) ? old_status.toJson() : null,
         "new_status": (new_status != null) ? new_status.toJson() : null,
         "member_id": (member_id != null) ? member_id.toJson() : null,
-        "old_available_reactions": (old_available_reactions != null) ? old_available_reactions.toJson() : null,
-        "new_available_reactions": (new_available_reactions != null) ? new_available_reactions.toJson() : null,
+        "old_available_reactions": (old_available_reactions != null)
+            ? old_available_reactions.toJson()
+            : null,
+        "new_available_reactions": (new_available_reactions != null)
+            ? new_available_reactions.toJson()
+            : null,
         "old_description": old_description,
         "new_description": new_description,
         "old_linked_chat_id": old_linked_chat_id,
@@ -38570,8 +40354,10 @@ class ChatEventAction {
         "new_location": (new_location != null) ? new_location.toJson() : null,
         "old_message_ttl": old_message_ttl,
         "new_message_ttl": new_message_ttl,
-        "old_permissions": (old_permissions != null) ? old_permissions.toJson() : null,
-        "new_permissions": (new_permissions != null) ? new_permissions.toJson() : null,
+        "old_permissions":
+            (old_permissions != null) ? old_permissions.toJson() : null,
+        "new_permissions":
+            (new_permissions != null) ? new_permissions.toJson() : null,
         "old_photo": (old_photo != null) ? old_photo.toJson() : null,
         "new_photo": (new_photo != null) ? new_photo.toJson() : null,
         "old_slow_mode_delay": old_slow_mode_delay,
@@ -38586,11 +40372,14 @@ class ChatEventAction {
         "can_invite_users": can_invite_users,
         "is_all_history_available": is_all_history_available,
         "sign_messages": sign_messages,
-        "old_invite_link": (old_invite_link != null) ? old_invite_link.toJson() : null,
-        "new_invite_link": (new_invite_link != null) ? new_invite_link.toJson() : null,
+        "old_invite_link":
+            (old_invite_link != null) ? old_invite_link.toJson() : null,
+        "new_invite_link":
+            (new_invite_link != null) ? new_invite_link.toJson() : null,
         "group_call_id": group_call_id,
         "mute_new_participants": mute_new_participants,
-        "participant_id": (participant_id != null) ? participant_id.toJson() : null,
+        "participant_id":
+            (participant_id != null) ? participant_id.toJson() : null,
         "is_muted": is_muted,
         "volume_level": volume_level,
       });
@@ -38617,7 +40406,11 @@ class ChatEventAction {
     try {
       return Message((rawData["old_message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_message"
+      });
     }
   }
 
@@ -38626,7 +40419,11 @@ class ChatEventAction {
     try {
       return Message((rawData["new_message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_message"
+      });
     }
   }
 
@@ -38635,7 +40432,11 @@ class ChatEventAction {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at ChatEventAction message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction message"
+      });
     }
   }
 
@@ -38644,7 +40445,11 @@ class ChatEventAction {
     try {
       return ChatInviteLink((rawData["invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at ChatEventAction invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction invite_link"
+      });
     }
   }
 
@@ -38671,7 +40476,11 @@ class ChatEventAction {
     try {
       return ChatMemberStatus((rawData["status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at ChatEventAction status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction status"
+      });
     }
   }
 
@@ -38680,7 +40489,11 @@ class ChatEventAction {
     try {
       return ChatMemberStatus((rawData["old_status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_status"
+      });
     }
   }
 
@@ -38689,7 +40502,11 @@ class ChatEventAction {
     try {
       return ChatMemberStatus((rawData["new_status"] as Map));
     } catch (e) {
-      return ChatMemberStatus({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_status"});
+      return ChatMemberStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_status"
+      });
     }
   }
 
@@ -38698,25 +40515,39 @@ class ChatEventAction {
     try {
       return MessageSender((rawData["member_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at ChatEventAction member_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction member_id"
+      });
     }
   }
 
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1ChatEventAction.html).
   ChatAvailableReactions get old_available_reactions {
     try {
-      return ChatAvailableReactions((rawData["old_available_reactions"] as Map));
+      return ChatAvailableReactions(
+          (rawData["old_available_reactions"] as Map));
     } catch (e) {
-      return ChatAvailableReactions({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_available_reactions"});
+      return ChatAvailableReactions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_available_reactions"
+      });
     }
   }
 
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1ChatEventAction.html).
   ChatAvailableReactions get new_available_reactions {
     try {
-      return ChatAvailableReactions((rawData["new_available_reactions"] as Map));
+      return ChatAvailableReactions(
+          (rawData["new_available_reactions"] as Map));
     } catch (e) {
-      return ChatAvailableReactions({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_available_reactions"});
+      return ChatAvailableReactions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_available_reactions"
+      });
     }
   }
 
@@ -38761,7 +40592,11 @@ class ChatEventAction {
     try {
       return ChatLocation((rawData["old_location"] as Map));
     } catch (e) {
-      return ChatLocation({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_location"});
+      return ChatLocation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_location"
+      });
     }
   }
 
@@ -38770,7 +40605,11 @@ class ChatEventAction {
     try {
       return ChatLocation((rawData["new_location"] as Map));
     } catch (e) {
-      return ChatLocation({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_location"});
+      return ChatLocation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_location"
+      });
     }
   }
 
@@ -38797,7 +40636,11 @@ class ChatEventAction {
     try {
       return ChatPermissions((rawData["old_permissions"] as Map));
     } catch (e) {
-      return ChatPermissions({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_permissions"});
+      return ChatPermissions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_permissions"
+      });
     }
   }
 
@@ -38806,7 +40649,11 @@ class ChatEventAction {
     try {
       return ChatPermissions((rawData["new_permissions"] as Map));
     } catch (e) {
-      return ChatPermissions({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_permissions"});
+      return ChatPermissions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_permissions"
+      });
     }
   }
 
@@ -38815,7 +40662,11 @@ class ChatEventAction {
     try {
       return ChatPhoto((rawData["old_photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_photo"
+      });
     }
   }
 
@@ -38824,7 +40675,11 @@ class ChatEventAction {
     try {
       return ChatPhoto((rawData["new_photo"] as Map));
     } catch (e) {
-      return ChatPhoto({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_photo"});
+      return ChatPhoto({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_photo"
+      });
     }
   }
 
@@ -38941,7 +40796,11 @@ class ChatEventAction {
     try {
       return ChatInviteLink((rawData["old_invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at ChatEventAction old_invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction old_invite_link"
+      });
     }
   }
 
@@ -38950,7 +40809,11 @@ class ChatEventAction {
     try {
       return ChatInviteLink((rawData["new_invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at ChatEventAction new_invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction new_invite_link"
+      });
     }
   }
 
@@ -38977,7 +40840,11 @@ class ChatEventAction {
     try {
       return MessageSender((rawData["participant_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at ChatEventAction participant_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEventAction participant_id"
+      });
     }
   }
 
@@ -39080,7 +40947,11 @@ class ChatEvent {
     try {
       return MessageSender((rawData["member_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at ChatEvent member_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEvent member_id"
+      });
     }
   }
 
@@ -39089,7 +40960,11 @@ class ChatEvent {
     try {
       return ChatEventAction((rawData["action"] as Map));
     } catch (e) {
-      return ChatEventAction({"@type": "error", "error": "${e}", "message": "error at ChatEvent action"});
+      return ChatEventAction({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatEvent action"
+      });
     }
   }
 
@@ -39160,7 +41035,11 @@ class ChatEvents {
           .cast<ChatEvent>();
     } catch (e) {
       return [
-        ChatEvent({"@type": "error", "error": "${e}", "message": "error at ChatEvents events"})
+        ChatEvent({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatEvents events"
+        })
       ].cast<ChatEvent>();
     }
   }
@@ -39542,7 +41421,11 @@ class LanguagePackString {
     try {
       return LanguagePackStringValue((rawData["value"] as Map));
     } catch (e) {
-      return LanguagePackStringValue({"@type": "error", "error": "${e}", "message": "error at LanguagePackString value"});
+      return LanguagePackStringValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at LanguagePackString value"
+      });
     }
   }
 
@@ -39613,7 +41496,11 @@ class LanguagePackStrings {
           .cast<LanguagePackString>();
     } catch (e) {
       return [
-        LanguagePackString({"@type": "error", "error": "${e}", "message": "error at LanguagePackStrings strings"})
+        LanguagePackString({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at LanguagePackStrings strings"
+        })
       ].cast<LanguagePackString>();
     }
   }
@@ -39878,7 +41765,11 @@ class LocalizationTargetInfo {
           .cast<LanguagePackInfo>();
     } catch (e) {
       return [
-        LanguagePackInfo({"@type": "error", "error": "${e}", "message": "error at LocalizationTargetInfo language_packs"})
+        LanguagePackInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at LocalizationTargetInfo language_packs"
+        })
       ].cast<LanguagePackInfo>();
     }
   }
@@ -40044,7 +41935,11 @@ class PremiumLimit {
     try {
       return PremiumLimitType((rawData["type"] as Map));
     } catch (e) {
-      return PremiumLimitType({"@type": "error", "error": "${e}", "message": "error at PremiumLimit type"});
+      return PremiumLimitType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumLimit type"
+      });
     }
   }
 
@@ -40141,7 +42036,11 @@ class PremiumFeatures {
           .cast<PremiumFeature>();
     } catch (e) {
       return [
-        PremiumFeature({"@type": "error", "error": "${e}", "message": "error at PremiumFeatures features"})
+        PremiumFeature({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PremiumFeatures features"
+        })
       ].cast<PremiumFeature>();
     }
   }
@@ -40157,7 +42056,11 @@ class PremiumFeatures {
           .cast<PremiumLimit>();
     } catch (e) {
       return [
-        PremiumLimit({"@type": "error", "error": "${e}", "message": "error at PremiumFeatures limits"})
+        PremiumLimit({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PremiumFeatures limits"
+        })
       ].cast<PremiumLimit>();
     }
   }
@@ -40167,7 +42070,11 @@ class PremiumFeatures {
     try {
       return InternalLinkType((rawData["payment_link"] as Map));
     } catch (e) {
-      return InternalLinkType({"@type": "error", "error": "${e}", "message": "error at PremiumFeatures payment_link"});
+      return InternalLinkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumFeatures payment_link"
+      });
     }
   }
 
@@ -40232,7 +42139,11 @@ class PremiumSource {
     try {
       return PremiumLimitType((rawData["limit_type"] as Map));
     } catch (e) {
-      return PremiumLimitType({"@type": "error", "error": "${e}", "message": "error at PremiumSource limit_type"});
+      return PremiumLimitType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumSource limit_type"
+      });
     }
   }
 
@@ -40241,7 +42152,11 @@ class PremiumSource {
     try {
       return PremiumFeature((rawData["feature"] as Map));
     } catch (e) {
-      return PremiumFeature({"@type": "error", "error": "${e}", "message": "error at PremiumSource feature"});
+      return PremiumFeature({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumSource feature"
+      });
     }
   }
 
@@ -40313,7 +42228,11 @@ class PremiumFeaturePromotionAnimation {
     try {
       return PremiumFeature((rawData["feature"] as Map));
     } catch (e) {
-      return PremiumFeature({"@type": "error", "error": "${e}", "message": "error at PremiumFeaturePromotionAnimation feature"});
+      return PremiumFeature({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumFeaturePromotionAnimation feature"
+      });
     }
   }
 
@@ -40322,7 +42241,11 @@ class PremiumFeaturePromotionAnimation {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at PremiumFeaturePromotionAnimation animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumFeaturePromotionAnimation animation"
+      });
     }
   }
 
@@ -40395,7 +42318,11 @@ class PremiumState {
     try {
       return FormattedText((rawData["state"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at PremiumState state"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PremiumState state"
+      });
     }
   }
 
@@ -40410,7 +42337,11 @@ class PremiumState {
           .cast<PremiumPaymentOption>();
     } catch (e) {
       return [
-        PremiumPaymentOption({"@type": "error", "error": "${e}", "message": "error at PremiumState payment_options"})
+        PremiumPaymentOption({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PremiumState payment_options"
+        })
       ].cast<PremiumPaymentOption>();
     }
   }
@@ -40426,7 +42357,11 @@ class PremiumState {
           .cast<PremiumFeaturePromotionAnimation>();
     } catch (e) {
       return [
-        PremiumFeaturePromotionAnimation({"@type": "error", "error": "${e}", "message": "error at PremiumState animations"})
+        PremiumFeaturePromotionAnimation({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at PremiumState animations"
+        })
       ].cast<PremiumFeaturePromotionAnimation>();
     }
   }
@@ -40934,7 +42869,11 @@ class BackgroundType {
     try {
       return BackgroundFill((rawData["fill"] as Map));
     } catch (e) {
-      return BackgroundFill({"@type": "error", "error": "${e}", "message": "error at BackgroundType fill"});
+      return BackgroundFill({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at BackgroundType fill"
+      });
     }
   }
 
@@ -41059,7 +42998,11 @@ class Background {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at Background document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Background document"
+      });
     }
   }
 
@@ -41068,7 +43011,11 @@ class Background {
     try {
       return BackgroundType((rawData["type"] as Map));
     } catch (e) {
-      return BackgroundType({"@type": "error", "error": "${e}", "message": "error at Background type"});
+      return BackgroundType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Background type"
+      });
     }
   }
 
@@ -41139,7 +43086,11 @@ class Backgrounds {
           .cast<Background>();
     } catch (e) {
       return [
-        Background({"@type": "error", "error": "${e}", "message": "error at Backgrounds backgrounds"})
+        Background({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Backgrounds backgrounds"
+        })
       ].cast<Background>();
     }
   }
@@ -41203,7 +43154,11 @@ class InputBackground {
     try {
       return InputFile((rawData["background"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputBackground background"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputBackground background"
+      });
     }
   }
 
@@ -41254,7 +43209,9 @@ class ThemeSettings {
         "@type": special_type,
         "accent_color": accent_color,
         "background": (background != null) ? background.toJson() : null,
-        "outgoing_message_fill": (outgoing_message_fill != null) ? outgoing_message_fill.toJson() : null,
+        "outgoing_message_fill": (outgoing_message_fill != null)
+            ? outgoing_message_fill.toJson()
+            : null,
         "animate_outgoing_message_fill": animate_outgoing_message_fill,
         "outgoing_message_accent_color": outgoing_message_accent_color,
       });
@@ -41290,7 +43247,11 @@ class ThemeSettings {
     try {
       return Background((rawData["background"] as Map));
     } catch (e) {
-      return Background({"@type": "error", "error": "${e}", "message": "error at ThemeSettings background"});
+      return Background({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ThemeSettings background"
+      });
     }
   }
 
@@ -41299,7 +43260,11 @@ class ThemeSettings {
     try {
       return BackgroundFill((rawData["outgoing_message_fill"] as Map));
     } catch (e) {
-      return BackgroundFill({"@type": "error", "error": "${e}", "message": "error at ThemeSettings outgoing_message_fill"});
+      return BackgroundFill({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ThemeSettings outgoing_message_fill"
+      });
     }
   }
 
@@ -41356,8 +43321,10 @@ class ChatTheme {
       return ChatTheme({
         "@type": special_type,
         "name": name,
-        "light_settings": (light_settings != null) ? light_settings.toJson() : null,
-        "dark_settings": (dark_settings != null) ? dark_settings.toJson() : null,
+        "light_settings":
+            (light_settings != null) ? light_settings.toJson() : null,
+        "dark_settings":
+            (dark_settings != null) ? dark_settings.toJson() : null,
       });
     } catch (e) {
       return ChatTheme({
@@ -41391,7 +43358,11 @@ class ChatTheme {
     try {
       return ThemeSettings((rawData["light_settings"] as Map));
     } catch (e) {
-      return ThemeSettings({"@type": "error", "error": "${e}", "message": "error at ChatTheme light_settings"});
+      return ThemeSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatTheme light_settings"
+      });
     }
   }
 
@@ -41400,7 +43371,11 @@ class ChatTheme {
     try {
       return ThemeSettings((rawData["dark_settings"] as Map));
     } catch (e) {
-      return ThemeSettings({"@type": "error", "error": "${e}", "message": "error at ChatTheme dark_settings"});
+      return ThemeSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatTheme dark_settings"
+      });
     }
   }
 
@@ -41896,7 +43871,11 @@ class PushMessageContent {
     try {
       return Animation((rawData["animation"] as Map));
     } catch (e) {
-      return Animation({"@type": "error", "error": "${e}", "message": "error at PushMessageContent animation"});
+      return Animation({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent animation"
+      });
     }
   }
 
@@ -41914,7 +43893,11 @@ class PushMessageContent {
     try {
       return Audio((rawData["audio"] as Map));
     } catch (e) {
-      return Audio({"@type": "error", "error": "${e}", "message": "error at PushMessageContent audio"});
+      return Audio({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent audio"
+      });
     }
   }
 
@@ -41932,7 +43915,11 @@ class PushMessageContent {
     try {
       return Document((rawData["document"] as Map));
     } catch (e) {
-      return Document({"@type": "error", "error": "${e}", "message": "error at PushMessageContent document"});
+      return Document({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent document"
+      });
     }
   }
 
@@ -41977,7 +43964,11 @@ class PushMessageContent {
     try {
       return Photo((rawData["photo"] as Map));
     } catch (e) {
-      return Photo({"@type": "error", "error": "${e}", "message": "error at PushMessageContent photo"});
+      return Photo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent photo"
+      });
     }
   }
 
@@ -42013,7 +44004,11 @@ class PushMessageContent {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at PushMessageContent sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent sticker"
+      });
     }
   }
 
@@ -42040,7 +44035,11 @@ class PushMessageContent {
     try {
       return Video((rawData["video"] as Map));
     } catch (e) {
-      return Video({"@type": "error", "error": "${e}", "message": "error at PushMessageContent video"});
+      return Video({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent video"
+      });
     }
   }
 
@@ -42049,7 +44048,11 @@ class PushMessageContent {
     try {
       return VideoNote((rawData["video_note"] as Map));
     } catch (e) {
-      return VideoNote({"@type": "error", "error": "${e}", "message": "error at PushMessageContent video_note"});
+      return VideoNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent video_note"
+      });
     }
   }
 
@@ -42058,7 +44061,11 @@ class PushMessageContent {
     try {
       return VoiceNote((rawData["voice_note"] as Map));
     } catch (e) {
-      return VoiceNote({"@type": "error", "error": "${e}", "message": "error at PushMessageContent voice_note"});
+      return VoiceNote({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at PushMessageContent voice_note"
+      });
     }
   }
 
@@ -42232,7 +44239,11 @@ class NotificationType {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at NotificationType message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NotificationType message"
+      });
     }
   }
 
@@ -42268,7 +44279,11 @@ class NotificationType {
     try {
       return MessageSender((rawData["sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at NotificationType sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NotificationType sender_id"
+      });
     }
   }
 
@@ -42295,7 +44310,11 @@ class NotificationType {
     try {
       return PushMessageContent((rawData["content"] as Map));
     } catch (e) {
-      return PushMessageContent({"@type": "error", "error": "${e}", "message": "error at NotificationType content"});
+      return PushMessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NotificationType content"
+      });
     }
   }
 
@@ -42461,7 +44480,11 @@ class NotificationSound {
     try {
       return File((rawData["sound"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at NotificationSound sound"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NotificationSound sound"
+      });
     }
   }
 
@@ -42532,7 +44555,11 @@ class NotificationSounds {
           .cast<NotificationSound>();
     } catch (e) {
       return [
-        NotificationSound({"@type": "error", "error": "${e}", "message": "error at NotificationSounds notification_sounds"})
+        NotificationSound({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at NotificationSounds notification_sounds"
+        })
       ].cast<NotificationSound>();
     }
   }
@@ -42627,7 +44654,11 @@ class Notification {
     try {
       return NotificationType((rawData["type"] as Map));
     } catch (e) {
-      return NotificationType({"@type": "error", "error": "${e}", "message": "error at Notification type"});
+      return NotificationType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Notification type"
+      });
     }
   }
 
@@ -42709,7 +44740,11 @@ class NotificationGroup {
     try {
       return NotificationGroupType((rawData["type"] as Map));
     } catch (e) {
-      return NotificationGroupType({"@type": "error", "error": "${e}", "message": "error at NotificationGroup type"});
+      return NotificationGroupType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NotificationGroup type"
+      });
     }
   }
 
@@ -42742,7 +44777,11 @@ class NotificationGroup {
           .cast<Notification>();
     } catch (e) {
       return [
-        Notification({"@type": "error", "error": "${e}", "message": "error at NotificationGroup notifications"})
+        Notification({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at NotificationGroup notifications"
+        })
       ].cast<Notification>();
     }
   }
@@ -42876,7 +44915,11 @@ class JsonObjectMember {
     try {
       return JsonValue((rawData["value"] as Map));
     } catch (e) {
-      return JsonValue({"@type": "error", "error": "${e}", "message": "error at JsonObjectMember value"});
+      return JsonValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at JsonObjectMember value"
+      });
     }
   }
 
@@ -42964,7 +45007,11 @@ class JsonValue {
           .cast<JsonValue>();
     } catch (e) {
       return [
-        JsonValue({"@type": "error", "error": "${e}", "message": "error at JsonValue values"})
+        JsonValue({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at JsonValue values"
+        })
       ].cast<JsonValue>();
     }
   }
@@ -42980,7 +45027,11 @@ class JsonValue {
           .cast<JsonObjectMember>();
     } catch (e) {
       return [
-        JsonObjectMember({"@type": "error", "error": "${e}", "message": "error at JsonValue members"})
+        JsonObjectMember({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at JsonValue members"
+        })
       ].cast<JsonObjectMember>();
     }
   }
@@ -43124,7 +45175,11 @@ class UserPrivacySettingRules {
           .cast<UserPrivacySettingRule>();
     } catch (e) {
       return [
-        UserPrivacySettingRule({"@type": "error", "error": "${e}", "message": "error at UserPrivacySettingRules rules"})
+        UserPrivacySettingRule({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at UserPrivacySettingRules rules"
+        })
       ].cast<UserPrivacySettingRule>();
     }
   }
@@ -43426,7 +45481,11 @@ class Session {
     try {
       return SessionType((rawData["type"] as Map));
     } catch (e) {
-      return SessionType({"@type": "error", "error": "${e}", "message": "error at Session type"});
+      return SessionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Session type"
+      });
     }
   }
 
@@ -43607,7 +45666,11 @@ class Sessions {
           .cast<Session>();
     } catch (e) {
       return [
-        Session({"@type": "error", "error": "${e}", "message": "error at Sessions sessions"})
+        Session({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Sessions sessions"
+        })
       ].cast<Session>();
     }
   }
@@ -43837,7 +45900,11 @@ class ConnectedWebsites {
           .cast<ConnectedWebsite>();
     } catch (e) {
       return [
-        ConnectedWebsite({"@type": "error", "error": "${e}", "message": "error at ConnectedWebsites websites"})
+        ConnectedWebsite({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ConnectedWebsites websites"
+        })
       ].cast<ConnectedWebsite>();
     }
   }
@@ -43993,7 +46060,11 @@ class TargetChat {
     try {
       return InternalLinkType((rawData["link"] as Map));
     } catch (e) {
-      return InternalLinkType({"@type": "error", "error": "${e}", "message": "error at TargetChat link"});
+      return InternalLinkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at TargetChat link"
+      });
     }
   }
 
@@ -44067,7 +46138,9 @@ class InternalLinkType {
         "background_name": background_name,
         "start_parameter": start_parameter,
         "autostart": autostart,
-        "administrator_rights": (administrator_rights != null) ? administrator_rights.toJson() : null,
+        "administrator_rights": (administrator_rights != null)
+            ? administrator_rights.toJson()
+            : null,
         "invite_link": invite_link,
         "game_short_name": game_short_name,
         "fallback_url": fallback_url,
@@ -44116,7 +46189,11 @@ class InternalLinkType {
     try {
       return TargetChat((rawData["target_chat"] as Map));
     } catch (e) {
-      return TargetChat({"@type": "error", "error": "${e}", "message": "error at InternalLinkType target_chat"});
+      return TargetChat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InternalLinkType target_chat"
+      });
     }
   }
 
@@ -44179,7 +46256,11 @@ class InternalLinkType {
     try {
       return ChatAdministratorRights((rawData["administrator_rights"] as Map));
     } catch (e) {
-      return ChatAdministratorRights({"@type": "error", "error": "${e}", "message": "error at InternalLinkType administrator_rights"});
+      return ChatAdministratorRights({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InternalLinkType administrator_rights"
+      });
     }
   }
 
@@ -44233,7 +46314,11 @@ class InternalLinkType {
     try {
       return FormattedText((rawData["text"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at InternalLinkType text"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InternalLinkType text"
+      });
     }
   }
 
@@ -44341,7 +46426,11 @@ class InternalLinkType {
     try {
       return ProxyType((rawData["type"] as Map));
     } catch (e) {
-      return ProxyType({"@type": "error", "error": "${e}", "message": "error at InternalLinkType type"});
+      return ProxyType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InternalLinkType type"
+      });
     }
   }
 
@@ -44556,7 +46645,11 @@ class MessageLinkInfo {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at MessageLinkInfo message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageLinkInfo message"
+      });
     }
   }
 
@@ -44759,7 +46852,11 @@ class StorageStatisticsByFileType {
     try {
       return FileType((rawData["file_type"] as Map));
     } catch (e) {
-      return FileType({"@type": "error", "error": "${e}", "message": "error at StorageStatisticsByFileType file_type"});
+      return FileType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at StorageStatisticsByFileType file_type"
+      });
     }
   }
 
@@ -44881,7 +46978,11 @@ class StorageStatisticsByChat {
           .cast<StorageStatisticsByFileType>();
     } catch (e) {
       return [
-        StorageStatisticsByFileType({"@type": "error", "error": "${e}", "message": "error at StorageStatisticsByChat by_file_type"})
+        StorageStatisticsByFileType({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StorageStatisticsByChat by_file_type"
+        })
       ].cast<StorageStatisticsByFileType>();
     }
   }
@@ -44975,7 +47076,11 @@ class StorageStatistics {
           .cast<StorageStatisticsByChat>();
     } catch (e) {
       return [
-        StorageStatisticsByChat({"@type": "error", "error": "${e}", "message": "error at StorageStatistics by_chat"})
+        StorageStatisticsByChat({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at StorageStatistics by_chat"
+        })
       ].cast<StorageStatisticsByChat>();
     }
   }
@@ -45261,7 +47366,11 @@ class NetworkStatisticsEntry {
     try {
       return FileType((rawData["file_type"] as Map));
     } catch (e) {
-      return FileType({"@type": "error", "error": "${e}", "message": "error at NetworkStatisticsEntry file_type"});
+      return FileType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NetworkStatisticsEntry file_type"
+      });
     }
   }
 
@@ -45270,7 +47379,11 @@ class NetworkStatisticsEntry {
     try {
       return NetworkType((rawData["network_type"] as Map));
     } catch (e) {
-      return NetworkType({"@type": "error", "error": "${e}", "message": "error at NetworkStatisticsEntry network_type"});
+      return NetworkType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at NetworkStatisticsEntry network_type"
+      });
     }
   }
 
@@ -45379,7 +47492,11 @@ class NetworkStatistics {
           .cast<NetworkStatisticsEntry>();
     } catch (e) {
       return [
-        NetworkStatisticsEntry({"@type": "error", "error": "${e}", "message": "error at NetworkStatistics entries"})
+        NetworkStatisticsEntry({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at NetworkStatistics entries"
+        })
       ].cast<NetworkStatisticsEntry>();
     }
   }
@@ -45583,7 +47700,11 @@ class AutoDownloadSettingsPresets {
     try {
       return AutoDownloadSettings((rawData["low"] as Map));
     } catch (e) {
-      return AutoDownloadSettings({"@type": "error", "error": "${e}", "message": "error at AutoDownloadSettingsPresets low"});
+      return AutoDownloadSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AutoDownloadSettingsPresets low"
+      });
     }
   }
 
@@ -45592,7 +47713,11 @@ class AutoDownloadSettingsPresets {
     try {
       return AutoDownloadSettings((rawData["medium"] as Map));
     } catch (e) {
-      return AutoDownloadSettings({"@type": "error", "error": "${e}", "message": "error at AutoDownloadSettingsPresets medium"});
+      return AutoDownloadSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AutoDownloadSettingsPresets medium"
+      });
     }
   }
 
@@ -45601,7 +47726,11 @@ class AutoDownloadSettingsPresets {
     try {
       return AutoDownloadSettings((rawData["high"] as Map));
     } catch (e) {
-      return AutoDownloadSettings({"@type": "error", "error": "${e}", "message": "error at AutoDownloadSettingsPresets high"});
+      return AutoDownloadSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at AutoDownloadSettingsPresets high"
+      });
     }
   }
 
@@ -45786,7 +47915,11 @@ class TMeUrlType {
     try {
       return ChatInviteLinkInfo((rawData["info"] as Map));
     } catch (e) {
-      return ChatInviteLinkInfo({"@type": "error", "error": "${e}", "message": "error at TMeUrlType info"});
+      return ChatInviteLinkInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at TMeUrlType info"
+      });
     }
   }
 
@@ -45867,7 +48000,11 @@ class TMeUrl {
     try {
       return TMeUrlType((rawData["type"] as Map));
     } catch (e) {
-      return TMeUrlType({"@type": "error", "error": "${e}", "message": "error at TMeUrl type"});
+      return TMeUrlType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at TMeUrl type"
+      });
     }
   }
 
@@ -45938,7 +48075,11 @@ class TMeUrls {
           .cast<TMeUrl>();
     } catch (e) {
       return [
-        TMeUrl({"@type": "error", "error": "${e}", "message": "error at TMeUrls urls"})
+        TMeUrl({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at TMeUrls urls"
+        })
       ].cast<TMeUrl>();
     }
   }
@@ -46318,7 +48459,11 @@ class DeepLinkInfo {
     try {
       return FormattedText((rawData["text"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at DeepLinkInfo text"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at DeepLinkInfo text"
+      });
     }
   }
 
@@ -46598,7 +48743,11 @@ class Proxy {
     try {
       return ProxyType((rawData["type"] as Map));
     } catch (e) {
-      return ProxyType({"@type": "error", "error": "${e}", "message": "error at Proxy type"});
+      return ProxyType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Proxy type"
+      });
     }
   }
 
@@ -46669,7 +48818,11 @@ class Proxies {
           .cast<Proxy>();
     } catch (e) {
       return [
-        Proxy({"@type": "error", "error": "${e}", "message": "error at Proxies proxies"})
+        Proxy({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Proxies proxies"
+        })
       ].cast<Proxy>();
     }
   }
@@ -46712,7 +48865,8 @@ class InputSticker {
         "sticker": (sticker != null) ? sticker.toJson() : null,
         "emojis": emojis,
         "format": (format != null) ? format.toJson() : null,
-        "mask_position": (mask_position != null) ? mask_position.toJson() : null,
+        "mask_position":
+            (mask_position != null) ? mask_position.toJson() : null,
       });
     } catch (e) {
       return InputSticker({
@@ -46737,7 +48891,11 @@ class InputSticker {
     try {
       return InputFile((rawData["sticker"] as Map));
     } catch (e) {
-      return InputFile({"@type": "error", "error": "${e}", "message": "error at InputSticker sticker"});
+      return InputFile({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputSticker sticker"
+      });
     }
   }
 
@@ -46755,7 +48913,11 @@ class InputSticker {
     try {
       return StickerFormat((rawData["format"] as Map));
     } catch (e) {
-      return StickerFormat({"@type": "error", "error": "${e}", "message": "error at InputSticker format"});
+      return StickerFormat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputSticker format"
+      });
     }
   }
 
@@ -46764,7 +48926,11 @@ class InputSticker {
     try {
       return MaskPosition((rawData["mask_position"] as Map));
     } catch (e) {
-      return MaskPosition({"@type": "error", "error": "${e}", "message": "error at InputSticker mask_position"});
+      return MaskPosition({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at InputSticker mask_position"
+      });
     }
   }
 
@@ -47407,14 +49573,21 @@ class ChatStatistics {
         "@type": special_type,
         "period": (period != null) ? period.toJson() : null,
         "member_count": (member_count != null) ? member_count.toJson() : null,
-        "message_count": (message_count != null) ? message_count.toJson() : null,
+        "message_count":
+            (message_count != null) ? message_count.toJson() : null,
         "viewer_count": (viewer_count != null) ? viewer_count.toJson() : null,
         "sender_count": (sender_count != null) ? sender_count.toJson() : null,
-        "member_count_graph": (member_count_graph != null) ? member_count_graph.toJson() : null,
+        "member_count_graph":
+            (member_count_graph != null) ? member_count_graph.toJson() : null,
         "join_graph": (join_graph != null) ? join_graph.toJson() : null,
-        "join_by_source_graph": (join_by_source_graph != null) ? join_by_source_graph.toJson() : null,
-        "language_graph": (language_graph != null) ? language_graph.toJson() : null,
-        "message_content_graph": (message_content_graph != null) ? message_content_graph.toJson() : null,
+        "join_by_source_graph": (join_by_source_graph != null)
+            ? join_by_source_graph.toJson()
+            : null,
+        "language_graph":
+            (language_graph != null) ? language_graph.toJson() : null,
+        "message_content_graph": (message_content_graph != null)
+            ? message_content_graph.toJson()
+            : null,
         "action_graph": (action_graph != null) ? action_graph.toJson() : null,
         "day_graph": (day_graph != null) ? day_graph.toJson() : null,
         "week_graph": (week_graph != null) ? week_graph.toJson() : null,
@@ -47425,7 +49598,8 @@ class ChatStatistics {
             : null,
         "top_administrators": (top_administrators != null)
             ? top_administrators.map((e) {
-                return ChatStatisticsAdministratorActionsInfo((e as Map)).toJson();
+                return ChatStatisticsAdministratorActionsInfo((e as Map))
+                    .toJson();
               }).toList()
             : null,
         "top_inviters": (top_inviters != null)
@@ -47433,17 +49607,29 @@ class ChatStatistics {
                 return ChatStatisticsInviterInfo((e as Map)).toJson();
               }).toList()
             : null,
-        "mean_view_count": (mean_view_count != null) ? mean_view_count.toJson() : null,
-        "mean_share_count": (mean_share_count != null) ? mean_share_count.toJson() : null,
+        "mean_view_count":
+            (mean_view_count != null) ? mean_view_count.toJson() : null,
+        "mean_share_count":
+            (mean_share_count != null) ? mean_share_count.toJson() : null,
         "enabled_notifications_percentage": enabled_notifications_percentage,
         "mute_graph": (mute_graph != null) ? mute_graph.toJson() : null,
-        "view_count_by_hour_graph": (view_count_by_hour_graph != null) ? view_count_by_hour_graph.toJson() : null,
-        "view_count_by_source_graph": (view_count_by_source_graph != null) ? view_count_by_source_graph.toJson() : null,
-        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
-        "instant_view_interaction_graph": (instant_view_interaction_graph != null) ? instant_view_interaction_graph.toJson() : null,
+        "view_count_by_hour_graph": (view_count_by_hour_graph != null)
+            ? view_count_by_hour_graph.toJson()
+            : null,
+        "view_count_by_source_graph": (view_count_by_source_graph != null)
+            ? view_count_by_source_graph.toJson()
+            : null,
+        "message_interaction_graph": (message_interaction_graph != null)
+            ? message_interaction_graph.toJson()
+            : null,
+        "instant_view_interaction_graph":
+            (instant_view_interaction_graph != null)
+                ? instant_view_interaction_graph.toJson()
+                : null,
         "recent_message_interactions": (recent_message_interactions != null)
             ? recent_message_interactions.map((e) {
-                return ChatStatisticsMessageInteractionInfo((e as Map)).toJson();
+                return ChatStatisticsMessageInteractionInfo((e as Map))
+                    .toJson();
               }).toList()
             : null,
       });
@@ -47470,7 +49656,11 @@ class ChatStatistics {
     try {
       return DateRange((rawData["period"] as Map));
     } catch (e) {
-      return DateRange({"@type": "error", "error": "${e}", "message": "error at ChatStatistics period"});
+      return DateRange({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics period"
+      });
     }
   }
 
@@ -47479,7 +49669,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["member_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics member_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics member_count"
+      });
     }
   }
 
@@ -47488,7 +49682,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["message_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics message_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics message_count"
+      });
     }
   }
 
@@ -47497,7 +49695,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["viewer_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics viewer_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics viewer_count"
+      });
     }
   }
 
@@ -47506,7 +49708,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["sender_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics sender_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics sender_count"
+      });
     }
   }
 
@@ -47515,7 +49721,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["member_count_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics member_count_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics member_count_graph"
+      });
     }
   }
 
@@ -47524,7 +49734,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["join_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics join_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics join_graph"
+      });
     }
   }
 
@@ -47533,7 +49747,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["join_by_source_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics join_by_source_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics join_by_source_graph"
+      });
     }
   }
 
@@ -47542,7 +49760,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["language_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics language_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics language_graph"
+      });
     }
   }
 
@@ -47551,7 +49773,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["message_content_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics message_content_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics message_content_graph"
+      });
     }
   }
 
@@ -47560,7 +49786,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["action_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics action_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics action_graph"
+      });
     }
   }
 
@@ -47569,7 +49799,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["day_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics day_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics day_graph"
+      });
     }
   }
 
@@ -47578,7 +49812,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["week_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics week_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics week_graph"
+      });
     }
   }
 
@@ -47593,7 +49831,11 @@ class ChatStatistics {
           .cast<ChatStatisticsMessageSenderInfo>();
     } catch (e) {
       return [
-        ChatStatisticsMessageSenderInfo({"@type": "error", "error": "${e}", "message": "error at ChatStatistics top_senders"})
+        ChatStatisticsMessageSenderInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatStatistics top_senders"
+        })
       ].cast<ChatStatisticsMessageSenderInfo>();
     }
   }
@@ -47609,7 +49851,11 @@ class ChatStatistics {
           .cast<ChatStatisticsAdministratorActionsInfo>();
     } catch (e) {
       return [
-        ChatStatisticsAdministratorActionsInfo({"@type": "error", "error": "${e}", "message": "error at ChatStatistics top_administrators"})
+        ChatStatisticsAdministratorActionsInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatStatistics top_administrators"
+        })
       ].cast<ChatStatisticsAdministratorActionsInfo>();
     }
   }
@@ -47625,7 +49871,11 @@ class ChatStatistics {
           .cast<ChatStatisticsInviterInfo>();
     } catch (e) {
       return [
-        ChatStatisticsInviterInfo({"@type": "error", "error": "${e}", "message": "error at ChatStatistics top_inviters"})
+        ChatStatisticsInviterInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatStatistics top_inviters"
+        })
       ].cast<ChatStatisticsInviterInfo>();
     }
   }
@@ -47635,7 +49885,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["mean_view_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics mean_view_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics mean_view_count"
+      });
     }
   }
 
@@ -47644,7 +49898,11 @@ class ChatStatistics {
     try {
       return StatisticalValue((rawData["mean_share_count"] as Map));
     } catch (e) {
-      return StatisticalValue({"@type": "error", "error": "${e}", "message": "error at ChatStatistics mean_share_count"});
+      return StatisticalValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics mean_share_count"
+      });
     }
   }
 
@@ -47662,7 +49920,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["mute_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics mute_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics mute_graph"
+      });
     }
   }
 
@@ -47671,7 +49933,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["view_count_by_hour_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics view_count_by_hour_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics view_count_by_hour_graph"
+      });
     }
   }
 
@@ -47680,7 +49946,11 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["view_count_by_source_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics view_count_by_source_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics view_count_by_source_graph"
+      });
     }
   }
 
@@ -47689,16 +49959,25 @@ class ChatStatistics {
     try {
       return StatisticalGraph((rawData["message_interaction_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics message_interaction_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics message_interaction_graph"
+      });
     }
   }
 
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1ChatStatistics.html).
   StatisticalGraph get instant_view_interaction_graph {
     try {
-      return StatisticalGraph((rawData["instant_view_interaction_graph"] as Map));
+      return StatisticalGraph(
+          (rawData["instant_view_interaction_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at ChatStatistics instant_view_interaction_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at ChatStatistics instant_view_interaction_graph"
+      });
     }
   }
 
@@ -47713,7 +49992,11 @@ class ChatStatistics {
           .cast<ChatStatisticsMessageInteractionInfo>();
     } catch (e) {
       return [
-        ChatStatisticsMessageInteractionInfo({"@type": "error", "error": "${e}", "message": "error at ChatStatistics recent_message_interactions"})
+        ChatStatisticsMessageInteractionInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at ChatStatistics recent_message_interactions"
+        })
       ].cast<ChatStatisticsMessageInteractionInfo>();
     }
   }
@@ -47750,7 +50033,9 @@ class MessageStatistics {
     try {
       return MessageStatistics({
         "@type": special_type,
-        "message_interaction_graph": (message_interaction_graph != null) ? message_interaction_graph.toJson() : null,
+        "message_interaction_graph": (message_interaction_graph != null)
+            ? message_interaction_graph.toJson()
+            : null,
       });
     } catch (e) {
       return MessageStatistics({
@@ -47775,7 +50060,11 @@ class MessageStatistics {
     try {
       return StatisticalGraph((rawData["message_interaction_graph"] as Map));
     } catch (e) {
-      return StatisticalGraph({"@type": "error", "error": "${e}", "message": "error at MessageStatistics message_interaction_graph"});
+      return StatisticalGraph({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at MessageStatistics message_interaction_graph"
+      });
     }
   }
 
@@ -47886,8 +50175,10 @@ class VectorPathCommand {
       return VectorPathCommand({
         "@type": special_type,
         "end_point": (end_point != null) ? end_point.toJson() : null,
-        "start_control_point": (start_control_point != null) ? start_control_point.toJson() : null,
-        "end_control_point": (end_control_point != null) ? end_control_point.toJson() : null,
+        "start_control_point":
+            (start_control_point != null) ? start_control_point.toJson() : null,
+        "end_control_point":
+            (end_control_point != null) ? end_control_point.toJson() : null,
       });
     } catch (e) {
       return VectorPathCommand({
@@ -47912,7 +50203,11 @@ class VectorPathCommand {
     try {
       return Point((rawData["end_point"] as Map));
     } catch (e) {
-      return Point({"@type": "error", "error": "${e}", "message": "error at VectorPathCommand end_point"});
+      return Point({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VectorPathCommand end_point"
+      });
     }
   }
 
@@ -47921,7 +50216,11 @@ class VectorPathCommand {
     try {
       return Point((rawData["start_control_point"] as Map));
     } catch (e) {
-      return Point({"@type": "error", "error": "${e}", "message": "error at VectorPathCommand start_control_point"});
+      return Point({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VectorPathCommand start_control_point"
+      });
     }
   }
 
@@ -47930,7 +50229,11 @@ class VectorPathCommand {
     try {
       return Point((rawData["end_control_point"] as Map));
     } catch (e) {
-      return Point({"@type": "error", "error": "${e}", "message": "error at VectorPathCommand end_control_point"});
+      return Point({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at VectorPathCommand end_control_point"
+      });
     }
   }
 
@@ -48189,7 +50492,8 @@ class Update {
     try {
       return Update({
         "@type": special_type,
-        "authorization_state": (authorization_state != null) ? authorization_state.toJson() : null,
+        "authorization_state":
+            (authorization_state != null) ? authorization_state.toJson() : null,
         "message": (message != null) ? message.toJson() : null,
         "chat_id": chat_id,
         "message_id": message_id,
@@ -48200,7 +50504,8 @@ class Update {
         "edit_date": edit_date,
         "reply_markup": (reply_markup != null) ? reply_markup.toJson() : null,
         "is_pinned": is_pinned,
-        "interaction_info": (interaction_info != null) ? interaction_info.toJson() : null,
+        "interaction_info":
+            (interaction_info != null) ? interaction_info.toJson() : null,
         "unread_mention_count": unread_mention_count,
         "unread_reactions": (unread_reactions != null)
             ? unread_reactions.map((e) {
@@ -48223,12 +50528,19 @@ class Update {
         "unread_count": unread_count,
         "last_read_outbox_message_id": last_read_outbox_message_id,
         "action_bar": (action_bar != null) ? action_bar.toJson() : null,
-        "available_reactions": (available_reactions != null) ? available_reactions.toJson() : null,
-        "draft_message": (draft_message != null) ? draft_message.toJson() : null,
-        "message_sender_id": (message_sender_id != null) ? message_sender_id.toJson() : null,
+        "available_reactions":
+            (available_reactions != null) ? available_reactions.toJson() : null,
+        "draft_message":
+            (draft_message != null) ? draft_message.toJson() : null,
+        "message_sender_id":
+            (message_sender_id != null) ? message_sender_id.toJson() : null,
         "message_ttl": message_ttl,
-        "notification_settings": (notification_settings != null) ? notification_settings.toJson() : null,
-        "pending_join_requests": (pending_join_requests != null) ? pending_join_requests.toJson() : null,
+        "notification_settings": (notification_settings != null)
+            ? notification_settings.toJson()
+            : null,
+        "pending_join_requests": (pending_join_requests != null)
+            ? pending_join_requests.toJson()
+            : null,
         "reply_markup_message_id": reply_markup_message_id,
         "theme_name": theme_name,
         "video_chat": (video_chat != null) ? video_chat.toJson() : null,
@@ -48276,11 +50588,16 @@ class Update {
         "basic_group": (basic_group != null) ? basic_group.toJson() : null,
         "supergroup": (supergroup != null) ? supergroup.toJson() : null,
         "secret_chat": (secret_chat != null) ? secret_chat.toJson() : null,
-        "user_full_info": (user_full_info != null) ? user_full_info.toJson() : null,
+        "user_full_info":
+            (user_full_info != null) ? user_full_info.toJson() : null,
         "basic_group_id": basic_group_id,
-        "basic_group_full_info": (basic_group_full_info != null) ? basic_group_full_info.toJson() : null,
+        "basic_group_full_info": (basic_group_full_info != null)
+            ? basic_group_full_info.toJson()
+            : null,
         "supergroup_id": supergroup_id,
-        "supergroup_full_info": (supergroup_full_info != null) ? supergroup_full_info.toJson() : null,
+        "supergroup_full_info": (supergroup_full_info != null)
+            ? supergroup_full_info.toJson()
+            : null,
         "content": (content != null) ? content.toJson() : null,
         "file": (file != null) ? file.toJson() : null,
         "generation_id": generation_id,
@@ -48289,7 +50606,8 @@ class Update {
         "conversion": conversion,
         "total_size": total_size,
         "downloaded_size": downloaded_size,
-        "file_download": (file_download != null) ? file_download.toJson() : null,
+        "file_download":
+            (file_download != null) ? file_download.toJson() : null,
         "counts": (counts != null) ? counts.toJson() : null,
         "file_id": file_id,
         "complete_date": complete_date,
@@ -48332,7 +50650,8 @@ class Update {
             : null,
         "state": (state != null) ? state.toJson() : null,
         "terms_of_service_id": terms_of_service_id,
-        "terms_of_service": (terms_of_service != null) ? terms_of_service.toJson() : null,
+        "terms_of_service":
+            (terms_of_service != null) ? terms_of_service.toJson() : null,
         "users_nearby": (users_nearby != null)
             ? users_nearby.map((e) {
                 return ChatNearby((e as Map)).toJson();
@@ -48345,7 +50664,8 @@ class Update {
             : null,
         "web_app_launch_id": web_app_launch_id,
         "emojis": emojis,
-        "reaction_type": (reaction_type != null) ? reaction_type.toJson() : null,
+        "reaction_type":
+            (reaction_type != null) ? reaction_type.toJson() : null,
         "sticker": (sticker != null) ? sticker.toJson() : null,
         "provider": provider,
         "added_actions": (added_actions != null)
@@ -48360,7 +50680,8 @@ class Update {
             : null,
         "id": id,
         "sender_user_id": sender_user_id,
-        "user_location": (user_location != null) ? user_location.toJson() : null,
+        "user_location":
+            (user_location != null) ? user_location.toJson() : null,
         "chat_type": (chat_type != null) ? chat_type.toJson() : null,
         "query": query,
         "offset": offset,
@@ -48369,7 +50690,8 @@ class Update {
         "chat_instance": chat_instance,
         "payload": (payload != null) ? payload.toJson() : null,
         "invoice_payload": invoice_payload,
-        "shipping_address": (shipping_address != null) ? shipping_address.toJson() : null,
+        "shipping_address":
+            (shipping_address != null) ? shipping_address.toJson() : null,
         "currency": currency,
         "total_amount": total_amount,
         "shipping_option_id": shipping_option_id,
@@ -48382,8 +50704,10 @@ class Update {
         "actor_user_id": actor_user_id,
         "date": date,
         "invite_link": (invite_link != null) ? invite_link.toJson() : null,
-        "old_chat_member": (old_chat_member != null) ? old_chat_member.toJson() : null,
-        "new_chat_member": (new_chat_member != null) ? new_chat_member.toJson() : null,
+        "old_chat_member":
+            (old_chat_member != null) ? old_chat_member.toJson() : null,
+        "new_chat_member":
+            (new_chat_member != null) ? new_chat_member.toJson() : null,
         "request": (request != null) ? request.toJson() : null,
       });
     } catch (e) {
@@ -48409,7 +50733,11 @@ class Update {
     try {
       return AuthorizationState((rawData["authorization_state"] as Map));
     } catch (e) {
-      return AuthorizationState({"@type": "error", "error": "${e}", "message": "error at Update authorization_state"});
+      return AuthorizationState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update authorization_state"
+      });
     }
   }
 
@@ -48418,7 +50746,11 @@ class Update {
     try {
       return Message((rawData["message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at Update message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update message"
+      });
     }
   }
 
@@ -48472,7 +50804,11 @@ class Update {
     try {
       return MessageContent((rawData["new_content"] as Map));
     } catch (e) {
-      return MessageContent({"@type": "error", "error": "${e}", "message": "error at Update new_content"});
+      return MessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update new_content"
+      });
     }
   }
 
@@ -48490,7 +50826,11 @@ class Update {
     try {
       return ReplyMarkup((rawData["reply_markup"] as Map));
     } catch (e) {
-      return ReplyMarkup({"@type": "error", "error": "${e}", "message": "error at Update reply_markup"});
+      return ReplyMarkup({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update reply_markup"
+      });
     }
   }
 
@@ -48508,7 +50848,11 @@ class Update {
     try {
       return MessageInteractionInfo((rawData["interaction_info"] as Map));
     } catch (e) {
-      return MessageInteractionInfo({"@type": "error", "error": "${e}", "message": "error at Update interaction_info"});
+      return MessageInteractionInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update interaction_info"
+      });
     }
   }
 
@@ -48532,7 +50876,11 @@ class Update {
           .cast<UnreadReaction>();
     } catch (e) {
       return [
-        UnreadReaction({"@type": "error", "error": "${e}", "message": "error at Update unread_reactions"})
+        UnreadReaction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update unread_reactions"
+        })
       ].cast<UnreadReaction>();
     }
   }
@@ -48551,7 +50899,11 @@ class Update {
     try {
       return Chat((rawData["chat"] as Map));
     } catch (e) {
-      return Chat({"@type": "error", "error": "${e}", "message": "error at Update chat"});
+      return Chat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update chat"
+      });
     }
   }
 
@@ -48569,7 +50921,11 @@ class Update {
     try {
       return ChatPhotoInfo((rawData["photo"] as Map));
     } catch (e) {
-      return ChatPhotoInfo({"@type": "error", "error": "${e}", "message": "error at Update photo"});
+      return ChatPhotoInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update photo"
+      });
     }
   }
 
@@ -48578,7 +50934,11 @@ class Update {
     try {
       return ChatPermissions((rawData["permissions"] as Map));
     } catch (e) {
-      return ChatPermissions({"@type": "error", "error": "${e}", "message": "error at Update permissions"});
+      return ChatPermissions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update permissions"
+      });
     }
   }
 
@@ -48587,7 +50947,11 @@ class Update {
     try {
       return Message((rawData["last_message"] as Map));
     } catch (e) {
-      return Message({"@type": "error", "error": "${e}", "message": "error at Update last_message"});
+      return Message({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update last_message"
+      });
     }
   }
 
@@ -48602,7 +50966,11 @@ class Update {
           .cast<ChatPosition>();
     } catch (e) {
       return [
-        ChatPosition({"@type": "error", "error": "${e}", "message": "error at Update positions"})
+        ChatPosition({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update positions"
+        })
       ].cast<ChatPosition>();
     }
   }
@@ -48612,7 +50980,11 @@ class Update {
     try {
       return ChatPosition((rawData["position"] as Map));
     } catch (e) {
-      return ChatPosition({"@type": "error", "error": "${e}", "message": "error at Update position"});
+      return ChatPosition({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update position"
+      });
     }
   }
 
@@ -48648,7 +51020,11 @@ class Update {
     try {
       return ChatActionBar((rawData["action_bar"] as Map));
     } catch (e) {
-      return ChatActionBar({"@type": "error", "error": "${e}", "message": "error at Update action_bar"});
+      return ChatActionBar({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update action_bar"
+      });
     }
   }
 
@@ -48657,7 +51033,11 @@ class Update {
     try {
       return ChatAvailableReactions((rawData["available_reactions"] as Map));
     } catch (e) {
-      return ChatAvailableReactions({"@type": "error", "error": "${e}", "message": "error at Update available_reactions"});
+      return ChatAvailableReactions({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update available_reactions"
+      });
     }
   }
 
@@ -48666,7 +51046,11 @@ class Update {
     try {
       return DraftMessage((rawData["draft_message"] as Map));
     } catch (e) {
-      return DraftMessage({"@type": "error", "error": "${e}", "message": "error at Update draft_message"});
+      return DraftMessage({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update draft_message"
+      });
     }
   }
 
@@ -48675,7 +51059,11 @@ class Update {
     try {
       return MessageSender((rawData["message_sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at Update message_sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update message_sender_id"
+      });
     }
   }
 
@@ -48691,9 +51079,14 @@ class Update {
   /// Tdlib Api methods full check [Tdlib-Functions](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1Update.html).
   ScopeNotificationSettings get notification_settings {
     try {
-      return ScopeNotificationSettings((rawData["notification_settings"] as Map));
+      return ScopeNotificationSettings(
+          (rawData["notification_settings"] as Map));
     } catch (e) {
-      return ScopeNotificationSettings({"@type": "error", "error": "${e}", "message": "error at Update notification_settings"});
+      return ScopeNotificationSettings({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update notification_settings"
+      });
     }
   }
 
@@ -48702,7 +51095,11 @@ class Update {
     try {
       return ChatJoinRequestsInfo((rawData["pending_join_requests"] as Map));
     } catch (e) {
-      return ChatJoinRequestsInfo({"@type": "error", "error": "${e}", "message": "error at Update pending_join_requests"});
+      return ChatJoinRequestsInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update pending_join_requests"
+      });
     }
   }
 
@@ -48729,7 +51126,11 @@ class Update {
     try {
       return VideoChat((rawData["video_chat"] as Map));
     } catch (e) {
-      return VideoChat({"@type": "error", "error": "${e}", "message": "error at Update video_chat"});
+      return VideoChat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update video_chat"
+      });
     }
   }
 
@@ -48789,7 +51190,11 @@ class Update {
           .cast<ChatFilterInfo>();
     } catch (e) {
       return [
-        ChatFilterInfo({"@type": "error", "error": "${e}", "message": "error at Update chat_filters"})
+        ChatFilterInfo({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update chat_filters"
+        })
       ].cast<ChatFilterInfo>();
     }
   }
@@ -48817,7 +51222,11 @@ class Update {
     try {
       return NotificationSettingsScope((rawData["scope"] as Map));
     } catch (e) {
-      return NotificationSettingsScope({"@type": "error", "error": "${e}", "message": "error at Update scope"});
+      return NotificationSettingsScope({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update scope"
+      });
     }
   }
 
@@ -48835,7 +51244,11 @@ class Update {
     try {
       return Notification((rawData["notification"] as Map));
     } catch (e) {
-      return Notification({"@type": "error", "error": "${e}", "message": "error at Update notification"});
+      return Notification({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update notification"
+      });
     }
   }
 
@@ -48886,7 +51299,11 @@ class Update {
           .cast<Notification>();
     } catch (e) {
       return [
-        Notification({"@type": "error", "error": "${e}", "message": "error at Update added_notifications"})
+        Notification({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update added_notifications"
+        })
       ].cast<Notification>();
     }
   }
@@ -48911,7 +51328,11 @@ class Update {
           .cast<NotificationGroup>();
     } catch (e) {
       return [
-        NotificationGroup({"@type": "error", "error": "${e}", "message": "error at Update groups"})
+        NotificationGroup({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update groups"
+        })
       ].cast<NotificationGroup>();
     }
   }
@@ -48975,7 +51396,11 @@ class Update {
     try {
       return MessageSender((rawData["sender_id"] as Map));
     } catch (e) {
-      return MessageSender({"@type": "error", "error": "${e}", "message": "error at Update sender_id"});
+      return MessageSender({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update sender_id"
+      });
     }
   }
 
@@ -48984,7 +51409,11 @@ class Update {
     try {
       return ChatAction((rawData["action"] as Map));
     } catch (e) {
-      return ChatAction({"@type": "error", "error": "${e}", "message": "error at Update action"});
+      return ChatAction({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update action"
+      });
     }
   }
 
@@ -49002,7 +51431,11 @@ class Update {
     try {
       return UserStatus((rawData["status"] as Map));
     } catch (e) {
-      return UserStatus({"@type": "error", "error": "${e}", "message": "error at Update status"});
+      return UserStatus({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update status"
+      });
     }
   }
 
@@ -49011,7 +51444,11 @@ class Update {
     try {
       return User((rawData["user"] as Map));
     } catch (e) {
-      return User({"@type": "error", "error": "${e}", "message": "error at Update user"});
+      return User({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update user"
+      });
     }
   }
 
@@ -49020,7 +51457,11 @@ class Update {
     try {
       return BasicGroup((rawData["basic_group"] as Map));
     } catch (e) {
-      return BasicGroup({"@type": "error", "error": "${e}", "message": "error at Update basic_group"});
+      return BasicGroup({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update basic_group"
+      });
     }
   }
 
@@ -49029,7 +51470,11 @@ class Update {
     try {
       return Supergroup((rawData["supergroup"] as Map));
     } catch (e) {
-      return Supergroup({"@type": "error", "error": "${e}", "message": "error at Update supergroup"});
+      return Supergroup({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update supergroup"
+      });
     }
   }
 
@@ -49038,7 +51483,11 @@ class Update {
     try {
       return SecretChat((rawData["secret_chat"] as Map));
     } catch (e) {
-      return SecretChat({"@type": "error", "error": "${e}", "message": "error at Update secret_chat"});
+      return SecretChat({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update secret_chat"
+      });
     }
   }
 
@@ -49047,7 +51496,11 @@ class Update {
     try {
       return UserFullInfo((rawData["user_full_info"] as Map));
     } catch (e) {
-      return UserFullInfo({"@type": "error", "error": "${e}", "message": "error at Update user_full_info"});
+      return UserFullInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update user_full_info"
+      });
     }
   }
 
@@ -49065,7 +51518,11 @@ class Update {
     try {
       return BasicGroupFullInfo((rawData["basic_group_full_info"] as Map));
     } catch (e) {
-      return BasicGroupFullInfo({"@type": "error", "error": "${e}", "message": "error at Update basic_group_full_info"});
+      return BasicGroupFullInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update basic_group_full_info"
+      });
     }
   }
 
@@ -49083,7 +51540,11 @@ class Update {
     try {
       return SupergroupFullInfo((rawData["supergroup_full_info"] as Map));
     } catch (e) {
-      return SupergroupFullInfo({"@type": "error", "error": "${e}", "message": "error at Update supergroup_full_info"});
+      return SupergroupFullInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update supergroup_full_info"
+      });
     }
   }
 
@@ -49092,7 +51553,11 @@ class Update {
     try {
       return MessageContent((rawData["content"] as Map));
     } catch (e) {
-      return MessageContent({"@type": "error", "error": "${e}", "message": "error at Update content"});
+      return MessageContent({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update content"
+      });
     }
   }
 
@@ -49101,7 +51566,11 @@ class Update {
     try {
       return File((rawData["file"] as Map));
     } catch (e) {
-      return File({"@type": "error", "error": "${e}", "message": "error at Update file"});
+      return File({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update file"
+      });
     }
   }
 
@@ -49164,7 +51633,11 @@ class Update {
     try {
       return FileDownload((rawData["file_download"] as Map));
     } catch (e) {
-      return FileDownload({"@type": "error", "error": "${e}", "message": "error at Update file_download"});
+      return FileDownload({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update file_download"
+      });
     }
   }
 
@@ -49173,7 +51646,11 @@ class Update {
     try {
       return DownloadedFileCounts((rawData["counts"] as Map));
     } catch (e) {
-      return DownloadedFileCounts({"@type": "error", "error": "${e}", "message": "error at Update counts"});
+      return DownloadedFileCounts({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update counts"
+      });
     }
   }
 
@@ -49209,7 +51686,11 @@ class Update {
     try {
       return Call((rawData["call"] as Map));
     } catch (e) {
-      return Call({"@type": "error", "error": "${e}", "message": "error at Update call"});
+      return Call({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update call"
+      });
     }
   }
 
@@ -49218,7 +51699,11 @@ class Update {
     try {
       return GroupCall((rawData["group_call"] as Map));
     } catch (e) {
-      return GroupCall({"@type": "error", "error": "${e}", "message": "error at Update group_call"});
+      return GroupCall({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update group_call"
+      });
     }
   }
 
@@ -49236,7 +51721,11 @@ class Update {
     try {
       return GroupCallParticipant((rawData["participant"] as Map));
     } catch (e) {
-      return GroupCallParticipant({"@type": "error", "error": "${e}", "message": "error at Update participant"});
+      return GroupCallParticipant({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update participant"
+      });
     }
   }
 
@@ -49263,7 +51752,11 @@ class Update {
     try {
       return UserPrivacySetting((rawData["setting"] as Map));
     } catch (e) {
-      return UserPrivacySetting({"@type": "error", "error": "${e}", "message": "error at Update setting"});
+      return UserPrivacySetting({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update setting"
+      });
     }
   }
 
@@ -49272,7 +51765,11 @@ class Update {
     try {
       return UserPrivacySettingRules((rawData["rules"] as Map));
     } catch (e) {
-      return UserPrivacySettingRules({"@type": "error", "error": "${e}", "message": "error at Update rules"});
+      return UserPrivacySettingRules({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update rules"
+      });
     }
   }
 
@@ -49281,7 +51778,11 @@ class Update {
     try {
       return ChatList((rawData["chat_list"] as Map));
     } catch (e) {
-      return ChatList({"@type": "error", "error": "${e}", "message": "error at Update chat_list"});
+      return ChatList({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update chat_list"
+      });
     }
   }
 
@@ -49326,7 +51827,11 @@ class Update {
     try {
       return OptionValue((rawData["value"] as Map));
     } catch (e) {
-      return OptionValue({"@type": "error", "error": "${e}", "message": "error at Update value"});
+      return OptionValue({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update value"
+      });
     }
   }
 
@@ -49335,7 +51840,11 @@ class Update {
     try {
       return StickerSet((rawData["sticker_set"] as Map));
     } catch (e) {
-      return StickerSet({"@type": "error", "error": "${e}", "message": "error at Update sticker_set"});
+      return StickerSet({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update sticker_set"
+      });
     }
   }
 
@@ -49344,7 +51853,11 @@ class Update {
     try {
       return StickerType((rawData["sticker_type"] as Map));
     } catch (e) {
-      return StickerType({"@type": "error", "error": "${e}", "message": "error at Update sticker_type"});
+      return StickerType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update sticker_type"
+      });
     }
   }
 
@@ -49362,7 +51875,11 @@ class Update {
     try {
       return TrendingStickerSets((rawData["sticker_sets"] as Map));
     } catch (e) {
-      return TrendingStickerSets({"@type": "error", "error": "${e}", "message": "error at Update sticker_sets"});
+      return TrendingStickerSets({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update sticker_sets"
+      });
     }
   }
 
@@ -49416,7 +51933,11 @@ class Update {
     try {
       return Background((rawData["background"] as Map));
     } catch (e) {
-      return Background({"@type": "error", "error": "${e}", "message": "error at Update background"});
+      return Background({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update background"
+      });
     }
   }
 
@@ -49431,7 +51952,11 @@ class Update {
           .cast<ChatTheme>();
     } catch (e) {
       return [
-        ChatTheme({"@type": "error", "error": "${e}", "message": "error at Update chat_themes"})
+        ChatTheme({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update chat_themes"
+        })
       ].cast<ChatTheme>();
     }
   }
@@ -49465,7 +51990,11 @@ class Update {
           .cast<LanguagePackString>();
     } catch (e) {
       return [
-        LanguagePackString({"@type": "error", "error": "${e}", "message": "error at Update strings"})
+        LanguagePackString({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update strings"
+        })
       ].cast<LanguagePackString>();
     }
   }
@@ -49475,7 +52004,11 @@ class Update {
     try {
       return ConnectionState((rawData["state"] as Map));
     } catch (e) {
-      return ConnectionState({"@type": "error", "error": "${e}", "message": "error at Update state"});
+      return ConnectionState({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update state"
+      });
     }
   }
 
@@ -49493,7 +52026,11 @@ class Update {
     try {
       return TermsOfService((rawData["terms_of_service"] as Map));
     } catch (e) {
-      return TermsOfService({"@type": "error", "error": "${e}", "message": "error at Update terms_of_service"});
+      return TermsOfService({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update terms_of_service"
+      });
     }
   }
 
@@ -49508,7 +52045,11 @@ class Update {
           .cast<ChatNearby>();
     } catch (e) {
       return [
-        ChatNearby({"@type": "error", "error": "${e}", "message": "error at Update users_nearby"})
+        ChatNearby({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update users_nearby"
+        })
       ].cast<ChatNearby>();
     }
   }
@@ -49524,7 +52065,11 @@ class Update {
           .cast<AttachmentMenuBot>();
     } catch (e) {
       return [
-        AttachmentMenuBot({"@type": "error", "error": "${e}", "message": "error at Update bots"})
+        AttachmentMenuBot({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update bots"
+        })
       ].cast<AttachmentMenuBot>();
     }
   }
@@ -49552,7 +52097,11 @@ class Update {
     try {
       return ReactionType((rawData["reaction_type"] as Map));
     } catch (e) {
-      return ReactionType({"@type": "error", "error": "${e}", "message": "error at Update reaction_type"});
+      return ReactionType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update reaction_type"
+      });
     }
   }
 
@@ -49561,7 +52110,11 @@ class Update {
     try {
       return Sticker((rawData["sticker"] as Map));
     } catch (e) {
-      return Sticker({"@type": "error", "error": "${e}", "message": "error at Update sticker"});
+      return Sticker({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update sticker"
+      });
     }
   }
 
@@ -49585,7 +52138,11 @@ class Update {
           .cast<SuggestedAction>();
     } catch (e) {
       return [
-        SuggestedAction({"@type": "error", "error": "${e}", "message": "error at Update added_actions"})
+        SuggestedAction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update added_actions"
+        })
       ].cast<SuggestedAction>();
     }
   }
@@ -49601,7 +52158,11 @@ class Update {
           .cast<SuggestedAction>();
     } catch (e) {
       return [
-        SuggestedAction({"@type": "error", "error": "${e}", "message": "error at Update removed_actions"})
+        SuggestedAction({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Update removed_actions"
+        })
       ].cast<SuggestedAction>();
     }
   }
@@ -49629,7 +52190,11 @@ class Update {
     try {
       return Location((rawData["user_location"] as Map));
     } catch (e) {
-      return Location({"@type": "error", "error": "${e}", "message": "error at Update user_location"});
+      return Location({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update user_location"
+      });
     }
   }
 
@@ -49638,7 +52203,11 @@ class Update {
     try {
       return ChatType((rawData["chat_type"] as Map));
     } catch (e) {
-      return ChatType({"@type": "error", "error": "${e}", "message": "error at Update chat_type"});
+      return ChatType({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update chat_type"
+      });
     }
   }
 
@@ -49692,7 +52261,11 @@ class Update {
     try {
       return CallbackQueryPayload((rawData["payload"] as Map));
     } catch (e) {
-      return CallbackQueryPayload({"@type": "error", "error": "${e}", "message": "error at Update payload"});
+      return CallbackQueryPayload({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update payload"
+      });
     }
   }
 
@@ -49710,7 +52283,11 @@ class Update {
     try {
       return Address((rawData["shipping_address"] as Map));
     } catch (e) {
-      return Address({"@type": "error", "error": "${e}", "message": "error at Update shipping_address"});
+      return Address({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update shipping_address"
+      });
     }
   }
 
@@ -49746,7 +52323,11 @@ class Update {
     try {
       return OrderInfo((rawData["order_info"] as Map));
     } catch (e) {
-      return OrderInfo({"@type": "error", "error": "${e}", "message": "error at Update order_info"});
+      return OrderInfo({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update order_info"
+      });
     }
   }
 
@@ -49773,7 +52354,11 @@ class Update {
     try {
       return Poll((rawData["poll"] as Map));
     } catch (e) {
-      return Poll({"@type": "error", "error": "${e}", "message": "error at Update poll"});
+      return Poll({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update poll"
+      });
     }
   }
 
@@ -49818,7 +52403,11 @@ class Update {
     try {
       return ChatInviteLink((rawData["invite_link"] as Map));
     } catch (e) {
-      return ChatInviteLink({"@type": "error", "error": "${e}", "message": "error at Update invite_link"});
+      return ChatInviteLink({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update invite_link"
+      });
     }
   }
 
@@ -49827,7 +52416,11 @@ class Update {
     try {
       return ChatMember((rawData["old_chat_member"] as Map));
     } catch (e) {
-      return ChatMember({"@type": "error", "error": "${e}", "message": "error at Update old_chat_member"});
+      return ChatMember({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update old_chat_member"
+      });
     }
   }
 
@@ -49836,7 +52429,11 @@ class Update {
     try {
       return ChatMember((rawData["new_chat_member"] as Map));
     } catch (e) {
-      return ChatMember({"@type": "error", "error": "${e}", "message": "error at Update new_chat_member"});
+      return ChatMember({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update new_chat_member"
+      });
     }
   }
 
@@ -49845,7 +52442,11 @@ class Update {
     try {
       return ChatJoinRequest((rawData["request"] as Map));
     } catch (e) {
-      return ChatJoinRequest({"@type": "error", "error": "${e}", "message": "error at Update request"});
+      return ChatJoinRequest({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at Update request"
+      });
     }
   }
 
@@ -49916,7 +52517,11 @@ class Updates {
           .cast<Update>();
     } catch (e) {
       return [
-        Update({"@type": "error", "error": "${e}", "message": "error at Updates updates"})
+        Update({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at Updates updates"
+        })
       ].cast<Update>();
     }
   }
@@ -50187,7 +52792,11 @@ class UserSupportInfo {
     try {
       return FormattedText((rawData["message"] as Map));
     } catch (e) {
-      return FormattedText({"@type": "error", "error": "${e}", "message": "error at UserSupportInfo message"});
+      return FormattedText({
+        "@type": "error",
+        "error": "${e}",
+        "message": "error at UserSupportInfo message"
+      });
     }
   }
 
@@ -50520,7 +53129,11 @@ class TestVectorIntObject {
           .cast<TestInt>();
     } catch (e) {
       return [
-        TestInt({"@type": "error", "error": "${e}", "message": "error at TestVectorIntObject value"})
+        TestInt({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at TestVectorIntObject value"
+        })
       ].cast<TestInt>();
     }
   }
@@ -50653,7 +53266,11 @@ class TestVectorStringObject {
           .cast<TestString>();
     } catch (e) {
       return [
-        TestString({"@type": "error", "error": "${e}", "message": "error at TestVectorStringObject value"})
+        TestString({
+          "@type": "error",
+          "error": "${e}",
+          "message": "error at TestVectorStringObject value"
+        })
       ].cast<TestString>();
     }
   }

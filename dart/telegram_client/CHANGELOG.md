@@ -1,3 +1,6 @@
+## 0.3.65
+- update library galaxeus and update scheme tdlib
+
 ## 0.3.64
 - fix tdlib scheme bugs
  
