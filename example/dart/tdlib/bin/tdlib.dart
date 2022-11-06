@@ -138,14 +138,8 @@ void main(List<String> arguments) async {
               await tg.callApi(
                 tdlibFunction: tdlib_scheme.TdlibFunction.sendMessage(
                   chat_id: chat_id,
-                  options: tdlib_scheme.MessageSendOptions.create(
-                    from_background: true
-                  ),
-                  input_message_content: tdlib_scheme.InputMessageContent.create(
-                    text: tdlib_scheme.FormattedText.create(
-                      text: "Native Tdlib Scheme"
-                    )
-                  ),
+                  options: tdlib_scheme.MessageSendOptions.create(from_background: true),
+                  input_message_content: tdlib_scheme.InputMessageContent.create(text: tdlib_scheme.FormattedText.create(text: "Native Tdlib Scheme")),
                 ),
               );
 
@@ -154,6 +148,7 @@ void main(List<String> arguments) async {
                 parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
                 clientId: update.client_id,
               );
+              
             }
           }
         }

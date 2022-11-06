@@ -1,3 +1,6 @@
+## 0.3.66
+- update library client
+
 ## 0.3.65
 - update library galaxeus and update scheme tdlib
 

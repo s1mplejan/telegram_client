@@ -156,8 +156,8 @@ class Tdlib {
       });
       client_id = client_create();
     }
-  }
-
+  } 
+  
   /// getMessage real like bot api
   num getMessageId(num message_id, [bool is_reverse = false]) {
     if (is_reverse) {
@@ -233,10 +233,8 @@ class Tdlib {
     String? extra,
   }) {
     for (var i = 0; i < clients.length; i++) {
-      var loop_data = clients[i];
-      if (loop_data is Map &&
-          loop_data.isolate is Isolate &&
-          loop_data.client_id == clientId) {
+      TdlibClient tdlibClient = clients[i];
+      if (tdlibClient.isolate is Isolate && tdlibClient.client_id == clientId) {
         if (isClose) {
           invoke(
             "close",
@@ -244,7 +242,7 @@ class Tdlib {
             extra: extra,
           ).catchError((onError) {});
         }
-        loop_data.close();
+        tdlibClient.close();
         clients.removeAt(i);
         return true;
       }
@@ -352,10 +350,8 @@ class Tdlib {
 
   bool existClientId(int clientId) {
     for (var i = 0; i < clients.length; i++) {
-      var loop_data = clients[i];
-      if (loop_data is Map &&
-          loop_data.isolate is Isolate &&
-          loop_data.client_id == clientId) {
+      TdlibClient tdlibClient = clients[i];
+      if (tdlibClient.client_id == clientId) {
         return true;
       }
     }
@@ -780,7 +776,9 @@ class Tdlib {
     Duration? delayDuration,
     Duration? invokeTimeOut,
     String? extra,
+    bool? iSAutoGetChat,
   }) async {
+    iSAutoGetChat ??= is_auto_get_chat;
     clientId ??= client_id;
     invokeTimeOut ??= invoke_time_out;
     if (clientId == 0) {
@@ -799,7 +797,7 @@ class Tdlib {
       parameters["@extra"] = random;
     }
 
-    if (is_auto_get_chat &&
+    if (iSAutoGetChat &&
         RegExp(r"^(sendMessage|getChatMember)$", caseSensitive: false)
             .hasMatch(method)) {
       if (parameters["chat_id"] is int) {
@@ -916,6 +914,7 @@ class Tdlib {
     Duration? delayDuration,
     Duration? invokeTimeOut,
     String? extra,
+    bool? iSAutoGetChat,
   }) async {
     try {
       return await invoke(
@@ -926,6 +925,7 @@ class Tdlib {
         delayDuration: delayDuration,
         invokeTimeOut: invokeTimeOut,
         extra: extra,
+        iSAutoGetChat: iSAutoGetChat,
       );
     } catch (e) {
       return await Future.error(e);
@@ -1142,29 +1142,34 @@ class Tdlib {
   ///   "text": "<b>Hello</b> <code>word</code>",
   ///   "parse_mode": "html"
   /// });
-  request(
+  Future<Map> request(
     String method, {
     Map? parameters,
     int? clientId,
     bool isVoid = false,
     String? extra,
+    bool? iSAutoGetChat,
   }) async {
     clientId ??= client_id;
     parameters ??= {};
     if (parameters["chat_id"] is String &&
         hxm.Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
-      var search_public_chat = await invoke("searchPublicChat",
-          parameters: {
-            "username": parameters["chat_id"],
-          },
-          clientId: clientId,
-          extra: extra);
+      iSAutoGetChat = false;
+      var search_public_chat = await invoke(
+        "searchPublicChat",
+        parameters: {
+          "username": parameters["chat_id"],
+        },
+        clientId: clientId,
+        extra: extra,
+      );
       if (search_public_chat["@type"] == "chat") {
         parameters["chat_id"] = search_public_chat["id"];
       }
     }
     if (parameters["user_id"] is String &&
         hxm.Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"])) {
+      iSAutoGetChat = false;
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -1194,9 +1199,12 @@ class Tdlib {
         clientId: clientId,
         isVoid: isVoid,
         extra: extra,
+        iSAutoGetChat: iSAutoGetChat,
       );
       if (isVoid) {
-        return;
+        return {
+          "@type": "ok",
+        };
       }
       result_request["ok"] ??= true;
       if (!result_request["ok"]) {
@@ -1253,6 +1261,7 @@ class Tdlib {
         clientId: clientId,
         isVoid: isVoid,
         extra: extra,
+        iSAutoGetChat: iSAutoGetChat,
       );
     }
     if (hxm.Regex(r"^editMessageText$", "i").exec(method)) {
@@ -1283,6 +1292,7 @@ class Tdlib {
         clientId: clientId,
         isVoid: isVoid,
         extra: extra,
+        iSAutoGetChat: iSAutoGetChat,
       );
     }
     if (hxm.Regex(r"^joinChatByInviteLink$", "i").exec(method)) {
@@ -1344,12 +1354,14 @@ class Tdlib {
       );
     }
     if (hxm.Regex(r"^answerCallbackQuery$", "i").exec(method)) {
-      return await answerCallbackQuery(parameters["callback_query_id"],
-          text: parameters["text"],
-          show_alert: parameters["show_alert"] ?? false,
-          url: parameters["url"],
-          cache_time: parameters["cache_time"],
-          clientId: clientId);
+      return await answerCallbackQuery(
+        parameters["callback_query_id"],
+        text: parameters["text"],
+        show_alert: parameters["show_alert"] ?? false,
+        url: parameters["url"],
+        cache_time: parameters["cache_time"],
+        clientId: clientId,
+      );
     }
 
     if (parameters["is_sync"] != null) {
@@ -1362,13 +1374,16 @@ class Tdlib {
         clientId: clientId,
       );
     } else {
-      return await invoke(method,
-          parameters: makeParametersApi({
-            "@type": method,
-            ...parameters,
-          }),
-          clientId: clientId,
-          extra: extra);
+      return await invoke(
+        method,
+        parameters: makeParametersApi({
+          "@type": method,
+          ...parameters,
+        }),
+        clientId: clientId,
+        extra: extra,
+        iSAutoGetChat: iSAutoGetChat,
+      );
     }
   }
 

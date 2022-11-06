@@ -19,7 +19,12 @@ LIABILITY, WHETHER IN AN ACTION OF  CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 **/
+import "package:web_ffi/web_ffi.dart";
+import 'package:web_ffi/web_ffi_modules.dart';
 
 class Tdlib {
-  Tdlib();
+  Tdlib() {
+    Memory.init();
+
+  }
 }
