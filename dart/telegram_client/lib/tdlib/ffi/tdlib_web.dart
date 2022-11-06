@@ -74,7 +74,11 @@ class LibTdJson {
 
   /// create client id for multi client
   int client_create() {
-    return tdLib.lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>('${is_android ? "_" : ""}td_json_client_create').call().address;
+    return tdLib
+        .lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>(
+            '${is_android ? "_" : ""}td_json_client_create')
+        .call()
+        .address;
   }
 
   /// client_send
@@ -89,7 +93,10 @@ class LibTdJson {
   Map<String, dynamic> client_execute(int clientId, [Map? parameters]) {
     return convert.json.decode(
       tdLib
-          .lookupFunction<ffi.Pointer<Utf8s> Function(ffi.Pointer, ffi.Pointer<Utf8s>), ffi.Pointer<Utf8s> Function(ffi.Pointer, ffi.Pointer<Utf8s>)>('${is_android ? "_" : ""}td_json_client_execute')
+          .lookupFunction<
+                  ffi.Pointer<Utf8s> Function(ffi.Pointer, ffi.Pointer<Utf8s>),
+                  ffi.Pointer<Utf8s> Function(ffi.Pointer, ffi.Pointer<Utf8s>)>(
+              '${is_android ? "_" : ""}td_json_client_execute')
           .call(
             ffi.Pointer.fromAddress(clientId),
             convert.json.encode(parameters).toNativeUtf8(),
@@ -101,7 +108,12 @@ class LibTdJson {
 
   /// client_destroy
   void client_destroy(int clientId) {
-    return tdLib.lookupFunction<ffi.Void Function(ffi.Pointer), void Function(ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy').call(ffi.Pointer.fromAddress(clientId));
+    return tdLib
+        .lookupFunction<
+            ffi.Void Function(ffi.Pointer),
+            void Function(
+                ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy')
+        .call(ffi.Pointer.fromAddress(clientId));
   }
 
   /// fetch update
@@ -168,7 +180,8 @@ extension Utf8Pointers on Pointer<Utf8s> {
 
   void _ensureNotNullptr(String operation) {
     if (this == nullptr) {
-      throw UnsupportedError("Operation '$operation' not allowed on a 'nullptr'.");
+      throw UnsupportedError(
+          "Operation '$operation' not allowed on a 'nullptr'.");
     }
   }
 }
@@ -187,10 +200,10 @@ extension StringUtf8Pointer on String {
   ///
   /// Returns an [allocator]-allocated pointer to the result.
   Pointer<Utf8s> toNativeUtf8(
-    // {
-    // ffi.Allocator allocator = malloc,
-    // }
-  ) {
+      // {
+      // ffi.Allocator allocator = malloc,
+      // }
+      ) {
     // final units = utf8.encode(this);
     // final Pointer<Uint8> result = allocator<Uint8>(units.length + 1);
     // final Uint8List nativeString = result.asTypedList(units.length + 1);

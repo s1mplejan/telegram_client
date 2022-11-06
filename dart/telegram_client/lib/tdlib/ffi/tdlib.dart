@@ -59,29 +59,60 @@ class LibTdJson {
 
   /// create client id for multi client
   int client_create() {
-    return tdLib.lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>('${is_android ? "_" : ""}td_json_client_create').call().address;
+    return tdLib
+        .lookupFunction<ffi.Pointer Function(), ffi.Pointer Function()>(
+            '${is_android ? "_" : ""}td_json_client_create')
+        .call()
+        .address;
   }
 
   /// client_send
   void client_send(int clientId, [Map? parameters]) {
-    return tdLib.lookupFunction<ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_send').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8());
+    return tdLib
+        .lookupFunction<
+                ffi.Void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>),
+                void Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>(
+            '${is_android ? "_" : ""}td_json_client_send')
+        .call(ffi.Pointer.fromAddress(clientId),
+            convert.json.encode(parameters).toNativeUtf8());
   }
 
   /// client_execute
   Map<String, dynamic> client_execute(int clientId, [Map? parameters]) {
-    return convert.json.decode(tdLib.lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>('${is_android ? "_" : ""}td_json_client_execute').call(ffi.Pointer.fromAddress(clientId), convert.json.encode(parameters).toNativeUtf8()).toDartString());
+    return convert.json.decode(tdLib
+        .lookupFunction<
+                ffi.Pointer<pkgffi.Utf8> Function(
+                    ffi.Pointer, ffi.Pointer<pkgffi.Utf8>),
+                ffi.Pointer<pkgffi.Utf8> Function(
+                    ffi.Pointer, ffi.Pointer<pkgffi.Utf8>)>(
+            '${is_android ? "_" : ""}td_json_client_execute')
+        .call(ffi.Pointer.fromAddress(clientId),
+            convert.json.encode(parameters).toNativeUtf8())
+        .toDartString());
   }
 
   /// client_destroy
   void client_destroy(int clientId) {
-    return tdLib.lookupFunction<ffi.Void Function(ffi.Pointer), void Function(ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy').call(ffi.Pointer.fromAddress(clientId));
+    return tdLib
+        .lookupFunction<
+            ffi.Void Function(ffi.Pointer),
+            void Function(
+                ffi.Pointer)>('${is_android ? "_" : ""}td_json_client_destroy')
+        .call(ffi.Pointer.fromAddress(clientId));
   }
 
   /// fetch update
   Map<String, dynamic>? client_receive(int clientId, [double timeout = 1.0]) {
     try {
-      Pointer<pkgffi.Utf8> update = tdLib.lookupFunction<ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Double), ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, double)>('${is_android ? "_" : ""}td_json_client_receive').call(ffi.Pointer.fromAddress(clientId), timeout);
-      if (update.address != 0 && update.toDartString() is String && update.toDartString().toString().isNotEmpty) {
+      Pointer<pkgffi.Utf8> update = tdLib
+          .lookupFunction<
+              ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer, ffi.Double),
+              ffi.Pointer<pkgffi.Utf8> Function(ffi.Pointer,
+                  double)>('${is_android ? "_" : ""}td_json_client_receive')
+          .call(ffi.Pointer.fromAddress(clientId), timeout);
+      if (update.address != 0 &&
+          update.toDartString() is String &&
+          update.toDartString().toString().isNotEmpty) {
         Map<String, dynamic>? updateOrigin;
         try {
           updateOrigin = convert.json.decode(update.toDartString());

@@ -1,3 +1,6 @@
+## 0.3.67
+- add api keyboard
+
 ## 0.3.66
 - update library client
 
