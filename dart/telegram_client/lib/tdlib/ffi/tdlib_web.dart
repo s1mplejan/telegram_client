@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check, void_checks, unnecessary_brace_in_string_interps, prefer_final_fields
+// ignore_for_file: non_constant_identifier_names, empty_catches, unnecessary_type_check, void_checks, unnecessary_brace_in_string_interps, prefer_final_fields, subtype_of_sealed_class
 
 // ignore: slash_for_doc_comments
 /**
@@ -100,7 +100,6 @@ class LibTdJson {
           )
           .toDartString(),
     );
-    return {};
   }
 
   /// client_destroy

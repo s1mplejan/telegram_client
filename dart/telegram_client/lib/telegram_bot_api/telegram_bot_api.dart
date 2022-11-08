@@ -337,8 +337,11 @@ class UpdateApi {
   late Map client_option;
 
   /// Update td for make update support raw, raw api, raw api light
-  UpdateApi(this.update,
-      {required String tokenBot, required Map clientOption}) {
+  UpdateApi(
+    this.update, {
+    required String tokenBot,
+    required Map clientOption,
+  }) {
     token_bot = tokenBot;
     client_option = clientOption;
   }

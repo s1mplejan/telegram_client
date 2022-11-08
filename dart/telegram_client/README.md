@@ -123,7 +123,7 @@ https://user-images.githubusercontent.com/82513502/178153444-5f1a9074-8f43-48c1-
 - [ ] Example voice call
 - [X] Tdlib support
 - [X] Telegram Bot Api Support
-- [ ] Tutorial Video
+- [x] Tutorial Video
 
 🔜️ Support Other language code
 

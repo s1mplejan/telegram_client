@@ -1,3 +1,9 @@
+## 0.3.71
+- update docs
+
+## 0.3.69
+- fix score
+
 ## 0.3.68
 - fix support web version
 

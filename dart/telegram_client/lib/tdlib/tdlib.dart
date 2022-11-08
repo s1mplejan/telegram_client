@@ -34,14 +34,23 @@ import 'package:galaxeus_lib/galaxeus_lib.dart';
 /// Cheatset
 ///
 /// ```dart
-/// Tdlib tg = Tdlib("libtdjson.so", {
-///   "api_id": 121315,
-///   "api_hash": "saskaspasad"
-/// });
-/// tg.on("update", (UpdateTd update) async {
+/// Tdlib tg = Tdlib(
+///   // https://github.com/tdlib/td
+///   "libtdjson.so",
+///   clientOption: {
+///     // https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1set_tdlib_parameters.html
+///     "api_id": 0,
+///     "api_hash": "a",
+///     'database_directory': Directory.current.path,
+///     'files_directory': Directory.current.path,
+///     "new_verbosity_level": 0,
+///     "database_key": "",
+///   },
+/// );
+/// tg.on(tg.event_update, (UpdateTd update) async {
 ///   print(update.raw);
 /// });
-/// tg.initIsolate();
+/// await tg.initIsolate();
 /// ````
 ///
 class Tdlib extends LibTdJson {
@@ -54,32 +63,25 @@ class Tdlib extends LibTdJson {
   // late List<TdlibClient> clients = [];
   late bool is_auto_get_chat = false;
 
-  // / Cheatset
+  /// Cheatset
   ///
   /// ```dart
-  /// Tdlib tg = Tdlib("libtdjson.so", {
-  ///   "api_id": 121315,
-  ///   "api_hash": "saskaspasad"
-  ///   'api_id': 1917085,
-  ///   'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
-  ///   'database_directory': "",
-  ///   'files_directory': "",
-  ///   "use_file_database": true,
-  ///   "use_chat_info_database": true,
-  ///   "use_message_database": true,
-  ///   "use_secret_chats": true,
-  ///   'enable_storage_optimizer': true,
-  ///   'system_language_code': 'en',
-  ///   'new_verbosity_level': 0,
-  ///   'application_version': 'v1',
-  ///   'device_model': 'Telegram Client HexaMinate',
-  // /   'system_version': Platform.operatingSystemVersion,
-  // /   "database_key": "",
-  // /   "start": true,
-  // / });
-  // / ````
-  // /
-  // / More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
+  /// Tdlib tg = Tdlib(
+  ///   // https://github.com/tdlib/td
+  ///   "libtdjson.so",
+  ///   clientOption: {
+  ///     // https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1set_tdlib_parameters.html
+  ///     "api_id": 0,
+  ///     "api_hash": "a",
+  ///     'database_directory': Directory.current.path,
+  ///     'files_directory': Directory.current.path,
+  ///     "new_verbosity_level": 0,
+  ///     "database_key": "",
+  ///   },
+  /// );
+  /// ```
+  ///
+  /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
   Tdlib(
     super.pathTdl, {
     super.clientOption,
@@ -580,17 +582,19 @@ class Tdlib extends LibTdJson {
   /// call api latest [Tdlib-Methods](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_function.html)
   /// example:
   /// ```dart
-  /// invoke("sendMessage", {
-  ///   "chat_id": 12345,
-  ///   "input_message_content": {
+  /// await tg.invoke(
+  ///   "sendMessage",
+  ///   parameters: {
+  ///     "chat_id": 12345,
+  ///     "input_message_content": {
   ///       "@type": "inputMessageText",
-  ///       "text": {
-  ///         "@type": "formattedText",
-  ///         "text": "Hello world"
-  ///       }
-  ///   }
-  /// });
+  ///       "text": {"@type": "formattedText", "text": "Hello world"}
+  ///     }
+  ///   },
+  ///   clientId: tg.client_id, // client id user
+  /// );
   /// ```
+  /// alow
   Future<Map> invoke(
     String method, {
     Map<String, dynamic>? parameters,
@@ -697,12 +701,14 @@ class Tdlib extends LibTdJson {
   /// call api latest [Tdlib-Methods](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1_function.html)
   /// example:
   /// ```dart
-  /// invokeSync("sendMessage", {
-  ///   "parse_mode": {
-  ///     "@type": "textParseModeHTML"
+  /// tg.invokeSync(
+  ///   "sendMessage",
+  ///   parameters: {
+  ///    "chat_id": 12345,
+  ///    "text": "send saskoasok"
   ///   },
-  ///   "text": "<b>Hello</b> <code>word</code>"
-  /// });
+  ///   clientId: tg.client_id,
+  /// );
   /// ```
   Map invokeSync(String method,
       {Map<String, dynamic>? parameters, int? clientId}) {
@@ -1010,16 +1016,22 @@ class Tdlib extends LibTdJson {
     } catch (e) {
       return null;
     }
+    return null;
   }
 
-  /// call api more pretty and
+  /// call api more pretty use https://core.telegram.org/bots/api#available-methods not all methods are here
   /// example:
   /// ```dart
-  /// request("sendMessage", {
-  ///   "chat_id": 123456,
-  ///   "text": "<b>Hello</b> <code>word</code>",
-  ///   "parse_mode": "html"
-  /// });
+  /// await tg.request(
+  ///   "sendMessage",
+  ///   parameters: {
+  ///     "chat_id": 12345,
+  ///     "text": "send saskoasok"
+  ///   },
+  ///   clientId: tg.client_id,
+  /// );
+  /// ```
+  /// //
   Future<Map> request(
     String method, {
     Map? parameters,
@@ -3024,26 +3036,3 @@ class UpdateTd {
     return update["@type"];
   }
 }
-
-// /// add state data
-// class TdlibClient {
-//   late int client_id;
-//   late Isolate isolate;
-//   late ReceivePort receive_port;
-//   late DateTime join_date = DateTime.now();
-
-//   /// state add data
-//   TdlibClient({
-//     required this.client_id,
-//     required this.isolate,
-//     required this.receive_port,
-//   });
-
-//   /// close
-//   void close() {
-//     isolate.kill();
-//     try {
-//       receive_port.close();
-//     } catch (e) {}
-//   }
-// }
