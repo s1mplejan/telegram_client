@@ -24,12 +24,10 @@ SOFTWARE.
 
 import 'dart:async';
 import 'dart:math';
-import 'dart:isolate';
+// import 'dart:isolate';
 import 'dart:convert' as convert;
 import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
 import 'package:telegram_client/telegram_client.dart';
-import 'package:universal_io/io.dart';
-
 import 'package:hexaminate/hexaminate.dart' as hxm;
 import 'package:galaxeus_lib/galaxeus_lib.dart';
 
@@ -47,33 +45,13 @@ import 'package:galaxeus_lib/galaxeus_lib.dart';
 /// ````
 ///
 class Tdlib extends LibTdJson {
-  late Map client_option = {
-    'api_id': 1917085,
-    'api_hash': 'a612212e6ac3ff1f97a99b2e0f050894',
-    'database_directory': "",
-    'files_directory': "",
-    "use_file_database": true,
-    "use_chat_info_database": true,
-    "use_message_database": true,
-    "use_secret_chats": true,
-    'enable_storage_optimizer': true,
-    'system_language_code': 'en',
-    'new_verbosity_level': 0,
-    'application_version': 'v1',
-    'device_model': 'Telegram Client HexaMinate @azkadev Galaxeus',
-    'system_version': Platform.operatingSystemVersion,
-    "database_key": "",
-    "start": true,
-  };
-  late int client_id = 0;
-  late EventEmitter event_emitter = EventEmitter();
   late Duration invoke_time_out;
-  late String event_invoke = "invoke";
-  late String event_update = "update";
-  late Duration delay_update = Duration(milliseconds: 1);
-  late Duration delay_invoke = Duration(milliseconds: 1);
-  late double timeOutUpdate;
-  late List<TdlibClient> clients = [];
+  // late String event_invoke = "invoke";
+  // late String event_update = "update";
+  // late Duration delay_update = Duration(milliseconds: 1);
+  // late Duration delay_invoke = Duration(milliseconds: 1);
+  // late double timeOutUpdate;
+  // late List<TdlibClient> clients = [];
   late bool is_auto_get_chat = false;
 
   // / Cheatset
@@ -104,14 +82,14 @@ class Tdlib extends LibTdJson {
   // / More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
   Tdlib(
     super.pathTdl, {
-    Map? clientOption,
+    super.clientOption,
     int? clientId,
     Duration? invokeTimeOut,
-    this.event_invoke = "invoke",
-    this.event_update = "update",
+    super.event_invoke = "invoke",
+    super.event_update = "update",
     Duration? delayUpdate,
-    this.timeOutUpdate = 1.0,
-    EventEmitter? eventEmitter,
+    super.timeOutUpdate = 1.0,
+    super.eventEmitter,
     Duration? delayInvoke,
     bool isAutoGetChat = false,
   }) {
@@ -121,17 +99,8 @@ class Tdlib extends LibTdJson {
     if (delayInvoke != null) {
       delay_invoke = delayInvoke;
     }
-    if (eventEmitter != null) {
-      event_emitter = eventEmitter;
-    }
     if (delayUpdate != null) {
       delay_update = delayUpdate;
-    }
-    if (clientOption != null) {
-      client_option.addAll(clientOption);
-      if (clientOption["is_android"] == true) {
-        is_android = true;
-      }
     }
     if (clientId != null) {
       client_option["start"] = false;
@@ -157,65 +126,6 @@ class Tdlib extends LibTdJson {
     }
   }
 
-  /// add this for multithread on flutter apps
-  Future<void> initIsolate({int? clientId, Map? clientOption}) async {
-    await Future.delayed(Duration(seconds: 2));
-    clientId ??= client_id;
-    var client_new_option = client_option;
-    if (clientOption != null) {
-      client_new_option.addAll(clientOption);
-    }
-    ReceivePort receivePort = ReceivePort();
-    receivePort.listen((message) async {
-      try {
-        if (message[0] is Map && message[0]["@extra"] is String) {
-          event_emitter.emit(event_invoke, null, message);
-        } else {
-          event_emitter.emit(event_update, null, message);
-        }
-      } catch (e) {
-        event_emitter.emit(event_update, null, message);
-      }
-    });
-
-    Isolate isolate = await Isolate.spawn(
-      (List args) async {
-        SendPort sendPortToMain = args[0];
-        Map option = args[1];
-        int clientId = args[2];
-        String pathTdl = args[3];
-        Duration duration = args[5];
-        double timeout = args[6];
-        Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
-        while (true) {
-          await Future.delayed(duration);
-          var updateOrigin = tg.client_receive(clientId, timeout);
-          if (updateOrigin != null) {
-            sendPortToMain.send([updateOrigin, clientId, option]);
-          }
-        }
-      },
-      [
-        receivePort.sendPort,
-        client_new_option,
-        clientId,
-        pathTdl,
-        is_android,
-        delay_update,
-        timeOutUpdate
-      ],
-      onExit: receivePort.sendPort,
-      onError: receivePort.sendPort,
-    ).catchError((onError) {
-      print("eror");
-    });
-    clients.add(TdlibClient(
-      client_id: clientId,
-      isolate: isolate,
-      receive_port: receivePort,
-    ));
-  }
-
   // exit
   bool exitClient(
     int clientId, {
@@ -224,7 +134,7 @@ class Tdlib extends LibTdJson {
   }) {
     for (var i = 0; i < clients.length; i++) {
       TdlibClient tdlibClient = clients[i];
-      if (tdlibClient.isolate is Isolate && tdlibClient.client_id == clientId) {
+      if (tdlibClient.client_id == clientId) {
         if (isClose) {
           invoke(
             "close",
@@ -238,14 +148,6 @@ class Tdlib extends LibTdJson {
       }
     }
     return false;
-  }
-
-  /// add this for multithread new client on flutter apps
-  Future<void> initIsolateNewClient(
-      {required int clientId, required Map clientOption}) async {
-    await Future.delayed(Duration(seconds: 2));
-    client_option.addAll(clientOption);
-    await initIsolate(clientId: clientId, clientOption: client_option);
   }
 
   /// add this for handle update api
@@ -3123,25 +3025,25 @@ class UpdateTd {
   }
 }
 
-/// add state data
-class TdlibClient {
-  late int client_id;
-  late Isolate isolate;
-  late ReceivePort receive_port;
-  late DateTime join_date = DateTime.now();
+// /// add state data
+// class TdlibClient {
+//   late int client_id;
+//   late Isolate isolate;
+//   late ReceivePort receive_port;
+//   late DateTime join_date = DateTime.now();
 
-  /// state add data
-  TdlibClient({
-    required this.client_id,
-    required this.isolate,
-    required this.receive_port,
-  });
+//   /// state add data
+//   TdlibClient({
+//     required this.client_id,
+//     required this.isolate,
+//     required this.receive_port,
+//   });
 
-  /// close
-  void close() {
-    isolate.kill();
-    try {
-      receive_port.close();
-    } catch (e) {}
-  }
-}
+//   /// close
+//   void close() {
+//     isolate.kill();
+//     try {
+//       receive_port.close();
+//     } catch (e) {}
+//   }
+// }

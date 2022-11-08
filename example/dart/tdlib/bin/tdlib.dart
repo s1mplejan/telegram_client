@@ -2,8 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
-import 'package:telegram_client/tdlib/tdlib.dart';
+import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme; 
 import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> arguments) async {

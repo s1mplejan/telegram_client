@@ -24,9 +24,6 @@ SOFTWARE.
 
 import 'dart:convert' as convert;
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:typed_data';
-
 import 'package:web_ffi/web_ffi.dart';
 import 'package:web_ffi/web_ffi.dart' as ffi;
 import 'package:web_ffi/web_ffi_modules.dart';

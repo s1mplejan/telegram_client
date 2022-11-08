@@ -1,3 +1,6 @@
+## 0.3.68
+- fix support web version
+
 ## 0.3.67
 - add api keyboard
 
