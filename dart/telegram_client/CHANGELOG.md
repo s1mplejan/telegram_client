@@ -1,3 +1,6 @@
+## 0.3.72
+- update galaxeus_lib
+
 ## 0.3.71
 - update docs
 
