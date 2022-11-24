@@ -1,6 +1,6 @@
 name: telegram_client
 description: Telegram Client Lightweight, blazing and Highly customizable for make application telegram based tdlib, mtproto, or bot api and support server side.
-version: 0.3.72
+version: 0.3.73
 homepage: https://github.com/azkadev/telegram_client/wiki
 repository: https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client
 issue_tracker: https://github.com/azkadev/telegram_client/issues
@@ -18,6 +18,7 @@ dependencies:
   galaxeus_lib: ^0.0.28
   hexaminate: ^0.1.4
   http: ^0.13.4
+  path: ^1.8.2
   universal_io: ^2.0.4
   web_ffi: ^0.7.2
 

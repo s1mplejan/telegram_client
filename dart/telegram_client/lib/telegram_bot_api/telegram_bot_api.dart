@@ -127,7 +127,7 @@ class TelegramBotApi {
   /// ```
   Future<Map> request(
     String method, {
-    Map? parameters,
+    Map parameters = const {},
     bool is_form = false,
     String? tokenBot,
     String? urlApi,
@@ -136,12 +136,48 @@ class TelegramBotApi {
   }) async {
     clientType ??= client_option["type"];
     urlApi ??= client_option["api"];
-    parameters ??= {};
     tokenBot ??= token_bot;
     var option = {
       "method": "post",
     };
     var url = "$urlApi$clientType${tokenBot.toString()}/${method.toString()}";
+    if (!is_form) {
+      List<String> methodForm = [
+        "sendDocument",
+        "sendPhoto",
+        "sendAudio",
+        "sendVideo",
+        "sendVoice",
+        "setChatPhoto",
+        "sendVideoNote",
+        "sendAnimation",
+      ];
+      List<String> keyForm = [
+        "video",
+        "audio",
+        "voice",
+        "document",
+        "photo",
+        "animation",
+        "video_note"
+      ];
+
+      if (methodForm
+          .map((e) => e.toLowerCase())
+          .toList()
+          .contains(method.toLowerCase())) {
+        parameters.forEach((key, value) {
+          try {
+            if (keyForm.contains(key)) {
+              parameters[key] = typeFile(value)["data"];
+              if (parameters[key] is String == false) {
+                is_form = true;
+              }
+            }
+          } catch (e) {}
+        });
+      }
+    }
     if (is_form) {
       Map params = parameters;
       final httpClient = HttpClient();
@@ -243,7 +279,7 @@ class TelegramBotApi {
   /// ```
   Future<Map> requestForm(
     String method, {
-    Map? parameters,
+    Map parameters = const {},
     bool is_form = false,
     String? tokenBot,
     String? urlApi,
