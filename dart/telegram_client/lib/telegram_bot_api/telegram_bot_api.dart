@@ -338,7 +338,7 @@ class TelegramBotApi {
   /// ```dart
   /// tg.file("./doc.json"),
   /// ```
-  Map file(path, [var option]) {
+  Map file(path, [Map<String, dynamic> option = const <String, dynamic>{}]) {
     Map<String, dynamic> jsonData = {"is_post_file": true};
     if (RegExp(r"^(./|/)", caseSensitive: false).hasMatch(path)) {
       var filename = path
@@ -346,9 +346,7 @@ class TelegramBotApi {
           .replaceAll(RegExp(r"^(./|/)", caseSensitive: false), "");
       jsonData["file_name"] = filename;
       jsonData["file_path"] = path;
-      if (typeData(option) == "object") {
-        jsonData.addAll(option);
-      }
+      jsonData.addAll(option);
     } else {
       jsonData["is_post_file"] = false;
       jsonData["file_path"] = path;

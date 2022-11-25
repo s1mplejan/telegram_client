@@ -28,7 +28,6 @@ import 'dart:math';
 import 'dart:convert' as convert;
 import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
 import 'package:telegram_client/telegram_client.dart';
-import 'package:hexaminate/hexaminate.dart' as hxm;
 import 'package:galaxeus_lib/galaxeus_lib.dart';
 
 /// Cheatset
@@ -271,7 +270,7 @@ class Tdlib extends LibTdJson {
   /// invoke request all client
   Future<List<Map>> invokeAllClients(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     bool isVoid = false,
     Duration? delayDuration,
     Duration? invokeTimeOut,
@@ -310,7 +309,7 @@ class Tdlib extends LibTdJson {
   /// invokeSync  request all client
   List<Map> invokeSyncAllClients(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     bool isVoid = false,
     Duration? delayDuration,
     Duration? invokeTimeOut,
@@ -345,7 +344,7 @@ class Tdlib extends LibTdJson {
   /// invoke request all client
   Future<List<Map>> requestAllClients(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     bool isVoid = false,
     String? extra,
   }) async {
@@ -394,7 +393,8 @@ class Tdlib extends LibTdJson {
     try {
       String regexMethodSend =
           r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
-      if (hxm.Regex(regexMethodSend, "i").exec(parameters["@type"])) {
+      if (RegExp(regexMethodSend, caseSensitive: false)
+          .hasMatch(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
         jsonResult["options"] = {
           "@type": "messageSendOptions",
@@ -406,7 +406,8 @@ class Tdlib extends LibTdJson {
             } catch (e) {}
           }
         });
-        if (hxm.Regex("editMessage(Text)", "i").exec(parameters["@type"])) {
+        if (RegExp("editMessage(Text)", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           jsonResult["@type"] = parameters["@type"];
         }
         jsonResult["input_message_content"] = {
@@ -438,8 +439,8 @@ class Tdlib extends LibTdJson {
         if (parameters.containsKey("reply_markup")) {
           jsonResult["reply_markup"] = replyMarkup(parameters["reply_markup"]);
         }
-        if (hxm.Regex(r"^(sendMessage|editMessageText)$", "i")
-            .exec(parameters["@type"])) {
+        if (RegExp(r"^(sendMessage|editMessageText)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var text = parseMode(
             parameters["text"].toString(),
             parameters["parse_mode"],
@@ -448,45 +449,53 @@ class Tdlib extends LibTdJson {
           jsonResult["input_message_content"]["@type"] = "inputMessageText";
           jsonResult["input_message_content"]["text"] = text;
         }
-        if (hxm.Regex(r"^(sendPhoto)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendPhoto)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["photo"]);
           jsonResult["input_message_content"]["@type"] = "inputMessagePhoto";
           jsonResult["input_message_content"]["photo"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendVoice)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendVoice)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["voice"]);
           jsonResult["input_message_content"]["@type"] =
               "inputMessageVoiceNote";
           jsonResult["input_message_content"]["voice_note"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendSticker)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendSticker)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["sticker"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageSticker";
           jsonResult["input_message_content"]["sticker"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendAnimation)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendAnimation)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["animation"]);
           jsonResult["input_message_content"]["@type"] =
               "inputMessageAnimation";
           jsonResult["input_message_content"]["animation"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendDocument)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendDocument)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["document"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageDocument";
           jsonResult["input_message_content"]["document"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendAudio)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendAudio)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["audio"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageAudio";
           jsonResult["input_message_content"]["audio"] = getDetailFile;
         }
-        if (hxm.Regex(r"^(sendVideo)$", "i").exec(parameters["@type"])) {
+        if (RegExp(r"^(sendVideo)$", caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["video"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageVideo";
           jsonResult["input_message_content"]["video"] = getDetailFile;
         }
-        if (!hxm.Regex(r"^(sendMessage|sendLocation|sendSticker)$", "i")
-            .exec(parameters["@type"])) {
+        if (!RegExp(r"^(sendMessage|sendLocation|sendSticker)$",
+                caseSensitive: false)
+            .hasMatch(parameters["@type"])) {
           if (parameters["caption"] != null) {
             var caption = parseMode(
               (parameters["caption"] != null)
@@ -501,7 +510,8 @@ class Tdlib extends LibTdJson {
         return jsonResult;
       }
 
-      if (hxm.Regex(r"^answerInlineQuery$", "i").exec(parameters["@type"])) {
+      if (RegExp(r"^answerInlineQuery$", caseSensitive: false)
+          .hasMatch(parameters["@type"])) {
         parameters["@type"] = "answerInlineQuery";
 
         if (parameters["results"] is List) {
@@ -539,9 +549,10 @@ class Tdlib extends LibTdJson {
   /// auto set parameters input file
   Map typeFile(String content) {
     Map data = {};
-    if (hxm.Regex(r"^http", "i").exec(content)) {
+    if (RegExp(r"^http", caseSensitive: false).hasMatch(content)) {
       data = {"@type": 'inputFileRemote', "id": content};
-    } else if (hxm.Regex(r"^(\/|\.\.?\/|~\/)", "i").exec(content)) {
+    } else if (RegExp(r"^(\/|\.\.?\/|~\/)", caseSensitive: false)
+        .hasMatch(content)) {
       data = {"@type": 'inputFileLocal', "path": content};
     } else if (content is int) {
       data = {"@type": 'inputFileId', "id": content};
@@ -597,7 +608,7 @@ class Tdlib extends LibTdJson {
   /// alow
   Future<Map> invoke(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     int? clientId,
     bool isVoid = false,
     Duration? delayDuration,
@@ -612,7 +623,6 @@ class Tdlib extends LibTdJson {
       clientId = client_id;
     }
 
-    parameters ??= {};
     String random = getRandom(15);
     if (parameters is Map) {
       parameters["@extra"] = random;
@@ -711,12 +721,13 @@ class Tdlib extends LibTdJson {
   /// );
   /// ```
   Map invokeSync(String method,
-      {Map<String, dynamic>? parameters, int? clientId}) {
+      {Map<String, dynamic> parameters = const <String, dynamic>{},
+      int? clientId}) {
     clientId ??= client_id;
     if (clientId == 0) {
       clientId = client_id;
     }
-    parameters ??= {};
+
     String random = getRandom(15);
     if (parameters is Map) {
       parameters["@extra"] = random;
@@ -815,11 +826,11 @@ class Tdlib extends LibTdJson {
     result["status"] = get_me["status"]["@type"]
         .toString()
         .toLowerCase()
-        .replace(hxm.Regex("userStatus", "i").run, "");
+        .replaceAll(RegExp("userStatus", caseSensitive: false), "");
     result["type_account"] = get_me["type"]["@type"]
         .toString()
         .toLowerCase()
-        .replace(hxm.Regex("userType", "i").run, "");
+        .replaceAll(RegExp("userType", caseSensitive: false), "");
     result["type"] = "private";
     if (result["type_account"] == "bot") {
       result["is_bot"] = true;
@@ -897,7 +908,7 @@ class Tdlib extends LibTdJson {
             if (in_loop_array_keyboard is String) {
               in_json_keyboard["text"] = in_loop_array_keyboard;
             } else if (in_loop_array_keyboard is Map) {
-              if (hxm.getBoolean(in_loop_array_keyboard["text"])) {
+              if (TgUtils.getBoolean(in_loop_array_keyboard["text"])) {
                 in_json_keyboard["text"] = in_loop_array_keyboard["text"];
               }
               if (in_loop_array_keyboard["request_contact"] == true) {
@@ -936,42 +947,42 @@ class Tdlib extends LibTdJson {
           for (var ii = 0; ii < loop_array_keyboard.length; ii++) {
             var in_loop_array_keyboard = loop_array_keyboard[ii];
             Map in_json_keyboard = {"@type": "inlineKeyboardButton"};
-            if (hxm.getBoolean(in_loop_array_keyboard["text"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["text"])) {
               in_json_keyboard["text"] = in_loop_array_keyboard["text"];
             }
 
-            if (hxm.getBoolean(in_loop_array_keyboard["url"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["url"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeUrl",
                 "url": in_loop_array_keyboard["url"]
               };
             }
 
-            if (hxm.getBoolean(in_loop_array_keyboard["login_url"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["login_url"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeLoginUrl",
                 "query": in_loop_array_keyboard["login_url"],
               };
             }
-            if (hxm.getBoolean(in_loop_array_keyboard["callback_data"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["callback_data"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeCallback",
-                "data": hxm.buffer
-                    .from(in_loop_array_keyboard["callback_data"])
+                "data": Buffer.from(in_loop_array_keyboard["callback_data"])
                     .toStringEncode('base64')
               };
             }
-            if (hxm
-                .getBoolean(in_loop_array_keyboard["callback_data_password"])) {
+            if (TgUtils.getBoolean(
+                in_loop_array_keyboard["callback_data_password"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeCallbackWithPassword",
-                "data": hxm.buffer
-                    .from(in_loop_array_keyboard["callback_data_password"])
+                "data": Buffer.from(
+                        in_loop_array_keyboard["callback_data_password"])
                     .toStringEncode('base64')
               };
             }
 
-            if (hxm.getBoolean(in_loop_array_keyboard["switch_inline_query"])) {
+            if (TgUtils.getBoolean(
+                in_loop_array_keyboard["switch_inline_query"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeSwitchInline",
                 "query": in_loop_array_keyboard["switch_inline_query"],
@@ -979,7 +990,7 @@ class Tdlib extends LibTdJson {
               };
             }
 
-            if (hxm.getBoolean(
+            if (TgUtils.getBoolean(
                 in_loop_array_keyboard["switch_inline_query_current_chat"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeSwitchInline",
@@ -988,20 +999,20 @@ class Tdlib extends LibTdJson {
                 "in_current_chat": true
               };
             }
-            if (hxm.getBoolean(in_loop_array_keyboard["callback_game"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["callback_game"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeSwitchInline",
                 "query": in_loop_array_keyboard["callback_game"],
                 "in_current_chat": false
               };
             }
-            if (hxm.getBoolean(in_loop_array_keyboard["user_id"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["user_id"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeUser",
                 "user_id": in_loop_array_keyboard["user_id"],
               };
             }
-            if (hxm.getBoolean(in_loop_array_keyboard["pay"])) {
+            if (TgUtils.getBoolean(in_loop_array_keyboard["pay"])) {
               in_json_keyboard["type"] = {
                 "@type": "inlineKeyboardButtonTypeBuy"
               };
@@ -1034,16 +1045,17 @@ class Tdlib extends LibTdJson {
   /// //
   Future<Map> request(
     String method, {
-    Map? parameters,
+    Map parameters = const {},
     int? clientId,
     bool isVoid = false,
     String? extra,
     bool? iSAutoGetChat,
   }) async {
     clientId ??= client_id;
-    parameters ??= {};
+
     if (parameters["chat_id"] is String &&
-        hxm.Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["chat_id"])) {
+        RegExp(r"^(@)?[a-z0-9_]+", caseSensitive: false)
+            .hasMatch(parameters["chat_id"])) {
       iSAutoGetChat = false;
       var search_public_chat = await invoke(
         "searchPublicChat",
@@ -1058,7 +1070,8 @@ class Tdlib extends LibTdJson {
       }
     }
     if (parameters["user_id"] is String &&
-        hxm.Regex(r"^(@)?[a-z0-9_]+", "i").exec(parameters["user_id"])) {
+        RegExp(r"^(@)?[a-z0-9_]+", caseSensitive: false)
+            .hasMatch(parameters["user_id"])) {
       iSAutoGetChat = false;
       var search_public_chat = await invoke(
         "searchPublicChat",
@@ -1074,10 +1087,10 @@ class Tdlib extends LibTdJson {
     }
     String regexMethodSend =
         r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
-    if (hxm.Regex(regexMethodSend, "i").exec(method)) {
+    if (RegExp(regexMethodSend, caseSensitive: false).hasMatch(method)) {
       Map result_request = {"ok": false};
       result_request = await invoke(
-        (hxm.Regex("editMessageText", "i").exec(method))
+        (RegExp("editMessageText", caseSensitive: false).hasMatch(method))
             ? method
             : "sendMessage",
         parameters: makeParametersApi(
@@ -1141,7 +1154,7 @@ class Tdlib extends LibTdJson {
         }
       });
     }
-    if (hxm.Regex(r"^addChatMember$", "i").exec(method)) {
+    if (RegExp(r"^addChatMember$", caseSensitive: false).hasMatch(method)) {
       return await invoke(
         "addChatMember",
         parameters: {
@@ -1154,7 +1167,7 @@ class Tdlib extends LibTdJson {
         iSAutoGetChat: iSAutoGetChat,
       );
     }
-    if (hxm.Regex(r"^editMessageText$", "i").exec(method)) {
+    if (RegExp(r"^editMessageText$", caseSensitive: false).hasMatch(method)) {
       return await editMessageText(
           chat_id: parameters["chat_id"],
           message_id: parameters["message_id"],
@@ -1173,7 +1186,7 @@ class Tdlib extends LibTdJson {
           reply_markup: parameters["reply_markup"],
           clientId: clientId);
     }
-    if (hxm.Regex(r"^joinChat$", "i").exec(method)) {
+    if (RegExp(r"^joinChat$", caseSensitive: false).hasMatch(method)) {
       return await invoke(
         "joinChat",
         parameters: {
@@ -1185,7 +1198,8 @@ class Tdlib extends LibTdJson {
         iSAutoGetChat: iSAutoGetChat,
       );
     }
-    if (hxm.Regex(r"^joinChatByInviteLink$", "i").exec(method)) {
+    if (RegExp(r"^joinChatByInviteLink$", caseSensitive: false)
+        .hasMatch(method)) {
       return await invoke(
         "joinChatByInviteLink",
         parameters: {
@@ -1197,25 +1211,25 @@ class Tdlib extends LibTdJson {
       );
     }
 
-    if (hxm.Regex(r"^getChatMember$", "i").exec(method)) {
+    if (RegExp(r"^getChatMember$", caseSensitive: false).hasMatch(method)) {
       return await getChatMember(
         parameters["chat_id"],
         parameters["user_id"],
         clientId: clientId,
       );
     }
-    if (hxm.Regex(r"^getMe$", "i").exec(method)) {
+    if (RegExp(r"^getMe$", caseSensitive: false).hasMatch(method)) {
       return await getMe(clientId: clientId);
     }
-    if (hxm.Regex(r"^getChat$", "i").exec(method)) {
+    if (RegExp(r"^getChat$", caseSensitive: false).hasMatch(method)) {
       return await getChat(parameters["chat_id"],
           is_detail: true, clientId: clientId);
     }
-    if (hxm.Regex(r"^getChats$", "i").exec(method)) {
+    if (RegExp(r"^getChats$", caseSensitive: false).hasMatch(method)) {
       var getChats = await invoke(
         "getChats",
         parameters: {
-          "limit": 9999,
+          "limit": (parameters["limit"] is int) ? parameters["limit"] : 10,
         },
         clientId: clientId,
         extra: extra,
@@ -1237,13 +1251,14 @@ class Tdlib extends LibTdJson {
       }
     }
 
-    if (hxm.Regex(r"^getUser$", "i").exec(method)) {
+    if (RegExp(r"^getUser$", caseSensitive: false).hasMatch(method)) {
       return await getUser(
         parameters["chat_id"],
         clientId: clientId,
       );
     }
-    if (hxm.Regex(r"^answerCallbackQuery$", "i").exec(method)) {
+    if (RegExp(r"^answerCallbackQuery$", caseSensitive: false)
+        .hasMatch(method)) {
       return await answerCallbackQuery(
         parameters["callback_query_id"],
         text: parameters["text"],
@@ -1394,7 +1409,7 @@ class Tdlib extends LibTdJson {
     clientId ??= client_id;
     chat_id ??= 0;
     user_id ??= 0;
-    if (hxm.Regex("^@.*", "i").exec(chat_id)) {
+    if (RegExp("^@.*", caseSensitive: false).hasMatch(chat_id)) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -1407,7 +1422,7 @@ class Tdlib extends LibTdJson {
         chat_id = search_public_chat["id"];
       }
     }
-    if (hxm.Regex("^@.*", "i").exec(user_id)) {
+    if (RegExp("^@.*", caseSensitive: false).hasMatch(user_id)) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -1433,7 +1448,8 @@ class Tdlib extends LibTdJson {
       extra: extra,
     );
 
-    if (hxm.Regex("^chatMember\$", "i").exec(get_chat_member["@type"])) {
+    if (RegExp("^chatMember\$", caseSensitive: false)
+        .hasMatch(get_chat_member["@type"])) {
       var json = {};
 
       var get_user = await getUser(
@@ -1446,7 +1462,7 @@ class Tdlib extends LibTdJson {
       json["status"] = status["@type"]
           .toString()
           .toLowerCase()
-          .replace(hxm.Regex("chatmemberstatus", "ig").run, "");
+          .replaceAll(RegExp("chatmemberstatus", caseSensitive: false), "");
       json["custom_title"] = status["custom_title"];
       json["can_be_edited"] = status["can_be_edited"];
       json["can_manage_chat"] = status["can_manage_chat"];
@@ -1732,16 +1748,16 @@ class Tdlib extends LibTdJson {
               json["is_bot"] = false;
             }
             json["first_name"] = get_user["first_name"];
-            if (hxm.getBoolean(get_user["last_name"])) {
+            if (TgUtils.getBoolean(get_user["last_name"])) {
               json["last_name"] = get_user["last_name"];
             }
-            if (hxm.getBoolean(get_user["username"])) {
+            if (TgUtils.getBoolean(get_user["username"])) {
               json["username"] = get_user["username"];
             }
-            if (hxm.getBoolean(get_user["phone_number"])) {
+            if (TgUtils.getBoolean(get_user["phone_number"])) {
               json["phone_number"] = get_user["phone_number"];
             }
-            if (hxm.getBoolean(get_user["language_code"])) {
+            if (TgUtils.getBoolean(get_user["language_code"])) {
               json["language_code"] = get_user["language_code"];
             }
             json["type"] = 'private';
@@ -1946,10 +1962,12 @@ class Tdlib extends LibTdJson {
           chat_json["type"] = "channel";
           chat_json["title"] = "";
         } else {
-          if (hxm.Regex("^-100", "i").exec(update["chat_id"])) {
+          if (RegExp("^-100", caseSensitive: false)
+              .hasMatch(update["chat_id"])) {
             chat_json["type"] = "supergroup";
             chat_json["title"] = "";
-          } else if (hxm.Regex("^-", "i").exec(update["chat_id"])) {
+          } else if (RegExp("^-", caseSensitive: false)
+              .hasMatch(update["chat_id"])) {
             chat_json["type"] = "group";
             chat_json["title"] = "";
           } else {
@@ -2004,7 +2022,8 @@ class Tdlib extends LibTdJson {
             from_json["id"] = update["sender_id"]["user_id"];
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
-            } else if (hxm.Regex("^-", "i").exec(from_json["chat_id"])) {
+            } else if (RegExp("^-", caseSensitive: false)
+                .hasMatch(from_json["chat_id"])) {
               from_json["type"] = "group";
             } else {
               from_json["type"] = "private";
@@ -2040,7 +2059,8 @@ class Tdlib extends LibTdJson {
             from_json["id"] = update["sender_id"]["chat_id"];
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
-            } else if (hxm.Regex("^-", "i").exec(from_json["chat_id"])) {
+            } else if (RegExp("^-", caseSensitive: false)
+                .hasMatch(from_json["chat_id"])) {
               from_json["type"] = "group";
             } else {
               from_json["type"] = "private";
@@ -2654,8 +2674,7 @@ class Tdlib extends LibTdJson {
         json["from"] = from;
         json["chat"] = chat;
         json["chat_instance"] = update["chat_instance"];
-        json["data"] = hxm.buffer
-            .from(update["payload"]["data"], 'base64')
+        json["data"] = Buffer.from(update["payload"]["data"], 'base64')
             .toStringEncode('utf8');
         return {
           "ok": true,
@@ -2708,7 +2727,7 @@ class Tdlib extends LibTdJson {
           json_new_member["status"] = update["old_chat_member"]["status"]
                   ["@type"]
               .toString()
-              .replace(hxm.Regex(r"chatMemberStatus", "i").run, "")
+              .replaceAll(RegExp(r"chatMemberStatus", caseSensitive: false), "")
               .toLowerCase();
           json["old_member"] = json_new_member;
         }
@@ -2737,7 +2756,7 @@ class Tdlib extends LibTdJson {
           json_new_member["status"] = update["new_chat_member"]["status"]
                   ["@type"]
               .toString()
-              .replace(hxm.Regex(r"chatMemberStatus", "i").run, "")
+              .replaceAll(RegExp(r"chatMemberStatus", caseSensitive: false), "")
               .toLowerCase();
           json["new_member"] = json_new_member;
         }
@@ -2761,7 +2780,7 @@ class Tdlib extends LibTdJson {
         json["from"] = from;
         json["chat_type"] = update["chat_type"]["@type"]
             .toString()
-            .replace(hxm.Regex("chatType", "i").run, "")
+            .replaceAll(RegExp("chatType", caseSensitive: false), "")
             .toLowerCase();
         try {
           if (json["chat_type"] == "supergroup" &&
@@ -2807,11 +2826,12 @@ class Tdlib extends LibTdJson {
       clientId: clientId,
       extra: extra,
     );
-    if (hxm.Regex(r"^user$", "i").exec(get_user["@type"])) {
+    if (RegExp(r"^user$", caseSensitive: false).hasMatch(get_user["@type"])) {
       var json = {};
       json["id"] = get_user["id"];
       try {
-        if (hxm.Regex(r"^userTypeBot$", "i").exec(get_user["type"]["@type"])) {
+        if (RegExp(r"^userTypeBot$", caseSensitive: false)
+            .hasMatch(get_user["type"]["@type"])) {
           json["is_bot"] = true;
         } else {
           json["is_bot"] = false;
@@ -2820,16 +2840,16 @@ class Tdlib extends LibTdJson {
         json["is_bot"] = false;
       }
       json["first_name"] = get_user["first_name"];
-      if (hxm.getBoolean(get_user["last_name"])) {
+      if (TgUtils.getBoolean(get_user["last_name"])) {
         json["last_name"] = get_user["last_name"];
       }
-      if (hxm.getBoolean(get_user["username"])) {
+      if (TgUtils.getBoolean(get_user["username"])) {
         json["username"] = get_user["username"];
       }
-      if (hxm.getBoolean(get_user["phone_number"])) {
+      if (TgUtils.getBoolean(get_user["phone_number"])) {
         json["phone_number"] = get_user["phone_number"];
       }
-      if (hxm.getBoolean(get_user["language_code"])) {
+      if (TgUtils.getBoolean(get_user["language_code"])) {
         json["language_code"] = get_user["language_code"];
       }
       json["type"] = "private";
@@ -2863,7 +2883,7 @@ class Tdlib extends LibTdJson {
 
   /// if you build flutter apps recommended to call this for call api
   voidRequest(String method,
-      {Map<String, dynamic>? parameters,
+      {Map<String, dynamic> parameters = const <String, dynamic>{},
       bool is_sync = false,
       bool is_raw = false,
       bool is_log = false,
@@ -2873,7 +2893,6 @@ class Tdlib extends LibTdJson {
     clientId ??= client_id;
     var result = {};
     try {
-      parameters ??= {};
       if (is_sync) {
         result = invokeSync(
           method,
@@ -2913,7 +2932,7 @@ class Tdlib extends LibTdJson {
   /// if you build flutter apps recommended to call this for call api
   debugRequest(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     bool is_sync = false,
     bool is_raw = false,
     bool is_log = false,
@@ -2924,7 +2943,6 @@ class Tdlib extends LibTdJson {
     clientId ??= client_id;
     var result = {};
     try {
-      parameters ??= {};
       if (is_sync) {
         result = invokeSync(
           method,
@@ -2964,7 +2982,7 @@ class Tdlib extends LibTdJson {
   /// if you build flutter apps recommended to call this for call api
   Future<Map> appRequest(
     String method, {
-    Map<String, dynamic>? parameters,
+    Map<String, dynamic> parameters = const <String, dynamic>{},
     bool is_sync = false,
     bool is_raw = false,
     bool is_log = false,
@@ -2976,7 +2994,6 @@ class Tdlib extends LibTdJson {
     clientId ??= client_id;
     var result = {};
     try {
-      parameters ??= {};
       if (is_sync) {
         result = invokeSync(
           method,

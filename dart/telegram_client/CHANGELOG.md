@@ -1,3 +1,6 @@
+## 0.3.74
+- remove depends
+  
 ## 0.3.73
 - now you can easy send file without add param is_form in telegram bot api
 
