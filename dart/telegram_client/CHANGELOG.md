@@ -1,3 +1,6 @@
+## 0.3.75
+- fix getChats request
+  
 ## 0.3.74
 - remove depends
   
