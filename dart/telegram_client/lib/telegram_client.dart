@@ -12,6 +12,7 @@ export 'telegram_bot_api_server/telegram_bot_api_server.dart';
 import 'telegram_bot_api/extension/telegram_bot_api.dart'
     if (dart.library.html) 'telegram_bot_api/extension/telegram_bot_api_web.dart';
 
+part "extensions/regexp.dart";
 part "extensions/tdlib.dart";
 part "extensions/telegram_bot_api.dart";
 part 'telegram_bot_api/telegram_bot_api.dart';

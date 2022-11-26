@@ -1,3 +1,9 @@
+## 0.3.77
+- fix pub score
+  
+## 0.3.76
+- fix regex
+  
 ## 0.3.75
 - fix getChats request
   

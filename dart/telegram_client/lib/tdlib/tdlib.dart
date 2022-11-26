@@ -395,7 +395,7 @@ class Tdlib extends LibTdJson {
       String regexMethodSend =
           r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation|editMessage(Text))$";
       if (RegExp(regexMethodSend, caseSensitive: false)
-          .hasMatch(parameters["@type"])) {
+          .exec(parameters["@type"])) {
         jsonResult["@type"] = "sendMessage";
         jsonResult["options"] = {
           "@type": "messageSendOptions",
@@ -408,7 +408,7 @@ class Tdlib extends LibTdJson {
           }
         });
         if (RegExp("editMessage(Text)", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           jsonResult["@type"] = parameters["@type"];
         }
         jsonResult["input_message_content"] = {
@@ -441,7 +441,7 @@ class Tdlib extends LibTdJson {
           jsonResult["reply_markup"] = replyMarkup(parameters["reply_markup"]);
         }
         if (RegExp(r"^(sendMessage|editMessageText)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var text = parseMode(
             parameters["text"].toString(),
             parameters["parse_mode"],
@@ -451,52 +451,52 @@ class Tdlib extends LibTdJson {
           jsonResult["input_message_content"]["text"] = text;
         }
         if (RegExp(r"^(sendPhoto)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["photo"]);
           jsonResult["input_message_content"]["@type"] = "inputMessagePhoto";
           jsonResult["input_message_content"]["photo"] = getDetailFile;
         }
         if (RegExp(r"^(sendVoice)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["voice"]);
           jsonResult["input_message_content"]["@type"] =
               "inputMessageVoiceNote";
           jsonResult["input_message_content"]["voice_note"] = getDetailFile;
         }
         if (RegExp(r"^(sendSticker)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["sticker"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageSticker";
           jsonResult["input_message_content"]["sticker"] = getDetailFile;
         }
         if (RegExp(r"^(sendAnimation)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["animation"]);
           jsonResult["input_message_content"]["@type"] =
               "inputMessageAnimation";
           jsonResult["input_message_content"]["animation"] = getDetailFile;
         }
         if (RegExp(r"^(sendDocument)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["document"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageDocument";
           jsonResult["input_message_content"]["document"] = getDetailFile;
         }
         if (RegExp(r"^(sendAudio)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["audio"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageAudio";
           jsonResult["input_message_content"]["audio"] = getDetailFile;
         }
         if (RegExp(r"^(sendVideo)$", caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           var getDetailFile = typeFile(parameters["video"]);
           jsonResult["input_message_content"]["@type"] = "inputMessageVideo";
           jsonResult["input_message_content"]["video"] = getDetailFile;
         }
         if (!RegExp(r"^(sendMessage|sendLocation|sendSticker)$",
                 caseSensitive: false)
-            .hasMatch(parameters["@type"])) {
+            .exec(parameters["@type"])) {
           if (parameters["caption"] != null) {
             var caption = parseMode(
               (parameters["caption"] != null)
@@ -512,7 +512,7 @@ class Tdlib extends LibTdJson {
       }
 
       if (RegExp(r"^answerInlineQuery$", caseSensitive: false)
-          .hasMatch(parameters["@type"])) {
+          .exec(parameters["@type"])) {
         parameters["@type"] = "answerInlineQuery";
 
         if (parameters["results"] is List) {
@@ -550,10 +550,10 @@ class Tdlib extends LibTdJson {
   /// auto set parameters input file
   Map typeFile(String content) {
     Map data = {};
-    if (RegExp(r"^http", caseSensitive: false).hasMatch(content)) {
+    if (RegExp(r"^http", caseSensitive: false).exec(content)) {
       data = {"@type": 'inputFileRemote', "id": content};
     } else if (RegExp(r"^(\/|\.\.?\/|~\/)", caseSensitive: false)
-        .hasMatch(content)) {
+        .exec(content)) {
       data = {"@type": 'inputFileLocal', "path": content};
     } else if (content is int) {
       data = {"@type": 'inputFileId', "id": content};
@@ -638,7 +638,7 @@ class Tdlib extends LibTdJson {
 
     if (iSAutoGetChat &&
         RegExp(r"^(sendMessage|getChatMember)$", caseSensitive: false)
-            .hasMatch(method)) {
+            .exec(method)) {
       if (parameters["chat_id"] is int) {
         client_send(
           clientId,
@@ -1057,7 +1057,7 @@ class Tdlib extends LibTdJson {
 
     if (parameters["chat_id"] is String &&
         RegExp(r"^(@)?[a-z0-9_]+", caseSensitive: false)
-            .hasMatch(parameters["chat_id"])) {
+            .exec(parameters["chat_id"])) {
       iSAutoGetChat = false;
       var search_public_chat = await invoke(
         "searchPublicChat",
@@ -1073,7 +1073,7 @@ class Tdlib extends LibTdJson {
     }
     if (parameters["user_id"] is String &&
         RegExp(r"^(@)?[a-z0-9_]+", caseSensitive: false)
-            .hasMatch(parameters["user_id"])) {
+            .exec(parameters["user_id"])) {
       iSAutoGetChat = false;
       var search_public_chat = await invoke(
         "searchPublicChat",
@@ -1089,10 +1089,10 @@ class Tdlib extends LibTdJson {
     }
     String regexMethodSend =
         r"^(sendMessage|sendPhoto|sendVideo|sendAudio|sendVoice|sendDocument|sendSticker|sendAnimation)$";
-    if (RegExp(regexMethodSend, caseSensitive: false).hasMatch(method)) {
+    if (RegExp(regexMethodSend, caseSensitive: false).exec(method)) {
       Map result_request = {"ok": false};
       result_request = await invoke(
-        (RegExp("editMessageText", caseSensitive: false).hasMatch(method))
+        (RegExp("editMessageText", caseSensitive: false).exec(method))
             ? method
             : "sendMessage",
         parameters: makeParametersApi(
@@ -1156,7 +1156,7 @@ class Tdlib extends LibTdJson {
         }
       });
     }
-    if (RegExp(r"^addChatMember$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^addChatMember$", caseSensitive: false).exec(method)) {
       return await invoke(
         "addChatMember",
         parameters: {
@@ -1169,7 +1169,7 @@ class Tdlib extends LibTdJson {
         iSAutoGetChat: iSAutoGetChat,
       );
     }
-    if (RegExp(r"^editMessageText$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^editMessageText$", caseSensitive: false).exec(method)) {
       return await editMessageText(
           chat_id: parameters["chat_id"],
           message_id: parameters["message_id"],
@@ -1188,7 +1188,7 @@ class Tdlib extends LibTdJson {
           reply_markup: parameters["reply_markup"],
           clientId: clientId);
     }
-    if (RegExp(r"^joinChat$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^joinChat$", caseSensitive: false).exec(method)) {
       return await invoke(
         "joinChat",
         parameters: {
@@ -1200,8 +1200,7 @@ class Tdlib extends LibTdJson {
         iSAutoGetChat: iSAutoGetChat,
       );
     }
-    if (RegExp(r"^joinChatByInviteLink$", caseSensitive: false)
-        .hasMatch(method)) {
+    if (RegExp(r"^joinChatByInviteLink$", caseSensitive: false).exec(method)) {
       return await invoke(
         "joinChatByInviteLink",
         parameters: {
@@ -1213,21 +1212,21 @@ class Tdlib extends LibTdJson {
       );
     }
 
-    if (RegExp(r"^getChatMember$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^getChatMember$", caseSensitive: false).exec(method)) {
       return await getChatMember(
         parameters["chat_id"],
         parameters["user_id"],
         clientId: clientId,
       );
     }
-    if (RegExp(r"^getMe$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^getMe$", caseSensitive: false).exec(method)) {
       return await getMe(clientId: clientId);
     }
-    if (RegExp(r"^getChat$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^getChat$", caseSensitive: false).exec(method)) {
       return await getChat(parameters["chat_id"],
           is_detail: true, clientId: clientId);
     }
-    if (RegExp(r"^getChats$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^getChats$", caseSensitive: false).exec(method)) {
       var getChats = await invoke(
         "getChats",
         parameters: {
@@ -1253,14 +1252,13 @@ class Tdlib extends LibTdJson {
       }
     }
 
-    if (RegExp(r"^getUser$", caseSensitive: false).hasMatch(method)) {
+    if (RegExp(r"^getUser$", caseSensitive: false).exec(method)) {
       return await getUser(
         parameters["chat_id"],
         clientId: clientId,
       );
     }
-    if (RegExp(r"^answerCallbackQuery$", caseSensitive: false)
-        .hasMatch(method)) {
+    if (RegExp(r"^answerCallbackQuery$", caseSensitive: false).exec(method)) {
       return await answerCallbackQuery(
         parameters["callback_query_id"],
         text: parameters["text"],
@@ -1411,7 +1409,7 @@ class Tdlib extends LibTdJson {
     clientId ??= client_id;
     chat_id ??= 0;
     user_id ??= 0;
-    if (RegExp("^@.*", caseSensitive: false).hasMatch(chat_id)) {
+    if (RegExp("^@.*", caseSensitive: false).exec(chat_id)) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -1424,7 +1422,7 @@ class Tdlib extends LibTdJson {
         chat_id = search_public_chat["id"];
       }
     }
-    if (RegExp("^@.*", caseSensitive: false).hasMatch(user_id)) {
+    if (RegExp("^@.*", caseSensitive: false).exec(user_id)) {
       var search_public_chat = await invoke(
         "searchPublicChat",
         parameters: {
@@ -1451,7 +1449,7 @@ class Tdlib extends LibTdJson {
     );
 
     if (RegExp("^chatMember\$", caseSensitive: false)
-        .hasMatch(get_chat_member["@type"])) {
+        .exec(get_chat_member["@type"])) {
       var json = {};
 
       var get_user = await getUser(
@@ -1498,7 +1496,7 @@ class Tdlib extends LibTdJson {
   }) async {
     clientId ??= client_id;
     try {
-      if (RegExp(r"^@.*$", caseSensitive: false).hasMatch(chat_id.toString())) {
+      if (RegExp(r"^@.*$", caseSensitive: false).exec(chat_id.toString())) {
         var search_public_chat = await invoke(
           "searchPublicChat",
           parameters: {
@@ -1520,7 +1518,7 @@ class Tdlib extends LibTdJson {
         extra: extra,
       );
       Map json = {};
-      if (RegExp(r"^chat$", caseSensitive: false).hasMatch(getchat["@type"])) {
+      if (RegExp(r"^chat$", caseSensitive: false).exec(getchat["@type"])) {
         var type_chat = getchat["type"]["@type"]
             .toString()
             .toLowerCase()
@@ -1661,7 +1659,7 @@ class Tdlib extends LibTdJson {
 
             if (json["profile_photo"] is Map &&
                 RegExp(r"^([0-9]+)$", caseSensitive: false)
-                    .hasMatch(json["profile_photo"]["id"])) {
+                    .exec(json["profile_photo"]["id"])) {
               try {
                 json["profile_photo"]["id"] =
                     (int.parse(json["profile_photo"]["id"]));
@@ -1735,13 +1733,12 @@ class Tdlib extends LibTdJson {
             clientId: clientId,
             extra: extra,
           );
-          if (RegExp("^user\$", caseSensitive: false)
-              .hasMatch(get_user["@type"])) {
+          if (RegExp("^user\$", caseSensitive: false).exec(get_user["@type"])) {
             var json = {};
             json["id"] = get_user["id"];
             try {
               if (RegExp("^userTypeBot\$", caseSensitive: false)
-                  .hasMatch(get_user["type"]["@type"])) {
+                  .exec(get_user["type"]["@type"])) {
                 json["is_bot"] = true;
               } else {
                 json["is_bot"] = false;
@@ -1868,7 +1865,7 @@ class Tdlib extends LibTdJson {
 
                 if (json["profile_photo"] is Map &&
                     RegExp(r"^([0-9]+)$", caseSensitive: false)
-                        .hasMatch(json["profile_photo"]["id"])) {
+                        .exec(json["profile_photo"]["id"])) {
                   try {
                     json["profile_photo"]["id"] =
                         (int.parse(json["profile_photo"]["id"]));
@@ -1883,8 +1880,7 @@ class Tdlib extends LibTdJson {
         }
       }
     } catch (e) {
-      if (RegExp("^[0-9]+\$", caseSensitive: false)
-          .hasMatch(chat_id.toString())) {
+      if (RegExp("^[0-9]+\$", caseSensitive: false).exec(chat_id.toString())) {
         try {
           return await getUser(
             chat_id,
@@ -1964,12 +1960,11 @@ class Tdlib extends LibTdJson {
           chat_json["type"] = "channel";
           chat_json["title"] = "";
         } else {
-          if (RegExp("^-100", caseSensitive: false)
-              .hasMatch(update["chat_id"])) {
+          if (RegExp("^-100", caseSensitive: false).exec(update["chat_id"])) {
             chat_json["type"] = "supergroup";
             chat_json["title"] = "";
           } else if (RegExp("^-", caseSensitive: false)
-              .hasMatch(update["chat_id"])) {
+              .exec(update["chat_id"])) {
             chat_json["type"] = "group";
             chat_json["title"] = "";
           } else {
@@ -2025,7 +2020,7 @@ class Tdlib extends LibTdJson {
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
             } else if (RegExp("^-", caseSensitive: false)
-                .hasMatch(from_json["chat_id"])) {
+                .exec(from_json["chat_id"])) {
               from_json["type"] = "group";
             } else {
               from_json["type"] = "private";
@@ -2062,7 +2057,7 @@ class Tdlib extends LibTdJson {
             if (update["chat_id"] == from_json["id"]) {
               from_json["type"] = chat_json["type"];
             } else if (RegExp("^-", caseSensitive: false)
-                .hasMatch(from_json["chat_id"])) {
+                .exec(from_json["chat_id"])) {
               from_json["type"] = "group";
             } else {
               from_json["type"] = "private";
@@ -2828,12 +2823,12 @@ class Tdlib extends LibTdJson {
       clientId: clientId,
       extra: extra,
     );
-    if (RegExp(r"^user$", caseSensitive: false).hasMatch(get_user["@type"])) {
+    if (RegExp(r"^user$", caseSensitive: false).exec(get_user["@type"])) {
       var json = {};
       json["id"] = get_user["id"];
       try {
         if (RegExp(r"^userTypeBot$", caseSensitive: false)
-            .hasMatch(get_user["type"]["@type"])) {
+            .exec(get_user["type"]["@type"])) {
           json["is_bot"] = true;
         } else {
           json["is_bot"] = false;
