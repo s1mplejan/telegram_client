@@ -1,11 +1,6 @@
-void main() async {
-  request(parameters: {});
-}
+import 'package:galaxeus_lib/galaxeus_lib.dart';
 
-request({
-  Map<String, dynamic> parameters = const <String, dynamic>{},
-}) {
-  print(parameters);
-  parameters["exte"] = "Azka";
-  print(parameters);
+void main(List<String> arguments) async {
+  Args args = Args(arguments);
+  print(args.arguments);
 }

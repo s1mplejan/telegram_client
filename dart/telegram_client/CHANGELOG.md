@@ -1,3 +1,6 @@
+## 0.3.78
+- update galaxeus_lib
+
 ## 0.3.77
 - fix pub score
   
