@@ -3,12 +3,12 @@ on: [workflow_dispatch]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Export Release Timestamp
         run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
       - name: Install Depends
-        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
+        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
       - name: Clone Repo Tdlib
         run: |
           git clone https://github.com/tdlib/td.git
@@ -17,10 +17,17 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build .
-      - name: Release Apps
-        uses: ncipollo/release-action@v1
+      - name: Zip tdlib
+        continue-on-error: true
+        run: |
+          zip "libtdjson.so.*"
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag: ${{ env.APP_VERSION }}
-          name: Tdlib Linux
-          token: ${{ secrets.TOKEN }}
-          artifacts: 'td/build/libtdjson.so.*'
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-tdlib-linux"
+          prerelease: false
+          title: "Release Tdlib Linux"
+          files: |
+            "td/build/libtdjson.so.*"
+           
