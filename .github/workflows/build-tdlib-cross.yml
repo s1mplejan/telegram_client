@@ -1,0 +1,71 @@
+name: Build Tdlib Cross Compile 
+on: [workflow_dispatch]
+jobs:
+  build:
+    name: Build 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        include:
+          # - os: ubuntu-latest
+          #   output-name: linux
+          - os: macOS-latest
+            output-name: macos
+          - os: windows-latest
+            output-name: windows
+    steps:
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+        with:
+          repository: tdlib/td
+      - name: Install Dependencies
+        continue-on-error: true
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt update -y
+            sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
+          fi
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            brew update
+            xcode-select --install
+            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+            brew install gperf cmake openssl
+          fi
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            git clone https://github.com/Microsoft/vcpkg.git
+            cd vcpkg
+            git checkout 1b1ae50e1a69f7c659bd7d731e80b358d21c86ad
+            ./bootstrap-vcpkg.bat
+            ./vcpkg.exe install gperf:x64-windows openssl:x64-windows zlib:x64-windows
+          fi
+        shell: bash
+      - name: Compile Tdlib
+        continue-on-error: true
+        run: |
+          mkdir build
+          cd build
+          if [ "$RUNNER_OS" == "Linux" ]; then 
+            cmake -DCMAKE_BUILD_TYPE=Release ..
+            cmake --build .
+          fi
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            cmake -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl/ ..
+            cmake --build .
+          fi
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cmake -A x64 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake --build . --config Release
+          fi
+        shell: bash
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
+        continue-on-error: true
+        with:
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-tdlib-${{ matrix.output-name }}"
+          prerelease: false
+          title: "Release Tdlib ${{ matrix.output-name }}"
+          files: |
+            build/libtdjson.*.*
