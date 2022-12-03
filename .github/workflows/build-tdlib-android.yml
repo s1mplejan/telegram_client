@@ -76,10 +76,14 @@ jobs:
 
           mkdir -p ../output/$ABI/
           cp build-$ABI/libtd*.so ../output/libtdjson-$ABI.so
-      - name: Release
-        uses: ncipollo/release-action@v1
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag: ${{ env.APP_VERSION }}
-          name: Tdlib Android
-          token: ${{ secrets.TOKEN }}
-          artifacts: 'tddroid/output/libtdjson*.so'
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-tdlib-android"
+          prerelease: false
+          title: "Release Tdlib Android"
+          files: |
+            tddroid/output/libtdjson*.so
+            
+
