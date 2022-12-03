@@ -1,4 +1,4 @@
-name: Build Tdlib Linux Ubuntu Latest
+name: Build Tdlib Linux 
 on: [workflow_dispatch]
 jobs:
   build:
@@ -9,10 +9,11 @@ jobs:
         run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
       - name: Install Depends
         run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
-      - name: Clone Repo Tdlib
+      - uses: actions/checkout@v3
+        with:
+          repository: "https://github.com/tdlib/td.git"
+      - name: Compile Tdlib
         run: |
-          git clone https://github.com/tdlib/td.git
-          cd td
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -20,7 +21,7 @@ jobs:
       - name: Zip tdlib
         continue-on-error: true
         run: |
-          zip "libtdjson.so.*"
+          zip "build/libtdjson.so.*"
       - name: Publish Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -29,5 +30,4 @@ jobs:
           prerelease: false
           title: "Release Tdlib Linux"
           files: |
-            "td/build/libtdjson.so.*"
-           
+            build/libtdjson.so.*
