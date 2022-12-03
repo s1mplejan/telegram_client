@@ -17,18 +17,32 @@ jobs:
     steps:
       - name: Export Release Timestamp
         run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
-      - name: Install Depends
-        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
       - uses: actions/checkout@v3
         with:
           repository: tdlib/telegram-bot-api
           submodules: true
-      # - name: Clone Repo telegram bot api
-      #   run: |
-      #     mkdir build
-      #     cd build
-      #     cmake -DCMAKE_BUILD_TYPE=Release ..
-      #     cmake --build .
+      - name: Install Dependencies
+        continue-on-error: true
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt update -y
+            sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
+          fi
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            brew update
+            brew upgrade
+            xcode-select --install
+            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+            brew install gperf cmake openssl
+          fi
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            git clone https://github.com/Microsoft/vcpkg.git
+            cd vcpkg
+            git checkout 1b1ae50e1a69f7c659bd7d731e80b358d21c86ad
+            ./bootstrap-vcpkg.bat
+            ./vcpkg.exe install gperf:x64-windows openssl:x64-windows zlib:x64-windows
+          fi
+        shell: bash
       - name: Compile Tdlib
         continue-on-error: true
         run: |
@@ -51,8 +65,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ github.token }}"
-          automatic_release_tag: "latest-telegram-bot-api-linux"
+          automatic_release_tag: "latest-telegram-bot-api-${{ matrix.output-name }}"
           prerelease: false
-          title: "Release Telegram Bot Api Linux"
+          title: "Release Telegram Bot Api ${{ matrix.output-name }}"
           files: |
             build/telegram-bot-api
