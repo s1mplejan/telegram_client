@@ -8,19 +8,23 @@ jobs:
       - name: Export Release Timestamp
         run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
       - name: Install Depends
-        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
+        run: sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
+      - uses: actions/checkout@v3
+        with:
+          repository: tdlib/telegram-bot-api
+          submodules: true
       - name: Clone Repo telegram bot api
         run: |
-          git clone --recursive https://github.com/tdlib/telegram-bot-api.git
-          cd telegram-bot-api
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build .
-      - name: Release Apps
-        uses: ncipollo/release-action@v1
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag: ${{ env.APP_VERSION }}
-          name: Telegram Bot Api Linux
-          token: ${{ secrets.TOKEN }}
-          artifacts: 'telegram-bot-api/build/telegram-bot-api'
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-telegram-bot-api-linux"
+          prerelease: false
+          title: "Release Telegram Bot Api Linux"
+          files: |
+            build/telegram-bot-api
