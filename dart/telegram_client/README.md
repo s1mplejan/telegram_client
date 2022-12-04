@@ -142,38 +142,100 @@ flutter pub add telegram_client
 ```
 
 2. Build [Tdlib](https://github.com/td/tdlib)
-3. Add library on project
+## Add library on project
   if you make app telegram based this library, you must add native compiled library
-  
-  - Android
-  Edit project/android/app/build.gradle
-  ```bash
+
+### Android
+Copy `.so` files from archive to `example/android/app/main/jniLibs`:
+```txt
+└── example 
+    └── android 
+        └── app 
+            └── main 
+                └── jniLibs 
+                    └── arm64-v8a
+                    │   └── libtdjson.so
+                    └── armeabi-v7a
+                    │   └── libtdjson.so
+                    └── x86
+                    │   └── libtdjson.so
+                    └── x86_64
+                        └── libtdjson.so
+```
+Open file `example/android/app/build.gradle`
+
+replace
+```groovy
+sourceSets {
+  main.java.srcDirs += 'src/main/kotlin'
+}
+```
+by 
+```groovy
+sourceSets {
   main {
-    jniLibs.srcDirs = ['src/jniLibs']
+    java.srcDirs += 'src/main/kotlin'
+    jniLibs.srcDirs = ['src/main/jniLibs']
   }
-  ```
-  ex:
-  ```bash
-  android { 
-    ...
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        main {
-            jniLibs.srcDirs = ['src/jniLibs']
-        }
-    }
-    ...
-  }
-  ```
-  add compiled library specified platform
-  add project/android/app/src/jniLibs/{ABI_DEVICE}/libtdjson.so
-  example:
-  ```bash
-  project/android/app/src/jniLibs/arm64-v8a/libtdjson.so
-  ```
+}
+```
 
-for other devices, I don't know because I only have android and linux
+### iOS and macOS
+1. Copy `libtdjson.dylib` from archive to `example/ios`
+2. Copy `libtdjson.dylib` from archive to `example/macos`
+```txt
+└── example 
+    └── ios 
+    │   └── libtdjson.dylib
+    └── macos
+        └── libtdjson.dylib
+```
+3. Open `Runner.xcworkspace` in Xcode.
+4. Add `.dylib` file to project.
+5. Find `Frameworks, Libraries, and EmbeddedContent`.
+6. Against `libtdjson.dylib` choose `Embed & Sign`.
+7. Find `Signing & Capabilities`.
+8. In Section `App Sandbox (Debug and Profile)` set true `Outgoing Connections (Client)`.
 
+### Windows
+1. Copy files from archive to `example/windows/tdlib`
+```txt
+└── example 
+    └── windows 
+        └── tdlib 
+            └── libcrypto-1_1.dll
+            └── libssl-1_1.dll
+            └── tdjson.dll
+            └── zlib1.dll
+```
+2. Open `example/windows/CMakeLists.txt`.
+3. Add below line `set(INSTALL_BUNDLE_LIB_DIR "${CMAKE_INSTALL_PREFIX}")`:
+```c
+# begin td
+set(dll_path "${CMAKE_CURRENT_SOURCE_DIR}/tdlib")
+install(FILES "${dll_path}/libcrypto-1_1.dll" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
+install(FILES "${dll_path}/libssl-1_1.dll" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
+install(FILES "${dll_path}/tdjson.dll" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
+install(FILES "${dll_path}/zlib1.dll" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
+# end td
+```
+
+### Linux
+1. Copy file from archive to `example/linux/tdlib`
+```
+└── example 
+    └── linux 
+        └── tdlib 
+            └── libtdjson.so
+```
+2. Open `example/linux/CMakeLists.txt`.
+3. Add at the end of file:
+```c
+# begin td
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/tdlib/libtdjson.so" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+    COMPONENT Runtime)
+# end td
+```
 
 - [Doc + Example](https://github.com/azkadev/telegram_client/tree/main/dart/telegram_client/doc)
 - [Youtube-Tutorial](https://www.youtube.com/channel/UC928-F8HenjZD1zNdMY42vA)
