@@ -144,7 +144,8 @@ flutter pub add telegram_client
 
 2. Build [Tdlib](https://github.com/td/tdlib)
 ## Add library on project
-  if you make app telegram based this library, you must add native compiled library
+  if you make app telegram based this library, you must add native compiled library.
+  [Thanks for](https://github.com/Wolfaks) [Issue](https://github.com/azkadev/telegram_client/issues/12#issuecomment-1336177122)
 
 ### Android
 Copy `.so` files from archive to `example/android/app/main/jniLibs`:
