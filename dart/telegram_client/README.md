@@ -264,7 +264,7 @@ import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   var path = Directory.current.path;
-  Tdlib tg = Tdlib("libtdjson.so", clientOption: {
+  Tdlib tg = Tdlib(path_tdlib:"./tdjson.so", clientOption: {
     'api_id': 12345,
     'api_hash': 'abcdefgjjaijiajdisd',
     'database_directory': "$path/user/",
@@ -282,7 +282,7 @@ import 'dart:io';
 import 'package:telegram_client/telegram_client.dart';
 void main(List<String> args) async {
   var path = Directory.current.path;
-  Tdlib tg = Tdlib("libtdjson.so", clientOption:{
+  Tdlib tg = Tdlib(path_tdlib:"./tdjson.so", clientOption:{
     'api_id': 12345678,
     'api_hash': 'asaskaoskaoskoa',
     'database_directory': "$path/user_0/",
@@ -312,7 +312,7 @@ void main(List<String> args) async {
 | 2  | `clientOption` | [object](https://core.telegram.org/bots/api#available-methods) | parameters di butuhkan jika method membutuhkannya |    `no`    |
 - examples
 ```js
-Tdlib tg = Tdlib("./tdjson.so", clientOption: {
+Tdlib tg = Tdlib(path_tdlib:"./tdjson.so", clientOption: {
   'api_id': 123435,
   'api_hash': 'asmamskmaks',
   'database_directory': "",

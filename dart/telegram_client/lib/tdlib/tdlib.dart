@@ -52,6 +52,7 @@ import 'package:galaxeus_lib/galaxeus_lib.dart';
 /// await tg.initIsolate();
 /// ````
 ///
+///
 class Tdlib extends LibTdJson {
   late Duration invoke_time_out;
   // late String event_invoke = "invoke";
@@ -81,8 +82,8 @@ class Tdlib extends LibTdJson {
   /// ```
   ///
   /// More configuration [Tdlib-Parameters](https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html)
-  Tdlib(
-    super.pathTdl, {
+  Tdlib({
+    super.pathTdl,
     super.clientOption,
     int? clientId,
     Duration? invokeTimeOut,
@@ -128,20 +129,22 @@ class Tdlib extends LibTdJson {
   }
 
   // exit
-  bool exitClient(
+  Future<bool> exitClient(
     int clientId, {
     bool isClose = false,
     String? extra,
-  }) {
+  }) async {
     for (var i = 0; i < clients.length; i++) {
       TdlibClient tdlibClient = clients[i];
       if (tdlibClient.client_id == clientId) {
         if (isClose) {
-          invoke(
-            "close",
-            clientId: clientId,
-            extra: extra,
-          ).catchError((onError) {});
+          try {
+            await invoke(
+              "close",
+              clientId: clientId,
+              extra: extra,
+            );
+          } catch (e) {}
         }
         tdlibClient.close();
         clients.removeAt(i);

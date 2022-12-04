@@ -63,7 +63,7 @@ class LibTdJson {
     "database_key": "",
     "start": true,
   };
-  final String pathTdl;
+  late final String path_tdlib;
   late bool is_android = Platform.isAndroid;
   late List<TdlibClient> clients = [];
   late int client_id = 0;
@@ -73,8 +73,8 @@ class LibTdJson {
   late Duration delay_update = Duration(milliseconds: 1);
   late Duration delay_invoke = Duration(milliseconds: 1);
   late double timeOutUpdate;
-  LibTdJson(
-    this.pathTdl, {
+  LibTdJson({
+    String? pathTdl,
     Map? clientOption,
     this.event_invoke = "invoke",
     this.event_update = "update",
@@ -83,6 +83,8 @@ class LibTdJson {
     this.timeOutUpdate = 1.0,
     Duration? delayInvoke,
   }) {
+    pathTdl ??= "libtdjson.${getFormatLibrary}";
+    path_tdlib = pathTdl;
     if (eventEmitter != null) {
       event_emitter = eventEmitter;
     }
@@ -95,6 +97,16 @@ class LibTdJson {
     }
   }
 
+  String get getFormatLibrary {
+    if (Platform.isAndroid || Platform.isLinux) {
+      return "so";
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      return "dylib";
+    } else {
+      return "dll";
+    }
+  }
+
   Future<void> init() async {
     return;
   }
@@ -103,7 +115,7 @@ class LibTdJson {
     if (Platform.isIOS || Platform.isMacOS) {
       return DynamicLibrary.process();
     } else {
-      return DynamicLibrary.open(pathTdl);
+      return DynamicLibrary.open(path_tdlib);
     }
   }
 
@@ -199,60 +211,66 @@ class LibTdJson {
       }
     });
 
-    Isolate isolate = await Isolate.spawn(
-      (List args) async {
-        SendPort sendPortToMain = args[0];
-        Map option = args[1];
-        int clientId = args[2];
-        String pathTdl = args[3];
-        Duration duration = args[5];
-        double timeout = args[6];
-        Tdlib tg = Tdlib(pathTdl, clientOption: option, clientId: clientId);
-        while (true) {
-          await Future.delayed(duration);
-          var updateOrigin = tg.client_receive(clientId, timeout);
-          if (updateOrigin != null) {
-            sendPortToMain.send([updateOrigin, clientId, option]);
+    try {
+      Isolate isolate = await Isolate.spawn(
+        (List args) async {
+          SendPort sendPortToMain = args[0];
+          Map option = args[1];
+          int clientId = args[2];
+          String pathTdl = args[3];
+          Duration duration = args[5];
+          double timeout = args[6];
+          Tdlib tg = Tdlib(
+            pathTdl: pathTdl,
+            clientOption: option,
+            clientId: clientId,
+          );
+          while (true) {
+            await Future.delayed(duration);
+            var updateOrigin = tg.client_receive(clientId, timeout);
+            if (updateOrigin != null) {
+              sendPortToMain.send([updateOrigin, clientId, option]);
+            }
           }
-        }
-      },
-      [
-        receivePort.sendPort,
-        client_new_option,
-        clientId,
-        pathTdl,
-        is_android,
-        delay_update,
-        timeOutUpdate,
-      ],
-      onExit: receivePort.sendPort,
-      onError: receivePort.sendPort,
-    ).catchError((onError) {
-      print("eror");
-    });
-    clients.add(TdlibClient(
-      client_id: clientId,
-      isolate: isolate,
-      receive_port: receivePort,
-    ));
+        },
+        [
+          receivePort.sendPort,
+          client_new_option,
+          clientId,
+          path_tdlib,
+          is_android,
+          delay_update,
+          timeOutUpdate,
+        ],
+        onExit: receivePort.sendPort,
+        onError: receivePort.sendPort,
+      );
+      clients.add(TdlibClient(
+        client_id: clientId,
+        isolate: isolate,
+        receive_port: receivePort,
+      ));
+    } catch (e) {
+      receivePort.close();
+    }
   }
 
-  // // exit
-  // bool exitClient(
+  // exit
+  // Future<bool> exitClient(
   //   int clientId, {
   //   bool isClose = false,
   //   String? extra,
-  // }) {
+  // }) async {
   //   for (var i = 0; i < clients.length; i++) {
   //     TdlibClient tdlibClient = clients[i];
   //     if (tdlibClient.client_id == clientId) {
-  //       // if (isClose) {
-  //       //   invoke(
-  //       //     "close",
-  //       //     clientId: clientId,
-  //       //     extra: extra,
-  //       //   ).catchError((onError) {});
-  //       // }
+  //       if (isClose) {
+  //         await invoke(
+  //           "close",
+  //           clientId: clientId,
+  //           extra: extra,
+  //         );
+  //       }
   //       tdlibClient.close();
   //       clients.removeAt(i);
   //       return true;

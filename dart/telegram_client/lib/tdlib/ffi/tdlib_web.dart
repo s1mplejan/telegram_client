@@ -43,15 +43,25 @@ import 'package:web_ffi/web_ffi_modules.dart';
 /// ````
 ///
 class LibTdJson {
-  final String pathTdl;
+  // final String pathTdl;
+  late final String path_tdlib;
   final bool is_android = false;
   late bool _is_init_tdlib = false;
   late Module _module;
-  LibTdJson(this.pathTdl);
+  LibTdJson({
+    String? pathTdl,
+  }) {
+    pathTdl ??= "libtdjson.${getFormatLibrary}";
+    path_tdlib = pathTdl;
+  }
+  String get getFormatLibrary {
+    return "websm";
+  }
+
   Future<void> init() async {
     if (!_is_init_tdlib) {
       Memory.init();
-      _module = await EmscriptenModule.process(pathTdl);
+      _module = await EmscriptenModule.process(path_tdlib);
       _is_init_tdlib = true;
     }
   }
