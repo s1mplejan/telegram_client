@@ -134,8 +134,12 @@ class Tdlib extends LibTdJson {
     bool isClose = false,
     String? extra,
   }) async {
+    int? index;
     for (var i = 0; i < clients.length; i++) {
       TdlibClient tdlibClient = clients[i];
+      if (index != null) {
+        continue;
+      }
       if (tdlibClient.client_id == clientId) {
         if (isClose) {
           try {
@@ -147,9 +151,11 @@ class Tdlib extends LibTdJson {
           } catch (e) {}
         }
         tdlibClient.close();
-        clients.removeAt(i);
-        return true;
       }
+    }
+    if (index != null) {
+      clients.removeAt(index);
+      return true;
     }
     return false;
   }

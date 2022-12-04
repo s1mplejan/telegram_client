@@ -1,3 +1,6 @@
+## 0.3.81
+- fix on error exit client tdlib
+
 ## 0.3.80
 - fix on error tdlib
 
