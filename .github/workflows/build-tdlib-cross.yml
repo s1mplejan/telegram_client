@@ -1,7 +1,7 @@
 name: Build Tdlib Cross Compile 
 on: [workflow_dispatch]
 jobs:
-  build:
+  build-tdlib-desktop:
     name: Build 
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,14 +25,96 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt update -y
-            sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev zip
+            sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev ninja-build zip
           fi
           if [ "$RUNNER_OS" == "macOS" ]; then
             brew update
             brew upgrade
             xcode-select --install
             curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-            brew install gperf cmake openssl
+            brew install gperf cmake openssl coreutils
+          fi
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            git clone https://github.com/Microsoft/vcpkg.git
+            cd vcpkg
+            git checkout 1b1ae50e1a69f7c659bd7d731e80b358d21c86ad
+            ./bootstrap-vcpkg.bat
+            ./vcpkg.exe install gperf:x64-windows openssl:x64-windows zlib:x64-windows
+          fi
+        shell: bash
+      - name: Compile Tdlib
+        continue-on-error: true
+        run: |
+          mkdir build
+          cd build
+          if [ "$RUNNER_OS" == "Linux" ]; then 
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib ..
+            cmake --build . --target prepare_cross_compiling
+            cd ..
+            php SplitSource.php
+            cd build
+            cmake --build . --target install
+            cd ..
+            php SplitSource.php --undo
+            cd tdlib/lib
+            zip libtdjson.zip libtdjson.so
+          fi
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            cmake -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl/ -DCMAKE_INSTALL_PREFIX:PATH=../tdlib ..
+            cmake --build . --target install
+          fi
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cmake -A x64 -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake --build . --target install --config Release
+            cd tdlib/bin
+            ls
+            mv libcrypto-1_1-x64.dll libcrypto-1_1.dll
+            mv libssl-1_1-x64.dll libssl-1_1.dll
+            7z a -tzip dlls.zip libcrypto-1_1.dll libssl-1_1.dll tdjson.dll zlib1.dll
+          fi
+        shell: bash
+      - name: Publish Release
+        uses: marvinpinto/action-automatic-releases@latest
+        continue-on-error: true
+        with:
+          repo_token: "${{ github.token }}"
+          automatic_release_tag: "latest-tdlib-${{ matrix.output-name }}"
+          prerelease: false
+          title: "Release Tdlib ${{ matrix.output-name }}"
+          files: |
+            build/libtdjson.*.*
+  
+  build-tdlib-mobile:
+    name: Build 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        include:
+          - os: ubuntu-latest
+            output-name: android
+          - os: macOS-latest
+            output-name: ios
+
+    steps:
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+        with:
+          repository: tdlib/td
+      - name: Install Dependencies
+        continue-on-error: true
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt update -y
+            sudo apt-get install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev ninja-build zip
+          fi
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            brew update
+            brew upgrade
+            xcode-select --install
+            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+            brew install gperf cmake openssl coreutils
           fi
           if [ "$RUNNER_OS" == "Windows" ]; then
             git clone https://github.com/Microsoft/vcpkg.git
@@ -70,3 +152,4 @@ jobs:
           title: "Release Tdlib ${{ matrix.output-name }}"
           files: |
             build/libtdjson.*.*
+            
