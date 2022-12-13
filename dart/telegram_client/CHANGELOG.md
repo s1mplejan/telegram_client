@@ -1,4 +1,8 @@
 ## 0.3.81
+- add support tdlib latest v1.8.9
+
+
+## 0.3.81
 - fix on error exit client tdlib
 
 ## 0.3.80
