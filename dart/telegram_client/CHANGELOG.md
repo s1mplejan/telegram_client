@@ -11,7 +11,7 @@
 - fix on error tdlib
 
 ## 0.3.79
-- update readme, Breackchange from Tdlib("libtdjson.so") to Tdlib(path_tdlib: "libtdjson.so")
+- update readme, Breackchange from Tdlib("libtdjson.so") to Tdlib(path_tdlib:git "libtdjson.so")
 
 ## 0.3.78
 - update galaxeus_lib

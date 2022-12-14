@@ -13,7 +13,7 @@ dev_dependencies:
 
 dependencies:
   ffi: ">=1.1.2 <=2.0.1"
-  galaxeus_lib: ^0.0.29
+  galaxeus_lib: ^0.0.33
   http: ^0.13.4
   path: ^1.8.2
   universal_io: ^2.0.4

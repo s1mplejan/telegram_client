@@ -6,9 +6,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-20.04, windows-latest, macOS-latest]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             output-name: linux
           - os: macOS-latest
             output-name: macos
@@ -89,9 +89,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-20.04, macOS-latest]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             output-name: android
           - os: macOS-latest
             output-name: ios
