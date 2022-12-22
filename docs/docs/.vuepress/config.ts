@@ -57,12 +57,16 @@ export default defineUserConfig({
                 link: "https://pub.dev/packages/telegram_client",
             },
             {
-                text: "API",
-                link: "https://pub.dev/documentation/telegram_client/latest",
+                text: "Github",
+                link: "https://github.com/azkadev",
             },
             {
                 text: "Telegram",
                 link: "https://t.me/azkadev",
+            },
+            {
+                text: "Youtube",
+                link: "https://youtube.com/@azkadev",
             },
         ],
         sidebarDepth: 1,
@@ -70,8 +74,6 @@ export default defineUserConfig({
     }),
 
     markdown: {
-
-
         code: {
             "lineNumbers": false,
             "highlightLines": true,
@@ -100,7 +102,7 @@ export default defineUserConfig({
                 rel: "icon",
                 type: "image/png",
                 sizes: "256x256",
-                href: `/icon-256x256.png`,
+                href: `/telegram.png`,
             },
         ],
         [
@@ -109,7 +111,7 @@ export default defineUserConfig({
                 rel: "icon",
                 type: "image/png",
                 sizes: "512x512",
-                href: `/icon-512x512.png`,
+                href: `/telegram.png`,
             },
         ],
         [
