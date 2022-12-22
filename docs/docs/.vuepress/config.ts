@@ -17,7 +17,7 @@ for (const locale of locales) {
 
 const themeLocales: LocaleConfig<DefaultThemeLocaleData> = {}
 for (const locale of locales) {
-    
+
     themeLocales[getLocalePath(locale.code)] = {
         selectLanguageName: locale.language,
         selectLanguageText: locale.selectLanguage,
@@ -68,12 +68,12 @@ export default defineUserConfig({
         sidebarDepth: 1,
 
     }),
-    
+
     markdown: {
-        
-       
+
+
         code: {
-             
+            "lineNumbers": false,
             "highlightLines": true,
             "vPre": {
                 "block": true,
@@ -174,7 +174,7 @@ function getSidebar({ locale, tutorials, concepts, recipes, sampleApps, chnagelo
                     // "faq.md",
                 ],
             ),
-        }, 
+        },
     ]
 }
 
