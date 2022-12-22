@@ -13,7 +13,7 @@ export default defineClientConfig({
             if (typeof navigator != 'undefined' && isFirstStart && isHome) {
                 const lang = navigator.language.split("-")[0].toLowerCase()
 
-                if (lang != "en" && locales.some((l) => l.code === lang)) {
+                if (lang != "id" && locales.some((l) => l.code === lang)) {
                     const redirectUrl = "/" + lang + "/"
                     // Avoid infinite redirection
                     if (to.fullPath != redirectUrl) {

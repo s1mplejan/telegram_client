@@ -44,9 +44,9 @@ export default defineUserConfig({
     locales: vueLocales,
     bundler: viteBundler({}),
     theme: defaultTheme({
-        logo: "/isar.svg",
-        repo: "isar/isar",
-        docsRepo: "isar/isar",
+        logo: "/telegram.png",
+        repo: "azkadev/telegram_client",
+        docsRepo: "azkadev/telegram_client",
         docsDir: "docs/docs",
         contributors: true,
         locales: themeLocales,
@@ -57,11 +57,11 @@ export default defineUserConfig({
             },
             {
                 text: "API",
-                link: "https://pub.dev/documentation/isar/latest/isar/isar-library.html",
+                link: "https://pub.dev/documentation/isar/latest/azkadev/telegram_client-library.html",
             },
             {
                 text: "Telegram",
-                link: "https://t.me/isardb",
+                link: "https://t.me/azkadev",
             },
         ],
         sidebarDepth: 1,
@@ -179,15 +179,15 @@ function getSidebar({ locale, tutorials, concepts, recipes, sampleApps, chnagelo
         },
         {
             text: sampleApps,
-            link: "https://github.com/isar/isar/tree/main/examples",
+            link: "https://github.com/azkadev/telegram_client/tree/main/examples",
         },
         {
             text: chnagelog,
-            link: "https://github.com/isar/isar/blob/main/packages/isar/CHANGELOG.md",
+            link: "https://github.com/azkadev/telegram_client/blob/main/packages/isar/CHANGELOG.md",
         },
         {
             text: contributors,
-            link: "https://github.com/isar/isar#contributors-",
+            link: "https://github.com/azkadev/telegram_client#contributors-",
         },
     ]
 }
@@ -195,7 +195,7 @@ function getSidebar({ locale, tutorials, concepts, recipes, sampleApps, chnagelo
 function getSidebarChildren(locale: string, children: string[]) {
     const localePath = getLocalePath(locale)
     return children.map((child) => {
-        if (locale === "en") {
+        if (locale === "id") {
             return '/' + child
         }
         const file = path.resolve(__dirname, '../', localePath.substring(1), child)
