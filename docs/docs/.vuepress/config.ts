@@ -17,6 +17,7 @@ for (const locale of locales) {
 
 const themeLocales: LocaleConfig<DefaultThemeLocaleData> = {}
 for (const locale of locales) {
+    
     themeLocales[getLocalePath(locale.code)] = {
         selectLanguageName: locale.language,
         selectLanguageText: locale.selectLanguage,
@@ -53,11 +54,11 @@ export default defineUserConfig({
         navbar: [
             {
                 text: "pub.dev",
-                link: "https://pub.dev/packages/isar",
+                link: "https://pub.dev/packages/telegram_client",
             },
             {
                 text: "API",
-                link: "https://pub.dev/documentation/isar/latest/azkadev/telegram_client-library.html",
+                link: "https://pub.dev/documentation/telegram_client/latest",
             },
             {
                 text: "Telegram",
@@ -67,9 +68,18 @@ export default defineUserConfig({
         sidebarDepth: 1,
 
     }),
+    
     markdown: {
+        
+       
         code: {
-            lineNumbers: false,
+             
+            "highlightLines": true,
+            "vPre": {
+                "block": true,
+                "inline": true,
+            },
+            "preWrapper": true,
         },
     },
     plugins: [
@@ -109,8 +119,8 @@ export default defineUserConfig({
                 href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap",
             },
         ],
-        ["meta", { name: "application-name", content: "Isar Database" }],
-        ["meta", { name: "apple-mobile-web-app-title", content: "Isar Database" }],
+        ["meta", { name: "application-name", content: "Telegram Client" }],
+        ["meta", { name: "apple-mobile-web-app-title", content: "Telegram Client" }],
         [
             "meta",
             { name: "apple-mobile-web-app-status-bar-style", content: "black" },
@@ -153,42 +163,18 @@ function getSidebar({ locale, tutorials, concepts, recipes, sampleApps, chnagelo
             children: getSidebarChildren(
                 locale,
                 [
-                    "schema.md",
-                    "crud.md",
-                    "queries.md",
-                    "transactions.md",
-                    "indexes.md",
-                    "links.md",
-                    "watchers.md",
-                    "limitations.md",
-                    "faq.md",
+                    // "schema.md",
+                    // "crud.md",
+                    // "queries.md",
+                    // "transactions.md",
+                    // "indexes.md",
+                    // "links.md",
+                    // "watchers.md",
+                    // "limitations.md",
+                    // "faq.md",
                 ],
             ),
-        },
-        {
-            text: recipes,
-            children: getSidebarChildren(
-                locale,
-                [
-                    "recipes/full_text_search.md",
-                    "recipes/multi_isolate.md",
-                    "recipes/string_ids.md",
-                    "recipes/data_migration.md",
-                ]
-            ),
-        },
-        {
-            text: sampleApps,
-            link: "https://github.com/azkadev/telegram_client/tree/main/examples",
-        },
-        {
-            text: chnagelog,
-            link: "https://github.com/azkadev/telegram_client/blob/main/packages/isar/CHANGELOG.md",
-        },
-        {
-            text: contributors,
-            link: "https://github.com/azkadev/telegram_client#contributors-",
-        },
+        }, 
     ]
 }
 
