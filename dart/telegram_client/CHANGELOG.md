@@ -1,3 +1,6 @@
+## 0.3.84
+- update depends
+
 ## 0.3.83
 - fix getme username
 

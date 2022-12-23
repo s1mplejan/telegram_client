@@ -7,7 +7,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.4"
+    version: "3.3.5"
   args:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: galaxeus_lib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.29"
+    version: "0.0.35"
   http:
     dependency: "direct main"
     description:
@@ -140,7 +140,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.2"
+    version: "1.8.3"
   petitparser:
     dependency: transitive
     description:

@@ -151,6 +151,7 @@ class Tdlib extends LibTdJson {
           } catch (e) {}
         }
         tdlibClient.close();
+        index = i;
       }
     }
     if (index != null) {
