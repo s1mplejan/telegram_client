@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme; 
+import 'package:telegram_client/scheme/tdlib_scheme.dart' as tdlib_scheme;
 import 'package:telegram_client/telegram_client.dart';
 
 void main(List<String> arguments) async {
@@ -20,7 +20,7 @@ void main(List<String> arguments) async {
   Directory tg_dir = Directory.current;
 
   Tdlib tg = Tdlib(
-    path_tdlib,
+    pathTdl: path_tdlib,
     clientOption: {
       "api_id": api_id,
       "api_hash": api_hash,
@@ -147,7 +147,6 @@ void main(List<String> arguments) async {
                 parameters: {"chat_id": chat_id, "text": "alive telegram client @azkadev"},
                 clientId: update.client_id,
               );
-              
             }
           }
         }

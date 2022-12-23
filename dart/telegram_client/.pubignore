@@ -2,3 +2,6 @@ app-use/
 hexa-userbot/
 bin/test.dart
 specta_userbot/
+.dart_tool
+.vscode
+pubspec.lock
