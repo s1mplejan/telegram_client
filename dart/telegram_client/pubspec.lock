@@ -169,6 +169,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  telegram_bot_api:
+    dependency: "direct main"
+    description:
+      name: telegram_bot_api
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
+  telegram_mtproto:
+    dependency: "direct main"
+    description:
+      name: telegram_mtproto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.0"
+  telegram_tdlib:
+    dependency: "direct main"
+    description:
+      name: telegram_tdlib
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -212,4 +233,4 @@ packages:
     source: hosted
     version: "0.1.1"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.18.5 <3.0.0"

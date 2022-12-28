@@ -1,3 +1,15 @@
+## 0.3.88
+- fix bug
+
+## 0.3.87
+- fix bug
+
+## 0.3.86
+- fix bug
+
+## 0.3.845
+- update depends
+
 ## 0.3.84
 - update depends
 

@@ -134,12 +134,8 @@ class Tdlib extends LibTdJson {
     bool isClose = false,
     String? extra,
   }) async {
-    int? index;
     for (var i = 0; i < clients.length; i++) {
       TdlibClient tdlibClient = clients[i];
-      if (index != null) {
-        continue;
-      }
       if (tdlibClient.client_id == clientId) {
         if (isClose) {
           try {
@@ -151,28 +147,28 @@ class Tdlib extends LibTdJson {
           } catch (e) {}
         }
         tdlibClient.close();
-        index = i;
+        clients.remove(tdlibClient);
+        return true;
       }
-    }
-    if (index != null) {
-      clients.removeAt(index);
-      return true;
     }
     return false;
   }
 
+  /// ahis for handle update api
   /// add this for handle update api
-  Listener on(String type_update, Function(UpdateTd update) callback,
+  Listener on(
+      String type_update, FutureOr<dynamic> Function(UpdateTd update) callback,
       {void Function(Object data)? onError}) {
     return event_emitter.on(type_update, null, (Event ev, context) async {
       try {
         if (ev.eventData is List) {
           List jsonUpdate = (ev.eventData as List);
-          return callback(UpdateTd(
+          await callback(UpdateTd(
             update: jsonUpdate[0],
             clientId: jsonUpdate[1],
             clientOption: jsonUpdate[2],
           ));
+          return;
         }
       } catch (e) {
         if (onError != null) {
